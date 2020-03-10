@@ -1,0 +1,1378 @@
+category: Deception
+commonfields:
+  id: CounterCraft Deception Director
+  version: -1
+configuration:
+- defaultvalue: ""
+  display: Deception Director Domain or IP Address
+  name: server
+  required: true
+  type: 0
+- defaultvalue: ""
+  display: API Key for Deception Director connection
+  name: api_key
+  required: true
+  type: 4
+- defaultvalue: ""
+  display: Secret Key for Deception Director connection
+  name: secret_key
+  required: true
+  type: 4
+- defaultvalue: ""
+  display: Trust any certificate (not secure)
+  name: insecure
+  required: false
+  type: 8
+- defaultvalue: ""
+  display: Use system proxy settings
+  name: proxy
+  required: false
+  type: 8
+- defaultvalue: ""
+  display: Fetch incidents
+  name: isFetch
+  required: false
+  type: 8
+- defaultvalue: ""
+  display: Incident type
+  name: incidentType
+  required: false
+  type: 13
+description: CounterCraft Deception Solution detects advanced adversaries. Automate
+  counterintelligence campaigns to discover targeted attacks with real-time active
+  response.
+detaileddescription: |
+  ## Prerequisites
+  ---
+
+  To configure an instance of Deception Director, you need to obtain the following information.
+
+  * Server URL
+  * API Key
+  * Secret Key
+
+  ## Get your API Key and Secret Key
+  1. In Deception Director, go to user settings.
+  2. Either copy or generate a new API Key and Secret Key.
+  3. Make note of both keys so you can enter them as parameter values when configuring the integration instance.
+display: CounterCraft Deception Director
+image: data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHgAAAAyCAYAAACXpx/YAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyVpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQ4IDc5LjE2NDAzNiwgMjAxOS8wOC8xMy0wMTowNjo1NyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIDIxLjAgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NzgxRjk2RjkzOTI5MTFFQUE3NUQ5MkNDNjlBMjc4NDkiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NzgxRjk2RkEzOTI5MTFFQUE3NUQ5MkNDNjlBMjc4NDkiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo3ODFGOTZGNzM5MjkxMUVBQTc1RDkyQ0M2OUEyNzg0OSIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo3ODFGOTZGODM5MjkxMUVBQTc1RDkyQ0M2OUEyNzg0OSIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PnnVssMAAAb9SURBVHja7Fx7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
+name: CounterCraft Deception Director
+script:
+  commands:
+  - arguments:
+    - description: Campaign Name
+      name: name
+    description: List all deception campaigns
+    name: countercraft-list-campaigns
+    outputs:
+    - contextPath: CounterCraft.Campaign.ID
+      description: Campaign ID
+      type: number
+    - contextPath: CounterCraft.Campaign.Name
+      description: Campaign Name
+      type: string
+    - contextPath: CounterCraft.Campaign.Description
+      description: Campaign Description
+      type: string
+    - contextPath: CounterCraft.Campaign.StatusCode
+      description: Campaign Status
+      type: string
+  - arguments:
+    - description: Campaign ID
+      name: campaign_id
+    description: Lists all deception hosts
+    name: countercraft-list-hosts
+    outputs:
+    - contextPath: CounterCraft.Host.ID
+      description: Host Id
+      type: number
+    - contextPath: CounterCraft.Host.Name
+      description: Host Name
+      type: string
+    - contextPath: CounterCraft.Host.Description
+      description: Host Description
+      type: string
+    - contextPath: CounterCraft.Host.StatusCode
+      description: Host Status
+      type: string
+    - contextPath: CounterCraft.Host.TypeCode
+      description: Host Type
+      type: string
+    - contextPath: Host.Domain
+      description: The domain of the host
+      type: string
+    - contextPath: Host.Hostname
+      description: The name of the host
+      type: string
+    - contextPath: Host.BIOSVersion
+      description: The BIOS version of the host
+      type: string
+    - contextPath: Host.ID
+      description: The UUID of the host
+      type: string
+    - contextPath: Host.IP
+      description: The IP address of the host
+      type: string
+    - contextPath: Host.Memory
+      description: The memory of the host
+      type: string
+    - contextPath: Host.Model
+      description: The model of the host
+      type: string
+    - contextPath: Host.OS
+      description: The OS of the host
+      type: string
+    - contextPath: Host.OSVersion
+      description: The OS version of the host
+      type: string
+    - contextPath: Host.Processor
+      description: The processor of the host
+      type: string
+    - contextPath: Host.Processors
+      description: The number of processors of the host
+      type: string
+  - arguments:
+    - description: Host Id
+      name: host_id
+    description: List services currently deployed on deception hosts
+    name: countercraft-list-services
+    outputs:
+    - contextPath: CounterCraft.Service.ID
+      description: Service ID
+      type: number
+    - contextPath: CounterCraft.Service.Name
+      description: Service Name
+      type: string
+    - contextPath: CounterCraft.Service.Description
+      description: Service.Description
+      type: string
+    - contextPath: CounterCraft.Service.StatusCode
+      description: Service Status
+      type: string
+    - contextPath: CounterCraft.Service.TypeCode
+      description: Service Type
+      type: string
+  - arguments:
+    - description: Campaign ID
+      name: campaign_id
+    description: List breadcrumbs in a campaign
+    name: countercraft-list-breadcrumbs
+    outputs:
+    - contextPath: CounterCraft.Breadcrumb.ID
+      description: Breadcrumb ID
+      type: number
+    - contextPath: CounterCraft.Breadcrumb.Name
+      description: Breadcrumb Name
+      type: string
+    - contextPath: CounterCraft.Breadcrumb.Description
+      description: Breadcrumb Description
+      type: string
+    - contextPath: CounterCraft.Breadcrumb.StatusCode
+      description: Breadcrumb Status
+      type: string
+    - contextPath: CounterCraft.Breadcrumb.TypeCode
+      description: Breadcrumb Type
+      type: string
+  - arguments:
+    - description: Object value. For example 'root' or '192.168.1.1'
+      name: value
+      required: true
+    description: Get information about an object (IoC)
+    name: countercraft-get-object
+    outputs:
+    - contextPath: CounterCraft.Object.ID
+      description: Object ID
+      type: number
+    - contextPath: CounterCraft.Object.Value
+      description: Object value
+      type: string
+    - contextPath: CounterCraft.Object.Hits
+      description: Object hits
+      type: number
+    - contextPath: CounterCraft.Object.Score
+      description: Object score
+      type: number
+    - contextPath: CounterCraft.Object.TypeCode
+      description: Object type
+      type: string
+    - contextPath: CounterCraft.Object.FirstSeen
+      description: Object first seen
+      type: date
+    - contextPath: CounterCraft.Object.LastSeen
+      description: Object last seen
+      type: date
+    - contextPath: CounterCraft.Object.EventsCount
+      description: Object events count
+      type: number
+    - contextPath: CounterCraft.Object.Tags
+      description: Object tags
+      type: string
+  - arguments:
+    - description: Search criteria. For example 'type_code:ValidAuth'
+      name: criteria
+      required: true
+    - default: true
+      defaultValue: "50"
+      description: Maximum number of results
+      name: max_results
+    description: Get full list of Events
+    name: countercraft-get-events
+    outputs:
+    - contextPath: CounterCraft.Event.ID
+      description: Event id
+      type: number
+    - contextPath: CounterCraft.Event.CampaignName
+      description: Campaign name
+      type: string
+    - contextPath: CounterCraft.Event.CategoryCode
+      description: Category Code
+      type: string
+    - contextPath: CounterCraft.Event.EventDate
+      description: Event date
+      type: date
+    - contextPath: CounterCraft.Event.HostName
+      description: Host name
+      type: string
+    - contextPath: CounterCraft.Event.ServiceName
+      description: Service name
+      type: string
+    - contextPath: CounterCraft.Event.TypeCode
+      description: Type
+      type: string
+    - contextPath: CounterCraft.Event.Score
+      description: Score
+      type: number
+    - contextPath: CounterCraft.Event.Tags
+      description: Tags
+      type: string
+    - contextPath: CounterCraft.Events.Data
+      description: Data
+      type: unknown
+  - arguments:
+    - description: Campaign name
+      name: name
+      required: true
+    - description: Campaign description
+      name: description
+      required: true
+    description: Create a new deception campaign
+    name: countercraft-create-campaign
+    outputs:
+    - contextPath: CounterCraft.Campaign.ID
+      description: Campaign ID
+      type: number
+    - contextPath: CounterCraft.Campaign.Name
+      description: Name
+      type: string
+    - contextPath: CounterCraft.Campaign.Description
+      description: Description
+      type: string
+    - contextPath: CounterCraft.Campaign.StatusCode
+      description: Status Code
+      type: string
+  - arguments: []
+    description: List Deception Support Nodes (DSNs)
+    name: countercraft-list-dsns
+    outputs:
+    - contextPath: CounterCraft.DSN.ID
+      description: ID
+      type: number
+    - contextPath: CounterCraft.DSN.Name
+      description: Name
+      type: string
+    - contextPath: CounterCraft.DSN.Description
+      description: Description
+      type: string
+    - contextPath: CounterCraft.DSN.Hostname
+      description: Hostname
+      type: string
+    - contextPath: CounterCraft.DSN.Port
+      description: Port
+      type: number
+  - arguments: []
+    description: 'List providers (providers for hosts or services i.e. AWS or Office365) '
+    name: countercraft-list-providers
+    outputs:
+    - contextPath: ID
+      description: ID
+      type: number
+    - contextPath: CounterCraft.Provider.Name
+      description: Name
+      type: string
+    - contextPath: CounterCraft.Provider.Description
+      description: Description
+      type: string
+    - contextPath: CounterCraft.Provider.TypeCode
+      description: Type
+      type: string
+    - contextPath: CounterCraft.Provider.StatusCode
+      description: Status
+      type: string
+  - arguments:
+    - description: Name
+      name: name
+      required: true
+    - description: Description
+      name: description
+    - description: Provider
+      name: provider_id
+      required: true
+    - description: Deception Support Node ID
+      name: deception_support_node_id
+      required: true
+    - description: ID of the campaign where you want to deploy a new host. You can
+        execute countercraft-list-campaigns in order to obtain the ID
+      name: campaign_id
+      required: true
+    - auto: PREDEFINED
+      description: Operating System
+      name: os_family
+      predefined:
+      - windows
+      - linux
+      required: true
+    - description: IP Address
+      name: ip_address
+      required: true
+    - description: Port
+      name: port
+      required: true
+    - description: Username
+      name: username
+      required: true
+    - description: Password
+      name: password
+      required: true
+    description: Deploy a new deception host
+    name: countercraft-create-host-machine
+    outputs:
+    - contextPath: CounterCraft.Host.Id
+      description: Host ID
+      type: number
+  - arguments:
+    - description: Campaign ID
+      name: campaign_id
+      required: true
+    description: List all incidents currently active
+    name: countercraft-list-incidents
+    outputs:
+    - contextPath: CounterCraft.Incident.ID
+      description: Incident ID
+      type: number
+    - contextPath: CounterCraft.Incident.Name
+      description: Name
+      type: string
+    - contextPath: CounterCraft.Incident.Description
+      description: Description
+      type: string
+    - contextPath: CounterCraft.Incident.StatusCode
+      description: Status
+      type: string
+    - contextPath: CounterCraft.Incident.TLPCode
+      description: TLP code
+      type: string
+  - arguments:
+    - description: Campaign ID
+      name: campaign_id
+      required: true
+    - auto: PREDEFINED
+      description: Operation
+      name: operation
+      predefined:
+      - activate
+      - pause
+      - resume
+      - terminate
+      required: true
+    description: Manage Campaign parameters
+    name: countercraft-manage-campaign
+    outputs:
+    - contextPath: CounterCraft.Campaign.Message
+      description: Result message
+      type: string
+    - contextPath: CounterCraft.Campaign.ID
+      description: Campaign ID
+      type: number
+  - arguments:
+    - description: Host ID
+      name: host_id
+      required: true
+    - auto: PREDEFINED
+      description: Operation
+      name: operation
+      predefined:
+      - activate
+      - pause
+      - resume
+      - terminate
+      required: true
+    description: Manage a deception host
+    name: countercraft-manage-host
+    outputs:
+    - contextPath: CounterCraft.Host.Message
+      description: Result message
+      type: string
+    - contextPath: CounterCraft.Host.ID
+      description: Host ID
+      type: number
+  - arguments:
+    - description: Service ID
+      name: service_id
+      required: true
+    - auto: PREDEFINED
+      description: Operation
+      name: operation
+      predefined:
+      - activate
+      - pause
+      - resume
+      - terminate
+      required: true
+    description: Manage a deception service
+    name: countercraft-manage-service
+    outputs:
+    - contextPath: CounterCraft.Service.Message
+      description: Result message
+      type: string
+    - contextPath: CounterCraft.Service.ID
+      description: Service ID
+      type: number
+  - arguments:
+    - description: Breadcrumb ID
+      name: breadcrumb_id
+      required: true
+    - auto: PREDEFINED
+      description: Operation
+      name: operation
+      predefined:
+      - activate
+      - pause
+      - resume
+      - terminate
+      required: true
+    description: Manage  breadcrumb
+    name: countercraft-manage-breadcrumb
+    outputs:
+    - contextPath: CounterCraft.Breadcrumb.Message
+      description: Result message
+      type: string
+    - contextPath: CounterCraft.Breadcrumb.ID
+      description: Breadcrumb ID
+      type: number
+  dockerimage: demisto/python3:3.8.1.5734
+  isfetch: true
+  runonce: false
+  script: |2
+
+
+
+
+    """ IMPORTS """
+    import json
+    import urllib.parse
+    import requests
+    import hmac
+    from datetime import datetime
+    import time
+    import binascii
+    import uuid
+
+    from typing import Dict, List
+    from hashlib import sha1
+
+    # Disable insecure warnings
+    requests.packages.urllib3.disable_warnings()
+
+    """ GLOBALS"""
+
+    X_API_KEY_AUTHENTICATION_HEADER_PREFIX = "X-API-Key-Auth-"
+    SERVER = demisto.params().get("server").rstrip("/") + "/api"
+    API_KEY = demisto.params().get("api_key")
+    SECRET_KEY = demisto.params().get("secret_key")
+    VERIFY_CERTIFICATE = not demisto.params().get("insecure", False)
+    PROXY = demisto.params().get('proxy', False)
+    FETCH_DELTA = "24 hours"
+
+    DEF_HEADERS = {"Accept": "application/json", "Content-Type": "application/json"}
+
+    ERR_DICT = {
+        400: 'Bad request. Please check your arguments and Deception Director API manual',
+        401: 'User does not have the right permission',
+        404: 'Entity not found. Please make sure the entity does exist',
+        500: 'Bad request. Please check your arguments and Deception Director API manual',
+    }
+
+    CAMPAIGN_FIELDS = {
+        "id": "ID",
+        "name": "Name",
+        "description": "Description",
+        "status_code": "StatusCode",
+    }
+
+    DSN_FIELDS = {
+        "id": "ID",
+        "name": "Name",
+        "description": "Description",
+        "hostname": "Hostname",
+        "port": "Port",
+    }
+
+    HOST_FIELDS = {
+        "id": "ID",
+        "name": "Name",
+        "description": "Description",
+        "type_code": "TypeCode",
+        "status_code": "StatusCode",
+    }
+
+    SERVICE_FIELDS = {
+        "id": "ID",
+        "name": "Name",
+        "description": "Description",
+        "type_code": "TypeCode",
+        "status_code": "StatusCode",
+    }
+
+    BREADCRUMB_FIELDS = {
+        "id": "ID",
+        "name": "Name",
+        "description": "Description",
+        "type_code": "TypeCode",
+        "status_code": "StatusCode",
+    }
+
+    PROVIDER_FIELDS = {
+        "id": "ID",
+        "name": "Name",
+        "description": "Description",
+        "type_code": "TypeCode",
+        "status_code": "StatusCode",
+    }
+
+    INCIDENT_FIELDS = {
+        "id": "ID",
+        "name": "Name",
+        "description": "Description",
+        "status_code": "StatusCode",
+        "tlp_code": "TLPCode",
+    }
+
+    OBJECT_FIELDS = {
+        "id": "ID",
+        "value": "Value",
+        "hits": "Hits",
+        "score": "Score",
+        "type_code": "TypeCode",
+        "first_seen": "FirstSeen",
+        "last_seen": "LastSeen",
+        "events_count": "EventsCount",
+        "tags": "Tags",
+    }
+
+    EVENT_FIELDS = {
+        "id": "ID",
+        "campaign_name": "CampaignName",
+        "category_code": "CategoryCode",
+        "host_name": "HostName",
+        "service_name": "ServiceName",
+        "event_date": "EventDate",
+        "score": "Score",
+        "type_code": "TypeCode",
+        "data": "Data",
+        "tags": "Tags",
+    }
+
+    """ HELPERS """
+
+
+    def sign(secret_key, data):
+        """
+        @param $secret_key the secret key to use for the HMAC-SHA digesting
+        @param $data the string to sign
+        @return string base64 encoding of the HMAC-SHA1 hash of the data parameter using {@code secret_key} as cipher key.
+        """
+
+        sha1_hash = hmac.new(secret_key.encode(), data.encode(), sha1)
+
+        return binascii.b2a_base64(sha1_hash.digest())[
+            :-1
+        ]  # strip \n from base64 string result
+
+
+    def get_signature(request_method, request_headers, path, query_string, private_key):
+        """
+        Calculate the authentication headers to be sent with a request to the API
+        @param $request_method the HTTP method (GET, POST, etc.)
+        @param $path the urlencoded string including the path (from the first forward slash) and the parameters
+        @param $x_headers HTTP headers specific to CounterCraft API
+        @return array a map with the Authorization and Date headers needed to sign a Latch API request
+        """
+
+        x_headers = {
+            k: v
+            for k, v in request_headers.items()
+            if k.lower().startswith(X_API_KEY_AUTHENTICATION_HEADER_PREFIX.lower())
+        }
+
+        string_to_sign = (
+            request_method.upper().strip()
+            + "\n"
+            + get_serialized_headers(x_headers)
+            + "\n"
+            + (
+                path
+                if query_string.strip() == b""
+                else "%s?%s" % (path, query_string.strip().decode("utf-8"))
+            )
+        )
+
+        return sign(private_key, string_to_sign).decode("utf-8")
+
+
+    def get_serialized_headers(x_headers):
+        """
+        Generate a string ready to be signed based on HTTP headers received
+        @param $x_headers a non neccesarily ordered map (array without duplicates) of the HTTP headers to be ordered.
+        @return string The serialized headers, an empty string if no headers are passed
+        """
+
+        res = {}  # type: Dict[str, List]
+
+        for k, v in x_headers.items():
+
+            if not k.strip().lower() in res:
+
+                res[k.lower()] = []
+
+            res[k.strip().lower()].append(v.strip())
+
+        return "\n".join(
+            "%s:%s" % (k, v)
+            for k, v in sorted({k: ",".join(v) for k, v in res.items()}.items())
+        )
+
+
+    def http_request(request_method, path, data={}, params=""):
+        """
+        Send an HTTP request
+        @param $request_method the request method GET, POST, etc.
+        @param $path the HTTP path
+        @param $data the data included in the POST request
+        @param $params the URL params to be included
+        @return string A dict containing the response in JSON format or an error
+        """
+
+        headers = {
+            X_API_KEY_AUTHENTICATION_HEADER_PREFIX
+            + "Date": time.strftime("%a, %d %b %Y %H:%M:%S +0000", time.gmtime())
+        }
+        headers.update(DEF_HEADERS)
+        signature = get_signature(
+            request_method,
+            headers,
+            path,
+            urllib.parse.urlencode(params).encode("utf-8"),
+            SECRET_KEY,
+        )
+        headers["Authorization"] = "APIKey %s:%s" % (API_KEY, signature)
+        url = SERVER + path
+
+        proxies = None
+        if PROXY:
+            proxies = handle_proxy()
+
+        res = requests.request(
+            request_method,
+            url,
+            data=json.dumps(data),
+            params=params,
+            headers=headers,
+            verify=VERIFY_CERTIFICATE,
+            proxies=proxies
+        )
+
+        if res.status_code not in [200, 201, 204]:
+            demisto.debug("Error doing the HTTP query. We got a %s: %s" % (res.status_code, res.text))
+            return_error(ERR_DICT[res.status_code])
+
+        try:
+            res_json = res.json()
+            return res_json
+        except Exception as ex:
+            demisto.debug(str(ex))
+            return_error(str(ex))
+
+
+    def return_host_standard_context(host):
+
+        host_standard_context = {}
+
+        if host['type_code'] == 'MACHINE':
+
+            host_standard_context["ID"] = host['uuid']
+            host_standard_context["IP"] = host['data']['ip_address']
+
+            if 'ansible_facts' in host['data']:
+
+                host_standard_context["Domain"] = host['data']['ansible_facts']['ansible_domain']
+                host_standard_context["Hostname"] = host['data']['ansible_facts']['ansible_hostname']
+                host_standard_context["BIOSVersion"] = host['data']['ansible_facts']['ansible_bios_version']
+                host_standard_context["Memory"] = host['data']['ansible_facts']['ansible_memtotal_mb']
+                host_standard_context["Model"] = host['data']['ansible_facts']['ansible_product_name']
+                host_standard_context["OS"] = host['data']['ansible_facts']['ansible_os_family']
+                host_standard_context["OSVersion"] = host['data']['ansible_facts']['ansible_distribution_version']
+                host_standard_context["Processor"] = ' '.join(host['data']['ansible_facts']['ansible_processor'])
+                host_standard_context["Processors"] = len(host['data']['ansible_facts']['ansible_processor'])
+
+        return host_standard_context
+
+
+    def return_results(title, content, human_readable, context, headers):
+        """
+        Generic function that receives a result json, and turns it into an entryObject
+        @param $title the table title
+        @param $content the object contents in JSON format
+        @param $human_readable human readable data for the table
+        @param $context the entry context
+        @param $headers table headers
+        @return dict the entryObject
+        """
+
+        if len(content) == 0:
+            return_outputs(
+                readable_output="There is no output result",
+                outputs=context,
+                raw_response=content,
+            )
+            return
+
+        if headers:
+            if isinstance(headers, str):
+                headers = headers.split(",")
+
+        else:
+            if isinstance(content, dict):
+                headers = list(set(headers).intersection(set(content.keys())))
+
+        readable_output = tableToMarkdown(
+            title,
+            human_readable,
+            headers,
+            lambda h: h.title().replace("_", " ").replace(".", ":"),
+        )
+
+        return_outputs(
+            readable_output=readable_output, outputs=context, raw_response=content
+        )
+
+
+    """ COMMANDS """
+
+
+    def test_module_command():
+
+        http_request("GET", "/campaigns")
+        demisto.results("ok")
+
+
+    def list_dsns_command():
+        """
+        Retrieve all deception support nodes
+        """
+
+        res = http_request("GET", "/deception_support_nodes")
+
+        new_dsns = []
+        for o in res["data"]:
+            new_dsns.append(
+                {
+                    new_key: o[old_key] if old_key in o else None
+                    for old_key, new_key in DSN_FIELDS.items()
+                }
+            )
+        context = createContext(new_dsns, removeNull=True)
+
+        return_results(
+            "Deception Support Node",
+            res["data"],
+            new_dsns,
+            {"CounterCraft.DSN(val.ID && val.ID === obj.ID)": context},
+            headers=["ID", "Name", "Description", "Hostname", "Port"],
+        )
+
+
+    def list_providers_command():
+        """
+        Retrieve all providers
+        """
+
+        res = http_request("GET", "/providers")
+
+        new_providers = []
+        for o in res["data"]:
+            new_providers.append(
+                {
+                    new_key: o[old_key] if old_key in o else None
+                    for old_key, new_key in PROVIDER_FIELDS.items()
+                }
+            )
+        context = createContext(new_providers, removeNull=True)
+
+        return_results(
+            "Providers",
+            res["data"],
+            new_providers,
+            {"CounterCraft.Provider(val.ID && val.ID === obj.ID)": context},
+            headers=["ID", "Name", "Description", "TypeCode", "StatusCode"],
+        )
+
+
+    def list_campaigns_command():
+        """
+        Retrieve all campaigns
+        """
+
+        name = demisto.args().get("name")
+
+        if name is not None:
+            criteria = {"criteria": f"name:\"{name}\""}
+        else:
+            criteria = {}
+
+        res = http_request("GET", "/campaigns", params=criteria)
+
+        new_campaigns = []
+        for o in res["data"]:
+            new_campaigns.append(
+                {
+                    new_key: o[old_key] if old_key in o else None
+                    for old_key, new_key in CAMPAIGN_FIELDS.items()
+                }
+            )
+        context = createContext(new_campaigns, removeNull=True)
+
+        return_results(
+            "Campaigns",
+            res["data"],
+            new_campaigns,
+            {"CounterCraft.Campaign(val.ID && val.ID === obj.ID)": context},
+            headers=["ID", "Name", "Description", "StatusCode"],
+        )
+
+
+    def list_hosts_command():
+        """
+        Retrieve all hosts
+        """
+
+        campaign_id = demisto.args().get("campaign_id")
+
+        if campaign_id is not None:
+            criteria = {"criteria": "campaigns.id:" + campaign_id}
+        else:
+            criteria = {}
+
+        res = http_request("GET", "/hosts", params=criteria)
+
+        new_hosts = []
+        for o in res["data"]:
+            new_hosts.append(
+                {
+                    new_key: o[old_key] if old_key in o else None
+                    for old_key, new_key in HOST_FIELDS.items()
+                }
+            )
+
+        context = createContext(new_hosts, removeNull=True)
+        contextHosts = createContext([return_host_standard_context(x) for x in res["data"]], removeNull=True)
+
+        return_results(
+            "Hosts",
+            res["data"],
+            new_hosts,
+            {"CounterCraft.Host(val.ID && val.ID === obj.ID)": context, "Host(val.IP && val.IP === obj.IP)": contextHosts},
+            headers=["ID", "Name", "Description", "StatusCode", "TypeCode"],
+        )
+
+
+    def list_services_command():
+        """
+        Retrieve all services
+        """
+
+        host_id = demisto.args().get("host_id")
+
+        if host_id is not None:
+            criteria = {"criteria": "hosts.id:" + host_id}
+        else:
+            criteria = {}
+
+        res = http_request("GET", "/services", params=criteria)
+
+        new_services = []
+        for o in res["data"]:
+            new_services.append(
+                {
+                    new_key: o[old_key] if old_key in o else None
+                    for old_key, new_key in SERVICE_FIELDS.items()
+                }
+            )
+        context = createContext(new_services, removeNull=True)
+
+        return_results(
+            "Services",
+            res["data"],
+            new_services,
+            {"CounterCraft.Service(val.ID && val.ID === obj.ID)": context},
+            headers=["ID", "Name", "Description", "StatusCode", "TypeCode"],
+        )
+
+
+    def list_breadcrumbs_command():
+        """
+        Retrieve all breadcrumbs
+        """
+
+        campaign_id = demisto.args().get("campaign_id")
+
+        if campaign_id is not None:
+            criteria = {"criteria": "campaigns.id:" + campaign_id}
+        else:
+            criteria = {}
+
+        res = http_request("GET", "/breadcrumbs", params=criteria)
+
+        new_breadcrumbs = []
+        for o in res["data"]:
+            new_breadcrumbs.append(
+                {
+                    new_key: o[old_key] if old_key in o else None
+                    for old_key, new_key in BREADCRUMB_FIELDS.items()
+                }
+            )
+        context = createContext(new_breadcrumbs, removeNull=True)
+
+        return_results(
+            "Breadcrumbs",
+            res["data"],
+            new_breadcrumbs,
+            {"CounterCraft.Breadcrumb(val.ID && val.ID === obj.ID)": context},
+            headers=["ID", "Name", "Description", "StatusCode", "TypeCode"],
+        )
+
+
+    def list_incidents_command():
+        """
+        Retrieve all incidents
+        """
+
+        campaign_id = demisto.args().get("campaign_id")
+
+        if campaign_id is not None:
+            criteria = {"criteria": "campaigns.id:" + campaign_id}
+        else:
+            criteria = {}
+
+        res = http_request("GET", "/incidents", params=criteria)
+
+        new_incidents = []
+        for o in res["data"]:
+            new_incidents.append(
+                {
+                    new_key: o[old_key] if old_key in o else None
+                    for old_key, new_key in INCIDENT_FIELDS.items()
+                }
+            )
+        context = createContext(new_incidents, removeNull=True)
+
+        return_results(
+            "Incidents",
+            res["data"],
+            new_incidents,
+            {"CounterCraft.Incident(val.ID && val.ID === obj.ID)": context},
+            headers=["ID", "Name", "Description", "StatusCode", "TLPCode", "Tags"],
+        )
+
+
+    def get_object_command():
+        """
+        Retrieve all objects
+        """
+
+        value = demisto.args().get("value")
+
+        if value is not None:
+            criteria = {"criteria": "objects.value:" + value}
+        else:
+            criteria = {}
+
+        res = http_request("GET", "/objects", params=criteria)
+
+        for entry in res["data"]:
+            entry["first_seen"] = formatEpochDate(entry["first_seen"])
+            entry["last_seen"] = formatEpochDate(entry["last_seen"])
+
+        new_objects = []
+        for o in res["data"]:
+            new_objects.append(
+                {
+                    new_key: o[old_key] if old_key in o else None
+                    for old_key, new_key in OBJECT_FIELDS.items()
+                }
+            )
+        context = createContext(new_objects, removeNull=True)
+
+        return_results(
+            "Objects",
+            res["data"],
+            new_objects,
+            {"CounterCraft.Object(val.ID && val.ID === obj.ID)": context},
+            headers=[
+                "ID",
+                "Value",
+                "Hits",
+                "EventsCount",
+                "TypeCode",
+                "Score",
+                "FirstSeen",
+                "LastSeen",
+                "Tags",
+            ],
+        )
+
+
+    def get_events_command():
+        """
+        Retrieve all events
+        """
+
+        sfilter = demisto.args().get("criteria")
+        per_page = demisto.args().get("max_results")
+
+        criteria = {
+            "criteria": sfilter,
+            "order": "-event_date",
+            "page": 1,
+            "per_page": per_page,
+        }
+
+        res = http_request("GET", "/events", params=criteria)
+
+        for entry in res["data"]:
+            entry["event_date"] = formatEpochDate(entry["event_date"])
+
+        new_events = []
+        for o in res["data"]:
+            new_events.append(
+                {
+                    new_key: o[old_key] if old_key in o else None
+                    for old_key, new_key in EVENT_FIELDS.items()
+                }
+            )
+        context = createContext(new_events, removeNull=True)
+
+        return_results(
+            "Events",
+            res["data"],
+            new_events,
+            {"CounterCraft.Event(val.ID && val.ID === obj.ID)": context},
+            headers=[
+                "ID",
+                "CampaignName",
+                "CategoryCode",
+                "HostName",
+                "ServiceName",
+                "EventDate",
+                "Score",
+                "TypeCode",
+                "Data",
+                "Tags",
+            ],
+        )
+
+
+    def list_notifications(last_fetched):
+        """
+        Retrieve all Notifications
+        """
+
+        criteria = {
+            "criteria": 'plugin_code:CONSOLE AND notifications.ctime:["%s" TO *]'
+            % last_fetched,
+            "order": "-ctime",
+            "with_stats": True,
+        }
+
+        res = http_request("GET", "/notifications", params=criteria)
+
+        return res["data"]
+
+
+    def create_campaign_command():
+        """
+        Create a campaign
+        """
+        name = demisto.args().get("name")
+        description = demisto.args().get("description")
+
+        data = {"name": name, "description": description}
+
+        res = http_request("POST", "/campaigns", data=data)
+
+        campaign = {
+            new_key: res[old_key] if old_key in res else None
+            for old_key, new_key in CAMPAIGN_FIELDS.items()
+        }
+
+        context = createContext(campaign, removeNull=True)
+
+        return_results(
+            "Campaign",
+            res,
+            campaign,
+            {"CounterCraft.Campaign(val.ID && val.ID === obj.ID)": context},
+            headers=["ID", "Name", "Description", "StatusCode"],
+        )
+
+
+    def manage_campaign_command():
+        """
+        Operate a campaign
+        """
+        campaign_id = demisto.args().get("campaign_id")
+        operation = demisto.args().get("operation")
+
+        data = {"action": operation}
+
+        res = http_request("PATCH", "/campaigns/" + campaign_id, data=data)
+
+        message = [{"ID": campaign_id, "Message": res["message"]}]
+
+        context = createContext(message, removeNull=True)
+
+        return_results(
+            "Campaign Management",
+            res,
+            message,
+            {"CounterCraft.Campaign(val.ID && val.ID === obj.ID)": context},
+            headers=["ID", "Message"],
+        )
+
+
+    def create_host_machine_command():
+        """
+        Create a host of type MACHINE
+        """
+
+        name = demisto.args().get("name")
+        description = demisto.args().get("description")
+        provider_id = demisto.args().get("provider_id")
+        type_code = "MACHINE"
+        deception_support_node_id = demisto.args().get("deception_support_node_id")
+        campaign_id = demisto.args().get("campaign_id")
+
+        ip_address = demisto.args().get("ip_address")
+        port = demisto.args().get("port")
+        username = demisto.args().get("username")
+        password = demisto.args().get("password")
+
+        host_data = {
+            "ip_address": ip_address,
+            "port": port,
+            "username": username,
+            "password": password,
+            "os_family_usr": "linux",
+        }
+
+        _uuid = str(uuid.uuid4())
+
+        data = {
+            "name": name,
+            "description": description,
+            "provider_id": provider_id,
+            "deception_support_node_id": deception_support_node_id,
+            "campaign_id": campaign_id,
+            "type_code": type_code,
+            "uuid": _uuid,
+            "data": host_data,
+        }
+
+        res = http_request("POST", "/hosts", data=data)
+
+        host = {
+            new_key: res[old_key] if old_key in res else None
+            for old_key, new_key in HOST_FIELDS.items()
+        }
+
+        context = createContext(host, removeNull=True)
+
+        return_results(
+            "Hosts",
+            res,
+            host,
+            {"CounterCraft.Host(val.ID && val.ID === obj.ID)": context},
+            headers=["ID", "Name", "Description", "StatusCode", "TypeCode"],
+        )
+
+
+    def manage_host_command():
+        """
+        Operate a host
+        """
+        host_id = demisto.args().get("host_id")
+        operation = demisto.args().get("operation")
+
+        data = {"action": operation}
+
+        res = http_request("PATCH", "/hosts/" + host_id, data=data)
+
+        message = {"ID": host_id, "Message": res["message"]}
+
+        context = createContext(message, removeNull=True)
+
+        return_results(
+            "Host Management",
+            res,
+            message,
+            {"CounterCraft.Host(val.ID && val.ID === obj.ID)": context},
+            headers=["ID", "Message"],
+        )
+
+
+    def manage_service_command():
+        """
+        Operate a service
+        """
+        service_id = demisto.args().get("service_id")
+        operation = demisto.args().get("operation")
+
+        data = {"action": operation}
+
+        res = http_request("PATCH", "/services/" + service_id, data=data)
+
+        message = {"ID": service_id, "Message": res["message"]}
+
+        context = createContext(message, removeNull=True)
+
+        return_results(
+            "Service Management",
+            res,
+            message,
+            {"CounterCraft.Service(val.ID && val.ID === obj.ID)": context},
+            headers=["ID", "Message"],
+        )
+
+
+    def manage_breadcrumb_command():
+        """
+        Operate a breadcrumb
+        """
+        breadcrumb_id = demisto.args().get("breadcrumb_id")
+        operation = demisto.args().get("operation")
+
+        data = {"action": operation}
+
+        res = http_request("PATCH", "/breadcrumbs/" + breadcrumb_id, data=data)
+
+        message = {"ID": breadcrumb_id, "Message": res["message"]}
+
+        context = createContext(message, removeNull=True)
+
+        return_results(
+            "Breadcrumb Management",
+            res,
+            message,
+            {"CounterCraft.Breadcrumb(val.ID && val.ID === obj.ID)": context},
+            headers=["ID", "Message"],
+        )
+
+
+    def fetch_incidents_command():
+        """
+        Fetch incidents (user notifications)
+        """
+
+        last_run = demisto.getLastRun()
+        if not last_run:
+            last_run = {}
+        if "time" not in last_run:
+            # get timestamp in seconds
+            timestamp, _ = parse_date_range(FETCH_DELTA, to_timestamp=True)
+            timestamp /= 1000
+        else:
+            timestamp = last_run["time"]
+
+        max_timestamp = timestamp
+
+        # All alerts retrieved from get_alerts are newer than last_fetch and are in a chronological order
+        notifications = list_notifications(timestamp)
+
+        incidents = []
+
+        for notification in notifications:
+            if int(notification["ctime"]) > timestamp:
+                incidents.append(
+                    {
+                        "name": notification["data"]["subject"],
+                        "occurred": datetime.utcfromtimestamp(
+                            int(notification["ctime"])
+                        ).strftime("%Y-%m-%dT%H:%M:%SZ"),
+                        "details": notification["data"]["html"],
+                        "rawJSON": json.dumps(notification),
+                    }
+                )
+                if int(notification["ctime"]) > max_timestamp:
+                    max_timestamp = int(notification["ctime"])
+
+        demisto.incidents(incidents)
+        demisto.setLastRun({"time": max_timestamp})
+
+
+    def main():
+        try:
+            if demisto.command() == "test-module":
+                test_module_command()
+            elif demisto.command() == "countercraft-list-providers":
+                list_providers_command()
+            elif demisto.command() == "countercraft-list-dsns":
+                list_dsns_command()
+            elif demisto.command() == "countercraft-list-campaigns":
+                list_campaigns_command()
+            elif demisto.command() == "countercraft-list-hosts":
+                list_hosts_command()
+            elif demisto.command() == "countercraft-list-services":
+                list_services_command()
+            elif demisto.command() == "countercraft-list-breadcrumbs":
+                list_breadcrumbs_command()
+            elif demisto.command() == "countercraft-list-incidents":
+                list_incidents_command()
+            elif demisto.command() == "countercraft-get-object":
+                get_object_command()
+            elif demisto.command() == "countercraft-get-events":
+                get_events_command()
+            elif demisto.command() == "countercraft-create-campaign":
+                create_campaign_command()
+            elif demisto.command() == "countercraft-create-host-machine":
+                create_host_machine_command()
+            elif demisto.command() == "countercraft-manage-campaign":
+                manage_campaign_command()
+            elif demisto.command() == "countercraft-manage-host":
+                manage_host_command()
+            elif demisto.command() == "countercraft-manage-service":
+                manage_service_command()
+            elif demisto.command() == "countercraft-manage-breadcrumb":
+                manage_breadcrumb_command()
+            elif demisto.command() == "fetch-incidents":
+                fetch_incidents_command()
+        except Exception as e:
+            return_error(
+                "Unable to perform command : {}, Reason: {}".format(demisto.command(), e)
+            )
+
+
+    if __name__ in ("__main__", "builtin", "builtins"):
+        main()
+  subtype: python3
+  type: python
+system: true

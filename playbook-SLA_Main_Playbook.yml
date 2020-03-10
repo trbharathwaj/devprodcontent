@@ -1,0 +1,136 @@
+id: c28f4870-d75f-4af4-8414-e0b6191d5e42
+inputs: []
+name: SLA_Main_Playbook
+outputs: []
+starttaskid: "0"
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "4"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 4e2c0775-0e61-47f3-8b96-9ff5aed46b7e
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: 4e2c0775-0e61-47f3-8b96-9ff5aed46b7e
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": -40
+        }
+      }
+  "2":
+    id: "2"
+    ignoreworker: false
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 6fc04f7d-8626-4535-88dc-62e5e07de296
+      iscommand: false
+      name: Send Slack
+      type: regular
+      version: -1
+    taskid: 6fc04f7d-8626-4535-88dc-62e5e07de296
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 420
+        }
+      }
+  "3":
+    id: "3"
+    ignoreworker: false
+    loop:
+      exitCondition: "yes"
+      iscommand: false
+      scriptArguments:
+        left:
+          simple: "90"
+        right:
+          simple: ${days_left}
+      scriptId: AreValuesEqual
+      wait: 1
+    nexttasks:
+      '#none#':
+      - "2"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 1f4f6274-747d-45eb-8200-81b56c367263
+      iscommand: false
+      name: SLA_Inner_loop
+      playbookId: ecc52b22-6f96-479e-8a60-9b29c9ac482a
+      script: AreValuesEqual
+      type: playbook
+      version: -1
+    taskid: 1f4f6274-747d-45eb-8200-81b56c367263
+    timertriggers: []
+    type: playbook
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 250
+        }
+      }
+  "4":
+    id: "4"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "3"
+    note: false
+    scriptarguments:
+      append: {}
+      key:
+        simple: days_left
+      stringify: {}
+      value:
+        simple: "100"
+    separatecontext: false
+    task:
+      brand: ""
+      description: Sets a value into the context with the given context key
+      id: 0c8fd2ce-f5fb-405c-8507-4b2b55915692
+      iscommand: false
+      name: Setting the Context
+      script: Set
+      type: regular
+      version: -1
+    taskid: 0c8fd2ce-f5fb-405c-8507-4b2b55915692
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 100
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 555,
+        "width": 380,
+        "x": 450,
+        "y": -40
+      }
+    }
+  }

@@ -1,0 +1,118 @@
+id: 2dbe4fcf-ab03-4e1c-87dd-4dde47f636ef
+inputs: []
+name: Fields_Search
+outputs: []
+starttaskid: "0"
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "1"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 86b1c285-eb51-428a-823c-17d99236d44c
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: 86b1c285-eb51-428a-823c-17d99236d44c
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 50
+        }
+      }
+  "1":
+    id: "1"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "2"
+    note: false
+    scriptarguments:
+      details: {}
+      fromclosedate: {}
+      fromdate: {}
+      fromduedate: {}
+      id: {}
+      level: {}
+      name: {}
+      notstatus: {}
+      owner: {}
+      page: {}
+      query:
+        simple: created:>="3 days ago"
+      reason: {}
+      size: {}
+      sort: {}
+      status: {}
+      toclosedate: {}
+      todate: {}
+      toduedate: {}
+      type: {}
+    separatecontext: false
+    task:
+      brand: ""
+      description: Searches Demisto incidents
+      id: 32c07b14-8d3a-473d-8cf8-da92acb80a31
+      iscommand: false
+      name: Search Incidents
+      script: SearchIncidents
+      type: regular
+      version: -1
+    taskid: 32c07b14-8d3a-473d-8cf8-da92acb80a31
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 210
+        }
+      }
+  "2":
+    id: "2"
+    ignoreworker: false
+    note: false
+    scriptarguments:
+      value:
+        simple: ${foundIncidents.name}
+    separatecontext: false
+    task:
+      brand: ""
+      description: Prints text to war room (Markdown supported)
+      id: 8ad5584a-e22f-48d9-88dd-17a40ffec145
+      iscommand: false
+      name: 'Print '
+      script: Print
+      type: regular
+      version: -1
+    taskid: 8ad5584a-e22f-48d9-88dd-17a40ffec145
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 400
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 445,
+        "width": 380,
+        "x": 450,
+        "y": 50
+      }
+    }
+  }

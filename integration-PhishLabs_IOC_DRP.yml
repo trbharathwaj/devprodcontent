@@ -1,0 +1,1451 @@
+category: Data Enrichment & Threat Intelligence
+commonfields:
+  id: PhishLabs IOC DRP
+  version: -1
+configuration:
+- defaultvalue: https://caseapi.phishlabs.com
+  display: Server URL (e.g. https://example.net)
+  name: url
+  required: true
+  type: 0
+- defaultvalue: ""
+  display: User
+  name: credentials
+  required: true
+  type: 9
+- defaultvalue: ""
+  display: Fetch incidents
+  name: isFetch
+  required: false
+  type: 8
+- defaultvalue: ""
+  display: Incident type
+  name: incidentType
+  required: false
+  type: 13
+- defaultvalue: 1 hours
+  display: First fetch timestamp (<number> <time unit>, e.g., 12 hours, 7 days)
+  name: fetchTime
+  required: false
+  type: 0
+- defaultvalue: dateModified
+  display: Fetch by date field
+  name: fetchByDate
+  options:
+  - dateModified
+  - dateClosed
+  - dateCreated
+  required: false
+  type: 15
+- defaultvalue: "20"
+  display: Fetch limit (minimum is 20)
+  name: fetchLimit
+  required: false
+  type: 0
+- defaultvalue: ""
+  display: Trust any certificate (not secure)
+  name: insecure
+  required: false
+  type: 8
+- defaultvalue: ""
+  display: Use system proxy settings
+  name: proxy
+  required: false
+  type: 8
+description: Retrieves Digital Risk cases Protection from PhishLabs.
+detaileddescription: "[Digital Risk Protection](https://www.phishlabs.com/digital-risk-protection/)
+  is a comprehensive service that provides proactive detection and rapid mitigation
+  of digital\\ \nrisks across email, domain, social media, mobile, dark, deep, and
+  open web vectors. "
+display: PhishLabs IOC DRP
+image: data:image/png;base64,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
+name: PhishLabs IOC DRP
+script:
+  commands:
+  - arguments:
+    - auto: PREDEFINED
+      description: Filter returned cases by case status.
+      name: status
+      predefined:
+      - New
+      - Closed
+      - Assigned
+      - Rejected
+      - Duplicate
+      - Pending Input
+    - auto: PREDEFINED
+      description: Filter returned cases by case type.
+      name: case_type
+      predefined:
+      - 419 Scam
+      - Credential Recovery
+      - Crimeware
+      - Mobile Abuse
+      - Job Scam
+      - Other
+      - Pharming
+      - Phishing
+      - Phishing Redirect
+      - Vishing
+    - defaultValue: "10"
+      description: The maximum number of cases to return. Default is 20. Maximum is
+        200.
+      name: max_records
+    - defaultValue: "0"
+      description: Paginate results used in conjunction with the max_records argument.
+      name: offset
+      predefined:
+      - ""
+    - auto: PREDEFINED
+      description: The date field by which to query when you specify the begin_date
+        and end_date arguments.
+      name: date_field
+      predefined:
+      - caseOpen
+      - caseClose
+      - caseModify
+    - description: The query start date.
+      name: begin_date
+    - description: The query end date.
+      name: end_date
+    - description: The time range for which to return incident (<number> <time unit>,
+        for example, 12 hours, 7 days.
+      name: period
+    description: Retrieves cases by the specified filters.
+    name: phishlabs-ioc-drp-get-cases
+    outputs:
+    - contextPath: PhishlabsIOC.DRP.CaseID
+      description: The case ID.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Title
+      description: The case title.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Description
+      description: The case description.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.CaseNumber
+      description: The case number.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Resolution
+      description: The case resolution.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.ResolutionStatus
+      description: The case resolution status.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.CreatedBy.ID
+      description: The ID of the case creator.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.CreatedBy.Name
+      description: The name of the case creator.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.CreatedBy.DisplayName
+      description: The display name of the case creator.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Brand
+      description: The brand reported in the case.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Email
+      description: The email address of the case creator.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.CaseType
+      description: The case type.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.CaseStatus
+      description: The status of the case.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.DateCreated
+      description: The date that the case was created.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.DateClosed
+      description: The date that the case was closed.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.DateModified
+      description: The date that the case was last modified.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Customer
+      description: The customer that reported the case.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AttackSources.URL
+      description: The URL of the attack source.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AttackSources.UrlType
+      description: The URL type of the attack source.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AttackSources.IP
+      description: The IP address of the attack source.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AttackSources.ISP
+      description: The internet service provider (ISP) of the attack source.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AttackSources.Country
+      description: The country of the attack source.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AttackSources.TargetedBrands
+      description: The target brands of the attack source.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AttackSources.FQDN
+      description: The FQDN of the attack source.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AttackSources.Domain
+      description: The domain of the attack source.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AttackSources.IsMaliciousDomain
+      description: Whether the domain of attack source is malicious.
+      type: Boolean
+    - contextPath: PhishlabsIOC.DRP.AttackSources.WhoIs.Registrant
+      description: The URL of the registrant.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AttackSources.WhoIs.Registration.Created
+      description: The date that the registration was created.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AttackSources.WhoIs.Registration.Expires
+      description: The date that the registration expires.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AttackSources.WhoIs.Registration.Updated
+      description: The date that the registration was last updated.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AttackSources.WhoIs.Registration.Registrar
+      description: The registrar of the URL.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AttackSources.WhoIs.NameServers
+      description: The name servers of the URL.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Attachments.ID
+      description: The ID of case attachment.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Attachments.Type
+      description: The case attachment type.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Attachments.Description
+      description: The description of the case attachment.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Attachments.DateAdded
+      description: The date that the case attachment was added.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Attachments.FileName
+      description: The file name of the case attachment.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Attachments.FileURL
+      description: The file URL of the case attachment.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.ApplicationName
+      description: The application reported in the case.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Platform
+      description: The platform reported in the case.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Severity
+      description: The severity of the DRP.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Developer
+      description: The developer of the reported application.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.DeveloperWebsite
+      description: The developer website of the reported application.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.ApplicationDescription
+      description: The description of the reported application.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Language
+      description: The language of the reported application.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Phone
+      description: The phone number of the case creator.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Hardware
+      description: The hardware used by the application.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AssociatedURLs.URL
+      description: The URL of the attack source.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AssociatedURLs.UrlType
+      description: The URL type of the attack source.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AssociatedURLs.TargetedBrands
+      description: The target brands of the attack source.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AssociatedURLs.WhoIs.Registrant
+      description: The URL of the registrant.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AssociatedURLs.WhoIs.Registration.Created
+      description: The date that the registration was created.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AssociatedURLs.WhoIs.Registration.Expires
+      description: The date that the registration expires.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AssociatedURLs.WhoIs.Registration.Updated
+      description: The date that the registration was last updated.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AssociatedURLs.WhoIs.Registration.Registrar
+      description: The registrar of the URL.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AssociatedURLs.WhoIs.NameServers
+      description: The name servers of the URL.
+      type: String
+  - arguments:
+    - description: The ID of the case.
+      name: case_id
+      required: true
+    description: Retrieves a case by the case ID.
+    name: phishlabs-ioc-drp-get-case-by-id
+    outputs:
+    - contextPath: PhishlabsIOC.DRP.CaseID
+      description: The case ID.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Title
+      description: The case title.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Description
+      description: The case description.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.CaseNumber
+      description: The case number.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Resolution
+      description: The case resolution.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.ResolutionStatus
+      description: The case resolution status.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.CreatedBy.ID
+      description: The ID of the case creator.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.CreatedBy.Name
+      description: The name of teh case creator.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.CreatedBy.DisplayName
+      description: The display name of the case creator.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Brand
+      description: The brand reported in the case.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Email
+      description: The email address of the case creator.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.CaseType
+      description: The case type.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.CaseStatus
+      description: The status of the case.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.DateCreated
+      description: The date that the case was created.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.DateClosed
+      description: The date that the case was closed.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.DateModified
+      description: The date that the case was last modified.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Customer
+      description: The customer that reported the case.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AttackSources.URL
+      description: The URL of the attack source.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AttackSources.UrlType
+      description: The URL type of the attack source.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AttackSources.IP
+      description: The IP address of the attack source.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AttackSources.ISP
+      description: The internet service provider (ISP) of the attack source.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AttackSources.Country
+      description: The country of the attack source.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AttackSources.TargetedBrands
+      description: The target brands of the attack source.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AttackSources.FQDN
+      description: The FQDN of the attack source.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AttackSources.Domain
+      description: The domain of the attack source.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AttackSources.IsMaliciousDomain
+      description: Whether the attack source is malicious.
+      type: Boolean
+    - contextPath: PhishlabsIOC.DRP.AttackSources.WhoIs.Registrant
+      description: The URL of the registrant.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AttackSources.WhoIs.Registration.Created
+      description: The date that the registration was created.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AttackSources.WhoIs.Registration.Expires
+      description: The date that the registration expires.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AttackSources.WhoIs.Registration.Updated
+      description: The date that the registration was last updated.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AttackSources.WhoIs.Registration.Registrar
+      description: The registrar of the URL.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AttackSources.WhoIs.NameServers
+      description: The name servers of the URL.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Attachments.ID
+      description: The ID of the case attachment.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Attachments.Type
+      description: The case attachment type.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Attachments.Description
+      description: The description of the case attachment.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Attachments.DateAdded
+      description: The date that the case attachment was added.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Attachments.FileName
+      description: The file name of the case attachment.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Attachments.FileURL
+      description: The file URL of the case attachment.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.ApplicationName
+      description: The application reported in the case.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Platform
+      description: The platform reported in the case.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Severity
+      description: The severity of the DRP.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Developer
+      description: The developer of the reported application.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.DeveloperWebsite
+      description: The developer website of the reported application.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.ApplicationDescription
+      description: The description of the reported application.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Language
+      description: The language of the reported application.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Hardware
+      description: The hardware used by the application.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Phone
+      description: The phone number of the case creator.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AssociatedURLs.URL
+      description: The URL of the attack source.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AssociatedURLs.UrlType
+      description: The URL type of the attack source.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AssociatedURLs.TargetedBrands
+      description: The target brands of the attack source.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AssociatedURLs.WhoIs.Registrant
+      description: The URL of the registrant.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AssociatedURLs.WhoIs.Registration.Created
+      description: The date that the registration was created.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AssociatedURLs.WhoIs.Registration.Expires
+      description: The date that the registration expires.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AssociatedURLs.WhoIs.Registration.Updated
+      description: The date that the registration was last updated.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AssociatedURLs.WhoIs.Registration.Registrar
+      description: The registrar of the URL.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AssociatedURLs.WhoIs.NameServers
+      description: The name servers of the URL.
+      type: String
+  - arguments:
+    - auto: PREDEFINED
+      description: Filter cases by case type.
+      name: case_type
+      predefined:
+      - 419 Scam
+      - Credential Recovery
+      - Crimeware
+      - Mobile Abuse
+      - Job Scam
+      - Other
+      - Pharming
+      - Phishing
+      - Phishing Redirect
+      - Vishing
+    - defaultValue: "20"
+      description: The maximum number of cases to return. Default is 20. Maximum is
+        200.
+      name: max_records
+    - defaultValue: "0"
+      description: Paginate results used in conjunction with the max_records argument.
+        First 200 records maxRecords=200&offset=0 second 200 records maxRecords=200&offset=200
+      name: offset
+      predefined:
+      - ""
+    - auto: PREDEFINED
+      description: The date field by which to query when you specify the begin_date
+        and end_date arguments.
+      name: date_field
+      predefined:
+      - caseOpen
+      - caseClose
+      - caseModify
+    - description: The query start date.
+      name: begin_date
+    - description: The query end date.
+      name: end_date
+    - description: The time range for which to return incident (<number> <time unit>,
+        for example, 12 hours, 7 days.
+      name: period
+    description: Retrieves open cases by the specified filters
+    name: phishlabs-ioc-drp-get-open-cases
+    outputs:
+    - contextPath: PhishlabsIOC.DRP.CaseID
+      description: Case ID
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Title
+      description: Case title
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Description
+      description: Case description
+      type: String
+    - contextPath: PhishlabsIOC.DRP.CaseNumber
+      description: Case number
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Resolution
+      description: Resolution
+      type: String
+    - contextPath: PhishlabsIOC.DRP.ResolutionStatus
+      description: Resolution status
+      type: String
+    - contextPath: PhishlabsIOC.DRP.CreatedBy.ID
+      description: Case creator ID
+      type: String
+    - contextPath: PhishlabsIOC.DRP.CreatedBy.Name
+      description: Case creator name
+      type: String
+    - contextPath: PhishlabsIOC.DRP.CreatedBy.DisplayName
+      description: Case creator display name
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Brand
+      description: Brand reported in case
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Email
+      description: Email of case creator
+      type: String
+    - contextPath: PhishlabsIOC.DRP.CaseType
+      description: Type of the case
+      type: String
+    - contextPath: PhishlabsIOC.DRP.CaseStatus
+      description: Status of the case
+      type: String
+    - contextPath: PhishlabsIOC.DRP.DateCreated
+      description: Case creation date
+      type: String
+    - contextPath: PhishlabsIOC.DRP.DateClosed
+      description: Case closing date
+      type: String
+    - contextPath: PhishlabsIOC.DRP.DateModified
+      description: Case modification date
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Customer
+      description: Customer reporting the case
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AttackSources.URL
+      description: URL of the attack source
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AttackSources.UrlType
+      description: URL type of the attack source
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AttackSources.IP
+      description: IP of the attack source
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AttackSources.ISP
+      description: ISP of the attack source
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AttackSources.Country
+      description: ISP of the attack source
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AttackSources.TargetedBrands
+      description: Target brands of the attack source
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AttackSources.FQDN
+      description: FQDN of the attack source
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AttackSources.Domain
+      description: Domain of the attack source
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AttackSources.IsMaliciousDomain
+      description: Detect if domain of attack source is malicious
+      type: Boolean
+    - contextPath: PhishlabsIOC.DRP.AttackSources.WhoIs.Registrant
+      description: URL of the registrant
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AttackSources.WhoIs.Registration.Created
+      description: Creation date of the registration
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AttackSources.WhoIs.Registration.Expires
+      description: Expiriation date of the registration
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AttackSources.WhoIs.Registration.Updated
+      description: Update date of the registration
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AttackSources.WhoIs.Registration.Registrar
+      description: Registrar of the URL
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AttackSources.WhoIs.NameServers
+      description: Name servers of the URL
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Attachments.ID
+      description: ID of case attachment
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Attachments.Type
+      description: Type of case attachment
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Attachments.Description
+      description: Description of case attachment
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Attachments.DateAdded
+      description: Date adding of case attachment
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Attachments.FileName
+      description: The file name of the case attachment.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Attachments.FileURL
+      description: The file URL of the case attachment.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.ApplicationName
+      description: The application reported in the case.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Platform
+      description: The platform reported in the case.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Severity
+      description: The severity of the DRP.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Developer
+      description: The developer of the reported application.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.DeveloperWebsite
+      description: The developer website of the reported application.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.ApplicationDescription
+      description: The description of the reported application.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Language
+      description: The language of the reported application.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Hardware
+      description: The hardware used by the application.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Phone
+      description: The phone number of the case creator.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AssociatedURLs.URL
+      description: The URL of the attack source.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AssociatedURLs.UrlType
+      description: The URL type of the attack source.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AssociatedURLs.TargetedBrands
+      description: The target brands of the attack source.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AssociatedURLs.WhoIs.Registrant
+      description: The URL of the registrant.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AssociatedURLs.WhoIs.Registration.Created
+      description: The date that the registration was created.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AssociatedURLs.WhoIs.Registration.Expires
+      description: The date that the registration expires.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AssociatedURLs.WhoIs.Registration.Updated
+      description: The date that the registration was last updated.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AssociatedURLs.WhoIs.Registration.Registrar
+      description: The registrar of the URL.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AssociatedURLs.WhoIs.NameServers
+      description: The name servers of the URL.
+      type: String
+  - arguments:
+    - auto: PREDEFINED
+      description: Filter cases by case type.
+      name: case_type
+      predefined:
+      - 419 Scam
+      - Credential Recovery
+      - Crimeware
+      - Mobile Abuse
+      - Job Scam
+      - Other
+      - Pharming
+      - Phishing
+      - Phishing Redirect
+      - Vishing
+    - defaultValue: "20"
+      description: The maximum number of cases to return. Default is 20. Maximum is
+        200.
+      name: max_records
+    - defaultValue: "0"
+      description: Paginate results used in conjunction with the max_records argument.
+      name: offset
+    - auto: PREDEFINED
+      description: The date field by which to query when you specify the begin_date
+        and end_date arguments.
+      name: Date_field
+      predefined:
+      - caseOpen
+      - caseClose
+      - caseModify
+    - description: The query start date.
+      name: begin_date
+    - description: The query end date.
+      name: end_date
+    - description: The time range for which to return incident (<number> <time unit>,
+        for example, 12 hours, 7 days.
+      name: period
+    description: Get closed cases by filters
+    name: phishlabs-ioc-drp-get-closed-cases
+    outputs:
+    - contextPath: PhishlabsIOC.DRP.CaseID
+      description: Case ID
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Title
+      description: Case title
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Description
+      description: Case description
+      type: String
+    - contextPath: PhishlabsIOC.DRP.CaseNumber
+      description: Case number
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Resolution
+      description: Resolution
+      type: String
+    - contextPath: PhishlabsIOC.DRP.ResolutionStatus
+      description: Resolution status
+      type: String
+    - contextPath: PhishlabsIOC.DRP.CreatedBy.ID
+      description: Case creator ID
+      type: String
+    - contextPath: PhishlabsIOC.DRP.CreatedBy.Name
+      description: Case creator name
+      type: String
+    - contextPath: PhishlabsIOC.DRP.CreatedBy.DisplayName
+      description: Case creator display name
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Brand
+      description: Brand reported in case
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Email
+      description: Email of case creator
+      type: String
+    - contextPath: PhishlabsIOC.DRP.CaseType
+      description: Type of the case
+      type: String
+    - contextPath: PhishlabsIOC.DRP.CaseStatus
+      description: Status of the case
+      type: String
+    - contextPath: PhishlabsIOC.DRP.DateCreated
+      description: Case creation date
+      type: String
+    - contextPath: PhishlabsIOC.DRP.DateClosed
+      description: Case closing date
+      type: String
+    - contextPath: PhishlabsIOC.DRP.DateModified
+      description: Case modification date
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Customer
+      description: Customer reporting the case
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AttackSources.URL
+      description: URL of the attack source
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AttackSources.UrlType
+      description: URL type of the attack source
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AttackSources.IP
+      description: IP of the attack source
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AttackSources.ISP
+      description: ISP of the attack source
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AttackSources.Country
+      description: ISP of the attack source
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AttackSources.TargetedBrands
+      description: Target brands of the attack source
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AttackSources.FQDN
+      description: FQDN of the attack source
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AttackSources.Domain
+      description: Domain of the attack source
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AttackSources.IsMaliciousDomain
+      description: Detect if domain of attack source is malicious
+      type: Boolean
+    - contextPath: PhishlabsIOC.DRP.AttackSources.WhoIs.Registrant
+      description: URL of the registrant
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AttackSources.WhoIs.Registration.Created
+      description: Creation date of the registration
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AttackSources.WhoIs.Registration.Expires
+      description: Expiriation date of the registration
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AttackSources.WhoIs.Registration.Updated
+      description: Update date of the registration
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AttackSources.WhoIs.Registration.Registrar
+      description: Registrar of the URL
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AttackSources.WhoIs.NameServers
+      description: Name servers of the URL
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Attachments.ID
+      description: ID of case attachment
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Attachments.Type
+      description: Type of case attachment
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Attachments.Description
+      description: Description of case attachment
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Attachments.DateAdded
+      description: Date adding of case attachment
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Attachments.FileName
+      description: The file name of the case attachment.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Attachments.FileURL
+      description: The file URL of the case attachment.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.ApplicationName
+      description: The application reported in the case.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Platform
+      description: The platform reported in the case.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Severity
+      description: The severity of the DRP.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Developer
+      description: The developer of the reported application.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.DeveloperWebsite
+      description: The developer website of the reported application.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.ApplicationDescription
+      description: The description of the reported application.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Language
+      description: The language of the reported application.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Hardware
+      description: The hardware used by the application.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.Phone
+      description: The phone number of the case creator.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AssociatedURLs.URL
+      description: The URL of the attack source.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AssociatedURLs.UrlType
+      description: The URL type of the attack source.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AssociatedURLs.TargetedBrands
+      description: The target brands of the attack source.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AssociatedURLs.WhoIs.Registrant
+      description: The URL of the registrant.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AssociatedURLs.WhoIs.Registration.Created
+      description: The date that the registration was created.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AssociatedURLs.WhoIs.Registration.Expires
+      description: The date that the registration expires.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AssociatedURLs.WhoIs.Registration.Updated
+      description: The date that the registration was last updated.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AssociatedURLs.WhoIs.Registration.Registrar
+      description: The registrar of the URL.
+      type: String
+    - contextPath: PhishlabsIOC.DRP.AssociatedURLs.WhoIs.NameServers
+      description: The name servers of the URL.
+      type: String
+  dockerimage: demisto/python3:3.7.5.4583
+  isfetch: true
+  runonce: false
+  script: |
+    """ IMPORTS """
+    # Std imports
+    from datetime import datetime
+
+    # 3-rd party imports
+    from typing import Dict, Tuple, Union, Optional, List, Any, AnyStr
+    import urllib3
+
+    # Local imports
+
+
+
+
+    """GLOBALS/PARAMS
+
+    Attributes:
+        INTEGRATION_NAME:
+            Name of the integration as shown in the integration UI, for example: Microsoft Graph User.
+
+        INTEGRATION_COMMAND_NAME:
+            Command names should be written in all lower-case letters,
+            and each word separated with a hyphen, for example: msgraph-user.
+
+        INTEGRATION_CONTEXT_NAME:
+            Context output names should be written in camel case, for example: MSGraphUser.
+    """
+    INTEGRATION_NAME = 'PhishLabs IOC - DRP'
+    INTEGRATION_COMMAND_NAME = 'phishlabs-ioc-drp'
+    INTEGRATION_CONTEXT_NAME = 'PhishLabsIOC'
+
+    # Disable insecure warnings
+    urllib3.disable_warnings()
+
+
+    class Client(BaseClient):
+        def test_module(self) -> Dict:
+            """Performs basic GET request to check if the API is reachable and authentication is successful.
+
+            Returns:
+                Response json
+            """
+            return self.get_cases(max_records=2)
+
+        def travel_to_end_date(self, cases_temp: List, params: Dict, end_date: Optional[str], date_field: str, suffix: str) \
+                -> Tuple[List[Any], Dict[Any, Any], int, Optional[datetime]]:
+            """Moving index to starting point, if neccery chage cases_temp (more get request)
+
+            Args:
+                cases_temp: case as starting point assuming list sorted by date
+                params: query params
+                end_date: end date of the query searched
+                date_field: date field to apply end date filter
+                suffix: suffix of url
+
+            Returns:
+                Tuple of (list of cases temp, modified params, index in cases, datetime object of last run in traveling)
+            """
+            format_time = "%Y-%m-%dT%H:%M:%SZ"
+            last_time: Optional[datetime] = None if not cases_temp else datetime.strptime(cases_temp[0].get(date_field),
+                                                                                          format_time)
+            end_date_obj: datetime = datetime.strptime(end_date, format_time) if end_date else datetime.now()
+
+            index = 0
+            while end_date_obj and last_time:
+                if end_date_obj < last_time:
+                    if len(cases_temp) == index + 1:
+                        params['offset'] += len(cases_temp)
+                        cases_temp = self._http_request('GET',
+                                                        url_suffix=suffix,
+                                                        params=assign_params(**params),
+                                                        timeout=20).get('data', [])
+                        index = 0
+                        if not cases_temp:
+                            break
+                    else:
+                        index += 1
+                    last_time = datetime.strptime(cases_temp[index].get(date_field), format_time)
+                else:
+                    break
+
+            return cases_temp, params, index, last_time
+
+        def travel_to_begin_date(self, cases_temp: List, index: int, params: Dict, begin_date: Optional[str],
+                                 last_time: Optional[datetime], date_field: str, max_records: Union[str, int], suffix: str) \
+                -> List[Dict[Any, Any]]:
+            """
+
+            Args:
+                suffix: suffix of url
+                cases_temp: case as starting point assuming list sorted by date
+                index: current traveling point in travelling
+                params: query params
+                begin_date: begin date to move while traveling case
+                last_time: last time of last case visited
+                date_field: date field to apply end date filter
+                max_records: max records to get in this query
+                suffix: suffix of url
+
+            Returns:
+                List of cases filtered by date
+            """
+            format_time = "%Y-%m-%dT%H:%M:%SZ"
+            begin_date_obj: Optional[datetime] = datetime.strptime(begin_date, format_time) if begin_date else None
+            cases: List = []
+
+            while cases_temp and len(cases) < int(max_records) and last_time:
+                if begin_date_obj:
+                    if last_time > begin_date_obj:
+                        cases.append(cases_temp[index])
+                    else:
+                        break
+                else:
+                    cases.append(cases_temp[index])
+
+                if len(cases) == max_records:
+                    break
+                elif len(cases_temp) == index + 1:
+                    params['offset'] += len(cases_temp)
+                    cases_temp = self._http_request('GET',
+                                                    url_suffix=suffix,
+                                                    params=assign_params(**params),
+                                                    timeout=20).get('data', [])
+                    index = 0
+                    if not cases_temp:
+                        break
+                else:
+                    index += 1
+                last_time = datetime.strptime(cases_temp[index].get(date_field), format_time)
+            return cases
+
+        def get_cases(self, status: Optional[str] = None, case_type: Optional[str] = None,
+                      max_records: Union[str, int] = 20, offset: Union[str, int] = 0,
+                      date_field: str = 'dateModified', begin_date: Optional[str] = None,
+                      end_date: Optional[str] = None, query_type: str = '', period: Optional[str] = None) -> Dict:
+            """
+            Query the specified kwargs with default parameters if not defined
+
+            Args:
+                status: Filter cases based on the case status
+                case_type: Filter cases by case type
+                max_records: Maximum number of cases to return, default is 20, maximum is 200
+                offset: Paginate results used in conjunction with maxRecords
+                date_field: Field to use to query using dateBegin and dateEnd parameters.
+                begin_date: Date query beginning date
+                end_date: Date query beginning date
+                query_type: query type influence on suffix - all/open/closed
+                period: timestamp (<number> <time unit>, e.g., 12 hours, 7 days)
+
+            Returns:
+                Response JSON as dictionary
+            """
+            if period:
+                begin_date, end_date = parse_date_range(date_range=period,
+                                                        date_format='%Y-%m-%dT%H:%M:%SZ')
+            suffix: str = f'/cases/{query_type}' if query_type else '/cases'
+            params: Dict = {
+                'status': status,
+                'type': case_type,
+                'offset': int(offset),
+                'maxRecords': int(max_records)
+            }
+            raw_response: Dict = self._http_request('GET',
+                                                    url_suffix=suffix,
+                                                    params=assign_params(**params),
+                                                    timeout=20)
+            cases_temp: List = raw_response.get('data', [])
+            # About the drop some mean regex right now disable-secrets-detection-start
+            cases_temp, params, index, last_time = self.travel_to_end_date(cases_temp, params, end_date, date_field, suffix)
+            cases = self.travel_to_begin_date(cases_temp, index, params, begin_date, last_time, date_field, max_records,
+                                              suffix)
+            # Drops the mic disable-secrets-detection-end
+            raw_response['header']['returnResult'] = len(cases)
+            raw_response['header']['totalResult'] = len(cases)
+            raw_response['header']['queryParams']['maxRecords'] = len(cases)
+            raw_response['data'] = cases
+
+            return raw_response
+
+        def get_case_by_id(self, case_id: str) -> Dict:
+            """Query incident by ID
+
+            Args:
+                case_id: ID of the case
+
+            Returns:
+                Response JSON as dictionary
+            """
+            suffix = f"/cases/{case_id}"
+            return self._http_request('GET',
+                                      url_suffix=suffix)
+
+
+    ''' HELPER FUNCTIONS '''
+
+
+    @logger
+    def indicator_ec(indicator: Dict, type_ec: AnyStr) -> Dict:
+        """indicator convert to ec format
+        Get an indicator from raw response and concert to demisto entry context format
+
+        Args:
+            indicator: raw response dictionary
+            type_ec: type of entry context
+
+        Returns:
+             indicator entry context
+        """
+        ec: Dict = {}
+        if type_ec == 'AttackSources':
+            ec = {
+                'URL': indicator.get('url'),
+                'UrlType': indicator.get('urlType'),
+                'IP': indicator.get('ipAddress'),
+                'ISP': indicator.get('isp'),
+                'Country': indicator.get('country'),
+                'TargetedBrands': indicator.get('targetedBrands'),
+                'FQDN': indicator.get('fqdn'),
+                'Domain': indicator.get('domain'),
+                'IsMaliciousDomain': indicator.get('isMaliciousDomain'),
+                'WhoIs': {
+                    'Registrant': indicator.get('whois', {}).get('registrant'),
+                    'Registration': {
+                        'Created': indicator.get('whois', {}).get('registration', {}).get('created'),
+                        'Expires': indicator.get('whois', {}).get('registration', {}).get('expires'),
+                        'Updated': indicator.get('whois', {}).get('registration', {}).get('updated'),
+                        'Registrar': indicator.get('whois', {}).get('registration', {}).get('registrar'),
+                        'NameServers': indicator.get('whois', {}).get('name_servers')
+                    },
+                }
+            }
+        elif type_ec == 'Attachments':
+            ec = {
+                'ID': indicator.get('id'),
+                'Type': indicator.get('type'),
+                'Description': indicator.get('description'),
+                'DateAdded': indicator.get('dateAdded'),
+                'FileName': indicator.get('fileName'),
+                'FileURL': indicator.get('fileURL')
+            }
+        elif type_ec == 'AssociatedURLs':
+            ec = {
+                'URL': indicator.get('url'),
+                'UrlType': indicator.get('urlType'),
+                'TargetedBrands': indicator.get('targetedBrands'),
+                'WhoIs': {
+                    'Registrant': indicator.get(''),
+                    'Registration': {
+                        'Created': indicator.get('whois', {}).get('registration', {}).get('created'),
+                        'Expires': indicator.get('whois', {}).get('registration', {}).get('expires'),
+                        'Updated': indicator.get('whois', {}).get('registration', {}).get('updated'),
+                        'Registrar': indicator.get('whois', {}).get('registration', {}).get('registrar'),
+                        'NameServers': indicator.get('whois', {}).get('name_servers')
+                    }
+                }
+            }
+
+        return assign_params(**ec)
+
+
+    @logger
+    def indicators_to_list_ec(indicators: List, type_ec: AnyStr) -> Union[Tuple[List, List], List]:
+        """Unpack list of incidents to demisto ec format
+        Convert list of incidents from raw response to demisto entry context format lists
+
+        Args:
+            indicators: lit of indicators from raw response
+            type_ec: type of indicators
+        Returns:
+             List of indicators entry context
+        """
+        ecs: List = []
+        for indicator in indicators:
+            ec = indicator_ec(indicator, type_ec)
+            ecs.append(ec)
+        return ecs
+
+
+    @logger
+    def raw_response_to_context(cases: Union[List, Any]) -> List:
+        """
+        Convert incidents list from raw response to demisto entry context list format
+        Args:
+            cases: Incidents list
+
+        Returns:
+            Entry contexts of phishLabs, emails, files, urls, dbotScores
+        """
+        phishlabs_ec: List = []
+        for case in cases:
+            # PhishLabs entry context
+            phishlabs: Dict = {
+                'CaseID': case.get('caseId'),
+                'Title': case.get('title'),
+                'Description': case.get('description'),
+                'CaseNumber': case.get('caseNumber'),
+                'Resolution': case.get('resolution'),
+                'ResolutionStatus': case.get('resolutionStatus'),
+                'CreatedBy': {
+                    'ID': case.get('createdBy', {}).get('id'),
+                    'Name': case.get('createdBy', {}).get('name'),
+                    'DisplayName': case.get('createdBy', {}).get('displayName')
+                },
+                'Brand': case.get('brand'),
+                'Email': case.get('emailAddress'),
+                'CaseType': case.get('caseType'),
+                'CaseStatus': case.get('caseStatus'),
+                'DateCreated': case.get('dateCreated'),
+                'DateClosed': case.get('dateClosed'),
+                'DateModified': case.get('dateModified'),
+                'Customer': case.get('customer'),
+                'AttackSources': indicators_to_list_ec(indicators=case.get('attackSources', []), type_ec='AttackSources'),
+                'Attachments': indicators_to_list_ec(indicators=case.get('attachments', []), type_ec='Attachments'),
+                'ApplicationName': case.get('applicationName'),
+                'Platform': case.get('platform'),
+                'Severity': case.get('severity'),
+                'Developer': case.get('developer'),
+                'DeveloperWebsite': case.get('developerWebsite'),
+                'ApplicationDescription': case.get('applicationDescripion'),
+                'Language': case.get('language'),
+                'Hardware': case.get('hardware'),
+                'Phone': case.get('phoneNumber'),
+                'AssociatedURLs': indicators_to_list_ec(indicators=case.get('associatedURLs', []), type_ec='AssociatedURLs')
+            }
+            phishlabs_ec.append(assign_params(**phishlabs))
+
+        return phishlabs_ec
+
+
+    ''' COMMANDS '''
+
+
+    @logger
+    def test_module_command(client: Client, *_) -> Tuple[None, None, str]:
+        """Performs a basic GET request to check if the API is reachable and authentication is successful.
+
+        Args:
+            client: Client object with request
+            *_: Usually demisto.args()
+
+        Returns:
+            'ok' if test successful.
+
+        Raises:
+            DemistoException: If test failed.
+        """
+        results = client.test_module()
+        if 'data' in results:
+            return None, None, 'ok'
+        raise DemistoException(f'Test module failed, {results}')
+
+
+    @logger
+    def fetch_incidents_command(
+            client: Client,
+            fetch_time: str,
+            max_records: Union[str, int],
+            date_field: str = 'dateModified',
+            last_run: Optional[str] = None) -> Tuple[List[Dict[str, Any]], Dict]:
+        """Uses to fetch incidents into Demisto
+        Documentation: https://github.com/demisto/content/tree/master/docs/fetching_incidents
+
+        Args:
+            date_field: filter date is by dateCreated / dateClosed / dateModified
+            client: Client object with request
+            fetch_time: From when to fetch if first time, e.g. `3 days`
+            max_records: limit of incidents in a fetch
+            last_run: Last fetch object occurs.
+
+        Returns:
+            incidents, new last_run
+        """
+        occurred_format = '%Y-%m-%dT%H:%M:%SZ'
+        if not last_run:
+            datetime_new_last_run, _ = parse_date_range(date_range=fetch_time,
+                                                        date_format=occurred_format)
+        else:
+            datetime_new_last_run = last_run
+        raw_response = client.get_cases(begin_date=datetime_new_last_run,
+                                        date_field=date_field,
+                                        max_records=max_records)
+        cases_raw: List = raw_response.get('data', [])
+        cases_report = []
+        if cases_raw:
+            datetime_new_last_run = cases_raw[0].get(date_field)
+            for case in cases_raw:
+                cases_report.append({
+                    'name': f"{INTEGRATION_NAME}: {case.get('caseId')}",
+                    'occurred': case.get(date_field),
+                    'rawJSON': json.dumps(case)
+                })
+
+        return cases_report, datetime_new_last_run
+
+
+    @logger
+    def get_cases_command(client: Client, **kwargs: Dict) -> Tuple[object, dict, Union[List, Dict]]:
+        """Get all case by filters and return outputs in Demisto's context entry
+
+        Args:
+            client: Client object with request
+            kwargs: Usually demisto.args()
+
+        Returns:
+            human readable (markdown format), entry context and raw response
+        """
+        raw_response: Dict = client.get_cases(**kwargs)  # type: ignore
+        if raw_response:
+            title = f'{INTEGRATION_NAME} - cases'
+            phishlabs_ec = raw_response_to_context(raw_response.get('data', []))
+            context_entry: Dict = {
+                f'{INTEGRATION_CONTEXT_NAME}(val.DRP.CaseID && val.EIR.CaseID === obj.DRP.CaseID && '
+                f'val.DRP.DateModified && val.DRP.DateModified === obj.DRP.DateModified)': {
+                    'DRP': phishlabs_ec
+                }
+            }
+            human_readable = tableToMarkdown(name=title,
+                                             t=phishlabs_ec,
+                                             headers=['CaseID', 'Title', 'CaseStatus', 'DateCreated', 'Resolution',
+                                                      'ResolutionStatus', 'CreatedBy'],
+                                             removeNull=True)
+
+            return human_readable, context_entry, raw_response
+        else:
+            return f'{INTEGRATION_NAME} - Could not find any results for given query', {}, {}
+
+
+    @logger
+    def get_case_by_id_command(client: Client, **kwargs: Dict) -> Tuple[object, dict, Union[List, Dict]]:
+        """Get case by ID and return outputs in Demisto's context entry
+
+        Args:
+            client: Client object with request
+            kwargs: Usually demisto.args()
+
+        Returns:
+            human readable (markdown format), entry context and raw response
+        """
+        raw_response: Dict = client.get_case_by_id(**kwargs)  # type: ignore
+        if raw_response:
+            title = f'{INTEGRATION_NAME} - case ID {kwargs.get("caseid")}'
+            phishlabs_ec = raw_response_to_context(raw_response.get('data', []))
+            context_entry: Dict = {
+                f'{INTEGRATION_CONTEXT_NAME}(val.DRP.CaseID && val.EIR.CaseID === obj.DRP.CaseID && '
+                f'val.DRP.DateModified && val.DRP.DateModified === obj.DRP.DateModified)': {
+                    'DRP': phishlabs_ec
+                }
+            }
+            human_readable = tableToMarkdown(name=title,
+                                             t=phishlabs_ec,
+                                             headers=['CaseID', 'Title', 'CaseStatus', 'DateCreated', 'Resolution',
+                                                      'ResolutionStatus', 'CreatedBy'],
+                                             removeNull=True)
+
+            return human_readable, context_entry, raw_response
+        else:
+            return f'{INTEGRATION_NAME} - Could not find any results for given query', {}, {}
+
+
+    @logger
+    def get_open_cases_command(client: Client, **kwargs: Dict) -> Tuple[object, dict, Union[List, Dict]]:
+        """Get all open case by filters and return outputs in Demisto's context entry
+
+          Args:
+              client: Client object with request
+              kwargs: Usually demisto.args()
+
+          Returns:
+              human readable (markdown format), entry context and raw response
+          """
+        raw_response: Dict = client.get_cases(**kwargs, query_type='open')  # type: ignore
+        if raw_response:
+            title = f'{INTEGRATION_NAME} - open cases'
+            phishlabs_ec = raw_response_to_context(raw_response.get('data', []))
+            context_entry: Dict = {
+                f'{INTEGRATION_CONTEXT_NAME}(val.DRP.CaseID && val.EIR.CaseID === obj.DRP.CaseID && '
+                f'val.DRP.DateModified && val.DRP.DateModified === obj.DRP.DateModified)': {
+                    'DRP': phishlabs_ec
+                }
+            }
+            human_readable = tableToMarkdown(name=title,
+                                             t=phishlabs_ec,
+                                             headers=['CaseID', 'Title', 'CaseStatus', 'DateCreated', 'Resolution',
+                                                      'ResolutionStatus', 'CreatedBy'],
+                                             removeNull=True)
+
+            return human_readable, context_entry, raw_response
+        else:
+            return f'{INTEGRATION_NAME} - Could not find any results for given query', {}, {}
+
+
+    @logger
+    def get_closed_cases_command(client: Client, **kwargs: Dict) -> Tuple[object, dict, Union[List, Dict]]:
+        """Get all closed case by filters and return outputs in Demisto's context entry
+
+          Args:
+              client: Client object with request
+              kwargs: Usually demisto.args()
+
+          Returns:
+              human readable (markdown format), entry context and raw response
+          """
+        raw_response: Dict = client.get_cases(**kwargs, query_type='closed')  # type: ignore
+        if raw_response:
+            title = f'{INTEGRATION_NAME} - Closed cases'
+            phishlabs_ec = raw_response_to_context(raw_response.get('data', []))
+            context_entry: Dict = {
+                f'{INTEGRATION_CONTEXT_NAME}(val.DRP.CaseID && val.EIR.CaseID === obj.DRP.CaseID && '
+                f'val.DRP.DateModified && val.DRP.DateModified === obj.DRP.DateModified)': {
+                    'DRP': phishlabs_ec
+                }
+            }
+            human_readable = tableToMarkdown(name=title,
+                                             t=phishlabs_ec,
+                                             headers=['CaseID', 'Title', 'CaseStatus', 'DateCreated', 'Resolution',
+                                                      'ResolutionStatus', 'CreatedBy'],
+                                             removeNull=True)
+
+            return human_readable, context_entry, raw_response
+        else:
+            return f'{INTEGRATION_NAME} - Could not find any results for given query', {}, {}
+
+
+    ''' COMMANDS MANAGER / SWITCH PANEL '''
+
+
+    def main():
+        params = demisto.params()
+        base_url = urljoin(params.get('url'), '/v1/data')
+        verify_ssl = not params.get('insecure', False)
+        proxy = params.get('proxy')
+        client = Client(
+            base_url=base_url,
+            verify=verify_ssl,
+            proxy=proxy,
+            auth=(params.get('credentials', {}).get('identifier'),
+                  params.get('credentials', {}).get('password'))
+        )
+        command = demisto.command()
+        demisto.debug(f'Command being called is {command}')
+        commands = {
+            'test-module': test_module_command,
+            f'{INTEGRATION_COMMAND_NAME}-get-cases': get_cases_command,
+            f'{INTEGRATION_COMMAND_NAME}-get-case-by-id': get_case_by_id_command,
+            f'{INTEGRATION_COMMAND_NAME}-get-open-cases': get_open_cases_command,
+            f'{INTEGRATION_COMMAND_NAME}-get-closed-cases': get_closed_cases_command
+        }
+        try:
+            if command == 'fetch-incidents':
+                incidents, new_last_run = fetch_incidents_command(client,
+                                                                  fetch_time=params.get('fetchTime'),
+                                                                  last_run=demisto.getLastRun().get('lastRun'),
+                                                                  max_records=params.get('fetchLimit'),
+                                                                  date_field=params.get('fetchByDate'))
+                demisto.incidents(incidents)
+                demisto.setLastRun({'lastRun': new_last_run})
+            else:
+                readable_output, outputs, raw_response = commands[command](client=client, **demisto.args())
+                return_outputs(readable_output, outputs, raw_response)
+
+        except Exception as e:
+            err_msg = f'Error in {INTEGRATION_NAME} Integration [{e}]'
+            return_error(err_msg, error=e)
+
+
+    if __name__ == 'builtins':
+        main()
+  subtype: python3
+  type: python
+system: true

@@ -1,0 +1,99 @@
+id: c1189478-c688-452f-85fb-c25479da650a
+inputs: []
+name: URL Collection
+outputs: []
+starttaskid: "0"
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "1"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: eb794d69-6a14-4b9d-8596-64517dbaf604
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: eb794d69-6a14-4b9d-8596-64517dbaf604
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 50
+        }
+      }
+  "1":
+    id: "1"
+    ignoreworker: false
+    note: false
+    scriptarguments:
+      append:
+        simple: "true"
+      key:
+        simple: url_new
+      value:
+        complex:
+          filters:
+          - - left:
+                iscontext: true
+                value:
+                  simple: ${url}
+              operator: notContainsGeneral
+              right:
+                value:
+                  simple: http://
+          - - left:
+                iscontext: true
+                value:
+                  simple: ${url}
+              operator: notContainsGeneral
+              right:
+                value:
+                  simple: https://
+          root: ${url}
+          transformers:
+          - args:
+              prefix:
+                value:
+                  simple: https://
+              suffix: {}
+            operator: concat
+    separatecontext: false
+    task:
+      brand: ""
+      description: Sets a value into the context with the given context key
+      id: af5ac4b2-e767-4bad-81d8-7b2f67569959
+      iscommand: false
+      name: URL Gathering
+      script: Set
+      type: regular
+      version: -1
+    taskid: af5ac4b2-e767-4bad-81d8-7b2f67569959
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 180
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 225,
+        "width": 380,
+        "x": 450,
+        "y": 50
+      }
+    }
+  }

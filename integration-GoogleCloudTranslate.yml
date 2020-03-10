@@ -1,0 +1,333 @@
+category: Utilities
+commonfields:
+  id: GoogleCloudTranslate
+  version: -1
+configuration:
+- defaultvalue: ""
+  display: Service Account Private Key file contents (JSON)
+  name: service_account_json
+  required: true
+  type: 4
+- defaultvalue: ""
+  display: Project in Google Cloud Translate
+  name: project
+  required: false
+  type: 0
+- defaultvalue: ""
+  display: Trust any certificate (not secure)
+  name: insecure
+  required: false
+  type: 8
+description: A Google API cloud based translation service.
+detaileddescription: "## Google Cloud Translation API\n\nIn order to use this integration
+  you need the following:\n1. [Select or create a Cloud Platform project on GCP](https://console.cloud.google.com/project)\n2.
+  [Enable billing for the project.](https://cloud.google.com/billing/docs/how-to/modify-project#enable_billing_for_a_project)\n3.
+  [Enable the Google Cloud Translate API.](https://cloud.google.com/translate)\n4.
+  [Create a Service Account](#create-a-service-account) with access to Google Translate
+  API\n5. Use the Service Account Private Key in JSON format and the GCP project ID
+  to configure a new instance of Google Cloud Translate integration in Demisto \n\n###
+  Create a Service Account\n1) Go to: https://console.developers.google.com.\n2) Select
+  your project.\n3) From the side-menu go to **IAM & admin** > **Service accounts**
+  > **CREATE SERVICE ACCOUNT**.\n5) Type an account name and description and click
+  **CREATE**.\n6) From  the drop down list Select a role select **Cloud Translation
+  API User**.\n7) Click **CONTINUE** and then click **CREATE KEY**.\n8) Select **JSON**
+  and click **CREATE**. The .json file downloads."
+display: Google Cloud Translate
+image: data:image/png;base64,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
+name: GoogleCloudTranslate
+script:
+  commands:
+  - arguments: []
+    description: Returns the list of supported two-letter ISO language codes.
+    name: gct-supported-languages
+    outputs:
+    - contextPath: GoogleCloudTranslate.SupportedLanguages
+      description: The list of supported two-letter ISO language codes.
+      type: list
+  - arguments:
+    - description: The text to translate.
+      name: text
+      required: true
+    - description: The two-letter ISO language code of the target language. Default
+        is "en" (English).
+      name: target
+    - description: The two-letter ISO language code of the source language. Default
+        is "autodetect".
+      name: source
+    description: Returns the translated text.
+    name: gct-translate-text
+    outputs:
+    - contextPath: GoogleCloudTranslate.TranslateText.ID
+      description: The ID of the request.
+      type: String
+    - contextPath: GoogleCloudTranslate.TranslateText.detected_language_code
+      description: The detected two-letter ISO language code of the source language.
+        Null, if no source argument is defined.
+      type: String
+    - contextPath: GoogleCloudTranslate.TranslateText.source_language_code
+      description: The source language as specified in the source argument. Null,
+        if no source argument is defined.
+      type: String
+    - contextPath: GoogleCloudTranslate.TranslateText.target_language_code
+      description: The two letter ISO language code to which the text was translated.
+      type: String
+    - contextPath: GoogleCloudTranslate.TranslateText.text
+      description: The source (original) text that was translated.
+      type: String
+    - contextPath: GoogleCloudTranslate.TranslateText.translated_text
+      description: The translated text.
+      type: String
+  dockerimage: demisto/google-cloud-translate:1.0.0.5038
+  runonce: false
+  script: |2
+
+
+
+    ''' IMPORTS '''
+
+    import json
+    import hashlib
+    import traceback
+    from google.cloud import translate_v3
+
+
+    class Client:
+        """Wrapper around the Google Cloud Translate API Client implementing the code
+        to handle credentials and proxy under Demisto and a translation between
+        the Google Cloud Python library typing system and Python serializable
+        dictionaries/lists
+
+        Returns:
+            service_account(dict): The desarialized contents of the Service Account Private
+                Key JSON file
+            project(str): The GCP project ID. If None, the project id is read from the
+                service_account. Default: None
+            verify(bool): Enable certificate verification. Default: True
+            proxy(bool): Enable proxy. Default: False
+        """
+        def __init__(self, service_account=None, project=None, verify=True):
+            self.service_account = service_account
+            self.project = project
+            self.verify = verify
+
+            self.client = self._get_client()
+            self.project_id = self._get_project_id()
+
+        def get_supported_languages(self):
+            """Returns languages supported by Google Cloud Translation API
+
+            Returns:
+                list: List of supported languages. Each entry is a dictionary
+                    representing a supported language: language_code is the
+                    2 letter ISO language code, support_source is a bool
+                    indicating if the language is a supported source,
+                    support_target is a bool indicating if the language is
+                    a supported target for the translation.
+            """
+            parent = self.client.location_path(self.project_id, 'global')
+            result = self.client.get_supported_languages(parent)
+
+            return [
+                dict(
+                    language_code=l.language_code,
+                    support_source=l.support_source,
+                    support_target=l.support_target
+                )
+                for l in result.languages
+            ]
+
+        def translate_text(self, text, target, source=None):
+            """Translates a text from source language to target language.
+
+            Args:
+                text (str): The text to be translated
+                target (str): ISO 2 letter code of the target language. Default: en
+                source (str, optional): ISO 2 letter code of the source language. If
+                    None, Google Cloud Translate will try to detect the source
+                    language. Default: None
+
+            Returns:
+                dict: Result of translation. The translated_text key is the result
+                    of the translation, detected_language_code is the ISO 2 letter
+                    code of the detected language or None if the source language
+                    was specified.
+            """
+            parent = self.client.location_path(self.project_id, 'global')
+            result = self.client.translate_text([text], target, parent, source_language_code=source)
+
+            return {
+                'detected_language_code': result.translations[0].detected_language_code,
+                'translated_text': result.translations[0].translated_text
+            }
+
+        def _get_project_id(self):
+            return self.project if self.project is not None else self.service_account['project_id']
+
+        def _get_client(self):
+            # turning off the proxy as the SDK doesn't support it.
+            handle_proxy()
+
+            cur_directory_path = os.getcwd()
+            credentials_file_name = demisto.uniqueFile() + '.json'
+            credentials_file_path = os.path.join(cur_directory_path, credentials_file_name)
+
+            with open(credentials_file_path, 'w') as creds_file:
+                json.dump(self.service_account, creds_file)
+
+            return translate_v3.TranslationServiceClient.from_service_account_json(credentials_file_path)
+
+
+    def test_module(client):
+        """
+        Returning 'ok' indicates that the integration works like it is supposed to. Connection to the service is successful.
+
+        Args:
+            client (Client): instance of the Client class
+
+        Returns:
+            'ok' if test passed, anything else will fail the test.
+        """
+
+        try:
+            client.get_supported_languages()
+            return 'ok'
+
+        except Exception as e:
+            return 'Test failed: {}'.format(str(e))
+
+
+    def supported_languages(client):
+        """Returns the list of supported languages
+
+        Args:
+            client (Client): instance of the Client class
+
+        Returns:
+            The list of supported languages
+
+            readable_output (str): This will be presented in the war room - should be in markdown syntax - human readable
+            outputs (dict): Dictionary/JSON - saved in the incident context in order to be used as inputs for other tasks in the
+                     playbook
+            raw_response (dict): Used for debugging/troubleshooting purposes - will be shown only if the command executed with
+                          raw-response=true
+        """
+        result = client.get_supported_languages()
+
+        # readable output will be in markdown format - https://www.markdownguide.org/basic-syntax/
+        readable_output = 'Languages: {}'.format(', '.join([l['language_code'] for l in result]))
+        outputs = {
+            'GoogleCloudTranslate': {
+                'SupportedLanguages': result
+            }
+        }
+
+        return (
+            readable_output,
+            outputs,
+            result  # raw response - the original response
+        )
+
+
+    def translate_text(client, args):
+        """Translates text
+
+        Args:
+            client (Client): instance of the Client class
+            args (dict): dictionary of arguments. The argument text is the text to
+                be translated, target is the ISO 2 letter code of the target language
+                (default: en), source is the ISO 2 letter code of the source language
+                (default: auto detect)
+
+        Returns:
+            The list of supported languages
+
+            readable_output (str): This will be presented in the war room - should be in markdown syntax - human readable
+            outputs (dict): Dictionary/JSON - saved in the incident context in order to be used as inputs for other tasks in the
+                     playbook
+            raw_response (dict): Used for debugging/troubleshooting purposes - will be shown only if the command executed with
+                          raw-response=true
+        """
+        text = args.get('text', '')
+        target = args.get('target', 'en')
+        source = args.get('source', None)
+
+        result = client.translate_text(
+            text,
+            target,
+            source=source
+        )
+
+        readable_output = 'Translation: {}\nSource Language Detected: {}'.format(
+            result['translated_text'],
+            result['detected_language_code']
+        )
+
+        id_ = hashlib.md5(f'{target}-{source}-{text}'.encode('utf-8')).hexdigest()
+
+        outputs = {
+            'GoogleCloudTranslate.TranslateText(val.ID && val.ID==obj.ID)': {
+                'ID': id_,
+                'text': text,
+                'translated_text': result['translated_text'],
+                'source_language_code': source,
+                'detected_language_code': result['detected_language_code'],
+                'target_language_code': target
+            }
+        }
+
+        return (
+            readable_output,
+            outputs,
+            result  # raw response - the original response
+        )
+
+
+    def main():
+        """
+            PARSE AND VALIDATE INTEGRATION PARAMS
+        """
+        service_account_json = demisto.params().get('service_account_json')
+        try:
+            service_account = json.loads(service_account_json)
+        except Exception:
+            return_error(f'Invalid JSON provided')
+
+        project = demisto.params().get('project', None)
+
+        verify_certificate = not demisto.params().get('insecure', False)
+
+        LOG(f'Command being called is {demisto.command()}')
+        try:
+            client = Client(
+                service_account=service_account,
+                project=project,
+                verify=verify_certificate,
+            )
+
+            if demisto.command() == 'test-module':
+                # This is the call made when pressing the integration Test button.
+                result = test_module(client)
+                demisto.results(result)
+
+            elif demisto.command() == 'gct-supported-languages':
+                return_outputs(*supported_languages(client))
+
+            elif demisto.command() == 'gct-translate-text':
+                return_outputs(*translate_text(client, demisto.args()))
+
+        # Log exceptions
+        except Exception as e:
+            LOG(traceback.format_exc())
+            return_error(
+                f'Failed to execute {demisto.command()} command. Error: {str(e)}'
+            )
+
+        finally:
+            LOG.print_log()
+
+
+    if __name__ in ('__main__', '__builtin__', 'builtins'):
+        main()
+  subtype: python3
+  type: python
+system: true

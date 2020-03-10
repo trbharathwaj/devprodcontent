@@ -1,0 +1,113 @@
+category: Data Enrichment
+commonfields:
+  id: Wells Fargo Bluecoat Categories
+  version: -1
+configuration:
+- defaultvalue: https://cip.wellsfargo.net/api/v1/sitecheck?url=
+  display: The URL for the LNS team's sitecheck utility.
+  name: URL
+  required: true
+  type: 0
+description: Used to retrieve proxy categorization values for an ip, domain, or URL.
+display: Wells Fargo Bluecoat Categories
+image: data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxIQDxMSERIVFRUVGRoWFhgWFRUXFxcYFhYWFxcXExgYHCggGh8lHRcWITEhJSkrLi4uFx8zODMtNygtLisBCgoKDg0OGxAQGy0lICUvMC0wLS0tLS0vLy0tLi0tLy0vLS0tLS0tLS01LS0tLS0tLS0tLS0tLS0tLS0tLS0tLf/AABEIAOEA4QMBEQACEQEDEQH/xAAbAAEAAwEBAQEAAAAAAAAAAAAAAwYHBQQCAf/EAEEQAAEDAgQBCAULAwQDAQAAAAEAAgMEEQUGEiExBxMiQVFxgZEyYXKhsRQzNEJSc4KSssHRFsLDI1NioiQl4RX/xAAbAQEAAgMBAQAAAAAAAAAAAAAAAQUDBAYCB//EAD4RAAIBAwEECAMFBwMFAQAAAAABAgMEESEFEjFBE1FhcaGxwdEUM4EiIzKR8BUkNEJScuHC0vEGQ2KCkiX/2gAMAwEAAhEDEQA/AKOtM+jBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQIjQkkQgIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCBEaEkiEBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQIjQkkQgIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCBEaEkiEBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQIjQkkQgIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCBEaEkiEBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQIjQkkQgIApwSF5yQFICAIAiCCDIQBRkBSEwoGUFIyEyAgCaAIAoAUgImAgCEhDzkJyySFGQ8oKeYCBEaEkiEHswenjlqI2Su0scek64FhYm9zssFxOcKblBZa5GOtOUItx4l5jyLSuALZJCDwIc0g92y56W3K8dHFFZ8fV58TkZly5S00LyyUmUabMc9t7FwB2tfhcresdoXFxNKUcR6/oZ7a5qVJJY0/wfWW8t0tTA1z5Xc4b3a17bixIHRtfgov8AaFxb1HiGYrmK9zUpzwlodOXJFIxpc+WRoHElzQPMhaUdtXE2oqCbMKvqj4JFXlw2nFe2ES/6JIBfqbw0knpcOKuY167tnUcftdX1NtVZ9Dv41LRBkqjkGpkr3Dta9hHmAqeptm5pvE4JM03fVU8NEc+UaFjtL6hzT2OkYD5WXuG1Lyccxp5PSvKr4InGRKYi4fLb2m/wsL27XzjdR5+Pn2Hkkyth7SQ6pII2IMkYII7dlsR2letZVI9/F13yPuHKdA82bUFx7BIwn4JPal7BZlTwQ7yquKPnF8mU8NPLI10l2NLhci1wOvZRbbYq1q0YNLDJpXs5SUXwObl7AqSeBrpZtMjiRpD2DrsNjvutu9vLqlUapwzHrM1xcVYTaS0O7/QVN9uX8zf4VZ+3ayeN1Gt8fU7DiZgwGjgp3vin1SNLQG62Hi4A7AX4Eqys726q1FGpDCedfoZ6FxVlNKS0Kmrg334HrwinZJURsldpY42c64FhY9Z2WG4nOFNygsy5Ix1ZSjBuJdqfJlHJcxzPfbjpew277BUFTa91T/HTwVzvaseKP2oyXRxi8kz2DqLnsF+64UUts3VR4hBPuIV5VfBZKXjlNHFUPjhdrY3TpdcG92tJ3HrJHgr61qTqUoymsN50+rLKhJzgpS4nhWyZTp4BgklZIWssGttrceDQb8B1k2O3qWpeXkLaGZc+C7jDXrxpLL+hcTljD6do+UPuT1vkLb9waQqL9pXtx8lfkk/MrVdV6j+x5I+TljD6kH5NJZw+xIX+bXEqf2leW+taOV2pLyPXxdem/vPI5lTk0QUk0sr7yMDi0NPRsNhe4vvx9S3KO1+nuI04LR44mWN85VEkioK6RYvtCkIjQkkQgKVghmh8nNbqgfCeMbtQ9l3/ANv5rltuUMTjU6/P/hFVf08TU+s4/KHQ6KlsoG0jRc/8m7H3afet7YldTobj/lfhp6mewnvQceo42W2PNbBzfpB7T3AG7r/hurC/lFW81LqfkbFw0qTz1PxNPzBRc/SyxgblpLfaG494C4+xrdFXjLOnMpqNTcqKRjy7tl/g0zKcQpcO5121w6Y91treAHmuR2hJ3F6qa1Wd3xwynuX0lbC7jN6qYySOkduXEuPibrqqcFCKj1FtCO5DBrGVfoNP7AXE7SX7zPvKO4f3ss9ZmePtvW1A7ZXjzeV19lpa02/6V5IuqMsUovs9D35py8yjERa9ztd76gNrW4W71gsL6Vy5ZWMGK2uJVW8lhpsYbLhMgkkHOBj2WLhqNtgbddxZVc7R07+Livs8fM050dyv9laGfWXSN6Mtn2G3N+bHs/svn0vmPvfqc4+LMRC+hHSH6hAQF05MvnJ/ZZ+pyoNv/Lh3srtocIn3yncabuk/xrx/0/8A9z/1/wBQ2f8AzfT1KQuiLEKR2Gl8nrWijuOJe7V3iwHuXI7blJ18Phgpr9/elSzdh07KqWR7XFrnXa+1xbbSNuFhtY9ivNnXNF0Ixi8Y5G9bVKbppJ4OJTzuY4PY6zmm4I4hWFSKmnCXB8TZcVKOGaHWY3HUYW9zntEjoyC24vqGxsOPFcvSsp0L5JL7OfUqI0XCuklzM5XUp8i57QgRGhJIhATBDO7kuu5mtZfhJeM/i3H/AGAVftSj0tu0uK1X6+pq3kN6k+wumeqHnaNzgLuiIeO4bO9xJ8Fzux66p3Cjyl/lmhZz3Ki7Tgcm9DqkkmI2aAxvrLtzbuAH5lZ7drYpqmuLy/yx7m1tCeEoF3oa1swcWH0HuYe9pXP3FvKjhS5rJWyg46MzGtwb/wBiaYDZ0gt7Dukbdwv5LsKd4nadM+rxLiFb7jffV4lsz9WCGkbC3bnDpA4WZHa/9oVLsam6txKq+Wv/ANZ18DQs4uVTef6yZwuoRcmu5V+gwewFxG0f4ufeUNz82Xec1ow35W6+jn9Zvq1fOat/S6N7rc//AEPhl/Rjwx7GTNfo1xxj0Odym8Kfvf8A2rb2B+GeTNs7iyiroXnVlp2Ao+BBtrfm/wAP7L57L5j72c6+LMRC+hHSH6hAuhJdOTP5yf2WfFy5/b/y4d7K3aH4Yn3ym8afuk/xrzsD/ufT/URs/wDm+nqUhdEWQUpDJ3sq5hNG8hw1RvtqAO7Tv0m9vd12VZtHZ/xUcrSS4exqXFt0q04o0ShxqnnA5uZhJ+qSA78p3XMVLO5ov8L70nj8ypnQqQeqYq8Fppt3wxuJ69IB8xYqKd9c0nhTfc22iY1qkVo2VDMWSxG10tOSQ0EuYdyAOth6+5XdjtjpJKnW0fJ5N+3vXJqM/wAymK/zzLDHWEJRGhJIhATsB+gkbjYjcd4TC5kPHBmyYdUtqaZjzwkZ0h6yLOHmuCr0/h67gv5Wc/NOnPd6jm01OMOw9/Alge7vcSdP9oW5Kp8bdxfLT8uZmcunqrPPBweTevPOSwuPpDnAe0ggO+IKsduW66OFRcvs+DfobF/TSUZLuLW7CWmtFT1iPR43PS/KSFSK7l8L0HW8/TT2NLpWqe525KDnuu52sLQdoho/Fxd+w8F0+yKLp2yfOWv05FpZU92nl8yuq0fUbmMo13Kv0GD2AuG2k/3mfeUNz82XeZnjxtW1BHVM8+TzZddaLNrTX/ivJFzRjmlFda9DoZqzAysbEGNc0svcutvcDhYnsWvYWUrZyy094w21B0m8v8js4bhTG4RJI+Npe5j3hxAuAfRse4A+K0a11KW0Iwi3jhj8zVq1G7hJPsKIugfMtMY0Nub83+H9l8+l8x97OdfFmIhfQjpDr5Uo+erImkXaDqcDw0t338bea0toVeitpy54wvqa11PcpNnRz/TMjqWCNjWjRezQBvqO+y1tjVZVKDctXkwWEm4vL5nt5M/nJ/ZZ8XLV298uHezztD8MT75TeNP3Sf415/6f4VPp/qI2d/N9PUpC6Isi+5ewtgwt8j42lzhI9pLQSBps2x8L+K5u9upfHRhB6LCffqVNxVbrrDGS8MinoHh7Glzi9uogXFxYWPHa6bUualG6juvTR+WRdVHCtnPDBSKyldDI6N4s5hsf5HeN/FX8JxqwU48yzhKM4prmT0eLzwm8cz2+Nx5HZealrSnpOK7+HkRKjTktYmp5dr3VFNHK8WLhY9hsSLj1FcbfUVb13CHeUdemoVHFGTV7QJpA3gHuA7tRsu1o/Li+xF7TzuruRAsh7RGhJIhAQBAXXJGYIYIHxTyBlnamXDjs4C4Fh2i/iqDa1hVrVFUprLxh+PuVt3bynNOC8hnfMMM8LIoJA8F132DhYNtpG4HEn/qo2TYVaNR1KscYxjVdueH0FpbThJuaK3l+u+T1UUh2ANneyRY/z4K2vKHTUJQ5s3LiHSU2jRZs2UYaS2dpIBsNL9z1D0VytLZd1vLehhZ617lT8JWzhrxXuZZLKXuLncXEuPe43PvuuxilCKiuWi7i6Ud2KS5Hby1HQuEnyx2k3Gjd42tv6IWjfTvIyXw6z+XujWuemTXRou1PmOgjY1jJ2hrQAAA/YD8K52ps69qSc5Q1favcr3a128uPivc5FS3B5Hue6QFzyXO3l4k3P1VvQltSEFCMFhacV/uM8fiorCXl7n5FFgzSDrabdTudI8QQvU57Vccbvivch/F/pr3PdjeYqR9LMxkzS5zCGgNfuSLAejZa1ns+5p14znHRc8r3MVK2qqayvL3K9l+PDTA01LgJQTcEycA7o3AFuCtLyV/0jVGOY47PdG5cfEOTUFp9Pct/9UUNrc+3s4P4flVE9mXnFw49q9zR+Frf0+K9zgCmwb/c/wC0v8K0VTav9C/Nf7jZzd9Xl7nRwzEsLpr8zIxt+JtISbdpLfctO4t9o1/mR8V7mGpSuJ/iXivc4WYK6lqa+FxeHQhtpHDULekey/YrKxoXFC1kksT5LT3NmhTq06UsLU7eFYhhlLq5mVrdXEnnCduHFqrrm32jc46SHDtXua9SlcT/ABLxXuMWxDDKrTz0wdovptzg9K1+Dd+AS2t9oW+ejhx62uX/ALdop0rmnndXl7nijhwYG+sHvMpHiLLZnU2q1+HxX+4yZu/1j3OpiGZKMwSMZM3djmtAa4fVsAOitOhs+7VWM5R0z1r3MMbatvLTy9zi5WzBBTUL2veOcBc5rLOu426IuBbcqw2jYVbi5Tivs6ZeV+vA2Lq3nUrZxodBuJ4fiDWicNZJbg7ouHsv4Eeq61nbXtk/utY/TxWjMLp17d5jw/XLifLMs4bGdTpLgdT5WlvuAJ80/aN/PRRSfYnnxYldV5LCXgyLHs3wsiMNJubaA4CzGDh0b8TbhbZZbLZdWVTpbjv5Z6+09UbOcpb0ygro0y1SwEJRGhJIhAQBAFOWEgoQCa5yOQU56hyCgBFoAjAUhBQSEIwEWnABAEAQPUISEIwEYCAKMEhSQFOST8soB+oRqEAQIjQkkQgIAgCAIAgCAIAgCAIAgCAIAgCAIAhIugCEBAEAQC6EhCAgCAIERoSSIQEzgHWy06lErvlfoaejs49K4+z6rrRvlcOmnb/iz3aYfW12GvcKo4JUi84dgmH1EfORRtc25F+mNxxBBXO3F9fUJbtR4f66mVlStXpvEmzxYhT4VBIY5WhrgAbaZTseG4uFs0Ku0q0N+Gq717mSErmosp+J8UrcHlcGN0XPAOEjb9xdYKaktq045a070/J5Jl8VBZZJmjL1NDRyyRxBrmhtjc7Xe0dZ7CvGz7+4q3EYTejz5Ni2uKk6qUpfrBn0bC4hrdyTYDtJO37LqJNRi2+C8i2k8avl6GoUmUaVsbA+IOcAA4knc9fA9q5Crta4c3uywslHO6qOWkjP8xYd8mqZIx6PpM9l24/ceC6WyuOnoxn+slrb1Okgpfn3njoy3nGc56Gpuv2dQ1cN+F1nq7zg9zjjT0Ms97deOOGaBhtFhdS4shYHOA1WtI3a4F+lbtC5q4uNoUFvVNF3r0ZU1JXVNZk9O8lxPCcNpmtdNGGhxsNpHb2v9W6x293f3DapvOP1zaIp1a9R4g2eGF2DOcANIv8AabK0eJIsFsy/asVnl3r3MkldpZ9V7noxLI8Ejb05LHW231MPffcd4KxUdt1oSxWSa56PPmeKd7UjpIz2WJzHFrhZzTYjsI2sunUk9Vw4lumpJPkdjLWXn1jyblsbfSdbfub2n4LSv7+FrHrk+C9zWuLiNJdpdpMMoKGMOkYwDhqeNbnH1bXPgFz0bm9uptQb+mi8StVSvVenE8QrsKqSIy1jSdgTGWeTgNvFbEqW0qC3st/Ve5k6O5prPV2onoMlU8bpC+8jTbQHcWje+448R5LFV2xXmoxWj4Pt8e8id5OSSWj5mcVLQJHgcA4geBIXU05NwT60vItotuKfYerB8KkqpRHGPW5x4NHaVjurqnb03Ob/AMnirVjSjvP8i8sy9Q0UeuoIeftSb3PYxgH8rnZX93dy3KSx3dvXqVjua1WWInn/AKjw0nSYNu3mW28uKz/s/aCWek16j38NcYznxRPUZXo6uLnKYhl+BZ6BPY5p4e4rDDaV1bT3K6z38fzTweY3VWjLE9Sh4lh8lPKY5RZw4dhHUWnsK6K3rwq01OmWlOpCrHeTPKs6XNGTlgIERoSSIQEAQJGkcnP0N33rv0sXJbc/iF/avNlPtD5q7vVlZz79Od7LfgVc7H/hF3s3LL5WWfeP5dZTUcMvS5x5a1wcdhdjnHa3aFFptCVa4lT0wlnyXqRQuZVKri+CPXPj8UmFGF7zz2lrbEEk6Xttc9wWCNhOF+q0V9nXxTR4jbyjcbyWmvkeLImG89Vh5F2xDWfa4N/c+Cz7XuFToNJ6y09zJe1XCnjmy31OPBuJR01+iWEO9t1nN9wt+JUkLDesnW5507tV5lfGg3Rczm8o2HaomTgbsOhx/wCLjtfud+pbOwrnEpUXz1Xf+kZ7CpiTg+fmZ+unwWvItXJv9Mf9079capNu/wANH+70kaN+l0a7/RnX5S/mIfvD+krS2C/vZ93qa+z/AMb7jP27mw4nhbj4Lp28ZbLfgtTW8qQSR0ULZAQ4A7HiAXEtHlbZcRtKdOpdScOGnkiguJRlUbiZtmSVr6ydzDcF21uBsANvG662zjKnbxUuKWpb26caSyahgdAKenjjA3DRqPa4i7j5rj7+u61ecu1pfmUlae/NyMzzTiLqirkJPRaSxg6gG7bd5BK6+wt40aEUuL1Lm1pqnBYOQFuGzjQvmVM1xsp+bqZLOYbNJBN29VyB1cPJc5tDZc5Vt+iuOuOoq7i0k55gtGUepcC95HAucR3EkroaSagk+pFjFbsUjUMmYaIKRh+vJ03Hr3A0jwHxXHbVuZVa7XKOi9yluqjnVb6ilZ2xAzVj236MRLGi/WPSPff4LoNlW6pW6fOWuSzs6e7ST5vU4CszaLRyfYgY6rmrnTKD3BzQSD5AjyVPtqgp0N/nH3NG+pqUN/mix5+w4S0vO26UW4PXpNg4H4+Cqti3Dp1tzkzTs57s8dZmi61cC6YQIjQkkQgIAgNI5OfobvvXfpYuR27j4lf2rzkVF+/vF3erJsXx+kp6nRNE4vABL9DHAAjbcm+yWtjdVqClTlp1ZfsY6dvUqQ3k9Dzcorw6jicDcGVpB7QY5Fl2JFq5knxSfmjJYLFRp9XqjOl1OnAt8cmafkbD+ZpA8jpS9M931B5fFchtev0txuco6fXn5FJe1N+pjq0KzWZcr5J3T6AHF+sHWzbfbr6rDyVzS2hZwpKm5acDcjcUFBQL9U04ngdHILa22cOwkersPwXL0Z9DWU48n/grIy3JKSMcqITG9zHekxxae9psV3lOSnFTXB6nQRkpJNcyzcm/0x/3Tv1xqm29/Dx/uXlI1L/5S7/RlwzHikVMxjpojIHOsAA02Nr36So7C2qXE5RpyxjUrqFGVRtRZ5MDzBSVEmhkfNyfVDmMF/ZLeJWxd2N1RjvSlldjfjoj3VtqtNZb0+p5s7PrI4i6OQCI7P0ts8X7XEnbut1LLslWs54nH7Xa9PP0PdoqTliS15dRn1IbSM7NTfiF01X5cu5+Raz/AAvHUzbOpcBwqfX1Od7DE6of6j7/AGnfEr6BDWKx1I6KH4V3HTy1FSukeKs2bp6PScN7+r1LVvp3EYJ0OPcYbmVXH3ZdoMpUEjQ5jS5rhcESPsR5rnZ7WvYSak9e5exWu6rLKb8EVrOOHUUDNMBtMHgObrc4hulxNwT26VbbMubqtNur+HHUlrldS7zdtJ1ZvM+GNPzNBw8gwx24aG27tIXM3OVVkn1lS+JkWN/S6j72T9bl29nj4en/AGryR0FH5ce5eR4lsGQ6+Ufp8FvtH9JutLaLXw08/rVGtdL7h/rmjScx2+R1F/8Aaf8Ap2XI2OfiKeP6l5oqKC+9j3ox9d3xOgXMIERoSSIQEAUah9ZpPJz9Dd9679LP4XJ7dX7wv7V5sp79/e/T3Kxn36c72G/Aq52O/wB1WOtm7Y/K16zx4jj0k9NHTuY0NjLSCNWo6Wlu9zbrWajYwpVpVk3mWnLs7Ow9wt405uab1PLg1AaiojiA9Jw1epo3cfIFZrqsqFJzb5f8HqtU3INmh5xxU0lOxsR0veQ1nA2a219uHCw8VzGzbZXNaUqmq597yVVrS6WbbKX/AFbWf7x/Kz+F0H7LtX/IWTtKX9Jbsj42+pZIyZ2p7SCDYC7SLdXYQfNUW17KFCUZ09E9MGhd0VTaceBweULDubqBM0dGUb+221794I8irLYtxv0nTb1j5cvI2bGpmG5LkfnJuf8AzH/dO/XGm3X+7xa/qXkz1tD5SXb6M6/KV8xD95/YVobBWKs+71NfZ/zH3FEonlssbhxa9pHeHBdLVW9CSfNMsqusH3Gr5pF6Ko9g+5cVZaXke8pKGOkjnrM2bgbzRmr1NDQbabG/phlx1dfuXWu8h8SqGNXnyfsWzrx6Xo+ZpWW8RFRSxvv0gA147HNFj58fFcntCg6NeWnF5X1Ki4p7k2jPc44U6nqXmx5uQlzD1XO7mn1g38F1GzbqNeis8UWtpWU6eG9UcNWGnF/8G1yNbypTOiooWvBBsSQerUdQv4FcRtSrGpcycShuZKVWTRm+ZvptR7ZXXWXyIdxb2vyol6yNigmphGT04uiR2t+q79vBczte2dKtvrhLX6lXeUt2eeTKvnzDHRVRlAOiU3v1B/1gezqKudj3EalHcz9qOF+vyN6zqqVPd5orStuw3C3cnuFOdMahwOhgIae1zhY27gT5qj21cqNLolxfhh59DRvqqUdxcWdflBxQMgEDT05Nz6mtI495+BWjsW2c6vTPgjXsaW9Pe6jOl1OOfMtwpCI0JJEICA6+Waunilc6pYHtLbAFgfZ2oG9j6gVo31GvUpqNCTTz146zXuYVJRxTZcKfOVFG0NY1zWjgGsAA7gFRT2PdVHmby+1/5K6VnWk8vzIavNGHym8sWsjYF0TXG3istLZl7TWITwuyX+T3G1uI6J+JQaggucWiwJJA7ASbe5dJTyoqMuJaxTxqXrCs0UMDGhsel2kBxbG0XIG9yOO91z11s27rTeZZXVn/ACVVS2uJ8X4k1XmugmtzsRfa9tUQda/G1+HV5LFT2VeUs7ksZ6njyZELWvH8Lx3MpdZPE6rMjG2i1hwaG26IIuNPnsuhpQmqKjJ5l3ljBTVPEnr3lzps04fESYotBPEtia0kdhsueqbMvaixOee959Sula15fiefqSz5yopG6Xsc5p4h0YI8ivENkXcHmDx3PHqQrSsnleZFS5pw+IkxxaCRYlsTQSOwkLJU2Ze1NJzyu2WfUmVtcS0k8/U+6nN9DKNMjHPHGzowR5Feaeybym8wljuePJkRtK8dY6fUp2YaqGSfXTMDGaRsGho1Ak3sPDyV7ZU6saO7WeX15yWNCnOMMTev5l5w/N1LLEOdcGOIs5rgSOw2NrEH91z9bZNzCq5U9dc5KypaVYy+yjgZszDDJCKalFo7guIbpbYbhrRbt3urHZ2z6tOo61fj26/XJtWtvNT36nE4eB43JRyao9wfSYb2cB8D2FWF3aU7mGJceT6jar0I1Y4ZeIs2UVQzTONN+LJG6h4EAhc+9l3dGW9Sf1Tx4FY7WtB5ieb/APSwmE62MYXDcaY3OIPquLBZnb7Sq/ZlLC72elSuZrGX+ZFSZ9aZXc5EWxW6Nuk4G/1uo3HUOFutTV2DLo1uyzLn2+J6ls+W6t15fMqGM1TZqmWRt9L3Ei4sbesK+t6bp0owfFFhRg4U0nyIsPrZIJBJE4hw8iOsEdY9SmtRhWg4TWUTOnGcd2XAu9JnSnmZoq4rX2O2tjvXa1wufnsivSlvW8vT11K2djUg8036H5fBgdXQ7v8AUI/KvWNq4w/z/wAj964an5iOdoo2aKSO9tgSNDG9zev3LzQ2NVnPfuJevjk9U7Kcnmoyj1VS+V7nyOLnONySfh2D1LoadONOKjFYSLGMFFbqIlkPYQIjQkkQgIAi46gIAg0CnTmEgi0QCjvGMi6ELjgISEAQBGktSE+TCkBee4BOwaBTwGQnaAmCVgIMZCPCHaEeOKICcSQmSMIKGNAiwSFICBEaEkiEBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQIjQkkQgIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCBEaEkiEBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQIjQkkQgIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCBEaEkiEBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQIjQkkQgIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCBEaEkiEBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQIjQkkQgIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCBEaEn//2Q==
+name: Wells Fargo Bluecoat Categories
+script:
+  commands:
+  - arguments:
+    - default: true
+      description: A domain for which to retrieve proxy categories.
+      name: domain
+    - description: An ipv4 address for which to retrieve proxy categories.
+      name: ip
+    - description: A URL for which to retrieve proxy categories.
+      name: url
+    description: Retrieves internal proxy categories for an IP, domain, or URL.
+    name: wfb-proxy-categories
+  - arguments:
+    - description: IP address to check
+      name: ip
+      required: true
+    description: Check IP Reputation
+    name: ip
+    outputs:
+    - contextPath: IP.WF.ProxyCategories
+      description: Wells Fargo Proxy Categories
+  - arguments:
+    - description: Domain name to check reputation
+      name: domain
+      required: true
+    description: Check domain reputation
+    name: domain
+  - arguments:
+    - name: url
+      required: true
+    description: Check URL Reputation
+    name: url
+  runonce: false
+  script: |+
+    import json
+    import urllib2
+    import ssl
+
+    #Ignore system proxy settings
+    urllib2.getproxies = lambda: {}
+
+    #create a context to ignore the invalid cert for the internal application
+    ctx = ssl.create_default_context()
+    ctx.check_hostname = False
+    ctx.verify_mode = ssl.CERT_NONE
+
+
+    tool_url = demisto.params()['URL']
+    lookup_item = None
+
+    arg_count = 0
+    root_key = ''
+    sub_key = ''
+    if 'domain' in demisto.args():
+        arg_count += 1
+        lookup_item = demisto.args()['domain']
+        root_key = 'Domain'
+        sub_key = 'Name'
+    elif 'url' in demisto.args():
+        arg_count += 1
+        lookup_item = demisto.args()['url']
+        root_key = 'URL'
+        sub_key = 'Data'
+    elif 'ip' in demisto.args():
+        arg_count += 1
+        lookup_item = demisto.args()['ip']
+        root_key = 'IP'
+        sub_key = 'Address'
+
+    dt_selector = '{0}(val.{1} && val.{1} == obj.{1})'.format(root_key,sub_key)
+    # The command demisto.command() holds the command sent from the user.
+    if demisto.command() == 'test-module':
+        # This is the call made when pressing the integration test button.
+        response = urllib2.urlopen(tool_url + 'google.com', context=ctx)
+        demisto.results('ok')
+        sys.exit(0)
+    if demisto.command() in ['wfb-proxy-categories','ip','domain','url']:
+        res = []
+        try:
+            assert arg_count == 1, 'Too many arguments: only 1 ip, domain, or url expected'
+            response = urllib2.urlopen(tool_url + lookup_item, context=ctx)
+            string_response = response.read()
+            dict_response = json.loads(string_response)
+            context = {root_key : {sub_key: lookup_item, 'WF': {'ProxyCategories': dict_response }}}
+            markdown = ''
+            for pair in dict_response.items():
+                if len(markdown) == 0:
+                    markdown += '**Webfilter Database**|**Categories**\n---|---\n'
+                markdown += '{0}|{1}\n'.format(pair[0], ', '.join(pair[1]))
+            res.append({'Type': entryTypes['note'], 'ContentsFormat': formats['markdown'], 'Contents': markdown, 'EntryContext': {dt_selector: [context]} })
+            #res.append({'Type': entryTypes['note'], 'ContentsFormat': formats['markdown'], 'Contents': markdown })
+        except Exception as ex:
+            res.append({'Type': entryTypes['error'], 'ContentsFormat': formats['text'], 'Contents': str(ex)})
+        demisto.results(res)
+
+
+
+  subtype: python2
+  type: python

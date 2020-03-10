@@ -1,0 +1,1543 @@
+category: Email Gateway
+commonfields:
+  id: MicrosoftGraphMail
+  version: -1
+configuration:
+- defaultvalue: https://graph.microsoft.com
+  display: Server URL
+  name: url
+  required: true
+  type: 0
+- defaultvalue: ""
+  display: ID (received from the admin consent - see Detailed Instructions (?)
+  name: auth_id
+  required: true
+  type: 4
+- defaultvalue: ""
+  display: Token (received from the admin consent - see Detailed Instructions (?)
+    section)
+  name: tenant_id
+  required: true
+  type: 4
+- defaultvalue: ""
+  display: Key (received from the admin consent - see Detailed Instructions (?)
+  name: enc_key
+  required: true
+  type: 4
+- defaultvalue: ""
+  display: Trust any certificate (not secure)
+  name: insecure
+  required: false
+  type: 8
+- defaultvalue: ""
+  display: Use system proxy settings
+  name: proxy
+  required: false
+  type: 8
+- defaultvalue: ""
+  display: Use a self deployed Azure Application
+  name: self_deployed
+  required: false
+  type: 8
+description: Microsoft Graph lets your app get authorized access to a user's Outlook
+  mail data in a personal or organization account.
+detaileddescription: |-
+  To allow us access to Microsoft Graph Mail, an admin has to approve our app using an admin consent flow, by clicking on the following [link](https://oproxy.demisto.ninja/ms-graph-mail).
+  After authorizing the Demisto app, you will get an ID, Token, and Key, which should be inserted in the integration instance configuration's corresponding fields.
+display: Microsoft Graph Mail
+image: data:image/png;base64,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
+name: MicrosoftGraphMail
+script:
+  commands:
+  - arguments:
+    - description: User ID from which to pull mails (can be principal ID (email address)).
+      isArray: true
+      name: user_id
+      required: true
+    - description: ' A comma-separated list of folder IDs, in the format: (mail_box,child_mail_box,child_mail_box). '
+      name: folder_id
+    - description: An OData query.
+      name: odata
+    - description: 'The term for which to search. This argument cannot contain reserved
+        characters such as !, $, #, @, etc. For further information, see https://tools.ietf.org/html/rfc3986#section-2.2'
+      name: search
+    - default: true
+      defaultValue: "1"
+      description: The number of pages of emails to return (maximum is 10 emails per
+        page).
+      name: pages_to_pull
+    description: Gets the properties of returned emails.
+    name: msgraph-mail-list-emails
+    outputs:
+    - contextPath: MSGraphMail.ID
+      description: The ID of the email.
+      type: String
+    - contextPath: MSGraphMail.Created
+      description: The time the email was created.
+      type: Date
+    - contextPath: MSGraphMail.LastModifiedTime
+      description: The time the email was last modified.
+      type: Date
+    - contextPath: MSGraphMail.ReceivedTime
+      description: The time the email was received.
+      type: Date
+    - contextPath: MSGraphMail.SendTime
+      description: The time the email was sent.
+      type: Date
+    - contextPath: MSGraphMail.Categories
+      description: Categories of the email.
+      type: String
+    - contextPath: MSGraphMail.HasAttachments
+      description: Whether the email has attachments.
+      type: Boolean
+    - contextPath: MSGraphMail.Subject
+      description: The subject of email.
+      type: String
+    - contextPath: MSGraphMail.IsDraft
+      description: Whether the email is a draft.
+      type: Boolean
+    - contextPath: MSGraphMail.Body
+      description: The content (body) of the email.
+      type: String
+    - contextPath: MSGraphMail.Sender.Name
+      description: The name of sender.
+      type: String
+    - contextPath: MSGraphMail.Sender.Address
+      description: The email address of the sender.
+      type: String
+    - contextPath: MSGraphMail.From.Name
+      description: The name of the user in the 'from' field of the email.
+      type: String
+    - contextPath: MSGraphMail.From.Address
+      description: The email address of the user in the 'from' field of the email
+      type: String
+    - contextPath: MSGraphMail.CCRecipients.Name
+      description: The names of the CC recipients.
+      type: String
+    - contextPath: MSGraphMail.CCRecipients.Address
+      description: The email address of the user in the 'cc' field of the email.
+      type: String
+    - contextPath: MSGraphMail.BCCRecipients.Name
+      description: The names of the users in the 'bcc' field of the email.
+      type: String
+    - contextPath: MSGraphMail.BCCRecipients.Address
+      description: The email address of the user in the 'bcc' field of the email.
+      type: String
+    - contextPath: MSGraphMail.ReplyTo.Name
+      description: The name in the 'replyTo' field of the email.
+      type: String
+    - contextPath: MSGraphMail.ReplyTo.Address
+      description: The email address in the 'replyTo' field of the email.
+      type: String
+    - contextPath: MSGraphMail.UserID
+      description: The ID of the user.
+      type: String
+  - arguments:
+    - description: User ID or principal ID (usually an email address in the format
+        someuser@example.com).
+      name: user_id
+      required: true
+    - description: The message ID.
+      name: message_id
+      required: true
+    - description: The folder ID.
+      name: folder_id
+    - description: OData.
+      name: odata
+    - auto: PREDEFINED
+      description: Whether to return the message body. Can ge "true" or "false".
+      name: get_body
+      predefined:
+      - "true"
+      - "false"
+    description: Returns the properties of an email.
+    name: msgraph-mail-get-email
+    outputs:
+    - contextPath: MSGraphMail.ID
+      description: The ID of the email.
+      type: String
+    - contextPath: MSGraphMail.Created
+      description: The time the email was created.
+      type: Date
+    - contextPath: MSGraphMail.LastModifiedTime
+      description: The time the email was last modified.
+      type: Date
+    - contextPath: MSGraphMail.ReceivedTime
+      description: The time the email was received.
+      type: Date
+    - contextPath: MSGraphMail.SendTime
+      description: The time the email was sent.
+      type: Date
+    - contextPath: MSGraphMail.Categories
+      description: Categories of the email.
+      type: String
+    - contextPath: MSGraphMail.HasAttachments
+      description: Whether the email has attachments.
+      type: Boolean
+    - contextPath: MSGraphMail.Subject
+      description: The subject of email.
+      type: String
+    - contextPath: MSGraphMail.IsDraft
+      description: Whether the email is a draft.
+      type: Boolean
+    - contextPath: MSGraphMail.Body
+      description: The content (body) of the email.
+      type: String
+    - contextPath: MSGraphMail.Sender.Name
+      description: The name of sender.
+      type: String
+    - contextPath: MSGraphMail.Sender.Address
+      description: The email address of the sender.
+      type: String
+    - contextPath: MSGraphMail.From.Name
+      description: The name of the user in the 'from' field of the email.
+      type: String
+    - contextPath: MSGraphMail.From.Address
+      description: The email address of the user in the 'from' field of the email.
+      type: String
+    - contextPath: MSGraphMail.CCRecipients.Name
+      description: The names of the users in the 'cc' field of the email.
+      type: String
+    - contextPath: MSGraphMail.CCRecipients.Address
+      description: The email address of the user in the 'cc' field of the email.
+      type: String
+    - contextPath: MSGraphMail.BCCRecipients.Name
+      description: The names of the users in the 'bcc' field of the email.
+      type: String
+    - contextPath: MSGraphMail.BCCRecipients.Address
+      description: The email address of the user in the 'bcc' field of the email.
+      type: String
+    - contextPath: MSGraphMail.ReplyTo.Name
+      description: The name in the 'replyTo' field of the email.
+      type: String
+    - contextPath: MSGraphMail.ReplyTo.Address
+      description: The email address in the 'replyTo' field of the email.
+      type: String
+    - contextPath: MSGraphMail.UserID
+      description: The ID of the user.
+      type: String
+  - arguments:
+    - description: User ID or principal ID (usually an email address in the format
+        someuser@example.com).
+      name: user_id
+      required: true
+    - description: Message ID.
+      name: message_id
+      required: true
+    - description: A comma-separated list of folder IDs. For example, mailFolders,childFolders,childFolders.
+      name: folder_id
+    description: Deletes an email.
+    name: msgraph-mail-delete-email
+  - arguments:
+    - description: User ID or principal ID (usually an email address in the format
+        someuser@example.com).
+      name: user_id
+      required: true
+    - description: Message ID.
+      name: message_id
+      required: true
+    - description: ' A comma-separated list of folder IDs, in the format: (mail_box,child_mail_box,child_mail_box). '
+      name: folder_id
+    description: Lists all of the attachments of given email
+    name: msgraph-mail-list-attachments
+    outputs:
+    - contextPath: MSGraphMailAttachment.ID
+      description: The email ID.
+      type: String
+    - contextPath: MSGraphMailAttachment.Attachment.ID
+      description: The ID of the attachment.
+      type: String
+    - contextPath: MSGraphMailAttachment.Attachment.Name
+      description: The name of the attachment.
+      type: String
+    - contextPath: MSGraphMailAttachment.Attachment.Type
+      description: The attachment type.
+      type: String
+    - contextPath: MSGraphMailAttachment.UserID
+      description: The ID of the user.
+      type: String
+  - arguments:
+    - description: User ID or principal ID (usually an email address in the format
+        someuser@example.com).
+      name: user_id
+      required: true
+    - description: Message ID.
+      name: message_id
+      required: true
+    - description: 'A comma-separated list of folder IDs, in the format: (mail_box,child_mail_box,child_mail_box).'
+      name: folder_id
+    - description: ID of the attachment.
+      name: attachment_id
+      required: true
+    description: Gets an attachment from the email.
+    name: msgraph-mail-get-attachment
+    outputs:
+    - contextPath: File.Size
+      description: The size of the file.
+      type: Number
+    - contextPath: File.SHA1
+      description: The SHA1 hash of the file.
+      type: String
+    - contextPath: File.SHA256
+      description: The SHA256 hash of the file.
+      type: String
+    - contextPath: File.Name
+      description: The name of the file.
+      type: String
+    - contextPath: File.SSDeep
+      description: The SSDeep hash of the file.
+      type: String
+    - contextPath: File.EntryID
+      description: The entry ID of the file.
+      type: String
+    - contextPath: File.Info
+      description: File information.
+      type: String
+    - contextPath: File.Type
+      description: The file type.
+      type: String
+    - contextPath: File.MD5
+      description: The MD5 hash of the file.
+      type: String
+    - contextPath: File.Extension
+      description: The file extension.
+      type: String
+  - arguments:
+    - description: User ID or principal ID (usually an email address in the format
+        someuser@example.com).
+      name: user_id
+      required: true
+    - defaultValue: "20"
+      description: The maximum number of mail folder lists to return. Default is 20.
+      name: limit
+    description: Returns the mail folder list directly under the root folder.
+    name: msgraph-mail-list-folders
+    outputs:
+    - contextPath: MSGraphMail.Folders.ChildFolderCount
+      description: The number of child folders.
+      type: Number
+    - contextPath: MSGraphMail.Folders.DisplayName
+      description: The folder display name.
+      type: String
+    - contextPath: MSGraphMail.Folders.ID
+      description: The target folder ID.
+      type: String
+    - contextPath: MSGraphMail.Folders.ParentFolderID
+      description: The parent folder ID.
+      type: String
+    - contextPath: MSGraphMail.Folders.TotalItemCount
+      description: The total number of email messages in the folder.
+      type: Number
+    - contextPath: MSGraphMail.Folders.UnreadItemCount
+      description: The number of unread emails in the folder.
+      type: Number
+  - arguments:
+    - description: User ID or principal ID (usually an email address in the format
+        someuser@example.com).
+      name: user_id
+      required: true
+    - description: The ID of the parent folder.
+      name: parent_folder_id
+      required: true
+    - defaultValue: "20"
+      description: The maximum number of mail folder lists to return. Default is 20.
+      name: limit
+    description: Returns the folder list under the specified folder.
+    name: msgraph-mail-list-child-folders
+    outputs:
+    - contextPath: MSGraphMail.Folders.ChildFolderCount
+      description: The number of child folders.
+      type: Number
+    - contextPath: MSGraphMail.Folders.DisplayName
+      description: The folder display name.
+      type: String
+    - contextPath: MSGraphMail.Folders.ID
+      description: The folder ID.
+      type: String
+    - contextPath: MSGraphMail.Folders.ParentFolderID
+      description: The parent folder ID.
+      type: String
+    - contextPath: MSGraphMail.Folders.TotalItemCount
+      description: The total number of email messages in the folder.
+      type: Number
+    - contextPath: MSGraphMail.Folders.UnreadItemCount
+      description: The number of unread email messages in the folder.
+      type: Number
+  - arguments:
+    - description: User ID or principal ID (usually an email address in the format
+        someuser@example.com).
+      name: user_id
+      required: true
+    - description: The display name of the new folder.
+      name: new_folder_name
+      required: true
+    - description: The ID of the parent folder under which to create a new folder.
+      name: parent_folder_id
+    description: Creates a new folder under specified the specified folder (parent).
+    name: msgraph-mail-create-folder
+    outputs:
+    - contextPath: MSGraphMail.Folders.ChildFolderCount
+      description: The number of child folders.
+      type: Number
+    - contextPath: MSGraphMail.Folders.DisplayName
+      description: The folder display name.
+      type: String
+    - contextPath: MSGraphMail.Folders.ID
+      description: The folder ID.
+      type: String
+    - contextPath: MSGraphMail.Folders.ParentFolderID
+      description: The parent folder ID.
+      type: String
+    - contextPath: MSGraphMail.Folders.TotalItemCount
+      description: The total number of email messages in the folder.
+      type: Number
+    - contextPath: MSGraphMail.Folders.UnreadItemCount
+      description: The number of unread email messages in the folder.
+      type: Number
+  - arguments:
+    - description: User ID or principal ID (usually an email address in the format
+        someuser@example.com).
+      name: user_id
+      required: true
+    - description: The ID of the folder to update.
+      name: folder_id
+      required: true
+    - description: The mail folder display name.
+      name: new_display_name
+      required: true
+    description: Updates the properties of the specified folder.
+    name: msgraph-mail-update-folder
+    outputs:
+    - contextPath: MSGraphMail.Folders.ChildFolderCount
+      description: The number of child folders.
+      type: String
+    - contextPath: MSGraphMail.Folders.DisplayName
+      description: The folder display name.
+      type: String
+    - contextPath: MSGraphMail.Folders.ID
+      description: The folder ID.
+      type: String
+    - contextPath: MSGraphMail.Folders.ParentFolderID
+      description: The parent folder ID.
+      type: String
+    - contextPath: MSGraphMail.Folders.TotalItemCount
+      description: The total number of email messages in the folder.
+      type: Number
+    - contextPath: MSGraphMail.Folders.UnreadItemCount
+      description: The unread emails count inside the folder.
+      type: Number
+  - arguments:
+    - description: User ID or principal ID (usually an email address in the format
+        someuser@example.com).
+      name: user_id
+      required: true
+    - description: The ID of the folder to delete.
+      name: folder_id
+      required: true
+    description: Deletes the specified mail folder.
+    name: msgraph-mail-delete-folder
+  - arguments:
+    - description: Message ID.
+      name: message_id
+      required: true
+    - description: The ID of the destination folder.
+      name: destination_folder_id
+      required: true
+    - description: User ID or principal ID (usually an email address in the format
+        someuser@example.com).
+      name: user_id
+      required: true
+    description: Moves a message to a different folder.
+    name: msgraph-mail-move-email
+    outputs:
+    - contextPath: MSGraphMail.MovedEmails.DestinationFolderID
+      description: The folder where the email message was moved.
+      type: String
+    - contextPath: MSGraphMail.MovedEmails.ID
+      description: The new ID of the moved email message.
+      type: String
+    - contextPath: MSGraphMail.MovedEmails.UserID
+      description: The user ID.
+      type: String
+  - arguments:
+    - description: User ID or principal ID (usually an email address in the format
+        someuser@example.com).
+      name: user_id
+      required: true
+    - description: The message ID.
+      name: message_id
+      required: true
+    description: Retrieves an email message by message ID and uploads the content
+      as an EML file.
+    name: msgraph-mail-get-email-as-eml
+    outputs:
+    - contextPath: File.Size
+      description: The size of the file.
+      type: String
+    - contextPath: File.SHA1
+      description: The SHA1 hash of the file.
+      type: String
+    - contextPath: File.SHA256
+      description: The SHA256 hash of the file.
+      type: String
+    - contextPath: File.SHA512
+      description: The SHA512 hash of the file.
+      type: String
+    - contextPath: File.Name
+      description: The name of the file.
+      type: String
+    - contextPath: File.SSDeep
+      description: The SSDeep hash of the file.
+      type: String
+    - contextPath: File.EntryID
+      description: The EntryID of the file.
+      type: String
+    - contextPath: File.Info
+      description: Information about the file.
+      type: String
+    - contextPath: File.Type
+      description: The file type.
+      type: String
+    - contextPath: File.MD5
+      description: The MD5 hash of the file.
+      type: String
+    - contextPath: File.Extension
+      description: The extension of the file.
+      type: String
+  dockerimage: demisto/crypto:1.0.0.303
+  runonce: false
+  script: |2
+
+
+
+    from typing import Union, Optional
+
+    ''' IMPORTS '''
+    import requests
+    import base64
+    import binascii
+
+    # Disable insecure warnings
+    requests.packages.urllib3.disable_warnings()
+
+    ''' GLOBAL VARS '''
+
+    CONTEXT_FOLDER_PATH = 'MSGraphMail.Folders(val.ID && val.ID === obj.ID)'
+    CONTEXT_COPIED_EMAIL = 'MSGraphMail.MovedEmails(val.ID && val.ID === obj.ID)'
+
+    FOLDER_MAPPING = {
+        'id': 'ID',
+        'displayName': 'DisplayName',
+        'parentFolderId': 'ParentFolderID',
+        'childFolderCount': 'ChildFolderCount',
+        'unreadItemCount': 'UnreadItemCount',
+        'totalItemCount': 'TotalItemCount'
+    }
+
+    ''' CLIENT '''
+
+
+    class MsGraphClient:
+        def __init__(self, ms_client):
+            self.ms_client = ms_client
+
+        def pages_puller(self, response: dict, page_count: int) -> list:
+            """ Gets first response from API and returns all pages
+
+            Args:
+                response (dict):
+                page_count (int):
+
+            Returns:
+                list: list of all pages
+            """
+            responses = [response]
+            i = page_count
+            while i != 0:
+                next_link = response.get('@odata.nextLink')
+                if next_link:
+                    responses.append(
+                        self.ms_client.http_request('GET', full_url=next_link, url_suffix=None)
+                    )
+
+                else:
+                    return responses
+                i -= 1
+            return responses
+
+        def list_mails(self, user_id: str, folder_id: str = '', search: str = None, odata: str = None) -> Union[dict, list]:
+            """Returning all mails from given user
+
+            Args:
+                user_id (str):
+                folder_id (str):
+                search (str):
+                odata (str):
+
+            Returns:
+                dict or list:
+            """
+            no_folder = f'/users/{user_id}/messages/'
+            with_folder = f'/users/{user_id}/{build_folders_path(folder_id)}/messages/'
+            pages_to_pull = demisto.args().get('pages_to_pull', 1)
+
+            if search:
+                odata = f'?{odata}$search={search}' if odata else f'?$search={search}'
+            suffix = with_folder if folder_id else no_folder
+            if odata:
+                suffix += odata
+            response = self.ms_client.http_request('GET', suffix)
+            return self.pages_puller(response, assert_pages(pages_to_pull))
+
+        def delete_mail(self, user_id: str, message_id: str, folder_id: str = None) -> bool:
+            """
+
+            Args:
+                user_id (str):
+                message_id (str):
+                folder_id (str):
+
+            Returns:
+                bool
+            """
+            with_folder = f'/users/{user_id}/{build_folders_path(folder_id)}/messages/{message_id}'  # type: ignore
+            no_folder = f'/users/{user_id}/messages/{message_id}'
+            suffix = with_folder if folder_id else no_folder
+            self.ms_client.http_request('DELETE', suffix)
+            return True
+
+        def get_attachment(self, message_id: str, user_id: str, attachment_id: str, folder_id: str = None) -> dict:
+            """
+
+            Args:
+                message_id (str):
+                user_id (str_:
+                attachment_id (str):
+                folder_id (str):
+
+            Returns:
+                dict:
+            """
+            no_folder = f'/users/{user_id}/messages/{message_id}/attachments/{attachment_id}'
+            with_folder = (f'/users/{user_id}/{build_folders_path(folder_id)}/'  # type: ignore
+                           f'messages/{message_id}/attachments/{attachment_id}')
+            suffix = with_folder if folder_id else no_folder
+            response = self.ms_client.http_request('GET', suffix)
+            return response
+
+        def get_message(self, user_id: str, message_id: str, folder_id: str = '', odata: str = '') -> dict:
+            """
+
+            Args:
+                user_id (str): User ID to pull message from
+                message_id (str): Message ID to pull
+                folder_id: (str) Folder ID to pull from
+                odata (str): OData query
+
+            Returns
+                dict: request json
+            """
+            no_folder = f'/users/{user_id}/messages/{message_id}/'
+            with_folder = (f'/users/{user_id}/{build_folders_path(folder_id)}'  # type: ignore
+                           f'/messages/{message_id}/')
+
+            suffix = with_folder if folder_id else no_folder
+            if odata:
+                suffix += odata
+            response = self.ms_client.http_request('GET', suffix)
+
+            # Add user ID
+            response['userId'] = user_id
+            return response
+
+        def list_attachments(self, user_id: str, message_id: str, folder_id: str) -> dict:
+            """Listing all the attachments
+
+            Args:
+                user_id (str):
+                message_id (str):
+                folder_id (str):
+
+            Returns:
+                dict:
+            """
+            no_folder = f'/users/{user_id}/messages/{message_id}/attachments/'
+            with_folder = f'/users/{user_id}/{build_folders_path(folder_id)}/messages/{message_id}/attachments/'
+            suffix = with_folder if folder_id else no_folder
+            return self.ms_client.http_request('GET', suffix)
+
+        def list_folders(self, user_id: str, limit: str = '20') -> dict:
+            """List folder under root folder (Top of information store)
+
+            Args:
+                user_id (str): User id or mailbox address
+                limit (str): Limit number of returned folder collection
+
+            Returns:
+                dict: Collection of folders under root folder
+            """
+            suffix = f'/users/{user_id}/mailFolders?$top={limit}'
+            return self.ms_client.http_request('GET', suffix)
+
+        def list_child_folders(self, user_id: str, parent_folder_id: str, limit: str = '20') -> list:
+            """List child folder under specified folder.
+
+            Args:
+                user_id (str): User id or mailbox address
+                parent_folder_id (str): Parent folder id
+                limit (str): Limit number of returned folder collection
+
+            Returns:
+                list: Collection of folders under specified folder
+            """
+            # for additional info regarding OData query https://docs.microsoft.com/en-us/graph/query-parameters
+            suffix = f'/users/{user_id}/mailFolders/{parent_folder_id}/childFolders?$top={limit}'
+            return self.ms_client.http_request('GET', suffix)
+
+        def create_folder(self, user_id: str, new_folder_name: str, parent_folder_id: str = None) -> dict:
+            """Create folder under specified folder with given display name
+
+            Args:
+                user_id (str): User id or mailbox address
+                new_folder_name (str): Created folder display name
+                parent_folder_id (str): Parent folder id under where created new folder
+
+            Returns:
+                dict: Created folder data
+            """
+
+            suffix = f'/users/{user_id}/mailFolders'
+            if parent_folder_id:
+                suffix += f'/{parent_folder_id}/childFolders'
+
+            json_data = {'displayName': new_folder_name}
+            return self.ms_client.http_request('POST', suffix, json_data=json_data)
+
+        def update_folder(self, user_id: str, folder_id: str, new_display_name: str) -> dict:
+            """Update folder under specified folder with new display name
+
+            Args:
+                user_id (str): User id or mailbox address
+                folder_id (str): Folder id to update
+                new_display_name (str): New display name of updated folder
+
+            Returns:
+                dict: Updated folder data
+            """
+
+            suffix = f'/users/{user_id}/mailFolders/{folder_id}'
+            json_data = {'displayName': new_display_name}
+            return self.ms_client.http_request('PATCH', suffix, json_data=json_data)
+
+        def delete_folder(self, user_id: str, folder_id: str):
+            """Deletes folder under specified folder
+
+            Args:
+                user_id (str): User id or mailbox address
+                folder_id (str): Folder id to delete
+            """
+
+            suffix = f'/users/{user_id}/mailFolders/{folder_id}'
+            return self.ms_client.http_request('DELETE', suffix)
+
+        def move_email(self, user_id: str, message_id: str, destination_folder_id: str) -> dict:
+            """Moves email to destination folder
+
+            Args:
+                user_id (str): User id or mailbox address
+                message_id (str): The message id to move
+                destination_folder_id (str): Destination folder id
+
+            Returns:
+                dict: Moved email data
+            """
+
+            suffix = f'/users/{user_id}/messages/{message_id}/move'
+            json_data = {'destinationId': destination_folder_id}
+            return self.ms_client.http_request('POST', suffix, json_data=json_data)
+
+        def get_email_as_eml(self, user_id: str, message_id: str) -> str:
+            """Returns MIME content of specified message
+
+            Args:
+                user_id (str): User id or mailbox address
+                message_id (str): The message id of the email
+
+            Returns:
+                str: MIME content of the email
+            """
+
+            suffix = f'/users/{user_id}/messages/{message_id}/$value'
+            return self.ms_client.http_request('GET', suffix, resp_type='text')
+
+
+    ''' HELPER FUNCTIONS '''
+
+
+    def assert_pages(pages: Union[str, int]) -> int:
+        """
+
+        Args:
+            pages (str or int): pages need to pull in int or str
+
+        Returns:
+            int: default 1
+
+        """
+        if isinstance(pages, str) and pages.isdigit():
+            return int(pages)
+        elif isinstance(pages, int):
+            return pages
+        return 1
+
+
+    def build_folders_path(folder_string: str) -> Optional[str]:
+        """
+
+        Args:
+            folder_string (str): string with `,` delimiter. first one is mailFolders all other are child
+
+        Returns:
+            str or None:  string with path to the folder and child folders
+        """
+        if isinstance(folder_string, str):
+            path = 'mailFolders/'
+            folders_list = argToList(folder_string, ',')
+            first = True
+            for folder in folders_list:
+                if first:
+                    path += folder
+                    first = False
+                else:
+                    path += f'/childFolders/{folder}'
+            return path
+        return None
+
+
+    def build_mail_object(raw_response: Union[dict, list], user_id: str, get_body: bool = False) -> Union[dict, list]:
+        """Building mail entry context
+        Getting a list from build_mail_object
+
+        Args:
+            user_id (str): user id of the mail
+            get_body (bool): should get body
+            raw_response (dict or list): list of pages
+
+        Returns:
+            dict or list: output context
+        """
+
+        def build_mail(given_mail: dict) -> dict:
+            """
+
+            Args:
+                given_mail (dict):
+
+            Returns:
+                dict:
+            """
+            # Dicts
+            mail_properties = {
+                'ID': 'id',
+                'Created': 'createdDateTime',
+                'LastModifiedTime': 'lastModifiedDateTime',
+                'ReceivedTime': 'receivedDateTime',
+                'SendTime': 'sentDateTime',
+                'Categories': 'categories',
+                'HasAttachments': 'hasAttachments',
+                'Subject': 'subject',
+                'IsDraft': 'isDraft',
+                'Headers': 'internetMessageHeaders',
+                'Flag': 'flag',
+                'Importance': 'importance',
+            }
+
+            contact_properties = {
+                'Sender': 'sender',
+                'From': 'from',
+                'CCRecipients': 'ccRecipients',
+                'BCCRecipients': 'bccRecipients',
+                'ReplyTo': 'replyTo'
+            }
+
+            # Create entry properties
+            entry = {k: given_mail.get(v) for k, v in mail_properties.items()}
+
+            # Create contacts properties
+            entry.update(
+                {k: build_contact(given_mail.get(v)) for k, v in contact_properties.items()}  # type: ignore
+            )
+
+            if get_body:
+                entry['Body'] = given_mail.get('body', {}).get('content')
+            entry['UserID'] = user_id
+            return entry
+
+        def build_contact(contacts: Union[dict, list, str]) -> object:
+            """Building contact object
+
+            Args:
+                contacts (list or dict or str):
+
+            Returns:
+                dict or list[dict] or str or None: describing contact
+            """
+            if contacts:
+                if isinstance(contacts, list):
+                    return [build_contact(contact) for contact in contacts]
+                elif isinstance(contacts, dict):
+                    email = contacts.get('emailAddress')
+                    if email and isinstance(email, dict):
+                        return {
+                            'Name': email.get('name'),
+                            'Address': email.get('address')
+                        }
+            return None
+
+        mails_list = list()
+        if isinstance(raw_response, list):
+            for page in raw_response:
+                # raw_response can be a list containing multiple pages or one response
+                # if value in page, we got
+                value = page.get('value')
+                if value:
+                    for mail in value:
+                        mails_list.append(build_mail(mail))
+                else:
+                    mails_list.append(build_mail(page))
+        elif isinstance(raw_response, dict):
+            return build_mail(raw_response)
+        return mails_list
+
+
+    def file_result_creator(raw_response: dict) -> dict:
+        """
+
+        Args:
+            raw_response (dict):
+
+        Returns:
+            dict:
+
+        """
+        name = raw_response.get('name')
+        data = raw_response.get('contentBytes')
+        try:
+            data = base64.b64decode(data)  # type: ignore
+            return fileResult(name, data)
+        except binascii.Error:
+            return_error('Attachment could not be decoded')
+            return {}  # return_error will exit
+
+
+    def parse_folders_list(folders_list):
+        if isinstance(folders_list, dict):
+            folders_list = [folders_list]
+
+        return [{FOLDER_MAPPING[k]: v for (k, v) in f.items() if k in FOLDER_MAPPING} for f in folders_list]
+
+
+    ''' COMMANDS '''
+
+
+    def list_mails_command(client: MsGraphClient, args):
+        search = args.get('search')
+        user_id = args.get('user_id')
+        folder_id = args.get('folder_id')
+        odata = args.get('odata')
+
+        raw_response = client.list_mails(user_id, folder_id=folder_id, search=search, odata=odata)
+        mail_context = build_mail_object(raw_response, user_id)
+        entry_context = {'MSGraphMail(val.ID === obj.ID)': mail_context}
+
+        # human_readable builder
+        human_readable = tableToMarkdown(
+            f'### Total of {len(mail_context)} of mails received',
+            mail_context,
+            headers=['Subject', 'From', 'SendTime']
+        )
+        return_outputs(human_readable, entry_context, raw_response)
+
+
+    def delete_mail_command(client: MsGraphClient, args):
+        user_id = args.get('user_id')
+        folder_id = args.get('folder_id')
+        message_id = args.get('message_id')
+        client.delete_mail(user_id, message_id, folder_id)
+
+        human_readable = tableToMarkdown(
+            'Message has been deleted successfully',
+            {
+                'Message ID': message_id,
+                'User ID': user_id,
+                'Folder ID': folder_id
+            },
+            headers=['Message ID', 'User ID', 'Folder ID'],
+            removeNull=True
+        )
+
+        entry_context = {}  # type: ignore
+
+        return_outputs(human_readable, entry_context)
+
+
+    def get_attachment_command(client: MsGraphClient, args):
+        message_id = args.get('message_id')
+        user_id = args.get('user_id')
+        folder_id = args.get('folder_id')
+        attachment_id = args.get('attachment_id')
+        raw_response = client.get_attachment(message_id, user_id, folder_id=folder_id, attachment_id=attachment_id)
+        entry_context = file_result_creator(raw_response)
+        demisto.results(entry_context)
+
+
+    def get_message_command(client: MsGraphClient, args):
+        user_id = args.get('user_id')
+        folder_id = args.get('folder_id')
+        message_id = args.get('message_id')
+        get_body = args.get('get_body') == 'true'
+        odata = args.get('odata')
+        raw_response = client.get_message(user_id, message_id, folder_id, odata=odata)
+        mail_context = build_mail_object(raw_response, user_id=user_id, get_body=get_body)
+        entry_context = {'MSGraphMail(val.ID === obj.ID)': mail_context}
+        human_readable = tableToMarkdown(
+            f'Results for message ID {message_id}',
+            mail_context,
+            headers=['ID', 'Subject', 'SendTime', 'Sender', 'From', 'HasAttachments', 'Body']
+        )
+        return_outputs(
+            human_readable,
+            entry_context,
+            raw_response=raw_response
+        )
+
+
+    def list_attachments_command(client: MsGraphClient, args):
+        user_id = args.get('user_id')
+        message_id = args.get('message_id')
+        folder_id = args.get('folder_id')
+        raw_response = client.list_attachments(user_id, message_id, folder_id)
+        attachments = raw_response.get('value')
+        if attachments:
+            attachment_list = [{
+                'ID': attachment.get('id'),
+                'Name': attachment.get('name'),
+                'Type': attachment.get('contentType')
+            } for attachment in attachments]
+            attachment_entry = {'ID': message_id, 'Attachment': attachment_list, 'UserID': user_id}
+            entry_context = {'MSGraphMailAttachment(val.ID === obj.ID)': attachment_entry}
+
+            # Build human readable
+            file_names = [attachment.get('Name') for attachment in attachment_list if isinstance(
+                attachment, dict) and attachment.get('Name')]
+            human_readable = tableToMarkdown(
+                f'Total of {len(attachment_list)} attachments found in message {message_id} from user {user_id}',
+                {'File names': file_names}
+            )
+            return_outputs(human_readable, entry_context, raw_response)
+        else:
+            human_readable = f'### No attachments found in message {message_id}'
+            return_outputs(human_readable, dict(), raw_response)
+
+
+    def list_folders_command(client: MsGraphClient, args):
+        user_id = args.get('user_id')
+        limit = args.get('limit', '20')
+
+        raw_response = client.list_folders(user_id, limit)
+        parsed_folder_result = parse_folders_list(raw_response.get('value', []))
+        human_readable = tableToMarkdown(f'Mail Folder collection under root folder for user {user_id}',
+                                         parsed_folder_result)
+        entry_context = {CONTEXT_FOLDER_PATH: parsed_folder_result}
+
+        return_outputs(human_readable, entry_context, raw_response)
+
+
+    def list_child_folders_command(client: MsGraphClient, args):
+        user_id = args.get('user_id')
+        parent_folder_id = args.get('parent_folder_id')
+        limit = args.get('limit', '20')
+
+        raw_response = client.list_child_folders(user_id, parent_folder_id, limit)
+        parsed_child_folders_result = parse_folders_list(raw_response.get('value', []))  # type: ignore
+        human_readable = tableToMarkdown(f'Mail Folder collection under {parent_folder_id} folder for user {user_id}',
+                                         parsed_child_folders_result)
+        entry_context = {CONTEXT_FOLDER_PATH: parsed_child_folders_result}
+
+        return_outputs(human_readable, entry_context, raw_response)
+
+
+    def create_folder_command(client: MsGraphClient, args):
+        user_id = args.get('user_id')
+        new_folder_name = args.get('new_folder_name')
+        parent_folder_id = args.get('parent_folder_id')
+
+        raw_response = client.create_folder(user_id, new_folder_name, parent_folder_id)
+        parsed_created_folder = parse_folders_list(raw_response)
+        human_readable = tableToMarkdown(
+            f'Mail folder was created with display name: {new_folder_name}',
+            parsed_created_folder)
+        entry_context = {CONTEXT_FOLDER_PATH: parsed_created_folder}
+
+        return_outputs(human_readable, entry_context, raw_response)
+
+
+    def update_folder_command(client: MsGraphClient, args):
+        user_id = args.get('user_id')
+        folder_id = args.get('folder_id')
+        new_display_name = args.get('new_display_name')
+
+        raw_response = client.update_folder(user_id, folder_id, new_display_name)
+        parsed_updated_folder = parse_folders_list(raw_response)
+        human_readable = tableToMarkdown(f'Mail folder {folder_id} was updated with display name: {new_display_name}',
+                                         parsed_updated_folder)
+        entry_context = {CONTEXT_FOLDER_PATH: parsed_updated_folder}
+
+        return_outputs(human_readable, entry_context, raw_response)
+
+
+    def delete_folder_command(client: MsGraphClient, args):
+        user_id = args.get('user_id')
+        folder_id = args.get('folder_id')
+
+        client.delete_folder(user_id, folder_id)
+        return_outputs(f'The folder {folder_id} was deleted successfully')
+
+
+    def move_email_command(client: MsGraphClient, args):
+        user_id = args.get('user_id')
+        message_id = args.get('message_id')
+        destination_folder_id = args.get('destination_folder_id')
+
+        raw_response = client.move_email(user_id, message_id, destination_folder_id)
+        new_message_id = raw_response.get('id')
+        moved_email_info = {
+            'ID': new_message_id,
+            'DestinationFolderID': destination_folder_id,
+            'UserID': user_id
+        }
+        human_readable = tableToMarkdown('The email was moved successfully. Updated email data:', moved_email_info)
+        entry_context = {CONTEXT_COPIED_EMAIL: moved_email_info}
+
+        return_outputs(human_readable, entry_context, raw_response)
+
+
+    def get_email_as_eml_command(client: MsGraphClient, args):
+        user_id = args.get('user_id')
+        message_id = args.get('message_id')
+
+        eml_content = client.get_email_as_eml(user_id, message_id)
+        file_result = fileResult(f'{message_id}.eml', eml_content)
+
+        if is_error(file_result):
+            raise Exception(file_result['Contents'])
+
+        demisto.results(file_result)
+
+
+    def main():
+        """ COMMANDS MANAGER / SWITCH PANEL """
+        command = demisto.command()
+        args = demisto.args()
+        LOG(f'Command being called is {command}')
+
+        params = demisto.params()
+        self_deployed = params.get('self_deployed', False)
+        tenant_id = params.get('tenant_id')
+        auth_and_token_url = params.get('auth_id', '')
+        enc_key = params.get('enc_key')
+        # Remove trailing slash to prevent wrong URL path to service
+        url = params.get('url', '')
+        server = url[:-1] if (url and url.endswith('/')) else url
+        # Service base URL
+        base_url = server + '/v1.0'
+        app_name = 'ms-graph-mail'
+        ok_codes = (200, 201, 202)
+        use_ssl = not params.get('insecure', False)
+        proxy = handle_proxy()
+
+        if self_deployed:
+            app_url = f'https://login.microsoftonline.com/{tenant_id}/oauth2/v2.0/token'
+            ms_client = MicrosoftClient.from_self_deployed(tenant_id, auth_and_token_url,
+                                                           enc_key, app_url=app_url,
+                                                           scope='https://graph.microsoft.com/.default',
+                                                           base_url=base_url, verify=use_ssl,
+                                                           proxy=proxy, ok_codes=ok_codes)
+        else:
+            # params related to oproxy
+            ms_client = MicrosoftClient.from_oproxy(auth_and_token_url, enc_key, app_name,
+                                                    tenant_id=tenant_id, base_url=base_url, verify=use_ssl,
+                                                    proxy=proxy, ok_codes=ok_codes)
+
+        client = MsGraphClient(ms_client)
+
+        try:
+            if command == 'test-module':
+                client.ms_client.get_access_token()
+                demisto.results('ok')
+            elif command in ('msgraph-mail-list-emails', 'msgraph-mail-search-email'):
+                list_mails_command(client, args)
+            elif command == 'msgraph-mail-get-email':
+                get_message_command(client, args)
+            elif command == 'msgraph-mail-delete-email':
+                delete_mail_command(client, args)
+            elif command == 'msgraph-mail-list-attachments':
+                list_attachments_command(client, args)
+            elif command == 'msgraph-mail-get-attachment':
+                get_attachment_command(client, args)
+            elif command == 'msgraph-mail-list-folders':
+                list_folders_command(client, args)
+            elif command == 'msgraph-mail-list-child-folders':
+                list_child_folders_command(client, args)
+            elif command == 'msgraph-mail-create-folder':
+                create_folder_command(client, args)
+            elif command == 'msgraph-mail-update-folder':
+                update_folder_command(client, args)
+            elif command == 'msgraph-mail-delete-folder':
+                delete_folder_command(client, args)
+            elif command == 'msgraph-mail-move-email':
+                move_email_command(client, args)
+            elif command == 'msgraph-mail-get-email-as-eml':
+                get_email_as_eml_command(client, args)
+        # Log exceptions
+        except Exception as e:
+            return_error(str(e))
+
+
+
+    ### GENERATED CODE ###
+    # This code was inserted in place of an API module.
+
+
+    import requests
+    import base64
+    from typing import Dict, Tuple
+    from cryptography.hazmat.primitives.ciphers.aead import AESGCM
+
+    OPROXY_AUTH_TYPE = 'oproxy'
+    SELF_DEPLOYED_AUTH_TYPE = 'self_deployed'
+
+
+    class MicrosoftClient(BaseClient):
+
+        def __init__(self, tenant_id: str = '', auth_id: str = '', enc_key: str = '',
+                     token_retrieval_url: str = '', app_name: str = '', refresh_token: str = '',
+                     client_id: str = '', client_secret: str = '', scope: str = '', resource: str = '', app_url: str = '',
+                     verify: bool = True, auth_type: str = OPROXY_AUTH_TYPE, *args, **kwargs):
+            """
+            Microsoft Client class that implements logic to authenticate with oproxy or self deployed applications.
+            It also provides common logic to handle responses from Microsoft.
+            """
+            super().__init__(verify=verify, *args, **kwargs)  # type: ignore[misc]
+            self.auth_type = auth_type
+            self.app_url = app_url
+            self.tenant_id = tenant_id
+            self.auth_id = auth_id
+            self.enc_key = enc_key
+            self.token_retrieval_url = token_retrieval_url
+            self.app_name = app_name
+            self.refresh_token = refresh_token
+            self.client_id = client_id
+            self.client_secret = client_secret
+            self.scope = scope
+            self.resource = resource
+            self.verify = verify
+
+        @classmethod
+        def from_oproxy(cls, auth_id_and_token_url: str, enc_key: str, app_name: str,
+                        tenant_id: str = '', refresh_token: str = '', *args, **kwargs):
+            """
+            Args:
+                auth_id_and_token_url: Authentication ID and the oproxy url to use
+                enc_key: Encryption key
+                app_name: The application name in oproxy
+                tenant_id: The tenant ID
+                refresh_token: The current refresh token
+            Returns:
+                An instance of Microsoft Client with oproxy authentication.
+            """
+            auth_id_and_token_retrieval_url = auth_id_and_token_url.split('@')
+            auth_id = auth_id_and_token_retrieval_url[0]
+            if len(auth_id_and_token_retrieval_url) != 2:
+                token_retrieval_url = 'https://oproxy.demisto.ninja/obtain-token'  # disable-secrets-detection
+            else:
+                token_retrieval_url = auth_id_and_token_retrieval_url[1]
+
+            return cls(tenant_id=tenant_id, auth_id=auth_id, enc_key=enc_key,  # type: ignore[misc]
+                       token_retrieval_url=token_retrieval_url, auth_type=OPROXY_AUTH_TYPE,
+                       app_name=app_name, refresh_token=refresh_token, *args, **kwargs)
+
+        @classmethod
+        def from_self_deployed(cls, tenant_id: str, client_id: str, client_secret: str, scope: str = '', resource: str = '',
+                               app_url: str = '', *args, **kwargs):
+            """
+            Args:
+                tenant_id: The self deployed tenant ID
+                client_id: The self deployed client ID
+                client_secret: The self deployed client secret
+                scope: The self deployed application scope
+                resource: The self deployed application resource
+                app_url: The self deployed application request URL
+            Returns:
+                An instance of Microsoft Client with self deployed application authentication.
+            """
+            return cls(tenant_id=tenant_id, client_id=client_id,  # type: ignore[misc]
+                       client_secret=client_secret, auth_type=SELF_DEPLOYED_AUTH_TYPE,
+                       scope=scope, resource=resource, app_url=app_url, *args, **kwargs)
+
+        def http_request(self, *args, **kwargs) -> requests.Response:
+            """
+            Overrides Base client request function, retrieves and adds to headers access token before sending the request.
+
+            Returns:
+                requests.Response: The http response
+            """
+            token = self.get_access_token()
+            headers = {
+                'Authorization': f'Bearer {token}',
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+            return super()._http_request(*args, headers=headers, **kwargs)  # type: ignore[misc]
+
+        def get_access_token(self):
+            """
+            Obtains access and refresh token from oproxy server or just a token from a self deployed app.
+            Access token is used and stored in the integration context
+            until expiration time. After expiration, new refresh token and access token are obtained and stored in the
+            integration context.
+
+            Returns:
+                str: Access token that will be added to authorization header.
+            """
+            integration_context = demisto.getIntegrationContext()
+            access_token = integration_context.get('access_token')
+            valid_until = integration_context.get('valid_until')
+            if access_token and valid_until:
+                if self.epoch_seconds() < valid_until:
+                    return access_token
+
+            auth_type = self.auth_type
+            refresh_token = ''
+            if auth_type == OPROXY_AUTH_TYPE:
+                access_token, expires_in, refresh_token = self._oproxy_authorize()
+            else:
+                access_token, expires_in = self._get_self_deployed_token()
+            time_now = self.epoch_seconds()
+            time_buffer = 5  # seconds by which to shorten the validity period
+            if expires_in - time_buffer > 0:
+                # err on the side of caution with a slightly shorter access token validity period
+                expires_in = expires_in - time_buffer
+
+            integration_context = {
+                'access_token': access_token,
+                'valid_until': time_now + expires_in,
+            }
+
+            if refresh_token:
+                integration_context['current_refresh_token'] = refresh_token
+            demisto.setIntegrationContext(integration_context)
+            return access_token
+
+        def _oproxy_authorize(self) -> Tuple[str, int, str]:
+            """
+            Gets a token by authorizing with oproxy.
+
+            Returns:
+                tuple: An access token, its expiry and refresh token.
+            """
+            content = self.refresh_token or self.tenant_id
+            headers = self._add_info_headers()
+            oproxy_response = requests.post(
+                self.token_retrieval_url,
+                headers=headers,
+                json={
+                    'app_name': self.app_name,
+                    'registration_id': self.auth_id,
+                    'encrypted_token': self.get_encrypted(content, self.enc_key)
+                },
+                verify=self.verify
+            )
+
+            if not oproxy_response.ok:
+                msg = 'Error in authentication. Try checking the credentials you entered.'
+                try:
+                    demisto.info('Authentication failure from server: {} {} {}'.format(
+                        oproxy_response.status_code, oproxy_response.reason, oproxy_response.text))
+                    err_response = oproxy_response.json()
+                    server_msg = err_response.get('message')
+                    if not server_msg:
+                        title = err_response.get('title')
+                        detail = err_response.get('detail')
+                        if title:
+                            server_msg = f'{title}. {detail}'
+                        elif detail:
+                            server_msg = detail
+                    if server_msg:
+                        msg += ' Server message: {}'.format(server_msg)
+                except Exception as ex:
+                    demisto.error('Failed parsing error response - Exception: {}'.format(ex))
+                raise Exception(msg)
+            try:
+                gcloud_function_exec_id = oproxy_response.headers.get('Function-Execution-Id')
+                demisto.info(f'Google Cloud Function Execution ID: {gcloud_function_exec_id}')
+                parsed_response = oproxy_response.json()
+            except ValueError:
+                raise Exception(
+                    'There was a problem in retrieving an updated access token.\n'
+                    'The response from the Oproxy server did not contain the expected content.'
+                )
+
+            return (parsed_response.get('access_token', ''), parsed_response.get('expires_in', 3595),
+                    parsed_response.get('refresh_token', ''))
+
+        def _get_self_deployed_token(self) -> Tuple[str, int]:
+            """
+            Gets a token by authorizing a self deployed Azure application.
+
+            Returns:
+                tuple: An access token and its expiry.
+            """
+            if not self.app_url:
+                url = f'https://login.windows.net/{self.tenant_id}/oauth2/token'
+            else:
+                url = self.app_url
+            data = {
+                'client_id': self.client_id,
+                'client_secret': self.client_secret,
+                'grant_type': 'client_credentials'
+            }
+
+            if self.scope:
+                data['scope'] = self.scope
+            if self.resource:
+                data['resource'] = self.resource
+
+            body: dict = {}
+            try:
+                response = requests.post(url, data, verify=self.verify)
+                if response.status_code not in {200, 201}:
+                    return_error(f'Error in Microsoft authorization. Status: {response.status_code},'
+                                 f' body: {self.error_parser(response)}')
+                body = response.json()
+            except Exception as e:
+                return_error(f'Error in Microsoft authorization: {str(e)}')
+
+            access_token = body.get('access_token', '')
+            expires_in = int(body.get('expires_in', 3595))
+
+            return access_token, expires_in
+
+        @staticmethod
+        def error_parser(error: requests.Response) -> str:
+            """
+
+            Args:
+                error (requests.Response): response with error
+
+            Returns:
+                str: string of error
+
+            """
+            try:
+                response = error.json()
+                inner_error = response.get('error', {})
+                if isinstance(inner_error, dict):
+                    err_str = f"{inner_error.get('code')}: {inner_error.get('message')}"
+                else:
+                    err_str = inner_error
+                if err_str:
+                    return err_str
+                # If no error message
+                raise ValueError
+            except ValueError:
+                return error.text
+
+        @staticmethod
+        def epoch_seconds(d: datetime = None) -> int:
+            """
+            Return the number of seconds for given date. If no date, return current.
+
+            Args:
+                d (datetime): timestamp
+            Returns:
+                 int: timestamp in epoch
+            """
+            if not d:
+                d = MicrosoftClient._get_utcnow()
+            return int((d - MicrosoftClient._get_utcfromtimestamp(0)).total_seconds())
+
+        @staticmethod
+        def _get_utcnow() -> datetime:
+            return datetime.utcnow()
+
+        @staticmethod
+        def _get_utcfromtimestamp(_time) -> datetime:
+            return datetime.utcfromtimestamp(_time)
+
+        @staticmethod
+        def get_encrypted(content: str, key: str) -> str:
+            """
+            Encrypts content with encryption key.
+            Args:
+                content: Content to encrypt
+                key: encryption key from oproxy
+
+            Returns:
+                timestamp: Encrypted content
+            """
+
+            def create_nonce():
+                return os.urandom(12)
+
+            def encrypt(string, enc_key):
+                """
+                Encrypts string input with encryption key.
+                Args:
+                    string: String to encrypt
+                    enc_key: Encryption key
+
+                Returns:
+                    bytes: Encrypted value
+                """
+                # String to bytes
+                enc_key = base64.b64decode(enc_key)
+                # Create key
+                aes_gcm = AESGCM(enc_key)
+                # Create nonce
+                nonce = create_nonce()
+                # Create ciphered data
+                data = string.encode()
+                ct = aes_gcm.encrypt(nonce, data, None)
+                return base64.b64encode(nonce + ct)
+
+            now = MicrosoftClient.epoch_seconds()
+            encrypted = encrypt(f'{now}:{content}', key).decode('utf-8')
+            return encrypted
+
+        @staticmethod
+        def _add_info_headers() -> Dict[str, str]:
+            # pylint: disable=no-member
+            headers = {}
+            try:
+                calling_context = demisto.callingContext.get('context', {})  # type: ignore[attr-defined]
+                brand_name = calling_context.get('IntegrationBrand', '')
+                instance_name = calling_context.get('IntegrationInstance', '')
+                headers['X-Content-Version'] = CONTENT_RELEASE_VERSION
+                headers['X-Content-Name'] = brand_name or instance_name or 'Name not found'
+                if hasattr(demisto, 'demistoVersion'):
+                    demisto_version = demisto.demistoVersion()
+                    headers['X-Content-Server-Version'] = '{}-{}'.format(demisto_version.get('version'),
+                                                                         demisto_version.get("buildNumber"))
+            except Exception as e:
+                demisto.error('Failed getting integration info: {}'.format(str(e)))
+
+            return headers
+
+
+
+    if __name__ in ["builtins", "__main__"]:
+        main()
+  subtype: python3
+  type: python
+system: true

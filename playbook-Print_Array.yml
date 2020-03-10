@@ -1,0 +1,80 @@
+id: e148b8a1-7065-4dfe-8100-4a129b336a9f
+inputs: []
+name: Print Array
+outputs: []
+starttaskid: "0"
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "1"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: d7a40e01-7a6d-4a5d-8665-b092010b07cc
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: d7a40e01-7a6d-4a5d-8665-b092010b07cc
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 50
+        }
+      }
+  "1":
+    id: "1"
+    ignoreworker: false
+    note: false
+    scriptarguments:
+      value:
+        complex:
+          root: ${array1}
+          transformers:
+          - args:
+              join:
+                value:
+                  simple: ' '
+              list2:
+                value:
+                  simple: ${array2}
+            operator: ProductJoin
+    separatecontext: false
+    task:
+      brand: ""
+      description: Prints text to war room (Markdown supported)
+      id: 395239ba-bc79-4ea5-8c7b-256e7fbb0db3
+      iscommand: false
+      name: Printing
+      script: Print
+      type: regular
+      version: -1
+    taskid: 395239ba-bc79-4ea5-8c7b-256e7fbb0db3
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 210
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 255,
+        "width": 380,
+        "x": 450,
+        "y": 50
+      }
+    }
+  }

@@ -1,0 +1,43 @@
+{
+	"associatedToAll": false,
+	"associatedTypes": [
+		"Employee Offboarding"
+	],
+	"breachScript": "",
+	"caseInsensitive": true,
+	"cliName": "googleaccountstatus",
+	"closeForm": false,
+	"columns": null,
+	"content": true,
+	"defaultRows": null,
+	"description": "The status of the Google account. Can be either \"Enabled\" or \"Deleted\".",
+	"editForm": true,
+	"fieldCalcScript": "",
+	"group": 0,
+	"hidden": false,
+	"id": "incident_googleaccountstatus",
+	"isReadOnly": false,
+	"locked": false,
+	"name": "Google Account Status",
+	"neverSetAsRequired": false,
+	"ownerOnly": false,
+	"placeholder": "",
+	"required": false,
+	"script": "",
+	"selectValues": [
+		"Enabled",
+		"Deleted"
+	],
+	"sla": 0,
+	"sortValues": null,
+	"system": false,
+	"systemAssociatedTypes": null,
+	"threshold": 72,
+	"type": "singleSelect",
+	"unmapped": false,
+	"unsearchable": false,
+	"useAsKpi": true,
+	"validatedError": "",
+	"validationRegex": "",
+	"version": -1
+}

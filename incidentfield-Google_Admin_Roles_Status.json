@@ -1,0 +1,43 @@
+{
+	"associatedToAll": false,
+	"associatedTypes": [
+		"Employee Offboarding"
+	],
+	"breachScript": "",
+	"caseInsensitive": true,
+	"cliName": "googleadminrolesstatus",
+	"closeForm": false,
+	"columns": null,
+	"content": true,
+	"defaultRows": null,
+	"description": "Whether Google admin roles were revoked for the user. Can be either \"Unchanged\" or \"Revoked\".",
+	"editForm": true,
+	"fieldCalcScript": "",
+	"group": 0,
+	"hidden": false,
+	"id": "incident_googleadminrolesstatus",
+	"isReadOnly": false,
+	"locked": false,
+	"name": "Google Admin Roles Status",
+	"neverSetAsRequired": false,
+	"ownerOnly": false,
+	"placeholder": "",
+	"required": false,
+	"script": "",
+	"selectValues": [
+		"Unchanged",
+		"Revoked"
+	],
+	"sla": 0,
+	"sortValues": null,
+	"system": false,
+	"systemAssociatedTypes": null,
+	"threshold": 72,
+	"type": "singleSelect",
+	"unmapped": false,
+	"unsearchable": false,
+	"useAsKpi": true,
+	"validatedError": "",
+	"validationRegex": "",
+	"version": -1
+}

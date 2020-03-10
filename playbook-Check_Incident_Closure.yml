@@ -1,0 +1,66 @@
+id: 945f7b66-58cd-4ace-807f-1264608dbdf0
+inputs: []
+name: Check_Incident_Closure
+outputs: []
+starttaskid: "0"
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "1"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 41e2e109-b4c5-4eb0-8bc6-fbc0304cbf83
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: 41e2e109-b4c5-4eb0-8bc6-fbc0304cbf83
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 50
+        }
+      }
+  "1":
+    id: "1"
+    ignoreworker: false
+    note: false
+    separatecontext: true
+    task:
+      brand: ""
+      id: 9b471af8-1fe0-4b36-813c-93db2f4249d7
+      iscommand: false
+      name: Testing_Lists
+      playbookId: c46d5b28-74b8-45ad-88ee-85a585f8bb53
+      type: playbook
+      version: -1
+    taskid: 9b471af8-1fe0-4b36-813c-93db2f4249d7
+    timertriggers: []
+    type: playbook
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 360
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 405,
+        "width": 380,
+        "x": 450,
+        "y": 50
+      }
+    }
+  }

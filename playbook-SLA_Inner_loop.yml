@@ -1,0 +1,145 @@
+id: ecc52b22-6f96-479e-8a60-9b29c9ac482a
+inputs: []
+name: SLA_Inner_loop
+outputs: []
+starttaskid: "0"
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "1"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 727b872e-6c82-49c5-84ea-0fb2e605aba1
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: 727b872e-6c82-49c5-84ea-0fb2e605aba1
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 50
+        }
+      }
+  "1":
+    id: "1"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "2"
+    note: false
+    scriptarguments:
+      value:
+        simple: ${days_left}
+    separatecontext: false
+    sla:
+      days: 0
+      hours: 1
+      weeks: 0
+    task:
+      brand: ""
+      description: Prints text to war room (Markdown supported)
+      id: 1e9ed305-5871-4265-88f8-3c578ffe04b8
+      iscommand: false
+      name: Print before value
+      script: Print
+      type: regular
+      version: -1
+    taskid: 1e9ed305-5871-4265-88f8-3c578ffe04b8
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 210
+        }
+      }
+  "2":
+    id: "2"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "3"
+    note: false
+    scriptarguments:
+      append: {}
+      key:
+        simple: days_left
+      stringify: {}
+      value:
+        complex:
+          root: ${days_left}
+          transformers:
+          - args:
+              by:
+                value:
+                  simple: "1"
+            operator: subtraction
+    separatecontext: false
+    task:
+      brand: ""
+      description: Sets a value into the context with the given context key
+      id: 75666a0e-4e6e-48cf-8d81-d0ceea4a544c
+      iscommand: false
+      name: Reduce Days Left
+      script: Set
+      type: regular
+      version: -1
+    taskid: 75666a0e-4e6e-48cf-8d81-d0ceea4a544c
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 390
+        }
+      }
+  "3":
+    id: "3"
+    ignoreworker: false
+    note: false
+    scriptarguments:
+      seconds:
+        simple: "86000"
+    separatecontext: false
+    task:
+      brand: ""
+      description: Sleep for X seconds
+      id: b9a3b872-7969-4ab0-837b-d8af95e79914
+      iscommand: false
+      name: Sleep
+      script: Sleep
+      type: regular
+      version: -1
+    taskid: b9a3b872-7969-4ab0-837b-d8af95e79914
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 570
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 615,
+        "width": 380,
+        "x": 450,
+        "y": 50
+      }
+    }
+  }

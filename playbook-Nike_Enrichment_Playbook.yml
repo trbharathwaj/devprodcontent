@@ -1,0 +1,1666 @@
+description: Enrich data with reputation. Data is expected to be found in the standard
+  locations like File, URL, IP.
+id: ffa09e9b-05ba-4e8d-8cea-9689e022aaa0
+inputs: []
+name: Nike_Enrichment_Playbook
+outputs: []
+starttaskid: "0"
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "1"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: d5c57770-e6f6-40c4-897b-b9a1cc80be2c
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: d5c57770-e6f6-40c4-897b-b9a1cc80be2c
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 275,
+          "y": 65
+        }
+      }
+  "1":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: incident.name
+          operator: match
+          right:
+            value:
+              simple: (?:Generic USB Activity.+|CCN USB Activity.+|PII Activity.+|DLP
+                Alert\:.+|UEBA alert.+)
+      label: ITO Only
+    id: "1"
+    ignoreworker: false
+    nexttasks:
+      '#default#':
+      - "32"
+      ITO Only:
+      - "5"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 7bb0b3d5-b0c0-4abe-87d6-553775982f8b
+      iscommand: false
+      name: Condition to assign the security group
+      type: condition
+      version: -1
+    taskid: 7bb0b3d5-b0c0-4abe-87d6-553775982f8b
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 275,
+          "y": 225
+        }
+      }
+  "5":
+    continueonerror: true
+    id: "5"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "17"
+    note: false
+    scriptarguments:
+      actionstaken: {}
+      addLabels: {}
+      affecteddata: {}
+      affecteddatatype: {}
+      affectedindividualscontactinformation: {}
+      alertdetails: {}
+      alertsource: {}
+      app: {}
+      approximatenumberofaffecteddatasubjects: {}
+      assetid: {}
+      attachmentcount: {}
+      attachmentextension: {}
+      attachmenthash: {}
+      attachmentid: {}
+      attachmentname: {}
+      attachmentsize: {}
+      attachmenttype: {}
+      bugtraq: {}
+      campaign: {}
+      city: {}
+      closeNotes: {}
+      closeReason: {}
+      companyaddress: {}
+      companycity: {}
+      companycountry: {}
+      companyhasinsuranceforthebreach: {}
+      companyname: {}
+      companypostalcode: {}
+      computerisolated: {}
+      computernameipaddress: {}
+      contactaddress: {}
+      contactname: {}
+      containment: {}
+      controlseverity: {}
+      country: {}
+      countrywherebusinesshasitsmainestablishment: {}
+      countrywherethebreachtookplace: {}
+      customFields: {}
+      cve: {}
+      cvss: {}
+      cyberkillchain: {}
+      dataclassification: {}
+      dataclassificationdetails: {}
+      datadescription: {}
+      dataencryptionstatus: {}
+      datetimeofthebreach: {}
+      deleteEmptyField: {}
+      department: {}
+      description: {}
+      dest: {}
+      destinationip: {}
+      destntdomain: {}
+      details: {}
+      detectedby: {}
+      detectedcomputername: {}
+      devicetype: {}
+      displayname: {}
+      dpoemailaddress: {}
+      duration: {}
+      email: {}
+      emailaddress: {}
+      emailbcc: {}
+      emailbody: {}
+      emailbodyformat: {}
+      emailbodyhtml: {}
+      emailcc: {}
+      emailclientname: {}
+      emailfrom: {}
+      emailinreplyto: {}
+      emailkeywords: {}
+      emailmessageid: {}
+      emailpreview: {}
+      emailreceived: {}
+      emailreplyto: {}
+      emailreturnpath: {}
+      emailsblocked: {}
+      emailsenderip: {}
+      emailsize: {}
+      emailsource: {}
+      emailsreceived: {}
+      emailsubject: {}
+      emailto: {}
+      emailtocount: {}
+      emailurlclicked: {}
+      encryptionstatus: {}
+      escalatedtoir: {}
+      eventcount: {}
+      eventendtime: {}
+      eventhash: {}
+      eventid: {}
+      eventlabels: {}
+      eventstarttime: {}
+      filehash: {}
+      filename: {}
+      filepath: {}
+      globalsecuritycontacted: {}
+      hostname: {}
+      id: {}
+      impact: {}
+      incidentreviewed: {}
+      incidentstatus: {}
+      isspoofed: {}
+      issuelink: {}
+      isthedatasubjecttodpia: {}
+      labels: {}
+      lastcheckin: {}
+      lastknownlocation: {}
+      lessonslearned: {}
+      lessonslearnedcompleted: {}
+      likelyimpact: {}
+      linksclicked: {}
+      lostorstolen: {}
+      maliciouscauseifthecauseisamaliciousattack: {}
+      malwarefamily: {}
+      malwarefile: {}
+      malwarepath: {}
+      measurestomitigate: {}
+      misusetype: {}
+      mitigationandremediation: {}
+      name: {}
+      notifiedcisleadership: {}
+      notifiedcscmt: {}
+      ntpasswordresettime: {}
+      occurred: {}
+      owner: {}
+      passwordresetrequested: {}
+      passwordresetrequestls: {}
+      passwordsreset: {}
+      percentdropped: {}
+      phase: {}
+      phishingcampaigntype: {}
+      possiblecauseofthebreach: {}
+      postalcode: {}
+      preventedinbound: {}
+      preventedoutbound: {}
+      previousstatus: {}
+      priority: {}
+      privacyinformationnotification: {}
+      question1answer: {}
+      question1description: {}
+      question2answer: {}
+      question2description: {}
+      question3answer: {}
+      question3description: {}
+      question4answer: {}
+      question4description: {}
+      question5answer: {}
+      question5description: {}
+      question6answer: {}
+      question6description: {}
+      queue: {}
+      rateimpact: {}
+      reimagerequested: {}
+      remotewipeconfirmed: {}
+      remotewipeconfirmedls: {}
+      remotewiperequested: {}
+      remotewiperequestedls: {}
+      removedfromad: {}
+      removedfromadls: {}
+      replacePlaybook: {}
+      reporter: {}
+      reportstatement: {}
+      residualrisk: {}
+      resolution: {}
+      result: {}
+      reviewinncdclessonslearned: {}
+      roles: {}
+      rootcause: {}
+      sealsaffected: {}
+      sectorofaffectedparty: {}
+      securitylevel:
+        simple: IR+GCI-Only
+      sensitiveuserteam: {}
+      serialnumber: {}
+      servicenowticket: {}
+      severity: {}
+      signature: {}
+      sizenumberofemployees: {}
+      sizeturnover: {}
+      sla: {}
+      slaField: {}
+      slajson: {}
+      sourceip: {}
+      sourceofinfection: {}
+      splunkraw: {}
+      src: {}
+      srcntdomain: {}
+      srcuser: {}
+      state: {}
+      street: {}
+      systems: {}
+      telephoneno: {}
+      test: {}
+      testdisplay: {}
+      threathuntingevent: {}
+      threattime: {}
+      timetoresolve: {}
+      title: {}
+      tuning: {}
+      type: {}
+      user: {}
+      userdetails: {}
+      useridlookup: {}
+      username: {}
+      vendorid: {}
+      vendorproduct: {}
+      vulnerabilitycategory: {}
+      waitingon: {}
+      wasthedeviceencrypted: {}
+      whenandwherewasthedevicestolen: {}
+      whereisdatahosted: {}
+      wipedmethod: {}
+    separatecontext: false
+    task:
+      brand: Builtin
+      id: 4e59c0b5-3f29-4977-8159-79cd8063f573
+      iscommand: true
+      name: Set Incident Security Group (Tentatively Deprecated)
+      script: Builtin|||setIncident
+      type: regular
+      version: -1
+    taskid: 4e59c0b5-3f29-4977-8159-79cd8063f573
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 655
+        }
+      }
+  "6":
+    id: "6"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "38"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 852f193d-f185-4cd0-8047-82559673c4eb
+      iscommand: false
+      name: Initiate Counters
+      type: title
+      version: -1
+    taskid: 852f193d-f185-4cd0-8047-82559673c4eb
+    timertriggers:
+    - action: start
+      fieldname: waitingfortriage
+    type: title
+    view: |-
+      {
+        "position": {
+          "x": 275,
+          "y": 1980
+        }
+      }
+  "7":
+    id: "7"
+    ignoreworker: false
+    nexttasks:
+      "no":
+      - "43"
+      "yes":
+      - "8"
+    note: false
+    scriptarguments:
+      value:
+        simple: ${incident.devo_event}
+    separatecontext: false
+    task:
+      brand: ""
+      id: 37f6d4b6-e87e-4b54-833e-9877e03ba105
+      iscommand: false
+      name: Does the Devo field exist?
+      script: Exists
+      type: condition
+      version: -1
+    taskid: 37f6d4b6-e87e-4b54-833e-9877e03ba105
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 602.5,
+          "y": 925
+        }
+      }
+  "8":
+    id: "8"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "43"
+    note: false
+    reputationcalc: 2
+    scriptarguments:
+      data:
+        simple: ${incident.devo_event}
+    separatecontext: false
+    task:
+      brand: ""
+      id: dab72794-c297-488c-8483-b90d5537ddd2
+      iscommand: false
+      name: Run the script to map alert details
+      script: AlertMap_devoJS
+      type: regular
+      version: -1
+    taskid: dab72794-c297-488c-8483-b90d5537ddd2
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 760,
+          "y": 1110
+        }
+      }
+  "17":
+    id: "17"
+    ignoreworker: false
+    nexttasks:
+      "no":
+      - "29"
+      "yes":
+      - "18"
+    note: false
+    scriptarguments:
+      value:
+        simple: ${incident.devo_event}
+    separatecontext: false
+    task:
+      brand: ""
+      id: c089eb33-073b-4ab8-8797-d8c76367954d
+      iscommand: false
+      name: Does the Devo field exist?
+      script: Exists
+      type: condition
+      version: -1
+    taskid: c089eb33-073b-4ab8-8797-d8c76367954d
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 995
+        }
+      }
+  "18":
+    id: "18"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "29"
+    note: false
+    scriptarguments:
+      data:
+        simple: ${incident.devo_event}
+    separatecontext: false
+    task:
+      brand: ""
+      id: d777f61a-ba01-4767-87cd-c3ab88099395
+      iscommand: false
+      name: Run the script to map alert details
+      script: AlertMap_devoJS
+      type: regular
+      version: -1
+    taskid: d777f61a-ba01-4767-87cd-c3ab88099395
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 152.5,
+          "y": 1275
+        }
+      }
+  "26":
+    id: "26"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "7"
+    note: false
+    scriptarguments:
+      actionstaken: {}
+      addLabels: {}
+      alertdetails: {}
+      alertsource: {}
+      app: {}
+      assetid: {}
+      attachmentcount: {}
+      attachmentextension: {}
+      attachmenthash: {}
+      attachmentid: {}
+      attachmentname: {}
+      attachmentsize: {}
+      attachmenttype: {}
+      bugtraq: {}
+      campaign: {}
+      cis: {}
+      city: {}
+      closeNotes: {}
+      closeReason: {}
+      closurestatement: {}
+      computerisolated: {}
+      computernameipaddress: {}
+      containment: {}
+      controlseverity: {}
+      country: {}
+      cscmt: {}
+      cti: {}
+      customFields: {}
+      cve: {}
+      cvss: {}
+      cyberkillchain: {}
+      dataclassification: {}
+      dataclassificationdetails: {}
+      datadescription: {}
+      deleteEmptyField: {}
+      department: {}
+      description: {}
+      dest: {}
+      destinationip: {}
+      destntdomain: {}
+      details: {}
+      detectedby: {}
+      detectedcomputername: {}
+      devicetype: {}
+      displayname: {}
+      duration: {}
+      email: {}
+      emailbcc: {}
+      emailbody: {}
+      emailbodyformat: {}
+      emailbodyhtml: {}
+      emailcc: {}
+      emailclientname: {}
+      emailfrom: {}
+      emailinreplyto: {}
+      emailkeywords: {}
+      emailmessageid: {}
+      emailpreview: {}
+      emailreceived: {}
+      emailreplyto: {}
+      emailreturnpath: {}
+      emailsblocked: {}
+      emailsenderip: {}
+      emailsize: {}
+      emailsource: {}
+      emailsreceived: {}
+      emailsubject: {}
+      emailto: {}
+      emailtocount: {}
+      emailurlclicked: {}
+      encryptionstatus: {}
+      escalatedtoir: {}
+      eventcount: {}
+      eventendtime: {}
+      eventhash: {}
+      eventid: {}
+      eventlabels: {}
+      eventseverity: {}
+      eventstarttime: {}
+      filehash: {}
+      filename: {}
+      filepath: {}
+      globalsecuritycontacted: {}
+      hostname: {}
+      htmldescription: {}
+      id: {}
+      impact: {}
+      incidentreviewed: {}
+      incidentstatus: {}
+      intriageunderinvestigation: {}
+      intriageunderinvestigationir: {}
+      ircis: {}
+      ircscmt: {}
+      ircti: {}
+      irlegal: {}
+      irmalwarepupremoval: {}
+      irmonitoring: {}
+      irnikebusinessunit: {}
+      irservicedesk: {}
+      irthirdparty: {}
+      iruser: {}
+      isspoofed: {}
+      issuelink: {}
+      labels: {}
+      lastcheckin: {}
+      lastknownlocation: {}
+      legal: {}
+      lessonslearned: {}
+      lessonslearnedcompleted: {}
+      linksclicked: {}
+      lostorstolen: {}
+      malwarefamily: {}
+      malwarefile: {}
+      malwarepath: {}
+      malwarepupremoval: {}
+      malwareremovalprocessing: {}
+      malwareremovalrequested: {}
+      misusetype: {}
+      mitigationandremediation: {}
+      monitoring: {}
+      name: {}
+      nikebusinessunit: {}
+      notifiedcisleadership: {}
+      notifiedcscmt: {}
+      ntpasswordresettime: {}
+      occurred: {}
+      owner: {}
+      passwordresetrequested: {}
+      passwordresetrequestls: {}
+      passwordsreset: {}
+      percentdropped: {}
+      phase: {}
+      phishingcampaigntype: {}
+      preventedinbound: {}
+      preventedoutbound: {}
+      priority: {}
+      privacyinformationnotification: {}
+      question1answer: {}
+      question1description: {}
+      question2answer: {}
+      question2description: {}
+      question3answer: {}
+      question3description: {}
+      question4answer: {}
+      question4description: {}
+      question5answer: {}
+      question5description: {}
+      question6answer: {}
+      question6description: {}
+      rateimpact: {}
+      reimagerequested: {}
+      remotewipeconfirmed: {}
+      remotewipeconfirmedls: {}
+      remotewiperequested: {}
+      remotewiperequestedls: {}
+      removedfromad: {}
+      removedfromadls: {}
+      replacePlaybook: {}
+      reporter: {}
+      reportstatement: {}
+      residualrisk: {}
+      resolution: {}
+      resolutionsla: {}
+      responsesla: {}
+      result: {}
+      reviewinncdclessonslearned: {}
+      roles:
+        simple: NCDC+IR+CTI
+      rootcause: {}
+      savedsearchname: {}
+      sealsaffected: {}
+      searchname: {}
+      securitylevel: {}
+      sensitiveuserteam: {}
+      serialnumber: {}
+      servicedesk: {}
+      servicenowticket: {}
+      severity: {}
+      signature: {}
+      sla: {}
+      slaField: {}
+      slajson: {}
+      sourceip: {}
+      sourceofinfection: {}
+      splunkraw: {}
+      src: {}
+      srcntdomain: {}
+      srcuser: {}
+      state: {}
+      street: {}
+      systems: {}
+      test: {}
+      testdisplay: {}
+      thirdparty: {}
+      threathuntingevent: {}
+      threattime: {}
+      timetoresolve: {}
+      title: {}
+      tuning: {}
+      type: {}
+      user: {}
+      userdetails: {}
+      userid: {}
+      useridlookup: {}
+      username: {}
+      vendorid: {}
+      vendorproduct: {}
+      vulnerabilitycategory: {}
+      waitingforresponse: {}
+      waitingforresponsecontain: {}
+      waitingforresponsecontainedir: {}
+      waitingforresponseinitiatecontainment: {}
+      waitingforresponseinitiatecontainmentir: {}
+      waitingforresponseintriage: {}
+      waitingforresponseireradicate: {}
+      waitingforresponseirinvestigate: {}
+      waitingfortriage: {}
+      waitingfortriageir: {}
+      waitingon: {}
+      wasthedeviceencrypted: {}
+      whenandwherewasthedevicestolen: {}
+      wipedmethod: {}
+    separatecontext: false
+    task:
+      brand: Builtin
+      id: 4e518d5b-172b-4871-83e6-d19417564534
+      iscommand: true
+      name: Assign Incident to NCDC+IR+CTI Role
+      script: Builtin|||setIncident
+      type: regular
+      version: -1
+    taskid: 4e518d5b-172b-4871-83e6-d19417564534
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 602.5,
+          "y": 750
+        }
+      }
+  "29":
+    id: "29"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "40"
+    note: false
+    scriptarguments:
+      actionstaken: {}
+      addLabels: {}
+      affecteddata: {}
+      affecteddatatype: {}
+      affectedindividualscontactinformation: {}
+      alertdetails: {}
+      alertsource: {}
+      app: {}
+      approximatenumberofaffecteddatasubjects: {}
+      assetid: {}
+      attachmentcount: {}
+      attachmentextension: {}
+      attachmenthash: {}
+      attachmentid: {}
+      attachmentname: {}
+      attachmentsize: {}
+      attachmenttype: {}
+      bugtraq: {}
+      campaign: {}
+      city: {}
+      closeNotes: {}
+      closeReason: {}
+      companyaddress: {}
+      companycity: {}
+      companycountry: {}
+      companyhasinsuranceforthebreach: {}
+      companyname: {}
+      companypostalcode: {}
+      computerisolated: {}
+      computernameipaddress: {}
+      contactaddress: {}
+      contactname: {}
+      containment: {}
+      controlseverity: {}
+      country: {}
+      countrywherebusinesshasitsmainestablishment: {}
+      countrywherethebreachtookplace: {}
+      customFields: {}
+      cve: {}
+      cvss: {}
+      cyberkillchain: {}
+      dataclassification: {}
+      dataclassificationdetails: {}
+      datadescription: {}
+      dataencryptionstatus: {}
+      datetimeofthebreach: {}
+      deleteEmptyField: {}
+      department: {}
+      description: {}
+      dest: {}
+      destinationip: {}
+      destntdomain: {}
+      details: {}
+      detectedby: {}
+      detectedcomputername: {}
+      devicetype: {}
+      displayname: {}
+      dpoemailaddress: {}
+      duration: {}
+      email: {}
+      emailaddress: {}
+      emailbcc: {}
+      emailbody: {}
+      emailbodyformat: {}
+      emailbodyhtml: {}
+      emailcc: {}
+      emailclientname: {}
+      emailfrom: {}
+      emailinreplyto: {}
+      emailkeywords: {}
+      emailmessageid: {}
+      emailpreview: {}
+      emailreceived: {}
+      emailreplyto: {}
+      emailreturnpath: {}
+      emailsblocked: {}
+      emailsenderip: {}
+      emailsize: {}
+      emailsource: {}
+      emailsreceived: {}
+      emailsubject: {}
+      emailto: {}
+      emailtocount: {}
+      emailurlclicked: {}
+      encryptionstatus: {}
+      escalatedtoir: {}
+      eventcount: {}
+      eventendtime: {}
+      eventhash: {}
+      eventid: {}
+      eventlabels: {}
+      eventstarttime: {}
+      filehash: {}
+      filename: {}
+      filepath: {}
+      globalsecuritycontacted: {}
+      hostname: {}
+      id: {}
+      impact: {}
+      incidentreviewed: {}
+      incidentstatus: {}
+      isspoofed: {}
+      issuelink: {}
+      isthedatasubjecttodpia: {}
+      labels: {}
+      lastcheckin: {}
+      lastknownlocation: {}
+      lessonslearned: {}
+      lessonslearnedcompleted: {}
+      likelyimpact: {}
+      linksclicked: {}
+      lostorstolen: {}
+      maliciouscauseifthecauseisamaliciousattack: {}
+      malwarefamily: {}
+      malwarefile: {}
+      malwarepath: {}
+      measurestomitigate: {}
+      misusetype: {}
+      mitigationandremediation: {}
+      name: {}
+      notifiedcisleadership: {}
+      notifiedcscmt: {}
+      ntpasswordresettime: {}
+      occurred: {}
+      owner: {}
+      passwordresetrequested: {}
+      passwordresetrequestls: {}
+      passwordsreset: {}
+      percentdropped: {}
+      phase: {}
+      phishingcampaigntype: {}
+      possiblecauseofthebreach: {}
+      postalcode: {}
+      preventedinbound: {}
+      preventedoutbound: {}
+      previousstatus: {}
+      priority: {}
+      privacyinformationnotification: {}
+      question1answer: {}
+      question1description: {}
+      question2answer: {}
+      question2description: {}
+      question3answer: {}
+      question3description: {}
+      question4answer: {}
+      question4description: {}
+      question5answer: {}
+      question5description: {}
+      question6answer: {}
+      question6description: {}
+      queue:
+        simple: ITO
+      rateimpact: {}
+      reimagerequested: {}
+      remotewipeconfirmed: {}
+      remotewipeconfirmedls: {}
+      remotewiperequested: {}
+      remotewiperequestedls: {}
+      removedfromad: {}
+      removedfromadls: {}
+      replacePlaybook: {}
+      reporter: {}
+      reportstatement: {}
+      residualrisk: {}
+      resolution: {}
+      result: {}
+      reviewinncdclessonslearned: {}
+      roles: {}
+      rootcause: {}
+      sealsaffected: {}
+      sectorofaffectedparty: {}
+      securitylevel: {}
+      sensitiveuserteam: {}
+      serialnumber: {}
+      servicenowticket: {}
+      severity: {}
+      signature: {}
+      sizenumberofemployees: {}
+      sizeturnover: {}
+      sla: {}
+      slaField: {}
+      slajson: {}
+      sourceip: {}
+      sourceofinfection: {}
+      splunkraw: {}
+      src: {}
+      srcntdomain: {}
+      srcuser: {}
+      state: {}
+      street: {}
+      systems: {}
+      telephoneno: {}
+      test: {}
+      testdisplay: {}
+      threathuntingevent: {}
+      threattime: {}
+      timetoresolve: {}
+      title: {}
+      tuning: {}
+      type: {}
+      user: {}
+      userdetails: {}
+      useridlookup: {}
+      username: {}
+      vendorid: {}
+      vendorproduct: {}
+      vulnerabilitycategory: {}
+      waitingon: {}
+      wasthedeviceencrypted: {}
+      whenandwherewasthedevicestolen: {}
+      whereisdatahosted: {}
+      wipedmethod: {}
+    separatecontext: false
+    task:
+      brand: Builtin
+      id: 983178e5-6b6a-4f4f-895e-ae251d181ada
+      iscommand: true
+      name: Assign incident to ITO queue
+      script: Builtin|||setIncident
+      type: regular
+      version: -1
+    taskid: 983178e5-6b6a-4f4f-895e-ae251d181ada
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": -110,
+          "y": 1515
+        }
+      }
+  "32":
+    id: "32"
+    ignoreworker: false
+    nexttasks:
+      "no":
+      - "26"
+      "yes":
+      - "33"
+    note: false
+    scriptarguments:
+      left:
+        simple: ${incident.sourceBrand}
+      right:
+        simple: mail-listener
+    separatecontext: false
+    task:
+      brand: Builtin
+      id: 7b905f39-7e77-4298-832a-4f0b58c6cba5
+      iscommand: false
+      name: Email Alert?
+      script: AreValuesEqual
+      type: condition
+      version: -1
+    taskid: 7b905f39-7e77-4298-832a-4f0b58c6cba5
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 602.5,
+          "y": 400
+        }
+      }
+  "33":
+    id: "33"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "26"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: f877d190-3d9b-4c31-8dda-2b851d47058b
+      iscommand: false
+      name: Create email preview
+      script: Print_EmailDetails_Old
+      type: regular
+      version: -1
+    taskid: f877d190-3d9b-4c31-8dda-2b851d47058b
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 715,
+          "y": 575
+        }
+      }
+  "35":
+    id: "35"
+    ignoreworker: false
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 74d27b81-c04e-48b0-8a02-b8d3c61bb886
+      iscommand: false
+      name: End Enrichment
+      type: title
+      version: -1
+    taskid: 74d27b81-c04e-48b0-8a02-b8d3c61bb886
+    timertriggers: []
+    type: title
+    view: |-
+      {
+        "position": {
+          "x": 275,
+          "y": 2465
+        }
+      }
+  "36":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: incident.name
+          operator: startWith
+          right:
+            value:
+              simple: Possible C2 Traffic Detected
+      label: "yes"
+    id: "36"
+    ignoreworker: false
+    nexttasks:
+      '#default#':
+      - "6"
+      "yes":
+      - "37"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 1bb2cebd-8f52-427b-8dbe-2f5532de5012
+      iscommand: false
+      name: Is this C2 Traffic Event?
+      type: condition
+      version: -1
+    taskid: 1bb2cebd-8f52-427b-8dbe-2f5532de5012
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 602.5,
+          "y": 1450
+        }
+      }
+  "37":
+    id: "37"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "6"
+    note: false
+    scriptarguments:
+      actionstaken: {}
+      addLabels: {}
+      alertdetails: {}
+      alertsource: {}
+      app: {}
+      assetid: {}
+      attachmentcount: {}
+      attachmentextension: {}
+      attachmenthash: {}
+      attachmentid: {}
+      attachmentname: {}
+      attachmentsize: {}
+      attachmenttype: {}
+      bugtraq: {}
+      cis: {}
+      computerisolated: {}
+      computernameipaddress: {}
+      containment: {}
+      controlseverity: {}
+      cscmt: {}
+      cti: {}
+      customFields: {}
+      cve: {}
+      cvss: {}
+      cyberkillchain: {}
+      dataclassification: {}
+      dataclassificationdetails: {}
+      datadescription: {}
+      deleteEmptyField: {}
+      description: {}
+      dest: {}
+      destinationip: {}
+      destntdomain: {}
+      details: {}
+      detectedby: {}
+      detectedcomputername: {}
+      devicetype: {}
+      duration: {}
+      emailbcc: {}
+      emailbody: {}
+      emailbodyformat: {}
+      emailbodyhtml: {}
+      emailcc: {}
+      emailclientname: {}
+      emailfrom: {}
+      emailinreplyto: {}
+      emailkeywords: {}
+      emailmessageid: {}
+      emailpreview: {}
+      emailreceived: {}
+      emailreplyto: {}
+      emailreturnpath: {}
+      emailsblocked: {}
+      emailsenderip: {}
+      emailsize: {}
+      emailsource: {}
+      emailsreceived: {}
+      emailsubject: {}
+      emailto: {}
+      emailtocount: {}
+      emailurlclicked: {}
+      encryptionstatus: {}
+      escalatedtoir: {}
+      eventcount: {}
+      eventendtime: {}
+      eventlabels: {}
+      eventstarttime: {}
+      filehash: {}
+      filename: {}
+      filepath: {}
+      globalsecuritycontacted: {}
+      htmlimage: {}
+      id: {}
+      impact: {}
+      incidentreviewed: {}
+      incidentstatus: {}
+      intriageunderinvestigation: {}
+      intriageunderinvestigationir: {}
+      ircis: {}
+      ircscmt: {}
+      ircti: {}
+      irlegal: {}
+      irmalwarepupremoval: {}
+      irmonitoring: {}
+      irnikebusinessunit: {}
+      irservicedesk: {}
+      irthirdparty: {}
+      iruser: {}
+      isspoofed: {}
+      labels: {}
+      lastcheckin: {}
+      lastknownlocation: {}
+      legal: {}
+      lessonslearned: {}
+      lessonslearnedcompleted: {}
+      linksclicked: {}
+      lostorstolen: {}
+      malwarefamily: {}
+      malwarefile: {}
+      malwarepath: {}
+      malwarepupremoval: {}
+      misusetype: {}
+      mitigationandremediation: {}
+      monitoring: {}
+      name: {}
+      nikebusinessunit: {}
+      notifiedcisleadership: {}
+      notifiedcscmt: {}
+      ntpasswordresettime: {}
+      occurred: {}
+      owner: {}
+      passwordresetrequested: {}
+      passwordresetrequestls: {}
+      passwordsreset: {}
+      percentdropped: {}
+      phase: {}
+      phishingcampaigntype: {}
+      preventedinbound: {}
+      preventedoutbound: {}
+      priority: {}
+      privacyinformationnotification: {}
+      question1answer: {}
+      question1description: {}
+      question2answer: {}
+      question2description: {}
+      question3answer: {}
+      question3description: {}
+      question4answer: {}
+      question4description: {}
+      question5answer: {}
+      question5description: {}
+      question6answer: {}
+      question6description: {}
+      rateimpact: {}
+      reimagerequested: {}
+      remotewipeconfirmed: {}
+      remotewipeconfirmedls: {}
+      remotewiperequested: {}
+      remotewiperequestedls: {}
+      removedfromad: {}
+      removedfromadls: {}
+      replacePlaybook: {}
+      reporter: {}
+      reportstatement: {}
+      residualrisk: {}
+      resolution: {}
+      result: {}
+      reviewinncdclessonslearned: {}
+      roles: {}
+      rootcause: {}
+      sealsaffected: {}
+      securitylevel: {}
+      sensitiveuserteam: {}
+      serialnumber: {}
+      servicedesk: {}
+      servicenowticket: {}
+      severity: {}
+      signature: {}
+      sla: {}
+      slajson: {}
+      sourceip: {}
+      sourceofinfection: {}
+      splunkraw: {}
+      src: {}
+      srcntdomain: {}
+      srcuser: {}
+      systems: {}
+      testdisplay: {}
+      thirdparty: {}
+      threathuntingevent: {}
+      timetoresolve: {}
+      tuning: {}
+      type:
+        simple: Malicious Activity
+      user: {}
+      useridlookup: {}
+      username: {}
+      vendorid: {}
+      vendorproduct: {}
+      vulnerabilitycategory: {}
+      waitingfortriage: {}
+      waitingfortriageir: {}
+      waitingon: {}
+      wasthedeviceencrypted: {}
+      whenandwherewasthedevicestolen: {}
+      wipedmethod: {}
+    separatecontext: false
+    task:
+      brand: Builtin
+      id: ac32d622-16ae-4c22-80f5-54dead23b59c
+      iscommand: true
+      name: Set the incident type as Malicious
+      script: Builtin|||setIncident
+      type: regular
+      version: -1
+    taskid: ac32d622-16ae-4c22-80f5-54dead23b59c
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 715,
+          "y": 1625
+        }
+      }
+  "38":
+    id: "38"
+    ignoreworker: false
+    nexttasks:
+      '#default#':
+      - "35"
+      "yes":
+      - "39"
+    note: false
+    scriptarguments:
+      value:
+        simple: ${incident.devo_event.username}
+    separatecontext: false
+    task:
+      brand: ""
+      description: Check if a given value exists in the context. Will return 'no'
+        for empty empty arrays. To be used mostly with DQ and selectors.
+      id: 90a328f8-3932-481d-82f8-bfcbc92582b3
+      iscommand: false
+      name: Is the username field passed?
+      script: Exists
+      type: condition
+      version: -1
+    taskid: 90a328f8-3932-481d-82f8-bfcbc92582b3
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 270,
+          "y": 2090
+        }
+      }
+  "39":
+    id: "39"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "35"
+    note: false
+    scriptarguments:
+      username:
+        simple: ${incident.devo_event.username}
+    separatecontext: false
+    task:
+      brand: ""
+      id: 6e56c0d9-5651-4c40-8b80-6b44b128a939
+      iscommand: false
+      name: Run the User Lookup script
+      script: FT_UserLookup
+      type: regular
+      version: -1
+    taskid: 6e56c0d9-5651-4c40-8b80-6b44b128a939
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 480,
+          "y": 2250
+        }
+      }
+  "40":
+    id: "40"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "41"
+    note: false
+    scriptarguments:
+      actionstaken: {}
+      addLabels: {}
+      affecteddata: {}
+      affecteddatatype: {}
+      affectedindividualscontactinformation: {}
+      alertdetails: {}
+      alertsource: {}
+      app: {}
+      approximatenumberofaffecteddatasubjects: {}
+      assetid: {}
+      attachmentcount: {}
+      attachmentextension: {}
+      attachmenthash: {}
+      attachmentid: {}
+      attachmentname: {}
+      attachmentsize: {}
+      attachmenttype: {}
+      bugtraq: {}
+      campaign: {}
+      city: {}
+      closeNotes: {}
+      closeReason: {}
+      closurestatement: {}
+      companyaddress: {}
+      companycity: {}
+      companycountry: {}
+      companyhasinsuranceforthebreach: {}
+      companyname: {}
+      companypostalcode: {}
+      computerisolated: {}
+      computernameipaddress: {}
+      contactaddress: {}
+      contactname: {}
+      containment: {}
+      controlseverity: {}
+      countrywherebusinesshasitsmainestablishment: {}
+      countrywherethebreachtookplace: {}
+      customFields: {}
+      cve: {}
+      cvss: {}
+      cyberkillchain: {}
+      dataclassification: {}
+      dataclassificationdetails: {}
+      datadescription: {}
+      dataencryptionstatus: {}
+      datetimeofthebreach: {}
+      deleteEmptyField: {}
+      department: {}
+      description: {}
+      dest: {}
+      destinationip: {}
+      destntdomain: {}
+      details: {}
+      detectedby: {}
+      detectedcomputername: {}
+      devicetype: {}
+      displayname: {}
+      dpoemailaddress: {}
+      duration: {}
+      email: {}
+      emailaddress: {}
+      emailbcc: {}
+      emailbody: {}
+      emailbodyformat: {}
+      emailbodyhtml: {}
+      emailcc: {}
+      emailclientname: {}
+      emailfrom: {}
+      emailinreplyto: {}
+      emailkeywords: {}
+      emailmessageid: {}
+      emailpreview: {}
+      emailreceived: {}
+      emailreplyto: {}
+      emailreturnpath: {}
+      emailsblocked: {}
+      emailsenderip: {}
+      emailsize: {}
+      emailsource: {}
+      emailsreceived: {}
+      emailsubject: {}
+      emailto: {}
+      emailtocount: {}
+      emailurlclicked: {}
+      encryptionstatus: {}
+      escalatedtoir: {}
+      eventcount: {}
+      eventendtime: {}
+      eventhash: {}
+      eventid: {}
+      eventlabels: {}
+      eventseverity: {}
+      eventstarttime: {}
+      filehash: {}
+      filename: {}
+      filepath: {}
+      globalsecuritycontacted: {}
+      hostname: {}
+      htmldescription: {}
+      id: {}
+      impact: {}
+      incidentreviewed: {}
+      incidentstatus: {}
+      isspoofed: {}
+      issuelink: {}
+      isthedatasubjecttodpia: {}
+      labels: {}
+      lastcheckin: {}
+      lastknownlocation: {}
+      lessonslearned: {}
+      lessonslearnedcompleted: {}
+      likelyimpact: {}
+      linksclicked: {}
+      lostorstolen: {}
+      maliciouscauseifthecauseisamaliciousattack: {}
+      malwarefamily: {}
+      malwarefile: {}
+      malwarepath: {}
+      malwareremovalprocessing: {}
+      malwareremovalrequested: {}
+      measurestomitigate: {}
+      misusetype: {}
+      mitigationandremediation: {}
+      name: {}
+      notifiedcisleadership: {}
+      notifiedcscmt: {}
+      ntpasswordresettime: {}
+      occurred: {}
+      owner: {}
+      passwordresetrequested: {}
+      passwordresetrequestls: {}
+      passwordsreset: {}
+      percentdropped: {}
+      phase: {}
+      phishingcampaigntype: {}
+      possiblecauseofthebreach: {}
+      postalcode: {}
+      preventedinbound: {}
+      preventedoutbound: {}
+      previousstatus: {}
+      priority: {}
+      privacyinformationnotification: {}
+      question1answer: {}
+      question1description: {}
+      question2answer: {}
+      question2description: {}
+      question3answer: {}
+      question3description: {}
+      question4answer: {}
+      question4description: {}
+      question5answer: {}
+      question5description: {}
+      question6answer: {}
+      question6description: {}
+      queue: {}
+      rateimpact: {}
+      reimagerequested: {}
+      remotewipeconfirmed: {}
+      remotewipeconfirmedls: {}
+      remotewiperequested: {}
+      remotewiperequestedls: {}
+      removedfromad: {}
+      removedfromadls: {}
+      replacePlaybook: {}
+      reporter: {}
+      reportstatement: {}
+      residualrisk: {}
+      resolution: {}
+      resolutionsla: {}
+      responsesla: {}
+      result: {}
+      reviewinncdclessonslearned: {}
+      roles:
+        simple: ITO
+      rootcause: {}
+      savedsearchname: {}
+      sealsaffected: {}
+      searchname: {}
+      sectorofaffectedparty: {}
+      securitylevel: {}
+      sensitiveuserteam: {}
+      serialnumber: {}
+      servicenowticket: {}
+      severity: {}
+      signature: {}
+      sizenumberofemployees: {}
+      sizeturnover: {}
+      sla: {}
+      slaField: {}
+      slajson: {}
+      sourceip: {}
+      sourceofinfection: {}
+      splunkraw: {}
+      src: {}
+      srcntdomain: {}
+      srcuser: {}
+      state: {}
+      street: {}
+      systems: {}
+      telephoneno: {}
+      test: {}
+      testdisplay: {}
+      threathuntingevent: {}
+      threattime: {}
+      timetoresolve: {}
+      title: {}
+      tuning: {}
+      type: {}
+      user: {}
+      userdetails: {}
+      userid: {}
+      useridlookup: {}
+      username: {}
+      vendorid: {}
+      vendorproduct: {}
+      vulnerabilitycategory: {}
+      waitingon: {}
+      wasthedeviceencrypted: {}
+      whenandwherewasthedevicestolen: {}
+      whereisdatahosted: {}
+      wipedmethod: {}
+    separatecontext: false
+    task:
+      brand: Builtin
+      id: e6edff88-1237-48ca-8404-afb7d7809b42
+      iscommand: true
+      name: Assign Incident to ITO Role
+      script: Builtin|||setIncident
+      type: regular
+      version: -1
+    taskid: e6edff88-1237-48ca-8404-afb7d7809b42
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": -110,
+          "y": 1660
+        }
+      }
+  "41":
+    id: "41"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "6"
+    note: false
+    scriptarguments:
+      data:
+        simple: ${incident.devo_event}
+    separatecontext: false
+    task:
+      brand: ""
+      id: b549261b-4abe-4fca-89b1-030ea70abcad
+      iscommand: false
+      name: AssignUEBARole
+      script: AssignUEBARole
+      type: regular
+      version: -1
+    taskid: b549261b-4abe-4fca-89b1-030ea70abcad
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": -110,
+          "y": 1800
+        }
+      }
+  "43":
+    id: "43"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "36"
+    note: false
+    scriptarguments:
+      new:
+        simple: NCDC
+      old:
+        simple: NCDC
+    separatecontext: false
+    task:
+      brand: Builtin
+      description: This script serves as trigger script for custom field - Queue.  When
+        this filed is updated, the Incident Status field will also be updated
+      id: eb875808-85e2-4818-85fc-2c7ead1ce4e1
+      iscommand: false
+      name: QueueUpdate
+      script: 9b82dc5a-fcbe-4687-8bb9-943714ea1f95
+      type: regular
+      version: -1
+    taskid: eb875808-85e2-4818-85fc-2c7ead1ce4e1
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 630,
+          "y": 1275
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {
+      "1_32_#default#": 0.89
+    },
+    "paper": {
+      "dimensions": {
+        "height": 2465,
+        "width": 1250,
+        "x": -110,
+        "y": 65
+      }
+    }
+  }

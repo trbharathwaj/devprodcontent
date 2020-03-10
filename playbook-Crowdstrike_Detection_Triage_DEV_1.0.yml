@@ -1,0 +1,1682 @@
+description: Crowdstrike Containment DEV 1.0
+id: d9366a2f-8f12-47a5-89fc-941d66e97df9
+inputs: []
+name: Crowdstrike Detection Triage DEV 1.0
+outputs: []
+starttaskid: "0"
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "3"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: f18c0691-44e1-48e9-8ea7-a83b1f9a5069
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: f18c0691-44e1-48e9-8ea7-a83b1f9a5069
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 1555,
+          "y": 50
+        }
+      }
+  "3":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: incident.severity
+          operator: isEqualString
+          right:
+            value:
+              simple: "1"
+      label: Low
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: incident.severity
+          operator: isEqualString
+          right:
+            value:
+              simple: "2"
+      label: Medium
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: incident.severity
+          operator: isEqualString
+          right:
+            value:
+              simple: "3"
+      label: High
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: incident.severity
+          operator: isEqualString
+          right:
+            value:
+              simple: "4"
+      label: Critical
+    id: "3"
+    ignoreworker: false
+    nexttasks:
+      Critical:
+      - "24"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 4c812135-8637-4992-89d2-8e58e17f787e
+      iscommand: false
+      name: Determine alert severity
+      type: condition
+      version: -1
+    taskid: 4c812135-8637-4992-89d2-8e58e17f787e
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 1555,
+          "y": 195
+        }
+      }
+  "7":
+    id: "7"
+    ignoreworker: false
+    nexttasks:
+      Server:
+      - "51"
+      Workstation:
+      - "10"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: dc264835-a5d8-4549-8616-d7a7587d36d6
+      iscommand: false
+      name: Was the detection made on a server or workstation?
+      type: condition
+      version: -1
+    taskid: dc264835-a5d8-4549-8616-d7a7587d36d6
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 2200,
+          "y": 720
+        }
+      }
+  "10":
+    id: "10"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "42"
+    note: false
+    scriptarguments:
+      value:
+        simple: sdvsf
+    separatecontext: false
+    task:
+      brand: ""
+      description: Prints text to war room (Markdown supported)
+      id: 5dd7ece6-d20c-4723-87fd-29c93ddda452
+      iscommand: false
+      name: Contain workstation via CS containment command
+      script: Print
+      type: regular
+      version: -1
+    taskid: 5dd7ece6-d20c-4723-87fd-29c93ddda452
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1555,
+          "y": 895
+        }
+      }
+  "11":
+    id: "11"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "13"
+    note: false
+    scriptarguments:
+      additionalOptions: {}
+      attachIds: {}
+      bcc: {}
+      bodyType:
+        simple: html
+      cc: {}
+      email:
+        simple: rvijaydev@paloaltonetworks.com
+      message:
+        simple: |-
+          <html><head>
+          <style>
+          table, th, td {
+            border: 1px solid black;
+          }
+          </style><head><body><h2>Critical detection on ${incident.cssystem}</h2><table>${HTMLTable}</table></body></html>
+      option1:
+        simple: contain
+      option2:
+        simple: ignore
+      persistent: {}
+      playbookTaskID: {}
+      replyAddress:
+        simple: avishai@demistodev.onmicrosoft.com
+      replyEntriesTag: {}
+      retries: {}
+      roles: {}
+      subject:
+        simple: Critical Detection on ${incident.cssytem} - DO SOMETHING NOW
+      task:
+        simple: servercontainmentresponse
+    separatecontext: false
+    task:
+      brand: ""
+      description: Ask a user a question via email and process the reply directly
+        into the investigation.
+      id: 8821186a-5c24-4254-875f-da84775c7bfe
+      iscommand: false
+      name: Notify team about server critical detection and await response
+      script: EmailAskUser
+      type: regular
+      version: -1
+    taskid: 8821186a-5c24-4254-875f-da84775c7bfe
+    timertriggers:
+    - action: start
+      fieldname: emailaskuserresponsetimer
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 2630,
+          "y": 1070
+        }
+      }
+  "13":
+    id: "13"
+    ignoreworker: false
+    nexttasks:
+      contain:
+      - "14"
+      ignore:
+      - "52"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      description: Extract user's response from EmailAskUser reply. Returns the first
+        textual response line of the provided entry that contains the reply body.
+        Use ${lastCompletedTaskEntries} to analyze the previous playbook task containing
+        the user's reply.
+      id: 4c1a19b5-641f-429c-848f-815ddece63a0
+      iscommand: false
+      name: Contain server when "Contain server" reply seen
+      tags:
+      - servercontainmentresponse
+      type: condition
+      version: -1
+    taskid: 4c1a19b5-641f-429c-848f-815ddece63a0
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 2630,
+          "y": 1245
+        }
+      }
+  "14":
+    id: "14"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "43"
+    note: false
+    scriptarguments:
+      value:
+        simple: Server ${incident.cssystem} contained
+    separatecontext: false
+    task:
+      brand: ""
+      description: Prints text to war room (Markdown supported)
+      id: 1f8b25da-26f5-4e09-8f9f-292859e958fd
+      iscommand: false
+      name: Contain Server
+      script: Print
+      type: regular
+      version: -1
+    taskid: 1f8b25da-26f5-4e09-8f9f-292859e958fd
+    timertriggers:
+    - action: stop
+      fieldname: emailaskuserresponsetimer
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 2200,
+          "y": 1420
+        }
+      }
+  "16":
+    id: "16"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "17"
+    note: false
+    scriptarguments:
+      additionalOptions: {}
+      attachIds: {}
+      bcc: {}
+      bodyType:
+        simple: html
+      cc: {}
+      email:
+        simple: rvijaydev@paloaltonetworks.com
+      message:
+        simple: |-
+          <html><head>
+          <style>
+          table, th, td {
+            border: 1px solid black;
+          }
+          </style><head><body><h2>Critical detection on ${incident.cssystem}</h2><table>${HTMLTable}</table></body></html>
+      option1:
+        simple: Retain
+      option2:
+        simple: Lift
+      persistent: {}
+      playbookTaskID: {}
+      replyAddress:
+        simple: avishai@demistodev.onmicrosoft.com
+      replyEntriesTag: {}
+      retries: {}
+      roles: {}
+      subject:
+        simple: Demisto contained ${incident.cssystem} - DO SOMETHING.
+      task:
+        simple: workstationcontainmentresponse
+    separatecontext: false
+    task:
+      brand: ""
+      description: Ask a user a question via email and process the reply directly
+        into the investigation.
+      id: 5a0ea5cd-f5b3-4e35-8841-17420763ca06
+      iscommand: false
+      name: Notify team about containment
+      script: EmailAskUser
+      type: regular
+      version: -1
+    taskid: 5a0ea5cd-f5b3-4e35-8841-17420763ca06
+    timertriggers:
+    - action: start
+      fieldname: emailaskuserresponsetimer
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1555,
+          "y": 1245
+        }
+      }
+  "17":
+    id: "17"
+    ignoreworker: false
+    nexttasks:
+      lift:
+      - "19"
+      retain:
+      - "18"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      description: Extract user's response from EmailAskUser reply. Returns the first
+        textual response line of the provided entry that contains the reply body.
+        Use ${lastCompletedTaskEntries} to analyze the previous playbook task containing
+        the user's reply.
+      id: e2352822-fcb6-4423-8b8f-a5815b7e49ba
+      iscommand: false
+      name: Retain or Lift Containment?
+      tags:
+      - workstationcontainmentresponse
+      type: condition
+      version: -1
+    taskid: e2352822-fcb6-4423-8b8f-a5815b7e49ba
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 1555,
+          "y": 1420
+        }
+      }
+  "18":
+    id: "18"
+    ignoreworker: false
+    note: false
+    scriptarguments:
+      value:
+        simple: Containment retained
+    separatecontext: false
+    task:
+      brand: ""
+      description: Prints text to war room (Markdown supported)
+      id: ab97de7b-71a1-462f-8fa2-3bc3ff5cc82d
+      iscommand: false
+      name: Retain Containment
+      script: Print
+      type: regular
+      version: -1
+    taskid: ab97de7b-71a1-462f-8fa2-3bc3ff5cc82d
+    timertriggers:
+    - action: stop
+      fieldname: emailaskuserresponsetimer
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1340,
+          "y": 1595
+        }
+      }
+  "19":
+    id: "19"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "47"
+    note: false
+    scriptarguments:
+      value:
+        simple: Workstation containment lifted
+    separatecontext: false
+    task:
+      brand: ""
+      description: Prints text to war room (Markdown supported)
+      id: 435904bc-0499-4a71-8ddb-8aea872551f4
+      iscommand: false
+      name: Lift Containment
+      script: Print
+      type: regular
+      version: -1
+    taskid: 435904bc-0499-4a71-8ddb-8aea872551f4
+    timertriggers:
+    - action: stop
+      fieldname: emailaskuserresponsetimer
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1770,
+          "y": 1595
+        }
+      }
+  "24":
+    id: "24"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "45"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 3340e16e-c602-47f5-852c-1d44a22815d0
+      iscommand: false
+      name: Format Detection details into HTML Table
+      script: GenerateHTMLTableForDetection
+      type: regular
+      version: -1
+    taskid: 3340e16e-c602-47f5-852c-1d44a22815d0
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 2200,
+          "y": 370
+        }
+      }
+  "42":
+    id: "42"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "16"
+    note: false
+    scriptarguments:
+      addLabels: {}
+      additionalkeyheaders: {}
+      affecteddata: {}
+      affecteddatatype: {}
+      affectedindividualscontactinformation: {}
+      app: {}
+      approximatenumberofaffecteddatasubjects: {}
+      assetid: {}
+      attachmentcount: {}
+      attachmentextension: {}
+      attachmenthash: {}
+      attachmentid: {}
+      attachmentname: {}
+      attachmentsize: {}
+      attachmenttype: {}
+      bcl: {}
+      bugtraq: {}
+      cherwellid: {}
+      cip: {}
+      city: {}
+      closeNotes: {}
+      closeReason: {}
+      companyaddress: {}
+      companycity: {}
+      companycountry: {}
+      companyhasinsuranceforthebreach: {}
+      companyname: {}
+      companypostalcode: {}
+      compliancesearchstatus: {}
+      contactaddress: {}
+      contactname: {}
+      country: {}
+      countrywherebusinesshasitsmainestablishment: {}
+      countrywherethebreachtookplace: {}
+      cssystem: {}
+      cssystemcontainmentstatus:
+        simple: <strong style="color:red;">Workstation ${incident.cssystem} Contained
+          at ${.=new Date().toString()}</strong>
+      cssystemscontainedbydbot:
+        simple: "yes"
+      cssystemscontainmenttimestamp:
+        simple: ${.=new Date().toString()}
+      cssystemscontinmentliftedbydbot: {}
+      csuser: {}
+      ctry: {}
+      customFields: {}
+      cve: {}
+      cvss: {}
+      dataencryptionstatus: {}
+      datetimeofthebreach: {}
+      dedupedfrom: {}
+      deleteEmptyField: {}
+      dest: {}
+      destntdomain: {}
+      details: {}
+      dpoemailaddress: {}
+      duration: {}
+      emailaddress: {}
+      emailbcc: {}
+      emailbody: {}
+      emailbodyformat: {}
+      emailbodyhtml: {}
+      emailcc: {}
+      emailclientname: {}
+      emailfrom: {}
+      emailinreplyto: {}
+      emailkeywords: {}
+      emailmessageid: {}
+      emailreceived: {}
+      emailreplyto: {}
+      emailreturnpath: {}
+      emailsenderip: {}
+      emailsize: {}
+      emailsource: {}
+      emailsubject: {}
+      emailto: {}
+      emailtocount: {}
+      emailurlclicked: {}
+      emlfiledownloadlink: {}
+      filehash: {}
+      filename: {}
+      filepath: {}
+      headerswewant: {}
+      id: {}
+      ipv: {}
+      isthedatasubjecttodpia: {}
+      joefileanalysisresult: {}
+      joesandboxfileanalysisresult: {}
+      joesandboxurlanalysisresult: {}
+      joeurlanalysisresult: {}
+      keyinformation: {}
+      labels: {}
+      likelyimpact: {}
+      malicious: {}
+      maliciouscauseifthecauseisamaliciousattack: {}
+      malwarefamily: {}
+      measurestomitigate: {}
+      name: {}
+      occurred: {}
+      owner: {}
+      pcl: {}
+      phase: {}
+      phishingemailmessageid: {}
+      phishingemailreporter: {}
+      phishingemailsender: {}
+      phishsent: {}
+      phishsubmitted: {}
+      possiblecauseofthebreach: {}
+      postalcode: {}
+      replacePlaybook: {}
+      roles: {}
+      scl: {}
+      sectorofaffectedparty: {}
+      severity: {}
+      sfv: {}
+      signature: {}
+      sizenumberofemployees: {}
+      sizeturnover: {}
+      sla: {}
+      slaField: {}
+      src: {}
+      srcntdomain: {}
+      srcuser: {}
+      systems: {}
+      telephoneno: {}
+      type: {}
+      user: {}
+      vendorid: {}
+      vendorproduct: {}
+      vulnerabilitycategory: {}
+      whereisdatahosted: {}
+    separatecontext: false
+    task:
+      brand: Builtin
+      id: 46bf0a3c-2764-49c6-80bf-a8fc12cd25a8
+      iscommand: true
+      name: Set CS Systems Contained By DBot field
+      script: Builtin|||setIncident
+      type: regular
+      version: -1
+    taskid: 46bf0a3c-2764-49c6-80bf-a8fc12cd25a8
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1555,
+          "y": 1070
+        }
+      }
+  "43":
+    id: "43"
+    ignoreworker: false
+    note: false
+    scriptarguments:
+      addLabels: {}
+      additionalkeyheaders: {}
+      affecteddata: {}
+      affecteddatatype: {}
+      affectedindividualscontactinformation: {}
+      app: {}
+      approximatenumberofaffecteddatasubjects: {}
+      assetid: {}
+      attachmentcount: {}
+      attachmentextension: {}
+      attachmenthash: {}
+      attachmentid: {}
+      attachmentname: {}
+      attachmentsize: {}
+      attachmenttype: {}
+      bcl: {}
+      bugtraq: {}
+      cherwellid: {}
+      cip: {}
+      city: {}
+      closeNotes: {}
+      closeReason: {}
+      companyaddress: {}
+      companycity: {}
+      companycountry: {}
+      companyhasinsuranceforthebreach: {}
+      companyname: {}
+      companypostalcode: {}
+      compliancesearchstatus: {}
+      contactaddress: {}
+      contactname: {}
+      country: {}
+      countrywherebusinesshasitsmainestablishment: {}
+      countrywherethebreachtookplace: {}
+      cssystem: {}
+      cssystemcontainmentstatus:
+        simple: <strong style="color:red;">Server ${incident.cssystem} Contained at
+          ${.=new Date().toString()}</strong>
+      cssystemscontainedbydbot:
+        simple: "yes"
+      cssystemscontainmenttimestamp:
+        simple: ${.=new Date().toString()}
+      cssystemscontinmentliftedbydbot: {}
+      csuser: {}
+      ctry: {}
+      customFields: {}
+      cve: {}
+      cvss: {}
+      dataencryptionstatus: {}
+      datetimeofthebreach: {}
+      dedupedfrom: {}
+      deleteEmptyField: {}
+      dest: {}
+      destntdomain: {}
+      details: {}
+      dpoemailaddress: {}
+      duration: {}
+      emailaddress: {}
+      emailbcc: {}
+      emailbody: {}
+      emailbodyformat: {}
+      emailbodyhtml: {}
+      emailcc: {}
+      emailclientname: {}
+      emailfrom: {}
+      emailinreplyto: {}
+      emailkeywords: {}
+      emailmessageid: {}
+      emailreceived: {}
+      emailreplyto: {}
+      emailreturnpath: {}
+      emailsenderip: {}
+      emailsize: {}
+      emailsource: {}
+      emailsubject: {}
+      emailto: {}
+      emailtocount: {}
+      emailurlclicked: {}
+      emlfiledownloadlink: {}
+      filehash: {}
+      filename: {}
+      filepath: {}
+      headerswewant: {}
+      id: {}
+      ipv: {}
+      isthedatasubjecttodpia: {}
+      joefileanalysisresult: {}
+      joesandboxfileanalysisresult: {}
+      joesandboxurlanalysisresult: {}
+      joeurlanalysisresult: {}
+      keyinformation: {}
+      labels: {}
+      likelyimpact: {}
+      malicious: {}
+      maliciouscauseifthecauseisamaliciousattack: {}
+      malwarefamily: {}
+      measurestomitigate: {}
+      name: {}
+      occurred: {}
+      owner: {}
+      pcl: {}
+      phase: {}
+      phishingemailmessageid: {}
+      phishingemailreporter: {}
+      phishingemailsender: {}
+      phishsent: {}
+      phishsubmitted: {}
+      possiblecauseofthebreach: {}
+      postalcode: {}
+      replacePlaybook: {}
+      roles: {}
+      scl: {}
+      sectorofaffectedparty: {}
+      severity: {}
+      sfv: {}
+      signature: {}
+      sizenumberofemployees: {}
+      sizeturnover: {}
+      sla: {}
+      slaField: {}
+      src: {}
+      srcntdomain: {}
+      srcuser: {}
+      systems: {}
+      telephoneno: {}
+      type: {}
+      user: {}
+      vendorid: {}
+      vendorproduct: {}
+      vulnerabilitycategory: {}
+      whereisdatahosted: {}
+    separatecontext: false
+    task:
+      brand: Builtin
+      id: e2b158b5-4e5b-42a9-8e36-7158bcc354b3
+      iscommand: true
+      name: Set containment status-Server contained
+      script: Builtin|||setIncident
+      type: regular
+      version: -1
+    taskid: e2b158b5-4e5b-42a9-8e36-7158bcc354b3
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 2200,
+          "y": 1595
+        }
+      }
+  "45":
+    id: "45"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "7"
+    note: false
+    scriptarguments:
+      assigned_to_uuid: {}
+      ids:
+        simple: ${incident.labels.DetectionID}
+      show_in_ui: {}
+      status:
+        simple: in_progress
+    separatecontext: false
+    task:
+      brand: CrowdstrikeFalcon
+      id: d0663c08-1611-465d-801d-131bc6f867ba
+      iscommand: true
+      name: Set incident to In progress
+      script: CrowdstrikeFalcon|||cs-falcon-resolve-detection
+      type: regular
+      version: -1
+    taskid: d0663c08-1611-465d-801d-131bc6f867ba
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 2200,
+          "y": 545
+        }
+      }
+  "47":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              complex:
+                accessor: emailaskuserresponsetimer
+                root: incident
+                transformers:
+                - args:
+                    field:
+                      value:
+                        simple: breachTriggered
+                  operator: getField
+          operator: isTrue
+      label: SLA Breached
+    id: "47"
+    ignoreworker: false
+    nexttasks:
+      '#default#':
+      - "49"
+      SLA Breached:
+      - "48"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: bce475fb-d84e-4d4b-8635-26d9af00383b
+      iscommand: false
+      name: Was the SLA breached?
+      type: condition
+      version: -1
+    taskid: bce475fb-d84e-4d4b-8635-26d9af00383b
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 1770,
+          "y": 1770
+        }
+      }
+  "48":
+    id: "48"
+    ignoreworker: false
+    note: false
+    scriptarguments:
+      addLabels: {}
+      additionalkeyheaders: {}
+      affecteddata: {}
+      affecteddatatype: {}
+      affectedindividualscontactinformation: {}
+      app: {}
+      approximatenumberofaffecteddatasubjects: {}
+      assetid: {}
+      attachmentcount: {}
+      attachmentextension: {}
+      attachmenthash: {}
+      attachmentid: {}
+      attachmentname: {}
+      attachmentsize: {}
+      attachmenttype: {}
+      bcl: {}
+      bugtraq: {}
+      cherwellid: {}
+      cip: {}
+      city: {}
+      closeNotes: {}
+      closeReason: {}
+      companyaddress: {}
+      companycity: {}
+      companycountry: {}
+      companyhasinsuranceforthebreach: {}
+      companyname: {}
+      companypostalcode: {}
+      compliancesearchstatus: {}
+      contactaddress: {}
+      contactname: {}
+      country: {}
+      countrywherebusinesshasitsmainestablishment: {}
+      countrywherethebreachtookplace: {}
+      cssystem: {}
+      cssystemcontainmentstatus:
+        simple: <strong style="color:green;">Containment lifted for ${incident.cssystem}
+          at ${.=new Date().toString()} due to no response from user </strong>
+      cssystemscontainedbydbot: {}
+      cssystemscontainmenttimestamp: {}
+      cssystemscontinmentliftedbydbot: {}
+      csuser: {}
+      ctry: {}
+      customFields: {}
+      cve: {}
+      cvss: {}
+      dataencryptionstatus: {}
+      datetimeofthebreach: {}
+      dedupedfrom: {}
+      deleteEmptyField: {}
+      dest: {}
+      destntdomain: {}
+      details: {}
+      dpoemailaddress: {}
+      duration: {}
+      emailaddress: {}
+      emailbcc: {}
+      emailbody: {}
+      emailbodyformat: {}
+      emailbodyhtml: {}
+      emailcc: {}
+      emailclientname: {}
+      emailfrom: {}
+      emailinreplyto: {}
+      emailkeywords: {}
+      emailmessageid: {}
+      emailreceived: {}
+      emailreplyto: {}
+      emailreturnpath: {}
+      emailsenderip: {}
+      emailsize: {}
+      emailsource: {}
+      emailsubject: {}
+      emailto: {}
+      emailtocount: {}
+      emailurlclicked: {}
+      emlfiledownloadlink: {}
+      filehash: {}
+      filename: {}
+      filepath: {}
+      headerswewant: {}
+      id: {}
+      ipv: {}
+      isthedatasubjecttodpia: {}
+      joefileanalysisresult: {}
+      joesandboxfileanalysisresult: {}
+      joesandboxurlanalysisresult: {}
+      joeurlanalysisresult: {}
+      keyinformation: {}
+      labels: {}
+      likelyimpact: {}
+      malicious: {}
+      maliciouscauseifthecauseisamaliciousattack: {}
+      malwarefamily: {}
+      measurestomitigate: {}
+      name: {}
+      occurred: {}
+      owner: {}
+      pcl: {}
+      phase: {}
+      phishingemailmessageid: {}
+      phishingemailreporter: {}
+      phishingemailsender: {}
+      phishsent: {}
+      phishsubmitted: {}
+      possiblecauseofthebreach: {}
+      postalcode: {}
+      replacePlaybook: {}
+      roles: {}
+      scl: {}
+      sectorofaffectedparty: {}
+      severity: {}
+      sfv: {}
+      signature: {}
+      sizenumberofemployees: {}
+      sizeturnover: {}
+      sla: {}
+      slaField: {}
+      src: {}
+      srcntdomain: {}
+      srcuser: {}
+      systems: {}
+      telephoneno: {}
+      type: {}
+      user: {}
+      vendorid: {}
+      vendorproduct: {}
+      vulnerabilitycategory: {}
+      whereisdatahosted: {}
+    separatecontext: false
+    task:
+      brand: Builtin
+      id: 0e415e6b-4fa7-44a7-8dad-d327ae987c25
+      iscommand: true
+      name: Set containment status - Containment lifted(No Response)
+      script: Builtin|||setIncident
+      type: regular
+      version: -1
+    taskid: 0e415e6b-4fa7-44a7-8dad-d327ae987c25
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1985,
+          "y": 1945
+        }
+      }
+  "49":
+    id: "49"
+    ignoreworker: false
+    note: false
+    scriptarguments:
+      addLabels: {}
+      additionalkeyheaders: {}
+      affecteddata: {}
+      affecteddatatype: {}
+      affectedindividualscontactinformation: {}
+      app: {}
+      approximatenumberofaffecteddatasubjects: {}
+      assetid: {}
+      attachmentcount: {}
+      attachmentextension: {}
+      attachmenthash: {}
+      attachmentid: {}
+      attachmentname: {}
+      attachmentsize: {}
+      attachmenttype: {}
+      bcl: {}
+      bugtraq: {}
+      cherwellid: {}
+      cip: {}
+      city: {}
+      closeNotes: {}
+      closeReason: {}
+      companyaddress: {}
+      companycity: {}
+      companycountry: {}
+      companyhasinsuranceforthebreach: {}
+      companyname: {}
+      companypostalcode: {}
+      compliancesearchstatus: {}
+      contactaddress: {}
+      contactname: {}
+      country: {}
+      countrywherebusinesshasitsmainestablishment: {}
+      countrywherethebreachtookplace: {}
+      cssystem: {}
+      cssystemcontainmentstatus:
+        simple: <strong style="color:green;">Containment lifted for ${incident.cssystem}
+          at ${.=new Date().toString()}-User responded with "Lift Containment"</strong>
+      cssystemscontainedbydbot: {}
+      cssystemscontainmenttimestamp: {}
+      cssystemscontinmentliftedbydbot: {}
+      csuser: {}
+      ctry: {}
+      customFields: {}
+      cve: {}
+      cvss: {}
+      dataencryptionstatus: {}
+      datetimeofthebreach: {}
+      dedupedfrom: {}
+      deleteEmptyField: {}
+      dest: {}
+      destntdomain: {}
+      details: {}
+      dpoemailaddress: {}
+      duration: {}
+      emailaddress: {}
+      emailbcc: {}
+      emailbody: {}
+      emailbodyformat: {}
+      emailbodyhtml: {}
+      emailcc: {}
+      emailclientname: {}
+      emailfrom: {}
+      emailinreplyto: {}
+      emailkeywords: {}
+      emailmessageid: {}
+      emailreceived: {}
+      emailreplyto: {}
+      emailreturnpath: {}
+      emailsenderip: {}
+      emailsize: {}
+      emailsource: {}
+      emailsubject: {}
+      emailto: {}
+      emailtocount: {}
+      emailurlclicked: {}
+      emlfiledownloadlink: {}
+      filehash: {}
+      filename: {}
+      filepath: {}
+      headerswewant: {}
+      id: {}
+      ipv: {}
+      isthedatasubjecttodpia: {}
+      joefileanalysisresult: {}
+      joesandboxfileanalysisresult: {}
+      joesandboxurlanalysisresult: {}
+      joeurlanalysisresult: {}
+      keyinformation: {}
+      labels: {}
+      likelyimpact: {}
+      malicious: {}
+      maliciouscauseifthecauseisamaliciousattack: {}
+      malwarefamily: {}
+      measurestomitigate: {}
+      name: {}
+      occurred: {}
+      owner: {}
+      pcl: {}
+      phase: {}
+      phishingemailmessageid: {}
+      phishingemailreporter: {}
+      phishingemailsender: {}
+      phishsent: {}
+      phishsubmitted: {}
+      possiblecauseofthebreach: {}
+      postalcode: {}
+      replacePlaybook: {}
+      roles: {}
+      scl: {}
+      sectorofaffectedparty: {}
+      severity: {}
+      sfv: {}
+      signature: {}
+      sizenumberofemployees: {}
+      sizeturnover: {}
+      sla: {}
+      slaField: {}
+      src: {}
+      srcntdomain: {}
+      srcuser: {}
+      systems: {}
+      telephoneno: {}
+      type: {}
+      user: {}
+      vendorid: {}
+      vendorproduct: {}
+      vulnerabilitycategory: {}
+      whereisdatahosted: {}
+    separatecontext: false
+    task:
+      brand: Builtin
+      id: 8c4003e3-30fa-4fc0-8d54-00dd5c37f0c3
+      iscommand: true
+      name: Set containment status-Containment lifted by user
+      script: Builtin|||setIncident
+      type: regular
+      version: -1
+    taskid: 8c4003e3-30fa-4fc0-8d54-00dd5c37f0c3
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1555,
+          "y": 1945
+        }
+      }
+  "50":
+    id: "50"
+    ignoreworker: false
+    note: false
+    scriptarguments:
+      addLabels: {}
+      additionalkeyheaders: {}
+      affecteddata: {}
+      affecteddatatype: {}
+      affectedindividualscontactinformation: {}
+      app: {}
+      approximatenumberofaffecteddatasubjects: {}
+      assetid: {}
+      attachmentcount: {}
+      attachmentextension: {}
+      attachmenthash: {}
+      attachmentid: {}
+      attachmentname: {}
+      attachmentsize: {}
+      attachmenttype: {}
+      bcl: {}
+      bugtraq: {}
+      cherwellid: {}
+      cip: {}
+      city: {}
+      closeNotes: {}
+      closeReason: {}
+      companyaddress: {}
+      companycity: {}
+      companycountry: {}
+      companyhasinsuranceforthebreach: {}
+      companyname: {}
+      companypostalcode: {}
+      compliancesearchstatus: {}
+      contactaddress: {}
+      contactname: {}
+      country: {}
+      countrywherebusinesshasitsmainestablishment: {}
+      countrywherethebreachtookplace: {}
+      cssystem: {}
+      cssystemcontainmentstatus:
+        simple: <strong style="color:green;">Server ${incident.cssystem} not contained
+          due to no user response</strong>
+      cssystemscontainedbydbot:
+        simple: "yes"
+      cssystemscontainmenttimestamp:
+        simple: ${.=new Date().toString()}
+      cssystemscontinmentliftedbydbot: {}
+      csuser: {}
+      ctry: {}
+      customFields: {}
+      cve: {}
+      cvss: {}
+      dataencryptionstatus: {}
+      datetimeofthebreach: {}
+      dedupedfrom: {}
+      deleteEmptyField: {}
+      dest: {}
+      destntdomain: {}
+      details: {}
+      dpoemailaddress: {}
+      duration: {}
+      emailaddress: {}
+      emailbcc: {}
+      emailbody: {}
+      emailbodyformat: {}
+      emailbodyhtml: {}
+      emailcc: {}
+      emailclientname: {}
+      emailfrom: {}
+      emailinreplyto: {}
+      emailkeywords: {}
+      emailmessageid: {}
+      emailreceived: {}
+      emailreplyto: {}
+      emailreturnpath: {}
+      emailsenderip: {}
+      emailsize: {}
+      emailsource: {}
+      emailsubject: {}
+      emailto: {}
+      emailtocount: {}
+      emailurlclicked: {}
+      emlfiledownloadlink: {}
+      filehash: {}
+      filename: {}
+      filepath: {}
+      headerswewant: {}
+      id: {}
+      ipv: {}
+      isthedatasubjecttodpia: {}
+      joefileanalysisresult: {}
+      joesandboxfileanalysisresult: {}
+      joesandboxurlanalysisresult: {}
+      joeurlanalysisresult: {}
+      keyinformation: {}
+      labels: {}
+      likelyimpact: {}
+      malicious: {}
+      maliciouscauseifthecauseisamaliciousattack: {}
+      malwarefamily: {}
+      measurestomitigate: {}
+      name: {}
+      occurred: {}
+      owner: {}
+      pcl: {}
+      phase: {}
+      phishingemailmessageid: {}
+      phishingemailreporter: {}
+      phishingemailsender: {}
+      phishsent: {}
+      phishsubmitted: {}
+      possiblecauseofthebreach: {}
+      postalcode: {}
+      replacePlaybook: {}
+      roles: {}
+      scl: {}
+      sectorofaffectedparty: {}
+      severity: {}
+      sfv: {}
+      signature: {}
+      sizenumberofemployees: {}
+      sizeturnover: {}
+      sla: {}
+      slaField: {}
+      src: {}
+      srcntdomain: {}
+      srcuser: {}
+      systems: {}
+      telephoneno: {}
+      type: {}
+      user: {}
+      vendorid: {}
+      vendorproduct: {}
+      vulnerabilitycategory: {}
+      whereisdatahosted: {}
+    separatecontext: false
+    task:
+      brand: Builtin
+      id: 37f34083-9390-40f0-885f-4e4dbb243ec0
+      iscommand: true
+      name: Set containment status-Not contained due to no user response
+      script: Builtin|||setIncident
+      type: regular
+      version: -1
+    taskid: 37f34083-9390-40f0-885f-4e4dbb243ec0
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 2630,
+          "y": 1595
+        }
+      }
+  "51":
+    id: "51"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "11"
+    note: false
+    scriptarguments:
+      addLabels: {}
+      additionalkeyheaders: {}
+      affecteddata: {}
+      affecteddatatype: {}
+      affectedindividualscontactinformation: {}
+      app: {}
+      approximatenumberofaffecteddatasubjects: {}
+      assetid: {}
+      attachmentcount: {}
+      attachmentextension: {}
+      attachmenthash: {}
+      attachmentid: {}
+      attachmentname: {}
+      attachmentsize: {}
+      attachmenttype: {}
+      bcl: {}
+      bugtraq: {}
+      cherwellid: {}
+      cip: {}
+      city: {}
+      closeNotes: {}
+      closeReason: {}
+      companyaddress: {}
+      companycity: {}
+      companycountry: {}
+      companyhasinsuranceforthebreach: {}
+      companyname: {}
+      companypostalcode: {}
+      compliancesearchstatus: {}
+      contactaddress: {}
+      contactname: {}
+      country: {}
+      countrywherebusinesshasitsmainestablishment: {}
+      countrywherethebreachtookplace: {}
+      cssystem: {}
+      cssystemcontainmentstatus: {}
+      cssystemscontainedbydbot: {}
+      cssystemscontainmenttimestamp: {}
+      cssystemscontinmentliftedbydbot: {}
+      csuser: {}
+      ctry: {}
+      customFields: {}
+      cve: {}
+      cvss: {}
+      dataencryptionstatus: {}
+      datetimeofthebreach: {}
+      dedupedfrom: {}
+      deleteEmptyField: {}
+      dest: {}
+      destntdomain: {}
+      details: {}
+      dpoemailaddress: {}
+      duration: {}
+      emailaddress: {}
+      emailbcc: {}
+      emailbody: {}
+      emailbodyformat: {}
+      emailbodyhtml: {}
+      emailcc: {}
+      emailclientname: {}
+      emailfrom: {}
+      emailinreplyto: {}
+      emailkeywords: {}
+      emailmessageid: {}
+      emailreceived: {}
+      emailreplyto: {}
+      emailreturnpath: {}
+      emailsenderip: {}
+      emailsize: {}
+      emailsource: {}
+      emailsubject: {}
+      emailto: {}
+      emailtocount: {}
+      emailurlclicked: {}
+      emlfiledownloadlink: {}
+      filehash: {}
+      filename: {}
+      filepath: {}
+      headerswewant: {}
+      id: {}
+      ipv: {}
+      isthedatasubjecttodpia: {}
+      joefileanalysisresult: {}
+      joesandboxfileanalysisresult: {}
+      joesandboxurlanalysisresult: {}
+      joeurlanalysisresult: {}
+      keyinformation: {}
+      labels: {}
+      likelyimpact: {}
+      malicious: {}
+      maliciouscauseifthecauseisamaliciousattack: {}
+      malwarefamily: {}
+      measurestomitigate: {}
+      name: {}
+      occurred: {}
+      owner: {}
+      pcl: {}
+      phase: {}
+      phishingemailmessageid: {}
+      phishingemailreporter: {}
+      phishingemailsender: {}
+      phishsent: {}
+      phishsubmitted: {}
+      possiblecauseofthebreach: {}
+      postalcode: {}
+      replacePlaybook: {}
+      roles: {}
+      scl: {}
+      sectorofaffectedparty: {}
+      severity: {}
+      sfv: {}
+      signature: {}
+      sizenumberofemployees: {}
+      sizeturnover: {}
+      sla:
+        simple: "3"
+      slaField:
+        simple: emailaskuserresponsetimer
+      src: {}
+      srcntdomain: {}
+      srcuser: {}
+      systems: {}
+      telephoneno: {}
+      type: {}
+      user: {}
+      vendorid: {}
+      vendorproduct: {}
+      vulnerabilitycategory: {}
+      whereisdatahosted: {}
+    separatecontext: false
+    task:
+      brand: Builtin
+      id: 670debc6-bdcf-43eb-8b4e-521fcdfbcb2f
+      iscommand: true
+      name: Set Response SLA to 1 hour
+      script: Builtin|||setIncident
+      type: regular
+      version: -1
+    taskid: 670debc6-bdcf-43eb-8b4e-521fcdfbcb2f
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 2630,
+          "y": 895
+        }
+      }
+  "52":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              complex:
+                accessor: emailaskuserresponsetimer
+                root: incident
+                transformers:
+                - args:
+                    field:
+                      value:
+                        simple: breachTriggered
+                  operator: getField
+          operator: isTrue
+      label: SLA Breached
+    id: "52"
+    ignoreworker: false
+    nexttasks:
+      '#default#':
+      - "53"
+      SLA Breached:
+      - "50"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 3628e746-e834-4c20-8daa-7fab79421a53
+      iscommand: false
+      name: Was the SLA breached?
+      type: condition
+      version: -1
+    taskid: 3628e746-e834-4c20-8daa-7fab79421a53
+    timertriggers:
+    - action: stop
+      fieldname: emailaskuserresponsetimer
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 2845,
+          "y": 1420
+        }
+      }
+  "53":
+    id: "53"
+    ignoreworker: false
+    note: false
+    scriptarguments:
+      addLabels: {}
+      additionalkeyheaders: {}
+      affecteddata: {}
+      affecteddatatype: {}
+      affectedindividualscontactinformation: {}
+      app: {}
+      approximatenumberofaffecteddatasubjects: {}
+      assetid: {}
+      attachmentcount: {}
+      attachmentextension: {}
+      attachmenthash: {}
+      attachmentid: {}
+      attachmentname: {}
+      attachmentsize: {}
+      attachmenttype: {}
+      bcl: {}
+      bugtraq: {}
+      cherwellid: {}
+      cip: {}
+      city: {}
+      closeNotes: {}
+      closeReason: {}
+      companyaddress: {}
+      companycity: {}
+      companycountry: {}
+      companyhasinsuranceforthebreach: {}
+      companyname: {}
+      companypostalcode: {}
+      compliancesearchstatus: {}
+      contactaddress: {}
+      contactname: {}
+      country: {}
+      countrywherebusinesshasitsmainestablishment: {}
+      countrywherethebreachtookplace: {}
+      cssystem: {}
+      cssystemcontainmentstatus:
+        simple: <strong style="color:green;">Server ${incident.cssystem} not contained-User
+          responded with "Do not contain"</strong>
+      cssystemscontainedbydbot: {}
+      cssystemscontainmenttimestamp: {}
+      cssystemscontinmentliftedbydbot: {}
+      csuser: {}
+      ctry: {}
+      customFields: {}
+      cve: {}
+      cvss: {}
+      dataencryptionstatus: {}
+      datetimeofthebreach: {}
+      dedupedfrom: {}
+      deleteEmptyField: {}
+      dest: {}
+      destntdomain: {}
+      details: {}
+      dpoemailaddress: {}
+      duration: {}
+      emailaddress: {}
+      emailbcc: {}
+      emailbody: {}
+      emailbodyformat: {}
+      emailbodyhtml: {}
+      emailcc: {}
+      emailclientname: {}
+      emailfrom: {}
+      emailinreplyto: {}
+      emailkeywords: {}
+      emailmessageid: {}
+      emailreceived: {}
+      emailreplyto: {}
+      emailreturnpath: {}
+      emailsenderip: {}
+      emailsize: {}
+      emailsource: {}
+      emailsubject: {}
+      emailto: {}
+      emailtocount: {}
+      emailurlclicked: {}
+      emlfiledownloadlink: {}
+      filehash: {}
+      filename: {}
+      filepath: {}
+      headerswewant: {}
+      id: {}
+      ipv: {}
+      isthedatasubjecttodpia: {}
+      joefileanalysisresult: {}
+      joesandboxfileanalysisresult: {}
+      joesandboxurlanalysisresult: {}
+      joeurlanalysisresult: {}
+      keyinformation: {}
+      labels: {}
+      likelyimpact: {}
+      malicious: {}
+      maliciouscauseifthecauseisamaliciousattack: {}
+      malwarefamily: {}
+      measurestomitigate: {}
+      name: {}
+      occurred: {}
+      owner: {}
+      pcl: {}
+      phase: {}
+      phishingemailmessageid: {}
+      phishingemailreporter: {}
+      phishingemailsender: {}
+      phishsent: {}
+      phishsubmitted: {}
+      possiblecauseofthebreach: {}
+      postalcode: {}
+      replacePlaybook: {}
+      roles: {}
+      scl: {}
+      sectorofaffectedparty: {}
+      severity: {}
+      sfv: {}
+      signature: {}
+      sizenumberofemployees: {}
+      sizeturnover: {}
+      sla: {}
+      slaField: {}
+      src: {}
+      srcntdomain: {}
+      srcuser: {}
+      systems: {}
+      telephoneno: {}
+      type: {}
+      user: {}
+      vendorid: {}
+      vendorproduct: {}
+      vulnerabilitycategory: {}
+      whereisdatahosted: {}
+    separatecontext: false
+    task:
+      brand: Builtin
+      id: ae11f1cf-7e70-48da-8dc7-eac5e784dc2b
+      iscommand: true
+      name: Set containment status-User responded with "Do not contain"
+      script: Builtin|||setIncident
+      type: regular
+      version: -1
+    taskid: ae11f1cf-7e70-48da-8dc7-eac5e784dc2b
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 3060,
+          "y": 1595
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {
+      "13_52_ignore": 0.81
+    },
+    "paper": {
+      "dimensions": {
+        "height": 1990,
+        "width": 2100,
+        "x": 1340,
+        "y": 50
+      }
+    }
+  }

@@ -1,0 +1,225 @@
+id: 440836de-2d7c-40af-89f3-a5acbe201e32
+inputs: []
+name: Ping Website
+outputs: []
+starttaskid: "0"
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "5"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 641e0112-dcef-417f-812c-288dd8a62d96
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: 641e0112-dcef-417f-812c-288dd8a62d96
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 50
+        }
+      }
+  "4":
+    id: "4"
+    ignoreworker: false
+    note: false
+    scriptarguments:
+      append:
+        simple: "false"
+      key:
+        simple: iteration
+      value:
+        complex:
+          root: iteration
+          transformers:
+          - args:
+              by:
+                value:
+                  simple: "1"
+            operator: addition
+    separatecontext: false
+    task:
+      brand: ""
+      id: 6f6dffa4-f5c9-4846-829c-466841cae4ca
+      iscommand: false
+      name: Increment iteration
+      script: Set
+      type: regular
+      version: -1
+    taskid: 6f6dffa4-f5c9-4846-829c-466841cae4ca
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": -310,
+          "y": 950
+        }
+      }
+  "5":
+    defaultassigneecomplex: {}
+    id: "5"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "7"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 6c2e8ad4-99c6-448f-83cd-af7c0bbb76e5
+      iscommand: false
+      name: Enter Website
+      type: regular
+      version: -1
+    taskid: 6c2e8ad4-99c6-448f-83cd-af7c0bbb76e5
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 195
+        }
+      }
+  "6":
+    continueonerror: true
+    id: "6"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "8"
+    note: false
+    scriptarguments:
+      address:
+        simple: ${website}
+    separatecontext: false
+    task:
+      brand: ""
+      id: f8f684ef-c4e5-4e89-8d8b-be3faf903a9f
+      iscommand: false
+      name: Ping
+      script: Ping
+      type: regular
+      version: -1
+    taskid: f8f684ef-c4e5-4e89-8d8b-be3faf903a9f
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 545
+        }
+      }
+  "7":
+    id: "7"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "6"
+    note: false
+    scriptarguments:
+      contextKey:
+        simple: website
+      entryId:
+        simple: ${lastCompletedTaskEntries}
+      listSeperator: {}
+    separatecontext: false
+    task:
+      brand: ""
+      id: 73345cf5-b0f2-4226-8a5a-fc9cfa937f7c
+      iscommand: false
+      name: Set website to context
+      script: commentsToContext
+      type: regular
+      version: -1
+    taskid: 73345cf5-b0f2-4226-8a5a-fc9cfa937f7c
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 370
+        }
+      }
+  "8":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: Ping
+          operator: isExists
+      label: "yes"
+    id: "8"
+    ignoreworker: false
+    nexttasks:
+      '#default#':
+      - "4"
+      "yes":
+      - "9"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 73877797-c2a9-4a96-8cec-b26473235fa5
+      iscommand: false
+      name: Received Response?
+      type: condition
+      version: -1
+    taskid: 73877797-c2a9-4a96-8cec-b26473235fa5
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 700
+        }
+      }
+  "9":
+    id: "9"
+    ignoreworker: false
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 67e91a70-fee6-48ec-8472-22444bea3179
+      iscommand: false
+      name: Done
+      type: title
+      version: -1
+    taskid: 67e91a70-fee6-48ec-8472-22444bea3179
+    timertriggers: []
+    type: title
+    view: |-
+      {
+        "position": {
+          "x": 270,
+          "y": 965
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 995,
+        "width": 960,
+        "x": -310,
+        "y": 50
+      }
+    }
+  }

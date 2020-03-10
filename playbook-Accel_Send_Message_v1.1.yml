@@ -1,0 +1,306 @@
+id: 6b016d87-a2d8-45af-8704-3ae5bb0a5a12
+inputs: []
+name: Accel_Send_Message_v1.1
+outputs: []
+starttaskid: "0"
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "7"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 6d871b10-d90e-4ee7-872a-c3191c53ae55
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: 6d871b10-d90e-4ee7-872a-c3191c53ae55
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 70,
+          "y": 70
+        }
+      }
+  "1":
+    id: "1"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "2"
+    note: false
+    scriptarguments:
+      IgnoreAddURL: {}
+      channel: {}
+      entry: {}
+      group: {}
+      message:
+        simple: ${incident.details}
+      threadID: {}
+      to:
+        simple: ${FinalList}
+    separatecontext: false
+    task:
+      brand: ""
+      id: 8346ac11-058e-459c-8775-2e61a0423e78
+      iscommand: true
+      name: 'Send Slack '
+      script: '|||slack-send'
+      type: regular
+      version: -1
+    taskid: 8346ac11-058e-459c-8775-2e61a0423e78
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": -280,
+          "y": 680
+        }
+      }
+  "2":
+    id: "2"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "6"
+    note: false
+    scriptarguments:
+      assetid: {}
+      closeNotes: {}
+      closeReason: {}
+      id: {}
+    separatecontext: false
+    task:
+      brand: Builtin
+      id: b762f949-bc5e-4d15-8b70-93aa8d3901de
+      iscommand: true
+      name: Close Investigation
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: b762f949-bc5e-4d15-8b70-93aa8d3901de
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 80,
+          "y": 880
+        }
+      }
+  "3":
+    id: "3"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "2"
+    note: false
+    scriptarguments:
+      attachCIDs: {}
+      attachIDs: {}
+      attachNames: {}
+      bcc: {}
+      body: {}
+      cc: {}
+      htmlBody:
+        simple: ${htmlbody} ${incident.details}
+      replyTo: {}
+      subject:
+        simple: Nigerian Prince wants your help
+      templateParams: {}
+      to:
+        simple: ${incident.recipients.email}
+      transientFile: {}
+      transientFileCID: {}
+      transientFileContent: {}
+    separatecontext: false
+    task:
+      brand: ""
+      id: e93d68e5-c4c9-467d-8f67-edc77692fd57
+      iscommand: true
+      name: Send Mail
+      script: '|||send-mail'
+      type: regular
+      version: -1
+    taskid: e93d68e5-c4c9-467d-8f67-edc77692fd57
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 300,
+          "y": 680
+        }
+      }
+  "6":
+    id: "6"
+    ignoreworker: false
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 370bfb25-f858-4a0a-8d55-55295033641a
+      iscommand: false
+      name: Done
+      type: title
+      version: -1
+    taskid: 370bfb25-f858-4a0a-8d55-55295033641a
+    timertriggers: []
+    type: title
+    view: |-
+      {
+        "position": {
+          "x": 80,
+          "y": 1050
+        }
+      }
+  "7":
+    id: "7"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "9"
+      - "10"
+    note: false
+    scriptarguments:
+      Recipients:
+        simple: ${incident.recipients}
+    separatecontext: false
+    task:
+      brand: ""
+      id: b3ca1380-71d1-4a99-88ca-c1e846d4a353
+      iscommand: false
+      name: Get Names of users that want Slack Notification
+      script: 578891b8-3a96-4892-8b1a-b9f89149cb5b
+      type: regular
+      version: -1
+    taskid: b3ca1380-71d1-4a99-88ca-c1e846d4a353
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 70,
+          "y": 210
+        }
+      }
+  "8":
+    id: "8"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "3"
+    note: false
+    scriptarguments:
+      height: {}
+      htmlBody:
+        simple: ${htmlbody}
+      type: {}
+      width: {}
+    separatecontext: false
+    task:
+      brand: ""
+      id: 94d016a2-95d8-42ac-8c53-210c4449dea1
+      iscommand: true
+      name: Rasterize Email
+      script: '|||rasterize-email'
+      type: regular
+      version: -1
+    taskid: 94d016a2-95d8-42ac-8c53-210c4449dea1
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 300,
+          "y": 530
+        }
+      }
+  "9":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: ${FinalList}
+          operator: isExists
+      label: "yes"
+    id: "9"
+    ignoreworker: false
+    nexttasks:
+      '#default#':
+      - "2"
+      "yes":
+      - "1"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 127e2ac9-97d8-48b2-82a0-42edf6c04a27
+      iscommand: false
+      name: Check if there are Slack Recipients
+      type: condition
+      version: -1
+    taskid: 127e2ac9-97d8-48b2-82a0-42edf6c04a27
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": -280,
+          "y": 435
+        }
+      }
+  "10":
+    id: "10"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "8"
+    note: false
+    scriptarguments:
+      key:
+        simple: htmlbody
+      listTemplate:
+        simple: ${Accel_Email_Template}
+      object: {}
+      removeNotFound: {}
+    separatecontext: false
+    task:
+      brand: ""
+      id: 47c87c21-5df0-4046-85ff-d967af0e1426
+      iscommand: false
+      name: Create HTML body
+      script: CreateEmailHtmlBody
+      type: regular
+      version: -1
+    taskid: 47c87c21-5df0-4046-85ff-d967af0e1426
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 300,
+          "y": 390
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 1045,
+        "width": 960,
+        "x": -280,
+        "y": 70
+      }
+    }
+  }

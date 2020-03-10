@@ -1,0 +1,27 @@
+{
+	"category": "",
+	"dataType": "",
+	"dateRange": {
+		"fromDate": "0001-01-01T00:00:00Z",
+		"fromDateLicense": "0001-01-01T00:00:00Z",
+		"period": {
+			"by": "",
+			"byFrom": "",
+			"byTo": "",
+			"field": "",
+			"fromValue": null,
+			"toValue": null
+		},
+		"toDate": "0001-01-01T00:00:00Z"
+	},
+	"id": "a7fce5c2-8d8d-4f38-80fc-5f679e60801d",
+	"isPredefined": false,
+	"name": "Auto Tasks",
+	"params": null,
+	"query": "",
+	"size": 0,
+	"sort": null,
+	"sortValues": null,
+	"version": -1,
+	"widgetType": ""
+}

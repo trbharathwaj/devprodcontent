@@ -1,0 +1,4016 @@
+id: 3c458aca-8ee8-48fb-8a1c-8b18a4f1203c
+inputs: []
+name: MA - User Verify
+outputs: []
+starttaskid: "0"
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "65"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: cc177208-6e96-427b-8f3d-154606cbb268
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: cc177208-6e96-427b-8f3d-154606cbb268
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": -1110
+        }
+      }
+  "1":
+    evidencedata:
+      customfields: {}
+      description:
+        simple: Slack Message Sent
+    id: "1"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "30"
+    note: false
+    scriptarguments:
+      execution-timeout:
+        simple: ${temp.timeout}
+      message:
+        simple: ${incident.emailbody}
+      option1:
+        simple: "YES"
+      option2:
+        simple: "NO"
+      persistent:
+        simple: "false"
+      replyEntriesTag: {}
+      task:
+        simple: slackrsp
+      user:
+        simple: ${incident.suspectuser}
+    separatecontext: false
+    task:
+      brand: ""
+      description: Ask a user a question on Slack and expect a response. The response
+        can also close a task (might be conditional) in a playbook.
+      id: 00cb94c1-fccf-41dc-8f2a-1d07ec5c8be5
+      iscommand: false
+      name: Send slack message
+      script: SlackAskUser
+      type: regular
+      version: -1
+    taskid: 00cb94c1-fccf-41dc-8f2a-1d07ec5c8be5
+    timertriggers:
+    - action: start
+      fieldname: slacktimer
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 240,
+          "y": -100
+        }
+      }
+  "9":
+    evidencedata:
+      customfields: {}
+      description:
+        simple: Duo Request Sent
+    id: "9"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "11"
+    note: false
+    scriptarguments:
+      async: {}
+      device: {}
+      displayUserName: {}
+      execution-timeout:
+        simple: ${temp.timeout}
+      factor:
+        simple: auto
+      ipaddr: {}
+      passcode: {}
+      pushInfo: {}
+      type: {}
+      userID: {}
+      username:
+        simple: ${incident.suspectuser}
+    separatecontext: false
+    task:
+      brand: duo
+      description: The /auth endpoint performs second-factor authentication for a
+        user by sending a push notification to the user's smartphone app, verifying
+        a passcode, or placing a phone call. It is also used to send the user a new
+        batch of passcodes via SMS.
+      id: 82523e5c-8337-493b-8d15-c39eecbfe2a8
+      iscommand: true
+      name: Send Duo Push request to verify
+      script: duo|||duo-authenticate
+      type: regular
+      version: -1
+    taskid: 82523e5c-8337-493b-8d15-c39eecbfe2a8
+    timertriggers:
+    - action: stop
+      fieldname: slacktimer
+    - action: stop
+      fieldname: emailtimer
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 40,
+          "y": 335
+        }
+      }
+  "11":
+    evidencedata:
+      customfields: {}
+      description:
+        simple: Duo Reply
+    id: "11"
+    ignoreworker: false
+    nexttasks:
+      '#default#':
+      - "34"
+      allow:
+      - "15"
+      deny:
+      - "16"
+    note: false
+    scriptarguments:
+      value:
+        simple: ${Duo.Auth.Response.Result}
+    separatecontext: false
+    task:
+      brand: ""
+      id: 66302f82-dcba-4232-8e15-437c647e1b28
+      iscommand: false
+      name: Check Duo response allow/deny
+      script: checkValue
+      type: condition
+      version: -1
+    taskid: 66302f82-dcba-4232-8e15-437c647e1b28
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 40,
+          "y": 650
+        }
+      }
+  "13":
+    id: "13"
+    ignoreworker: false
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: df3fad3c-d947-4803-833c-755e2c58521b
+      iscommand: false
+      name: Return to Master Playbook
+      type: title
+      version: -1
+    taskid: df3fad3c-d947-4803-833c-755e2c58521b
+    timertriggers: []
+    type: title
+    view: |-
+      {
+        "position": {
+          "x": 670,
+          "y": 2020
+        }
+      }
+  "14":
+    evidencedata:
+      customfields: {}
+      description:
+        simple: User replied no via slack
+    id: "14"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "13"
+    note: false
+    scriptarguments:
+      action: {}
+      addLabels: {}
+      adgroup: {}
+      adsecurity: {}
+      affecteddata: {}
+      affecteddatatype: {}
+      affectedindividualscontactinformation: {}
+      alertcount: {}
+      app: {}
+      approximatenumberofaffecteddatasubjects: {}
+      assetid: {}
+      attachmentcount: {}
+      attachmentextension: {}
+      attachmenthash: {}
+      attachmentid: {}
+      attachmentname: {}
+      attachmentsize: {}
+      attachmenttype: {}
+      bugtraq: {}
+      caseclosenote: {}
+      caseclosereason: {}
+      caserunerror: {}
+      caserunerrors: {}
+      city: {}
+      closeNotes: {}
+      closeReason: {}
+      command: {}
+      companyaddress: {}
+      companycity: {}
+      companycountry: {}
+      companyhasinsuranceforthebreach: {}
+      companyname: {}
+      companypostalcode: {}
+      contactaddress: {}
+      contactname: {}
+      count: {}
+      country: {}
+      countrywherebusinesshasitsmainestablishment: {}
+      countrywherethebreachtookplace: {}
+      cs: {}
+      csid: {}
+      cssignature: {}
+      csurl: {}
+      customFields: {}
+      cve: {}
+      cvss: {}
+      cyphortsignature: {}
+      cyphorturl: {}
+      dataencryptionstatus: {}
+      datetimeofthebreach: {}
+      deleteEmptyField: {}
+      dest: {}
+      destcategory: {}
+      desthost: {}
+      destip: {}
+      destmanager: {}
+      destntdomain: {}
+      destos: {}
+      destport: {}
+      desttranslatedip: {}
+      desttranslatedport: {}
+      destuser: {}
+      details: {}
+      dpoemailaddress: {}
+      duration: {}
+      egid: {}
+      emailaddress: {}
+      emailbcc: {}
+      emailbody: {}
+      emailbodyformat: {}
+      emailbodyhtml: {}
+      emailcc: {}
+      emailclientname: {}
+      emailfrom: {}
+      emailinreplyto: {}
+      emailkeywords: {}
+      emailmessageid: {}
+      emailreceived: {}
+      emailreplyto: {}
+      emailreturnpath: {}
+      emailsenderip: {}
+      emailsize: {}
+      emailsource: {}
+      emailsubject: {}
+      emailto: {}
+      emailtocount: {}
+      emailurlclicked: {}
+      filehash: {}
+      filename: {}
+      filepath: {}
+      firstpasscount: {}
+      hash: {}
+      haurl: {}
+      hostname: {}
+      hostsscanned: {}
+      id: {}
+      ip: {}
+      iparray: {}
+      ipbool: {}
+      ipinternal: {}
+      isthedatasubjecttodpia: {}
+      labels: {}
+      likelyimpact: {}
+      loginagent: {}
+      loginagent1: {}
+      loginagent2: {}
+      logincity1: {}
+      logincity2: {}
+      logincountry1: {}
+      logincountry2: {}
+      loginregion1: {}
+      loginregion2: {}
+      maliciouscauseifthecauseisamaliciousattack: {}
+      malwarefamily: {}
+      measurestomitigate: {}
+      name: {}
+      "null": {}
+      objectcategory: {}
+      objectpath: {}
+      occurred: {}
+      os: {}
+      owner: {}
+      pancve: {}
+      pansignature: {}
+      pdmessage: {}
+      pdsubject: {}
+      phase: {}
+      possiblecauseofthebreach: {}
+      postalcode: {}
+      protocol: {}
+      replacePlaybook: {}
+      resstatus: {}
+      roles: {}
+      ruleid: {}
+      s1eventid: {}
+      s1signature: {}
+      searchcount: {}
+      secondpasscount: {}
+      sectorofaffectedparty: {}
+      servicefilename: {}
+      servicename: {}
+      severity: {}
+      signature: {}
+      sizenumberofemployees: {}
+      sizeturnover: {}
+      sla: {}
+      slaField: {}
+      slackmsg: {}
+      splunkdrilldown: {}
+      splunkearliest: {}
+      splunkepoch: {}
+      splunkeventid: {}
+      splunklatest: {}
+      splunkurl: {}
+      src: {}
+      srccategory: {}
+      srchost: {}
+      srcip: {}
+      srcmanager: {}
+      srcntdomain: {}
+      srcos: {}
+      srcport: {}
+      srctranslatedip: {}
+      srctranslatedport: {}
+      srcuser: {}
+      suspectapplication: {}
+      suspectdevice: {}
+      suspectdomain: {}
+      suspectemail: {}
+      suspectfile: {}
+      suspectfilename: {}
+      suspectfilepath: {}
+      suspecthash: {}
+      suspecthostname: {}
+      suspectip: {}
+      suspectmanager: {}
+      suspectos: {}
+      suspecturl: {}
+      suspectuser: {}
+      suspectverfied:
+        simple: slackfail
+      systems: {}
+      telephoneno: {}
+      threatvaultcve: {}
+      threatvaultdescription: {}
+      threatvaultdetails: {}
+      threatvaultrefs: {}
+      threatvaultseverity: {}
+      type: {}
+      url: {}
+      user: {}
+      userverified: {}
+      vendorid: {}
+      vendorproduct: {}
+      vulnerabilitycategory: {}
+      vulnhosts: {}
+      whereisdatahosted: {}
+    separatecontext: false
+    task:
+      brand: Builtin
+      id: 87fd2de4-eac0-4cda-8ee7-8aba6a7e4393
+      iscommand: true
+      name: Populate incident.suspectverfied field as slackfail
+      script: Builtin|||setIncident
+      type: regular
+      version: -1
+    taskid: 87fd2de4-eac0-4cda-8ee7-8aba6a7e4393
+    timertriggers:
+    - action: stop
+      fieldname: slacktimer
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 460,
+          "y": 335
+        }
+      }
+  "15":
+    evidencedata:
+      customfields: {}
+      description:
+        simple: User confirmed via 2FA
+    id: "15"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "17"
+    note: false
+    reputationcalc: 2
+    scriptarguments:
+      action: {}
+      addLabels: {}
+      adgroup: {}
+      adsecurity: {}
+      alertcount: {}
+      app: {}
+      assetid: {}
+      attachmentcount: {}
+      attachmentextension: {}
+      attachmenthash: {}
+      attachmentid: {}
+      attachmentname: {}
+      attachmentsize: {}
+      attachmenttype: {}
+      bugtraq: {}
+      caseclosenote: {}
+      caseclosereason: {}
+      caserunerror: {}
+      closeNotes: {}
+      closeReason: {}
+      cs: {}
+      customFields: {}
+      cve: {}
+      cvss: {}
+      deleteEmptyField: {}
+      dest: {}
+      destcategory: {}
+      desthost: {}
+      destip: {}
+      destmanager: {}
+      destntdomain: {}
+      destos: {}
+      destport: {}
+      desttranslatedip: {}
+      desttranslatedport: {}
+      destuser: {}
+      details: {}
+      duration: {}
+      emailbcc: {}
+      emailbody: {}
+      emailbodyformat: {}
+      emailbodyhtml: {}
+      emailcc: {}
+      emailclientname: {}
+      emailfrom: {}
+      emailinreplyto: {}
+      emailkeywords: {}
+      emailmessageid: {}
+      emailreceived: {}
+      emailreplyto: {}
+      emailreturnpath: {}
+      emailsenderip: {}
+      emailsize: {}
+      emailsource: {}
+      emailsubject: {}
+      emailto: {}
+      emailtocount: {}
+      emailurlclicked: {}
+      filehash: {}
+      filename: {}
+      filepath: {}
+      firstpasscount: {}
+      hash: {}
+      hostname: {}
+      id: {}
+      ip: {}
+      ipbool: {}
+      ipinternal: {}
+      labels: {}
+      malwarefamily: {}
+      name: {}
+      "null": {}
+      occurred: {}
+      os: {}
+      owner: {}
+      pancve: {}
+      pansignature: {}
+      phase: {}
+      protocol: {}
+      replacePlaybook: {}
+      roles: {}
+      ruleid: {}
+      searchcount: {}
+      secondpasscount: {}
+      servicefilename: {}
+      servicename: {}
+      severity: {}
+      signature: {}
+      sla: {}
+      slaField: {}
+      slackmsg: {}
+      splunkurl: {}
+      src: {}
+      srccategory: {}
+      srchost: {}
+      srcip: {}
+      srcmanager: {}
+      srcntdomain: {}
+      srcos: {}
+      srcport: {}
+      srctranslatedip: {}
+      srctranslatedport: {}
+      srcuser: {}
+      suspectapplication: {}
+      suspectdomain: {}
+      suspectfile: {}
+      suspecthostname: {}
+      suspectip: {}
+      suspectos: {}
+      suspecturl: {}
+      suspectuser: {}
+      suspectverfied:
+        simple: success
+      systems: {}
+      type: {}
+      url: {}
+      user: {}
+      userverified: {}
+      vendorid: {}
+      vendorproduct: {}
+      vulnerabilitycategory: {}
+    separatecontext: false
+    task:
+      brand: Builtin
+      id: f8b19c2d-e68f-4f01-89d9-3405935c15e5
+      iscommand: true
+      name: Populate incident.suspectverfied field as success
+      script: Builtin|||setIncident
+      type: regular
+      version: -1
+    taskid: f8b19c2d-e68f-4f01-89d9-3405935c15e5
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 60,
+          "y": 890
+        }
+      }
+  "16":
+    evidencedata:
+      customfields: {}
+      description:
+        simple: User failed to confirm via Duo (Denied)
+    id: "16"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "13"
+    note: false
+    reputationcalc: 2
+    scriptarguments:
+      action: {}
+      addLabels: {}
+      adgroup: {}
+      adsecurity: {}
+      alertcount: {}
+      app: {}
+      assetid: {}
+      attachmentcount: {}
+      attachmentextension: {}
+      attachmenthash: {}
+      attachmentid: {}
+      attachmentname: {}
+      attachmentsize: {}
+      attachmenttype: {}
+      bugtraq: {}
+      caseclosenote: {}
+      caseclosereason: {}
+      caserunerror: {}
+      closeNotes: {}
+      closeReason: {}
+      cs: {}
+      customFields: {}
+      cve: {}
+      cvss: {}
+      deleteEmptyField: {}
+      dest: {}
+      destcategory: {}
+      desthost: {}
+      destip: {}
+      destmanager: {}
+      destntdomain: {}
+      destos: {}
+      destport: {}
+      desttranslatedip: {}
+      desttranslatedport: {}
+      destuser: {}
+      details: {}
+      duration: {}
+      emailbcc: {}
+      emailbody: {}
+      emailbodyformat: {}
+      emailbodyhtml: {}
+      emailcc: {}
+      emailclientname: {}
+      emailfrom: {}
+      emailinreplyto: {}
+      emailkeywords: {}
+      emailmessageid: {}
+      emailreceived: {}
+      emailreplyto: {}
+      emailreturnpath: {}
+      emailsenderip: {}
+      emailsize: {}
+      emailsource: {}
+      emailsubject: {}
+      emailto: {}
+      emailtocount: {}
+      emailurlclicked: {}
+      filehash: {}
+      filename: {}
+      filepath: {}
+      firstpasscount: {}
+      hash: {}
+      hostname: {}
+      id: {}
+      ip: {}
+      ipbool: {}
+      ipinternal: {}
+      labels: {}
+      malwarefamily: {}
+      name: {}
+      "null": {}
+      occurred: {}
+      os: {}
+      owner: {}
+      pancve: {}
+      pansignature: {}
+      phase: {}
+      protocol: {}
+      replacePlaybook: {}
+      roles: {}
+      ruleid: {}
+      searchcount: {}
+      secondpasscount: {}
+      servicefilename: {}
+      servicename: {}
+      severity: {}
+      signature: {}
+      sla: {}
+      slaField: {}
+      slackmsg: {}
+      splunkurl: {}
+      src: {}
+      srccategory: {}
+      srchost: {}
+      srcip: {}
+      srcmanager: {}
+      srcntdomain: {}
+      srcos: {}
+      srcport: {}
+      srctranslatedip: {}
+      srctranslatedport: {}
+      srcuser: {}
+      suspectapplication: {}
+      suspectdomain: {}
+      suspectfile: {}
+      suspecthostname: {}
+      suspectip: {}
+      suspectos: {}
+      suspecturl: {}
+      suspectuser: {}
+      suspectverfied:
+        simple: fail
+      systems: {}
+      type: {}
+      url: {}
+      user: {}
+      userverified: {}
+      vendorid: {}
+      vendorproduct: {}
+      vulnerabilitycategory: {}
+    separatecontext: false
+    task:
+      brand: Builtin
+      id: e9c09f2d-0493-47cf-8929-e040e9d4eba6
+      iscommand: true
+      name: Populate incident.suspectverfied field as fail
+      script: Builtin|||setIncident
+      type: regular
+      version: -1
+    taskid: e9c09f2d-0493-47cf-8929-e040e9d4eba6
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 440,
+          "y": 890
+        }
+      }
+  "17":
+    id: "17"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "31"
+    note: false
+    reputationcalc: 2
+    scriptarguments:
+      addLabels: {}
+      alertcount: {}
+      app: {}
+      assetid: {}
+      attachmentcount: {}
+      attachmentextension: {}
+      attachmenthash: {}
+      attachmentid: {}
+      attachmentname: {}
+      attachmentsize: {}
+      attachmenttype: {}
+      bugtraq: {}
+      caseclosenote:
+        simple: User verified activity via 2FA
+      caseclosereason: {}
+      closeNotes: {}
+      closeReason: {}
+      cs: {}
+      customFields: {}
+      cve: {}
+      cvss: {}
+      deleteEmptyField: {}
+      dest: {}
+      destcategory: {}
+      desthost: {}
+      destip: {}
+      destmanager: {}
+      destntdomain: {}
+      destos: {}
+      destport: {}
+      destuser: {}
+      details: {}
+      duration: {}
+      emailbcc: {}
+      emailbody: {}
+      emailbodyformat: {}
+      emailbodyhtml: {}
+      emailcc: {}
+      emailclientname: {}
+      emailfrom: {}
+      emailinreplyto: {}
+      emailkeywords: {}
+      emailmessageid: {}
+      emailreceived: {}
+      emailreplyto: {}
+      emailreturnpath: {}
+      emailsenderip: {}
+      emailsize: {}
+      emailsource: {}
+      emailsubject: {}
+      emailto: {}
+      emailtocount: {}
+      emailurlclicked: {}
+      filehash: {}
+      filename: {}
+      filepath: {}
+      firstpasscount: {}
+      hash: {}
+      hostname: {}
+      id: {}
+      ip: {}
+      ipbool: {}
+      ipinternal: {}
+      labels: {}
+      malwarefamily: {}
+      name: {}
+      "null": {}
+      occurred: {}
+      os: {}
+      owner: {}
+      phase: {}
+      replacePlaybook: {}
+      roles: {}
+      ruleid: {}
+      searchcount: {}
+      secondpasscount: {}
+      severity: {}
+      signature: {}
+      sla: {}
+      slaField: {}
+      src: {}
+      srccategory: {}
+      srchost: {}
+      srcip: {}
+      srcmanager: {}
+      srcntdomain: {}
+      srcos: {}
+      srcport: {}
+      srcuser: {}
+      suspectdomain: {}
+      suspectfile: {}
+      suspecthostname: {}
+      suspectip: {}
+      suspectos: {}
+      suspecturl: {}
+      suspectuser: {}
+      suspectverfied: {}
+      systems: {}
+      type: {}
+      url: {}
+      user: {}
+      userverified: {}
+      vendorid: {}
+      vendorproduct: {}
+      vulnerabilitycategory: {}
+    separatecontext: false
+    task:
+      brand: Builtin
+      id: c303f547-a664-45f8-830b-4a89b190800e
+      iscommand: true
+      name: Populate incident.caseclosenote notes as verified by 2fa
+      script: Builtin|||setIncident
+      type: regular
+      version: -1
+    taskid: c303f547-a664-45f8-830b-4a89b190800e
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 60,
+          "y": 1020
+        }
+      }
+  "30":
+    id: "30"
+    ignoreworker: false
+    nexttasks:
+      '#default#':
+      - "69"
+      "NO":
+      - "14"
+      "YES":
+      - "9"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 32adcae0-0e88-49a6-8011-1d743f1751fe
+      iscommand: false
+      name: Check users Yes/No answer from Slack
+      tags:
+      - slackrsp
+      - slacksla
+      type: condition
+      version: -1
+    taskid: 32adcae0-0e88-49a6-8011-1d743f1751fe
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 220,
+          "y": 75
+        }
+      }
+  "31":
+    id: "31"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "13"
+    note: false
+    reputationcalc: 2
+    scriptarguments:
+      action: {}
+      addLabels: {}
+      adgroup: {}
+      adsecurity: {}
+      affecteddata: {}
+      affecteddatatype: {}
+      affectedindividualscontactinformation: {}
+      alertcount: {}
+      app: {}
+      approximatenumberofaffecteddatasubjects: {}
+      assetid: {}
+      attachmentcount: {}
+      attachmentextension: {}
+      attachmenthash: {}
+      attachmentid: {}
+      attachmentname: {}
+      attachmentsize: {}
+      attachmenttype: {}
+      bugtraq: {}
+      caseclosenote: {}
+      caseclosereason:
+        simple: True Positive
+      caserunerror: {}
+      caserunerrors: {}
+      city: {}
+      closeNotes: {}
+      closeReason: {}
+      companyaddress: {}
+      companycity: {}
+      companycountry: {}
+      companyhasinsuranceforthebreach: {}
+      companyname: {}
+      companypostalcode: {}
+      contactaddress: {}
+      contactname: {}
+      count: {}
+      country: {}
+      countrywherebusinesshasitsmainestablishment: {}
+      countrywherethebreachtookplace: {}
+      cs: {}
+      csid: {}
+      cssignature: {}
+      csurl: {}
+      customFields: {}
+      cve: {}
+      cvss: {}
+      cyphortsignature: {}
+      cyphorturl: {}
+      dataencryptionstatus: {}
+      datetimeofthebreach: {}
+      deleteEmptyField: {}
+      dest: {}
+      destcategory: {}
+      desthost: {}
+      destip: {}
+      destmanager: {}
+      destntdomain: {}
+      destos: {}
+      destport: {}
+      desttranslatedip: {}
+      desttranslatedport: {}
+      destuser: {}
+      details: {}
+      dpoemailaddress: {}
+      duration: {}
+      emailaddress: {}
+      emailbcc: {}
+      emailbody: {}
+      emailbodyformat: {}
+      emailbodyhtml: {}
+      emailcc: {}
+      emailclientname: {}
+      emailfrom: {}
+      emailinreplyto: {}
+      emailkeywords: {}
+      emailmessageid: {}
+      emailreceived: {}
+      emailreplyto: {}
+      emailreturnpath: {}
+      emailsenderip: {}
+      emailsize: {}
+      emailsource: {}
+      emailsubject: {}
+      emailto: {}
+      emailtocount: {}
+      emailurlclicked: {}
+      filehash: {}
+      filename: {}
+      filepath: {}
+      firstpasscount: {}
+      hash: {}
+      haurl: {}
+      hostname: {}
+      hostsscanned: {}
+      id: {}
+      ip: {}
+      ipbool: {}
+      ipinternal: {}
+      isthedatasubjecttodpia: {}
+      labels: {}
+      likelyimpact: {}
+      loginagent: {}
+      loginagent1: {}
+      loginagent2: {}
+      logincity1: {}
+      logincity2: {}
+      logincountry1: {}
+      logincountry2: {}
+      loginregion1: {}
+      loginregion2: {}
+      maliciouscauseifthecauseisamaliciousattack: {}
+      malwarefamily: {}
+      measurestomitigate: {}
+      name: {}
+      "null": {}
+      occurred: {}
+      os: {}
+      owner: {}
+      pancve: {}
+      pansignature: {}
+      pdmessage: {}
+      pdsubject: {}
+      phase: {}
+      possiblecauseofthebreach: {}
+      postalcode: {}
+      protocol: {}
+      replacePlaybook: {}
+      resstatus: {}
+      roles: {}
+      ruleid: {}
+      s1eventid: {}
+      s1signature: {}
+      searchcount: {}
+      secondpasscount: {}
+      sectorofaffectedparty: {}
+      severity: {}
+      signature: {}
+      sizenumberofemployees: {}
+      sizeturnover: {}
+      sla: {}
+      slaField: {}
+      slackmsg: {}
+      splunkdrilldown: {}
+      splunkearliest: {}
+      splunkepoch: {}
+      splunkeventid: {}
+      splunklatest: {}
+      splunkurl: {}
+      src: {}
+      srccategory: {}
+      srchost: {}
+      srcip: {}
+      srcmanager: {}
+      srcntdomain: {}
+      srcos: {}
+      srcport: {}
+      srctranslatedip: {}
+      srctranslatedport: {}
+      srcuser: {}
+      suspectapplication: {}
+      suspectdomain: {}
+      suspectemail: {}
+      suspectfile: {}
+      suspectfilename: {}
+      suspectfilepath: {}
+      suspecthash: {}
+      suspecthostname: {}
+      suspectip: {}
+      suspectmanager: {}
+      suspectos: {}
+      suspecturl: {}
+      suspectuser: {}
+      suspectverfied: {}
+      systems: {}
+      telephoneno: {}
+      threatvaultcve: {}
+      threatvaultdescription: {}
+      threatvaultdetails: {}
+      threatvaultrefs: {}
+      threatvaultseverity: {}
+      type: {}
+      url: {}
+      user: {}
+      userverified: {}
+      vendorid: {}
+      vendorproduct: {}
+      vulnerabilitycategory: {}
+      vulnhosts: {}
+      whereisdatahosted: {}
+    separatecontext: false
+    task:
+      brand: Builtin
+      id: 09373396-823e-4fc6-80ba-427fd7adcda4
+      iscommand: true
+      name: Populate incident.caseclosereason as true positive
+      script: Builtin|||setIncident
+      type: regular
+      version: -1
+    taskid: 09373396-823e-4fc6-80ba-427fd7adcda4
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 60,
+          "y": 1160
+        }
+      }
+  "32":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: incident.suspectuser
+          operator: isExists
+      - - left:
+            iscontext: true
+            value:
+              simple: incident.suspectuser
+          operator: isNotEmpty
+      label: "yes"
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: incident.suspectuser
+          operator: isNotExists
+        - left:
+            iscontext: true
+            value:
+              simple: incident.suspectuser
+          operator: isEmpty
+      label: "no"
+    id: "32"
+    ignoreworker: false
+    nexttasks:
+      "no":
+      - "33"
+      "yes":
+      - "1"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 34ceb740-8142-4f7f-87b5-e40177f4d070
+      iscommand: false
+      name: Check field exists
+      type: condition
+      version: -1
+    taskid: 34ceb740-8142-4f7f-87b5-e40177f4d070
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": -270
+        }
+      }
+  "33":
+    id: "33"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "13"
+    note: false
+    scriptarguments:
+      fieldName:
+        simple: caserunerrors
+      newValue:
+        simple: '{"errors":"Source user could not be determined - MA - IP to User
+          Detail"}'
+    separatecontext: false
+    task:
+      brand: ""
+      id: 42a1ac6e-7874-4308-8ddc-498649c44ab5
+      iscommand: false
+      name: 'ERROR: Source user could not be determined'
+      script: AppendRowToGrid
+      type: regular
+      version: -1
+    taskid: 42a1ac6e-7874-4308-8ddc-498649c44ab5
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 660,
+          "y": -100
+        }
+      }
+  "34":
+    id: "34"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "35"
+    note: false
+    scriptarguments:
+      append: {}
+      key:
+        simple: ${incident.emailbody}
+      value:
+        simple: Please confirm action via 2FA
+    separatecontext: false
+    task:
+      brand: ""
+      id: 7fa7730e-5df3-4a2d-87c6-d10d470e58b5
+      iscommand: false
+      name: Populate reminder slack message
+      script: Set
+      type: regular
+      version: -1
+    taskid: 7fa7730e-5df3-4a2d-87c6-d10d470e58b5
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": -350,
+          "y": 890
+        }
+      }
+  "35":
+    id: "35"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "42"
+    note: false
+    scriptarguments:
+      execution-timeout:
+        simple: "900"
+      message:
+        simple: ${incident.emailbody}
+      option1:
+        simple: "YES"
+      option2:
+        simple: "NO"
+      persistent:
+        simple: "false"
+      replyEntriesTag: {}
+      task: {}
+      user:
+        simple: ${incident.suspectuser}
+    separatecontext: false
+    task:
+      brand: ""
+      description: Ask a user a question on Slack and expect a response. The response
+        can also close a task (might be conditional) in a playbook.
+      id: be7e1d35-1ecd-48c5-8d65-7f3be665b5ce
+      iscommand: false
+      name: Send slack message
+      script: SlackAskUser
+      type: regular
+      version: -1
+    taskid: be7e1d35-1ecd-48c5-8d65-7f3be665b5ce
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": -350,
+          "y": 1030
+        }
+      }
+  "39":
+    evidencedata:
+      customfields: {}
+      description:
+        simple: User confirmed via 2FA
+    id: "39"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "40"
+    note: false
+    reputationcalc: 2
+    scriptarguments:
+      action: {}
+      addLabels: {}
+      adgroup: {}
+      adsecurity: {}
+      alertcount: {}
+      app: {}
+      assetid: {}
+      attachmentcount: {}
+      attachmentextension: {}
+      attachmenthash: {}
+      attachmentid: {}
+      attachmentname: {}
+      attachmentsize: {}
+      attachmenttype: {}
+      bugtraq: {}
+      caseclosenote: {}
+      caseclosereason: {}
+      caserunerror: {}
+      closeNotes: {}
+      closeReason: {}
+      cs: {}
+      customFields: {}
+      cve: {}
+      cvss: {}
+      deleteEmptyField: {}
+      dest: {}
+      destcategory: {}
+      desthost: {}
+      destip: {}
+      destmanager: {}
+      destntdomain: {}
+      destos: {}
+      destport: {}
+      desttranslatedip: {}
+      desttranslatedport: {}
+      destuser: {}
+      details: {}
+      duration: {}
+      emailbcc: {}
+      emailbody: {}
+      emailbodyformat: {}
+      emailbodyhtml: {}
+      emailcc: {}
+      emailclientname: {}
+      emailfrom: {}
+      emailinreplyto: {}
+      emailkeywords: {}
+      emailmessageid: {}
+      emailreceived: {}
+      emailreplyto: {}
+      emailreturnpath: {}
+      emailsenderip: {}
+      emailsize: {}
+      emailsource: {}
+      emailsubject: {}
+      emailto: {}
+      emailtocount: {}
+      emailurlclicked: {}
+      filehash: {}
+      filename: {}
+      filepath: {}
+      firstpasscount: {}
+      hash: {}
+      hostname: {}
+      id: {}
+      ip: {}
+      ipbool: {}
+      ipinternal: {}
+      labels: {}
+      malwarefamily: {}
+      name: {}
+      "null": {}
+      occurred: {}
+      os: {}
+      owner: {}
+      pancve: {}
+      pansignature: {}
+      phase: {}
+      protocol: {}
+      replacePlaybook: {}
+      roles: {}
+      ruleid: {}
+      searchcount: {}
+      secondpasscount: {}
+      servicefilename: {}
+      servicename: {}
+      severity: {}
+      signature: {}
+      sla: {}
+      slaField: {}
+      slackmsg: {}
+      splunkurl: {}
+      src: {}
+      srccategory: {}
+      srchost: {}
+      srcip: {}
+      srcmanager: {}
+      srcntdomain: {}
+      srcos: {}
+      srcport: {}
+      srctranslatedip: {}
+      srctranslatedport: {}
+      srcuser: {}
+      suspectapplication: {}
+      suspectdomain: {}
+      suspectfile: {}
+      suspecthostname: {}
+      suspectip: {}
+      suspectos: {}
+      suspecturl: {}
+      suspectuser: {}
+      suspectverfied:
+        simple: success
+      systems: {}
+      type: {}
+      url: {}
+      user: {}
+      userverified: {}
+      vendorid: {}
+      vendorproduct: {}
+      vulnerabilitycategory: {}
+    separatecontext: false
+    task:
+      brand: Builtin
+      id: 6bad5060-052f-4ad4-821a-c8a500a906aa
+      iscommand: true
+      name: Populate incident.suspectverfied field as success
+      script: Builtin|||setIncident
+      type: regular
+      version: -1
+    taskid: 6bad5060-052f-4ad4-821a-c8a500a906aa
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": -350,
+          "y": 1525
+        }
+      }
+  "40":
+    id: "40"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "41"
+    note: false
+    reputationcalc: 2
+    scriptarguments:
+      addLabels: {}
+      alertcount: {}
+      app: {}
+      assetid: {}
+      attachmentcount: {}
+      attachmentextension: {}
+      attachmenthash: {}
+      attachmentid: {}
+      attachmentname: {}
+      attachmentsize: {}
+      attachmenttype: {}
+      bugtraq: {}
+      caseclosenote:
+        simple: User verified activity via 2FA
+      caseclosereason: {}
+      closeNotes: {}
+      closeReason: {}
+      cs: {}
+      customFields: {}
+      cve: {}
+      cvss: {}
+      deleteEmptyField: {}
+      dest: {}
+      destcategory: {}
+      desthost: {}
+      destip: {}
+      destmanager: {}
+      destntdomain: {}
+      destos: {}
+      destport: {}
+      destuser: {}
+      details: {}
+      duration: {}
+      emailbcc: {}
+      emailbody: {}
+      emailbodyformat: {}
+      emailbodyhtml: {}
+      emailcc: {}
+      emailclientname: {}
+      emailfrom: {}
+      emailinreplyto: {}
+      emailkeywords: {}
+      emailmessageid: {}
+      emailreceived: {}
+      emailreplyto: {}
+      emailreturnpath: {}
+      emailsenderip: {}
+      emailsize: {}
+      emailsource: {}
+      emailsubject: {}
+      emailto: {}
+      emailtocount: {}
+      emailurlclicked: {}
+      filehash: {}
+      filename: {}
+      filepath: {}
+      firstpasscount: {}
+      hash: {}
+      hostname: {}
+      id: {}
+      ip: {}
+      ipbool: {}
+      ipinternal: {}
+      labels: {}
+      malwarefamily: {}
+      name: {}
+      "null": {}
+      occurred: {}
+      os: {}
+      owner: {}
+      phase: {}
+      replacePlaybook: {}
+      roles: {}
+      ruleid: {}
+      searchcount: {}
+      secondpasscount: {}
+      severity: {}
+      signature: {}
+      sla: {}
+      slaField: {}
+      src: {}
+      srccategory: {}
+      srchost: {}
+      srcip: {}
+      srcmanager: {}
+      srcntdomain: {}
+      srcos: {}
+      srcport: {}
+      srcuser: {}
+      suspectdomain: {}
+      suspectfile: {}
+      suspecthostname: {}
+      suspectip: {}
+      suspectos: {}
+      suspecturl: {}
+      suspectuser: {}
+      suspectverfied: {}
+      systems: {}
+      type: {}
+      url: {}
+      user: {}
+      userverified: {}
+      vendorid: {}
+      vendorproduct: {}
+      vulnerabilitycategory: {}
+    separatecontext: false
+    task:
+      brand: Builtin
+      id: 88128731-678f-4031-883b-1d8e2297ef4c
+      iscommand: true
+      name: Populate incident.caseclosenote notes as verified by 2fa
+      script: Builtin|||setIncident
+      type: regular
+      version: -1
+    taskid: 88128731-678f-4031-883b-1d8e2297ef4c
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": -350,
+          "y": 1675
+        }
+      }
+  "41":
+    id: "41"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "13"
+    note: false
+    reputationcalc: 2
+    scriptarguments:
+      action: {}
+      addLabels: {}
+      adgroup: {}
+      adsecurity: {}
+      affecteddata: {}
+      affecteddatatype: {}
+      affectedindividualscontactinformation: {}
+      alertcount: {}
+      app: {}
+      approximatenumberofaffecteddatasubjects: {}
+      assetid: {}
+      attachmentcount: {}
+      attachmentextension: {}
+      attachmenthash: {}
+      attachmentid: {}
+      attachmentname: {}
+      attachmentsize: {}
+      attachmenttype: {}
+      bugtraq: {}
+      caseclosenote: {}
+      caseclosereason:
+        simple: True Positive
+      caserunerror: {}
+      caserunerrors: {}
+      city: {}
+      closeNotes: {}
+      closeReason: {}
+      companyaddress: {}
+      companycity: {}
+      companycountry: {}
+      companyhasinsuranceforthebreach: {}
+      companyname: {}
+      companypostalcode: {}
+      contactaddress: {}
+      contactname: {}
+      count: {}
+      country: {}
+      countrywherebusinesshasitsmainestablishment: {}
+      countrywherethebreachtookplace: {}
+      cs: {}
+      csid: {}
+      cssignature: {}
+      csurl: {}
+      customFields: {}
+      cve: {}
+      cvss: {}
+      cyphortsignature: {}
+      cyphorturl: {}
+      dataencryptionstatus: {}
+      datetimeofthebreach: {}
+      deleteEmptyField: {}
+      dest: {}
+      destcategory: {}
+      desthost: {}
+      destip: {}
+      destmanager: {}
+      destntdomain: {}
+      destos: {}
+      destport: {}
+      desttranslatedip: {}
+      desttranslatedport: {}
+      destuser: {}
+      details: {}
+      dpoemailaddress: {}
+      duration: {}
+      emailaddress: {}
+      emailbcc: {}
+      emailbody: {}
+      emailbodyformat: {}
+      emailbodyhtml: {}
+      emailcc: {}
+      emailclientname: {}
+      emailfrom: {}
+      emailinreplyto: {}
+      emailkeywords: {}
+      emailmessageid: {}
+      emailreceived: {}
+      emailreplyto: {}
+      emailreturnpath: {}
+      emailsenderip: {}
+      emailsize: {}
+      emailsource: {}
+      emailsubject: {}
+      emailto: {}
+      emailtocount: {}
+      emailurlclicked: {}
+      filehash: {}
+      filename: {}
+      filepath: {}
+      firstpasscount: {}
+      hash: {}
+      haurl: {}
+      hostname: {}
+      hostsscanned: {}
+      id: {}
+      ip: {}
+      ipbool: {}
+      ipinternal: {}
+      isthedatasubjecttodpia: {}
+      labels: {}
+      likelyimpact: {}
+      loginagent: {}
+      loginagent1: {}
+      loginagent2: {}
+      logincity1: {}
+      logincity2: {}
+      logincountry1: {}
+      logincountry2: {}
+      loginregion1: {}
+      loginregion2: {}
+      maliciouscauseifthecauseisamaliciousattack: {}
+      malwarefamily: {}
+      measurestomitigate: {}
+      name: {}
+      "null": {}
+      occurred: {}
+      os: {}
+      owner: {}
+      pancve: {}
+      pansignature: {}
+      pdmessage: {}
+      pdsubject: {}
+      phase: {}
+      possiblecauseofthebreach: {}
+      postalcode: {}
+      protocol: {}
+      replacePlaybook: {}
+      resstatus: {}
+      roles: {}
+      ruleid: {}
+      s1eventid: {}
+      s1signature: {}
+      searchcount: {}
+      secondpasscount: {}
+      sectorofaffectedparty: {}
+      severity: {}
+      signature: {}
+      sizenumberofemployees: {}
+      sizeturnover: {}
+      sla: {}
+      slaField: {}
+      slackmsg: {}
+      splunkdrilldown: {}
+      splunkearliest: {}
+      splunkepoch: {}
+      splunkeventid: {}
+      splunklatest: {}
+      splunkurl: {}
+      src: {}
+      srccategory: {}
+      srchost: {}
+      srcip: {}
+      srcmanager: {}
+      srcntdomain: {}
+      srcos: {}
+      srcport: {}
+      srctranslatedip: {}
+      srctranslatedport: {}
+      srcuser: {}
+      suspectapplication: {}
+      suspectdomain: {}
+      suspectemail: {}
+      suspectfile: {}
+      suspectfilename: {}
+      suspectfilepath: {}
+      suspecthash: {}
+      suspecthostname: {}
+      suspectip: {}
+      suspectmanager: {}
+      suspectos: {}
+      suspecturl: {}
+      suspectuser: {}
+      suspectverfied: {}
+      systems: {}
+      telephoneno: {}
+      threatvaultcve: {}
+      threatvaultdescription: {}
+      threatvaultdetails: {}
+      threatvaultrefs: {}
+      threatvaultseverity: {}
+      type: {}
+      url: {}
+      user: {}
+      userverified: {}
+      vendorid: {}
+      vendorproduct: {}
+      vulnerabilitycategory: {}
+      vulnhosts: {}
+      whereisdatahosted: {}
+    separatecontext: false
+    task:
+      brand: Builtin
+      id: edd47059-af77-4fd2-89bb-60e4e7d9755f
+      iscommand: true
+      name: Populate incident.caseclosereason as true positive
+      script: Builtin|||setIncident
+      type: regular
+      version: -1
+    taskid: edd47059-af77-4fd2-89bb-60e4e7d9755f
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": -350,
+          "y": 1830
+        }
+      }
+  "42":
+    evidencedata:
+      customfields: {}
+      description:
+        simple: Second Duo Request Sent
+    id: "42"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "43"
+    note: false
+    scriptarguments:
+      async: {}
+      device: {}
+      displayUserName: {}
+      execution-timeout:
+        simple: ${temp.timeout}
+      factor:
+        simple: auto
+      ipaddr: {}
+      passcode: {}
+      pushInfo: {}
+      type: {}
+      userID: {}
+      username:
+        simple: ${incident.suspectuser}
+    separatecontext: false
+    task:
+      brand: duo
+      description: The /auth endpoint performs second-factor authentication for a
+        user by sending a push notification to the user's smartphone app, verifying
+        a passcode, or placing a phone call. It is also used to send the user a new
+        batch of passcodes via SMS.
+      id: c6e4c810-ae74-4e9f-81f3-a9cd130a896f
+      iscommand: true
+      name: Send Duo Push request to verify
+      script: duo|||duo-authenticate
+      type: regular
+      version: -1
+    taskid: c6e4c810-ae74-4e9f-81f3-a9cd130a896f
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": -350,
+          "y": 1180
+        }
+      }
+  "43":
+    evidencedata:
+      customfields: {}
+      description:
+        simple: Duo Reply
+    id: "43"
+    ignoreworker: false
+    nexttasks:
+      '#default#':
+      - "46"
+      ALLOW:
+      - "39"
+      DENY:
+      - "66"
+    note: false
+    scriptarguments:
+      value:
+        simple: ${Duo.Auth.Response.Result}
+    separatecontext: false
+    task:
+      brand: ""
+      id: 027839ff-7169-43d5-8efe-cab313c23fb7
+      iscommand: false
+      name: Check Duo response allow/deny
+      script: checkValue
+      type: condition
+      version: -1
+    taskid: 027839ff-7169-43d5-8efe-cab313c23fb7
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": -350,
+          "y": 1330
+        }
+      }
+  "46":
+    evidencedata:
+      customfields: {}
+      description:
+        simple: User failed to confirm via Duo (timeout)
+    id: "46"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "13"
+    note: false
+    reputationcalc: 2
+    scriptarguments:
+      action: {}
+      addLabels: {}
+      adgroup: {}
+      adsecurity: {}
+      alertcount: {}
+      app: {}
+      assetid: {}
+      attachmentcount: {}
+      attachmentextension: {}
+      attachmenthash: {}
+      attachmentid: {}
+      attachmentname: {}
+      attachmentsize: {}
+      attachmenttype: {}
+      bugtraq: {}
+      caseclosenote: {}
+      caseclosereason: {}
+      caserunerror: {}
+      closeNotes: {}
+      closeReason: {}
+      cs: {}
+      customFields: {}
+      cve: {}
+      cvss: {}
+      deleteEmptyField: {}
+      dest: {}
+      destcategory: {}
+      desthost: {}
+      destip: {}
+      destmanager: {}
+      destntdomain: {}
+      destos: {}
+      destport: {}
+      desttranslatedip: {}
+      desttranslatedport: {}
+      destuser: {}
+      details: {}
+      duration: {}
+      emailbcc: {}
+      emailbody: {}
+      emailbodyformat: {}
+      emailbodyhtml: {}
+      emailcc: {}
+      emailclientname: {}
+      emailfrom: {}
+      emailinreplyto: {}
+      emailkeywords: {}
+      emailmessageid: {}
+      emailreceived: {}
+      emailreplyto: {}
+      emailreturnpath: {}
+      emailsenderip: {}
+      emailsize: {}
+      emailsource: {}
+      emailsubject: {}
+      emailto: {}
+      emailtocount: {}
+      emailurlclicked: {}
+      filehash: {}
+      filename: {}
+      filepath: {}
+      firstpasscount: {}
+      hash: {}
+      hostname: {}
+      id: {}
+      ip: {}
+      ipbool: {}
+      ipinternal: {}
+      labels: {}
+      malwarefamily: {}
+      name: {}
+      "null": {}
+      occurred: {}
+      os: {}
+      owner: {}
+      pancve: {}
+      pansignature: {}
+      phase: {}
+      protocol: {}
+      replacePlaybook: {}
+      roles: {}
+      ruleid: {}
+      searchcount: {}
+      secondpasscount: {}
+      servicefilename: {}
+      servicename: {}
+      severity: {}
+      signature: {}
+      sla: {}
+      slaField: {}
+      slackmsg: {}
+      splunkurl: {}
+      src: {}
+      srccategory: {}
+      srchost: {}
+      srcip: {}
+      srcmanager: {}
+      srcntdomain: {}
+      srcos: {}
+      srcport: {}
+      srctranslatedip: {}
+      srctranslatedport: {}
+      srcuser: {}
+      suspectapplication: {}
+      suspectdomain: {}
+      suspectfile: {}
+      suspecthostname: {}
+      suspectip: {}
+      suspectos: {}
+      suspecturl: {}
+      suspectuser: {}
+      suspectverfied:
+        simple: duotimeout
+      systems: {}
+      type: {}
+      url: {}
+      user: {}
+      userverified: {}
+      vendorid: {}
+      vendorproduct: {}
+      vulnerabilitycategory: {}
+    separatecontext: false
+    task:
+      brand: Builtin
+      id: b4621cea-f90d-44b0-8786-7b5a018c7dd2
+      iscommand: true
+      name: Populate incident.suspectverfied field as duotimeout
+      script: Builtin|||setIncident
+      type: regular
+      version: -1
+    taskid: b4621cea-f90d-44b0-8786-7b5a018c7dd2
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 60,
+          "y": 1525
+        }
+      }
+  "48":
+    evidencedata:
+      customfields: {}
+      description:
+        simple: Email data
+      tags:
+        simple: slacksla
+    id: "48"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "68"
+    note: false
+    scriptarguments:
+      additionalOptions: {}
+      attachCIDs:
+        simple: ${File.EntryID=>val.join(",")}
+      attachIds:
+        simple: ${File.EntryID=>val.join(",")}
+      bcc: {}
+      bodyType:
+        simple: html
+      cc: {}
+      email:
+        simple: ${incident.suspectuser}@workday.com
+      footer:
+        simple: '<p class=MsoNormal><span style=''mso-bookmark:_MailOriginal''><span
+          lang=EN-GB style=''font-size:11.0pt;mso-ansi-language:EN-GB''><o:p>&nbsp;</o:p></span></span></p><p
+          class=MsoNormal><span style=''mso-bookmark:_MailOriginal''><span lang=EN-GB
+          style=''font-size:11.0pt;mso-ansi-language:EN-GB''>Thanks for your help.<o:p></o:p></span></span></p><p
+          class=MsoNormal><span style=''mso-bookmark:_MailOriginal''><o:p>&nbsp;</o:p></span></p><p
+          class=MsoNormal><span style=''mso-bookmark:_MailOriginal''><span lang=EN-GB
+          style=''font-size:11.0pt;mso-ansi-language:EN-GB''>Security Operations Centre<o:p></o:p></span></span></p><p
+          class=MsoNormal><span style=''mso-bookmark:_MailOriginal''><span lang=EN-US
+          style=''font-size:10.5pt;color:black;mso-ansi-language:EN-US''>SOC Inter-call
+          (HOTLINE): 1-925-951-9273<br><br></span></span><a href="http://www.workday.com/"><span
+          style=''mso-bookmark:_MailOriginal''><span lang=EN-US style=''font-size:10.5pt;color:black;mso-ansi-language:EN-US;mso-no-proof:yes;text-decoration:none;text-underline:none''><img
+          src="cid:sig1.png"></span></span><span style=''mso-bookmark:_MailOriginal''></span></a><span
+          style=''mso-bookmark:_MailOriginal''><span lang=EN-US style=''font-size:10.5pt;color:black;mso-ansi-language:EN-US''><br><br><span
+          style=''mso-no-proof:yes''><img src="cid:sig2.png"></span>Thank you for
+          considering the environmental impact in your daily choices.</span><o:p></o:p></span></p><p
+          class=MsoNormal><span style=''mso-bookmark:_MailOriginal''><span lang=EN-GB
+          style=''mso-ansi-language:EN-GB''>&nbsp;</span></span><o:p></o:p></p><p
+          class=MsoNormal><span style=''font-size:11.0pt;mso-ascii-font-family:Calibri;mso-hansi-font-family:Calibri;mso-bidi-font-family:"Times
+          New Roman"''><o:p>&nbsp;</o:p></span></p></div></body></html>'
+      message:
+        simple: "<html xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:o=\"urn:schemas-microsoft-com:office:office\"
+          xmlns:w=\"urn:schemas-microsoft-com:office:word\" xmlns:m=\"http://schemas.microsoft.com/office/2004/12/omml\"
+          xmlns=\"http://www.w3.org/TR/REC-html40\"><head><meta http-equiv=Content-Type
+          content=\"text/html; charset=utf-8\"><meta name=ProgId content=Word.Document><meta
+          name=Generator content=\"Microsoft Word 15\"><meta name=Originator content=\"Microsoft
+          Word 15\"><link rel=File-List href=\"cid:filelist.xml@01D50B83.B7E13A30\"><link
+          rel=Edit-Time-Data href=\"cid:editdata.mso\"><!--[if !mso]><style>v\\:*
+          {behavior:url(#default#VML);}\no\\:* {behavior:url(#default#VML);}\nw\\:*
+          {behavior:url(#default#VML);}\n.shape {behavior:url(#default#VML);}\n</style><![endif]--><!--[if
+          gte mso 9]><xml>\n<o:OfficeDocumentSettings>\n<o:AllowPNG/>\n</o:OfficeDocumentSettings>\n</xml><![endif]--><!--[if
+          gte mso 9]><xml>\n<w:WordDocument>\n<w:SpellingState>Clean</w:SpellingState>\n<w:DocumentKind>DocumentEmail</w:DocumentKind>\n<w:TrackMoves>false</w:TrackMoves>\n<w:TrackFormatting/>\n<w:EnvelopeVis/>\n<w:ValidateAgainstSchemas/>\n<w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid>\n<w:IgnoreMixedContent>false</w:IgnoreMixedContent>\n<w:AlwaysShowPlaceholderText>false</w:AlwaysShowPlaceholderText>\n<w:DoNotPromoteQF/>\n<w:LidThemeOther>EN-NZ</w:LidThemeOther>\n<w:LidThemeAsian>X-NONE</w:LidThemeAsian>\n<w:LidThemeComplexScript>X-NONE</w:LidThemeComplexScript>\n<w:Compatibility>\n<w:DoNotExpandShiftReturn/>\n<w:BreakWrappedTables/>\n<w:SplitPgBreakAndParaMark/>\n<w:EnableOpenTypeKerning/>\n</w:Compatibility>\n<m:mathPr>\n<m:mathFont
+          m:val=\"Cambria Math\"/>\n<m:brkBin m:val=\"before\"/>\n<m:brkBinSub m:val=\"&#45;-\"/>\n<m:smallFrac
+          m:val=\"off\"/>\n<m:dispDef/>\n<m:lMargin m:val=\"0\"/>\n<m:rMargin m:val=\"0\"/>\n<m:defJc
+          m:val=\"centerGroup\"/>\n<m:wrapIndent m:val=\"1440\"/>\n<m:intLim m:val=\"subSup\"/>\n<m:naryLim
+          m:val=\"undOvr\"/>\n</m:mathPr></w:WordDocument>\n</xml><![endif]--><!--[if
+          gte mso 9]><xml>\n<w:LatentStyles DefLockedState=\"false\" DefUnhideWhenUsed=\"false\"
+          DefSemiHidden=\"false\" DefQFormat=\"false\" DefPriority=\"99\" LatentStyleCount=\"376\">\n<w:LsdException
+          Locked=\"false\" Priority=\"0\" QFormat=\"true\" Name=\"Normal\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"9\" QFormat=\"true\" Name=\"heading 1\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"9\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"
+          QFormat=\"true\" Name=\"heading 2\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"9\" SemiHidden=\"true\" UnhideWhenUsed=\"true\" QFormat=\"true\"
+          Name=\"heading 3\"/>\n<w:LsdException Locked=\"false\" Priority=\"9\" SemiHidden=\"true\"
+          UnhideWhenUsed=\"true\" QFormat=\"true\" Name=\"heading 4\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"9\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"
+          QFormat=\"true\" Name=\"heading 5\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"9\" SemiHidden=\"true\" UnhideWhenUsed=\"true\" QFormat=\"true\"
+          Name=\"heading 6\"/>\n<w:LsdException Locked=\"false\" Priority=\"9\" SemiHidden=\"true\"
+          UnhideWhenUsed=\"true\" QFormat=\"true\" Name=\"heading 7\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"9\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"
+          QFormat=\"true\" Name=\"heading 8\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"9\" SemiHidden=\"true\" UnhideWhenUsed=\"true\" QFormat=\"true\"
+          Name=\"heading 9\"/>\n<w:LsdException Locked=\"false\" SemiHidden=\"true\"
+          UnhideWhenUsed=\"true\" Name=\"index 1\"/>\n<w:LsdException Locked=\"false\"
+          SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"index 2\"/>\n<w:LsdException
+          Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"index
+          3\"/>\n<w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"
+          Name=\"index 4\"/>\n<w:LsdException Locked=\"false\" SemiHidden=\"true\"
+          UnhideWhenUsed=\"true\" Name=\"index 5\"/>\n<w:LsdException Locked=\"false\"
+          SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"index 6\"/>\n<w:LsdException
+          Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"index
+          7\"/>\n<w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"
+          Name=\"index 8\"/>\n<w:LsdException Locked=\"false\" SemiHidden=\"true\"
+          UnhideWhenUsed=\"true\" Name=\"index 9\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"39\" SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"toc 1\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"39\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"
+          Name=\"toc 2\"/>\n<w:LsdException Locked=\"false\" Priority=\"39\" SemiHidden=\"true\"
+          UnhideWhenUsed=\"true\" Name=\"toc 3\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"39\" SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"toc 4\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"39\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"
+          Name=\"toc 5\"/>\n<w:LsdException Locked=\"false\" Priority=\"39\" SemiHidden=\"true\"
+          UnhideWhenUsed=\"true\" Name=\"toc 6\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"39\" SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"toc 7\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"39\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"
+          Name=\"toc 8\"/>\n<w:LsdException Locked=\"false\" Priority=\"39\" SemiHidden=\"true\"
+          UnhideWhenUsed=\"true\" Name=\"toc 9\"/>\n<w:LsdException Locked=\"false\"
+          SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"Normal Indent\"/>\n<w:LsdException
+          Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"footnote
+          text\"/>\n<w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"
+          Name=\"annotation text\"/>\n<w:LsdException Locked=\"false\" SemiHidden=\"true\"
+          UnhideWhenUsed=\"true\" Name=\"header\"/>\n<w:LsdException Locked=\"false\"
+          SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"footer\"/>\n<w:LsdException
+          Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"index
+          heading\"/>\n<w:LsdException Locked=\"false\" Priority=\"35\" SemiHidden=\"true\"
+          UnhideWhenUsed=\"true\" QFormat=\"true\" Name=\"caption\"/>\n<w:LsdException
+          Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"table
+          of figures\"/>\n<w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"
+          Name=\"envelope address\"/>\n<w:LsdException Locked=\"false\" SemiHidden=\"true\"
+          UnhideWhenUsed=\"true\" Name=\"envelope return\"/>\n<w:LsdException Locked=\"false\"
+          SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"footnote reference\"/>\n<w:LsdException
+          Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"annotation
+          reference\"/>\n<w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"
+          Name=\"line number\"/>\n<w:LsdException Locked=\"false\" SemiHidden=\"true\"
+          UnhideWhenUsed=\"true\" Name=\"page number\"/>\n<w:LsdException Locked=\"false\"
+          SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"endnote reference\"/>\n<w:LsdException
+          Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"endnote
+          text\"/>\n<w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"
+          Name=\"table of authorities\"/>\n<w:LsdException Locked=\"false\" SemiHidden=\"true\"
+          UnhideWhenUsed=\"true\" Name=\"macro\"/>\n<w:LsdException Locked=\"false\"
+          SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"toa heading\"/>\n<w:LsdException
+          Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"List\"/>\n<w:LsdException
+          Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"List
+          Bullet\"/>\n<w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"
+          Name=\"List Number\"/>\n<w:LsdException Locked=\"false\" SemiHidden=\"true\"
+          UnhideWhenUsed=\"true\" Name=\"List 2\"/>\n<w:LsdException Locked=\"false\"
+          SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"List 3\"/>\n<w:LsdException
+          Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"List
+          4\"/>\n<w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"
+          Name=\"List 5\"/>\n<w:LsdException Locked=\"false\" SemiHidden=\"true\"
+          UnhideWhenUsed=\"true\" Name=\"List Bullet 2\"/>\n<w:LsdException Locked=\"false\"
+          SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"List Bullet 3\"/>\n<w:LsdException
+          Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"List
+          Bullet 4\"/>\n<w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"
+          Name=\"List Bullet 5\"/>\n<w:LsdException Locked=\"false\" SemiHidden=\"true\"
+          UnhideWhenUsed=\"true\" Name=\"List Number 2\"/>\n<w:LsdException Locked=\"false\"
+          SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"List Number 3\"/>\n<w:LsdException
+          Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"List
+          Number 4\"/>\n<w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"
+          Name=\"List Number 5\"/>\n<w:LsdException Locked=\"false\" Priority=\"10\"
+          QFormat=\"true\" Name=\"Title\"/>\n<w:LsdException Locked=\"false\" SemiHidden=\"true\"
+          UnhideWhenUsed=\"true\" Name=\"Closing\"/>\n<w:LsdException Locked=\"false\"
+          SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"Signature\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"1\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"
+          Name=\"Default Paragraph Font\"/>\n<w:LsdException Locked=\"false\" SemiHidden=\"true\"
+          UnhideWhenUsed=\"true\" Name=\"Body Text\"/>\n<w:LsdException Locked=\"false\"
+          SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"Body Text Indent\"/>\n<w:LsdException
+          Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"List
+          Continue\"/>\n<w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"
+          Name=\"List Continue 2\"/>\n<w:LsdException Locked=\"false\" SemiHidden=\"true\"
+          UnhideWhenUsed=\"true\" Name=\"List Continue 3\"/>\n<w:LsdException Locked=\"false\"
+          SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"List Continue 4\"/>\n<w:LsdException
+          Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"List
+          Continue 5\"/>\n<w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"
+          Name=\"Message Header\"/>\n<w:LsdException Locked=\"false\" Priority=\"11\"
+          QFormat=\"true\" Name=\"Subtitle\"/>\n<w:LsdException Locked=\"false\" SemiHidden=\"true\"
+          UnhideWhenUsed=\"true\" Name=\"Salutation\"/>\n<w:LsdException Locked=\"false\"
+          SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"Date\"/>\n<w:LsdException
+          Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"Body
+          Text First Indent\"/>\n<w:LsdException Locked=\"false\" SemiHidden=\"true\"
+          UnhideWhenUsed=\"true\" Name=\"Body Text First Indent 2\"/>\n<w:LsdException
+          Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"Note
+          Heading\"/>\n<w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"
+          Name=\"Body Text 2\"/>\n<w:LsdException Locked=\"false\" SemiHidden=\"true\"
+          UnhideWhenUsed=\"true\" Name=\"Body Text 3\"/>\n<w:LsdException Locked=\"false\"
+          SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"Body Text Indent 2\"/>\n<w:LsdException
+          Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"Body
+          Text Indent 3\"/>\n<w:LsdException Locked=\"false\" SemiHidden=\"true\"
+          UnhideWhenUsed=\"true\" Name=\"Block Text\"/>\n<w:LsdException Locked=\"false\"
+          SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"Hyperlink\"/>\n<w:LsdException
+          Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"FollowedHyperlink\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"22\" QFormat=\"true\" Name=\"Strong\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"20\" QFormat=\"true\" Name=\"Emphasis\"/>\n<w:LsdException
+          Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"Document
+          Map\"/>\n<w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"
+          Name=\"Plain Text\"/>\n<w:LsdException Locked=\"false\" SemiHidden=\"true\"
+          UnhideWhenUsed=\"true\" Name=\"E-mail Signature\"/>\n<w:LsdException Locked=\"false\"
+          SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"HTML Top of Form\"/>\n<w:LsdException
+          Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"HTML
+          Bottom of Form\"/>\n<w:LsdException Locked=\"false\" SemiHidden=\"true\"
+          UnhideWhenUsed=\"true\" Name=\"Normal (Web)\"/>\n<w:LsdException Locked=\"false\"
+          SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"HTML Acronym\"/>\n<w:LsdException
+          Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"HTML
+          Address\"/>\n<w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"
+          Name=\"HTML Cite\"/>\n<w:LsdException Locked=\"false\" SemiHidden=\"true\"
+          UnhideWhenUsed=\"true\" Name=\"HTML Code\"/>\n<w:LsdException Locked=\"false\"
+          SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"HTML Definition\"/>\n<w:LsdException
+          Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"HTML
+          Keyboard\"/>\n<w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"
+          Name=\"HTML Preformatted\"/>\n<w:LsdException Locked=\"false\" SemiHidden=\"true\"
+          UnhideWhenUsed=\"true\" Name=\"HTML Sample\"/>\n<w:LsdException Locked=\"false\"
+          SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"HTML Typewriter\"/>\n<w:LsdException
+          Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"HTML
+          Variable\"/>\n<w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"
+          Name=\"Normal Table\"/>\n<w:LsdException Locked=\"false\" SemiHidden=\"true\"
+          UnhideWhenUsed=\"true\" Name=\"annotation subject\"/>\n<w:LsdException Locked=\"false\"
+          SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"No List\"/>\n<w:LsdException
+          Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"Outline
+          List 1\"/>\n<w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"
+          Name=\"Outline List 2\"/>\n<w:LsdException Locked=\"false\" SemiHidden=\"true\"
+          UnhideWhenUsed=\"true\" Name=\"Outline List 3\"/>\n<w:LsdException Locked=\"false\"
+          SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"Table Simple 1\"/>\n<w:LsdException
+          Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"Table
+          Simple 2\"/>\n<w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"
+          Name=\"Table Simple 3\"/>\n<w:LsdException Locked=\"false\" SemiHidden=\"true\"
+          UnhideWhenUsed=\"true\" Name=\"Table Classic 1\"/>\n<w:LsdException Locked=\"false\"
+          SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"Table Classic 2\"/>\n<w:LsdException
+          Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"Table
+          Classic 3\"/>\n<w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"
+          Name=\"Table Classic 4\"/>\n<w:LsdException Locked=\"false\" SemiHidden=\"true\"
+          UnhideWhenUsed=\"true\" Name=\"Table Colorful 1\"/>\n<w:LsdException Locked=\"false\"
+          SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"Table Colorful 2\"/>\n<w:LsdException
+          Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"Table
+          Colorful 3\"/>\n<w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"
+          Name=\"Table Columns 1\"/>\n<w:LsdException Locked=\"false\" SemiHidden=\"true\"
+          UnhideWhenUsed=\"true\" Name=\"Table Columns 2\"/>\n<w:LsdException Locked=\"false\"
+          SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"Table Columns 3\"/>\n<w:LsdException
+          Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"Table
+          Columns 4\"/>\n<w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"
+          Name=\"Table Columns 5\"/>\n<w:LsdException Locked=\"false\" SemiHidden=\"true\"
+          UnhideWhenUsed=\"true\" Name=\"Table Grid 1\"/>\n<w:LsdException Locked=\"false\"
+          SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"Table Grid 2\"/>\n<w:LsdException
+          Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"Table
+          Grid 3\"/>\n<w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"
+          Name=\"Table Grid 4\"/>\n<w:LsdException Locked=\"false\" SemiHidden=\"true\"
+          UnhideWhenUsed=\"true\" Name=\"Table Grid 5\"/>\n<w:LsdException Locked=\"false\"
+          SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"Table Grid 6\"/>\n<w:LsdException
+          Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"Table
+          Grid 7\"/>\n<w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"
+          Name=\"Table Grid 8\"/>\n<w:LsdException Locked=\"false\" SemiHidden=\"true\"
+          UnhideWhenUsed=\"true\" Name=\"Table List 1\"/>\n<w:LsdException Locked=\"false\"
+          SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"Table List 2\"/>\n<w:LsdException
+          Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"Table
+          List 3\"/>\n<w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"
+          Name=\"Table List 4\"/>\n<w:LsdException Locked=\"false\" SemiHidden=\"true\"
+          UnhideWhenUsed=\"true\" Name=\"Table List 5\"/>\n<w:LsdException Locked=\"false\"
+          SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"Table List 6\"/>\n<w:LsdException
+          Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"Table
+          List 7\"/>\n<w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"
+          Name=\"Table List 8\"/>\n<w:LsdException Locked=\"false\" SemiHidden=\"true\"
+          UnhideWhenUsed=\"true\" Name=\"Table 3D effects 1\"/>\n<w:LsdException Locked=\"false\"
+          SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"Table 3D effects 2\"/>\n<w:LsdException
+          Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"Table
+          3D effects 3\"/>\n<w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"
+          Name=\"Table Contemporary\"/>\n<w:LsdException Locked=\"false\" SemiHidden=\"true\"
+          UnhideWhenUsed=\"true\" Name=\"Table Elegant\"/>\n<w:LsdException Locked=\"false\"
+          SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"Table Professional\"/>\n<w:LsdException
+          Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"Table
+          Subtle 1\"/>\n<w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"
+          Name=\"Table Subtle 2\"/>\n<w:LsdException Locked=\"false\" SemiHidden=\"true\"
+          UnhideWhenUsed=\"true\" Name=\"Table Web 1\"/>\n<w:LsdException Locked=\"false\"
+          SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"Table Web 2\"/>\n<w:LsdException
+          Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"Table
+          Web 3\"/>\n<w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"
+          Name=\"Balloon Text\"/>\n<w:LsdException Locked=\"false\" Priority=\"39\"
+          Name=\"Table Grid\"/>\n<w:LsdException Locked=\"false\" SemiHidden=\"true\"
+          UnhideWhenUsed=\"true\" Name=\"Table Theme\"/>\n<w:LsdException Locked=\"false\"
+          SemiHidden=\"true\" Name=\"Placeholder Text\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"1\" QFormat=\"true\" Name=\"No Spacing\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"60\" Name=\"Light Shading\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"61\" Name=\"Light List\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"62\" Name=\"Light Grid\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"63\" Name=\"Medium Shading 1\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"64\" Name=\"Medium Shading 2\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"65\" Name=\"Medium List 1\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"66\" Name=\"Medium List 2\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"67\" Name=\"Medium Grid 1\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"68\" Name=\"Medium Grid 2\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"69\" Name=\"Medium Grid 3\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"70\" Name=\"Dark List\"/>\n<w:LsdException Locked=\"false\" Priority=\"71\"
+          Name=\"Colorful Shading\"/>\n<w:LsdException Locked=\"false\" Priority=\"72\"
+          Name=\"Colorful List\"/>\n<w:LsdException Locked=\"false\" Priority=\"73\"
+          Name=\"Colorful Grid\"/>\n<w:LsdException Locked=\"false\" Priority=\"60\"
+          Name=\"Light Shading Accent 1\"/>\n<w:LsdException Locked=\"false\" Priority=\"61\"
+          Name=\"Light List Accent 1\"/>\n<w:LsdException Locked=\"false\" Priority=\"62\"
+          Name=\"Light Grid Accent 1\"/>\n<w:LsdException Locked=\"false\" Priority=\"63\"
+          Name=\"Medium Shading 1 Accent 1\"/>\n<w:LsdException Locked=\"false\" Priority=\"64\"
+          Name=\"Medium Shading 2 Accent 1\"/>\n<w:LsdException Locked=\"false\" Priority=\"65\"
+          Name=\"Medium List 1 Accent 1\"/>\n<w:LsdException Locked=\"false\" SemiHidden=\"true\"
+          Name=\"Revision\"/>\n<w:LsdException Locked=\"false\" Priority=\"34\" QFormat=\"true\"
+          Name=\"List Paragraph\"/>\n<w:LsdException Locked=\"false\" Priority=\"29\"
+          QFormat=\"true\" Name=\"Quote\"/>\n<w:LsdException Locked=\"false\" Priority=\"30\"
+          QFormat=\"true\" Name=\"Intense Quote\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"66\" Name=\"Medium List 2 Accent 1\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"67\" Name=\"Medium Grid 1 Accent 1\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"68\" Name=\"Medium Grid 2 Accent 1\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"69\" Name=\"Medium Grid 3 Accent 1\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"70\" Name=\"Dark List Accent 1\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"71\" Name=\"Colorful Shading Accent 1\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"72\" Name=\"Colorful List Accent 1\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"73\" Name=\"Colorful Grid Accent 1\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"60\" Name=\"Light Shading Accent 2\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"61\" Name=\"Light List Accent 2\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"62\" Name=\"Light Grid Accent 2\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"63\" Name=\"Medium Shading 1 Accent 2\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"64\" Name=\"Medium Shading 2 Accent 2\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"65\" Name=\"Medium List 1 Accent 2\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"66\" Name=\"Medium List 2 Accent 2\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"67\" Name=\"Medium Grid 1 Accent 2\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"68\" Name=\"Medium Grid 2 Accent 2\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"69\" Name=\"Medium Grid 3 Accent 2\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"70\" Name=\"Dark List Accent 2\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"71\" Name=\"Colorful Shading Accent 2\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"72\" Name=\"Colorful List Accent 2\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"73\" Name=\"Colorful Grid Accent 2\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"60\" Name=\"Light Shading Accent 3\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"61\" Name=\"Light List Accent 3\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"62\" Name=\"Light Grid Accent 3\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"63\" Name=\"Medium Shading 1 Accent 3\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"64\" Name=\"Medium Shading 2 Accent 3\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"65\" Name=\"Medium List 1 Accent 3\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"66\" Name=\"Medium List 2 Accent 3\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"67\" Name=\"Medium Grid 1 Accent 3\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"68\" Name=\"Medium Grid 2 Accent 3\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"69\" Name=\"Medium Grid 3 Accent 3\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"70\" Name=\"Dark List Accent 3\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"71\" Name=\"Colorful Shading Accent 3\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"72\" Name=\"Colorful List Accent 3\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"73\" Name=\"Colorful Grid Accent 3\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"60\" Name=\"Light Shading Accent 4\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"61\" Name=\"Light List Accent 4\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"62\" Name=\"Light Grid Accent 4\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"63\" Name=\"Medium Shading 1 Accent 4\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"64\" Name=\"Medium Shading 2 Accent 4\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"65\" Name=\"Medium List 1 Accent 4\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"66\" Name=\"Medium List 2 Accent 4\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"67\" Name=\"Medium Grid 1 Accent 4\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"68\" Name=\"Medium Grid 2 Accent 4\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"69\" Name=\"Medium Grid 3 Accent 4\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"70\" Name=\"Dark List Accent 4\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"71\" Name=\"Colorful Shading Accent 4\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"72\" Name=\"Colorful List Accent 4\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"73\" Name=\"Colorful Grid Accent 4\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"60\" Name=\"Light Shading Accent 5\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"61\" Name=\"Light List Accent 5\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"62\" Name=\"Light Grid Accent 5\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"63\" Name=\"Medium Shading 1 Accent 5\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"64\" Name=\"Medium Shading 2 Accent 5\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"65\" Name=\"Medium List 1 Accent 5\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"66\" Name=\"Medium List 2 Accent 5\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"67\" Name=\"Medium Grid 1 Accent 5\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"68\" Name=\"Medium Grid 2 Accent 5\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"69\" Name=\"Medium Grid 3 Accent 5\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"70\" Name=\"Dark List Accent 5\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"71\" Name=\"Colorful Shading Accent 5\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"72\" Name=\"Colorful List Accent 5\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"73\" Name=\"Colorful Grid Accent 5\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"60\" Name=\"Light Shading Accent 6\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"61\" Name=\"Light List Accent 6\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"62\" Name=\"Light Grid Accent 6\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"63\" Name=\"Medium Shading 1 Accent 6\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"64\" Name=\"Medium Shading 2 Accent 6\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"65\" Name=\"Medium List 1 Accent 6\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"66\" Name=\"Medium List 2 Accent 6\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"67\" Name=\"Medium Grid 1 Accent 6\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"68\" Name=\"Medium Grid 2 Accent 6\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"69\" Name=\"Medium Grid 3 Accent 6\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"70\" Name=\"Dark List Accent 6\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"71\" Name=\"Colorful Shading Accent 6\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"72\" Name=\"Colorful List Accent 6\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"73\" Name=\"Colorful Grid Accent 6\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"19\" QFormat=\"true\" Name=\"Subtle Emphasis\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"21\" QFormat=\"true\" Name=\"Intense Emphasis\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"31\" QFormat=\"true\" Name=\"Subtle Reference\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"32\" QFormat=\"true\" Name=\"Intense Reference\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"33\" QFormat=\"true\" Name=\"Book Title\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"37\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"
+          Name=\"Bibliography\"/>\n<w:LsdException Locked=\"false\" Priority=\"39\"
+          SemiHidden=\"true\" UnhideWhenUsed=\"true\" QFormat=\"true\" Name=\"TOC
+          Heading\"/>\n<w:LsdException Locked=\"false\" Priority=\"41\" Name=\"Plain
+          Table 1\"/>\n<w:LsdException Locked=\"false\" Priority=\"42\" Name=\"Plain
+          Table 2\"/>\n<w:LsdException Locked=\"false\" Priority=\"43\" Name=\"Plain
+          Table 3\"/>\n<w:LsdException Locked=\"false\" Priority=\"44\" Name=\"Plain
+          Table 4\"/>\n<w:LsdException Locked=\"false\" Priority=\"45\" Name=\"Plain
+          Table 5\"/>\n<w:LsdException Locked=\"false\" Priority=\"40\" Name=\"Grid
+          Table Light\"/>\n<w:LsdException Locked=\"false\" Priority=\"46\" Name=\"Grid
+          Table 1 Light\"/>\n<w:LsdException Locked=\"false\" Priority=\"47\" Name=\"Grid
+          Table 2\"/>\n<w:LsdException Locked=\"false\" Priority=\"48\" Name=\"Grid
+          Table 3\"/>\n<w:LsdException Locked=\"false\" Priority=\"49\" Name=\"Grid
+          Table 4\"/>\n<w:LsdException Locked=\"false\" Priority=\"50\" Name=\"Grid
+          Table 5 Dark\"/>\n<w:LsdException Locked=\"false\" Priority=\"51\" Name=\"Grid
+          Table 6 Colorful\"/>\n<w:LsdException Locked=\"false\" Priority=\"52\" Name=\"Grid
+          Table 7 Colorful\"/>\n<w:LsdException Locked=\"false\" Priority=\"46\" Name=\"Grid
+          Table 1 Light Accent 1\"/>\n<w:LsdException Locked=\"false\" Priority=\"47\"
+          Name=\"Grid Table 2 Accent 1\"/>\n<w:LsdException Locked=\"false\" Priority=\"48\"
+          Name=\"Grid Table 3 Accent 1\"/>\n<w:LsdException Locked=\"false\" Priority=\"49\"
+          Name=\"Grid Table 4 Accent 1\"/>\n<w:LsdException Locked=\"false\" Priority=\"50\"
+          Name=\"Grid Table 5 Dark Accent 1\"/>\n<w:LsdException Locked=\"false\"
+          Priority=\"51\" Name=\"Grid Table 6 Colorful Accent 1\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"52\" Name=\"Grid Table 7 Colorful Accent 1\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"46\" Name=\"Grid Table 1 Light Accent 2\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"47\" Name=\"Grid Table 2 Accent 2\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"48\" Name=\"Grid Table 3 Accent 2\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"49\" Name=\"Grid Table 4 Accent 2\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"50\" Name=\"Grid Table 5 Dark Accent 2\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"51\" Name=\"Grid Table 6 Colorful Accent 2\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"52\" Name=\"Grid Table 7 Colorful Accent 2\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"46\" Name=\"Grid Table 1 Light Accent 3\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"47\" Name=\"Grid Table 2 Accent 3\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"48\" Name=\"Grid Table 3 Accent 3\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"49\" Name=\"Grid Table 4 Accent 3\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"50\" Name=\"Grid Table 5 Dark Accent 3\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"51\" Name=\"Grid Table 6 Colorful Accent 3\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"52\" Name=\"Grid Table 7 Colorful Accent 3\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"46\" Name=\"Grid Table 1 Light Accent 4\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"47\" Name=\"Grid Table 2 Accent 4\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"48\" Name=\"Grid Table 3 Accent 4\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"49\" Name=\"Grid Table 4 Accent 4\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"50\" Name=\"Grid Table 5 Dark Accent 4\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"51\" Name=\"Grid Table 6 Colorful Accent 4\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"52\" Name=\"Grid Table 7 Colorful Accent 4\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"46\" Name=\"Grid Table 1 Light Accent 5\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"47\" Name=\"Grid Table 2 Accent 5\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"48\" Name=\"Grid Table 3 Accent 5\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"49\" Name=\"Grid Table 4 Accent 5\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"50\" Name=\"Grid Table 5 Dark Accent 5\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"51\" Name=\"Grid Table 6 Colorful Accent 5\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"52\" Name=\"Grid Table 7 Colorful Accent 5\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"46\" Name=\"Grid Table 1 Light Accent 6\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"47\" Name=\"Grid Table 2 Accent 6\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"48\" Name=\"Grid Table 3 Accent 6\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"49\" Name=\"Grid Table 4 Accent 6\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"50\" Name=\"Grid Table 5 Dark Accent 6\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"51\" Name=\"Grid Table 6 Colorful Accent 6\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"52\" Name=\"Grid Table 7 Colorful Accent 6\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"46\" Name=\"List Table 1 Light\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"47\" Name=\"List Table 2\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"48\" Name=\"List Table 3\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"49\" Name=\"List Table 4\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"50\" Name=\"List Table 5 Dark\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"51\" Name=\"List Table 6 Colorful\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"52\" Name=\"List Table 7 Colorful\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"46\" Name=\"List Table 1 Light Accent 1\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"47\" Name=\"List Table 2 Accent 1\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"48\" Name=\"List Table 3 Accent 1\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"49\" Name=\"List Table 4 Accent 1\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"50\" Name=\"List Table 5 Dark Accent 1\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"51\" Name=\"List Table 6 Colorful Accent 1\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"52\" Name=\"List Table 7 Colorful Accent 1\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"46\" Name=\"List Table 1 Light Accent 2\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"47\" Name=\"List Table 2 Accent 2\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"48\" Name=\"List Table 3 Accent 2\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"49\" Name=\"List Table 4 Accent 2\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"50\" Name=\"List Table 5 Dark Accent 2\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"51\" Name=\"List Table 6 Colorful Accent 2\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"52\" Name=\"List Table 7 Colorful Accent 2\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"46\" Name=\"List Table 1 Light Accent 3\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"47\" Name=\"List Table 2 Accent 3\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"48\" Name=\"List Table 3 Accent 3\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"49\" Name=\"List Table 4 Accent 3\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"50\" Name=\"List Table 5 Dark Accent 3\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"51\" Name=\"List Table 6 Colorful Accent 3\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"52\" Name=\"List Table 7 Colorful Accent 3\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"46\" Name=\"List Table 1 Light Accent 4\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"47\" Name=\"List Table 2 Accent 4\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"48\" Name=\"List Table 3 Accent 4\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"49\" Name=\"List Table 4 Accent 4\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"50\" Name=\"List Table 5 Dark Accent 4\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"51\" Name=\"List Table 6 Colorful Accent 4\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"52\" Name=\"List Table 7 Colorful Accent 4\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"46\" Name=\"List Table 1 Light Accent 5\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"47\" Name=\"List Table 2 Accent 5\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"48\" Name=\"List Table 3 Accent 5\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"49\" Name=\"List Table 4 Accent 5\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"50\" Name=\"List Table 5 Dark Accent 5\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"51\" Name=\"List Table 6 Colorful Accent 5\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"52\" Name=\"List Table 7 Colorful Accent 5\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"46\" Name=\"List Table 1 Light Accent 6\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"47\" Name=\"List Table 2 Accent 6\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"48\" Name=\"List Table 3 Accent 6\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"49\" Name=\"List Table 4 Accent 6\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"50\" Name=\"List Table 5 Dark Accent 6\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"51\" Name=\"List Table 6 Colorful Accent 6\"/>\n<w:LsdException
+          Locked=\"false\" Priority=\"52\" Name=\"List Table 7 Colorful Accent 6\"/>\n<w:LsdException
+          Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"Mention\"/>\n<w:LsdException
+          Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"Smart
+          Hyperlink\"/>\n<w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"
+          Name=\"Hashtag\"/>\n<w:LsdException Locked=\"false\" SemiHidden=\"true\"
+          UnhideWhenUsed=\"true\" Name=\"Unresolved Mention\"/>\n<w:LsdException Locked=\"false\"
+          SemiHidden=\"true\" UnhideWhenUsed=\"true\" Name=\"Smart Link\"/>\n</w:LatentStyles>\n</xml><![endif]--><style><!--\n/*
+          Font Definitions */\n@font-face\n\t{font-family:Wingdings;\n\tpanose-1:5
+          0 0 0 0 0 0 0 0 0;\n\tmso-font-charset:2;\n\tmso-generic-font-family:auto;\n\tmso-font-pitch:variable;\n\tmso-font-signature:0
+          268435456 0 0 -2147483648 0;}\n@font-face\n\t{font-family:\"Cambria Math\";\n\tpanose-1:2
+          4 5 3 5 4 6 3 2 4;\n\tmso-font-charset:0;\n\tmso-generic-font-family:roman;\n\tmso-font-pitch:variable;\n\tmso-font-signature:3
+          0 0 0 1 0;}\n@font-face\n\t{font-family:Calibri;\n\tpanose-1:2 15 5 2 2
+          2 4 3 2 4;\n\tmso-font-charset:0;\n\tmso-generic-font-family:swiss;\n\tmso-font-pitch:variable;\n\tmso-font-signature:-536859905
+          -1073732485 9 0 511 0;}\n/* Style Definitions */\np.MsoNormal, li.MsoNormal,
+          div.MsoNormal\n\t{mso-style-unhide:no;\n\tmso-style-qformat:yes;\n\tmso-style-parent:\"\";\n\tmargin:0cm;\n\tmargin-bottom:.0001pt;\n\tmso-pagination:widow-orphan;\n\tfont-size:12.0pt;\n\tfont-family:\"Calibri\",sans-serif;\n\tmso-fareast-font-family:Calibri;}\na:link,
+          span.MsoHyperlink\n\t{mso-style-noshow:yes;\n\tmso-style-priority:99;\n\tcolor:#0563C1;\n\ttext-decoration:underline;\n\ttext-underline:single;}\na:visited,
+          span.MsoHyperlinkFollowed\n\t{mso-style-noshow:yes;\n\tmso-style-priority:99;\n\tcolor:#954F72;\n\ttext-decoration:underline;\n\ttext-underline:single;}\np.MsoListParagraph,
+          li.MsoListParagraph, div.MsoListParagraph\n\t{mso-style-priority:34;\n\tmso-style-unhide:no;\n\tmso-style-qformat:yes;\n\tmargin-top:0cm;\n\tmargin-right:0cm;\n\tmargin-bottom:0cm;\n\tmargin-left:36.0pt;\n\tmargin-bottom:.0001pt;\n\tmso-pagination:widow-orphan;\n\tfont-size:12.0pt;\n\tfont-family:\"Calibri\",sans-serif;\n\tmso-fareast-font-family:Calibri;}\nspan.EmailStyle17\n\t{mso-style-type:personal-compose;\n\tmso-style-noshow:yes;\n\tmso-style-unhide:no;\n\tmso-ansi-font-size:11.0pt;\n\tmso-bidi-font-size:11.0pt;\n\tfont-family:\"Calibri\",sans-serif;\n\tmso-ascii-font-family:Calibri;\n\tmso-fareast-font-family:Calibri;\n\tmso-hansi-font-family:Calibri;\n\tmso-bidi-font-family:\"Times
+          New Roman\";\n\tcolor:windowtext;}\nspan.SpellE\n\t{mso-style-name:\"\";\n\tmso-spl-e:yes;}\n.MsoChpDefault\n\t{mso-style-type:export-only;\n\tmso-default-props:yes;\n\tfont-family:\"Calibri\",sans-serif;\n\tmso-ascii-font-family:Calibri;\n\tmso-fareast-font-family:Calibri;\n\tmso-hansi-font-family:Calibri;\n\tmso-bidi-font-family:\"Times
+          New Roman\";}\n@page WordSection1\n\t{size:612.0pt 792.0pt;\n\tmargin:72.0pt
+          72.0pt 72.0pt 72.0pt;\n\tmso-header-margin:36.0pt;\n\tmso-footer-margin:36.0pt;\n\tmso-paper-source:0;}\ndiv.WordSection1\n\t{page:WordSection1;}\n/*
+          List Definitions */\n@list l0\n\t{mso-list-id:1400514040;\n\tmso-list-type:hybrid;\n\tmso-list-template-ids:-78889636
+          1463850496 67698691 67698693 67698689 67698691 67698693 67698689 67698691
+          67698693;}\n@list l0:level1\n\t{mso-level-start-at:0;\n\tmso-level-number-format:bullet;\n\tmso-level-text:-;\n\tmso-level-tab-stop:none;\n\tmso-level-number-position:left;\n\tmargin-left:20.25pt;\n\ttext-indent:-18.0pt;\n\tfont-family:\"Calibri\",sans-serif;\n\tmso-fareast-font-family:Calibri;}\n@list
+          l0:level2\n\t{mso-level-number-format:bullet;\n\tmso-level-text:o;\n\tmso-level-tab-stop:none;\n\tmso-level-number-position:left;\n\tmargin-left:56.25pt;\n\ttext-indent:-18.0pt;\n\tfont-family:\"Courier
+          New\";}\n@list l0:level3\n\t{mso-level-number-format:bullet;\n\tmso-level-text:;\n\tmso-level-tab-stop:none;\n\tmso-level-number-position:left;\n\tmargin-left:92.25pt;\n\ttext-indent:-18.0pt;\n\tfont-family:Wingdings;}\n@list
+          l0:level4\n\t{mso-level-number-format:bullet;\n\tmso-level-text:;\n\tmso-level-tab-stop:none;\n\tmso-level-number-position:left;\n\tmargin-left:128.25pt;\n\ttext-indent:-18.0pt;\n\tfont-family:Symbol;}\n@list
+          l0:level5\n\t{mso-level-number-format:bullet;\n\tmso-level-text:o;\n\tmso-level-tab-stop:none;\n\tmso-level-number-position:left;\n\tmargin-left:164.25pt;\n\ttext-indent:-18.0pt;\n\tfont-family:\"Courier
+          New\";}\n@list l0:level6\n\t{mso-level-number-format:bullet;\n\tmso-level-text:;\n\tmso-level-tab-stop:none;\n\tmso-level-number-position:left;\n\tmargin-left:200.25pt;\n\ttext-indent:-18.0pt;\n\tfont-family:Wingdings;}\n@list
+          l0:level7\n\t{mso-level-number-format:bullet;\n\tmso-level-text:;\n\tmso-level-tab-stop:none;\n\tmso-level-number-position:left;\n\tmargin-left:236.25pt;\n\ttext-indent:-18.0pt;\n\tfont-family:Symbol;}\n@list
+          l0:level8\n\t{mso-level-number-format:bullet;\n\tmso-level-text:o;\n\tmso-level-tab-stop:none;\n\tmso-level-number-position:left;\n\tmargin-left:272.25pt;\n\ttext-indent:-18.0pt;\n\tfont-family:\"Courier
+          New\";}\n@list l0:level9\n\t{mso-level-number-format:bullet;\n\tmso-level-text:;\n\tmso-level-tab-stop:none;\n\tmso-level-number-position:left;\n\tmargin-left:308.25pt;\n\ttext-indent:-18.0pt;\n\tfont-family:Wingdings;}\n@list
+          l1\n\t{mso-list-id:2122606053;\n\tmso-list-type:hybrid;\n\tmso-list-template-ids:879381102
+          -604866232 67698691 67698693 67698689 67698691 67698693 67698689 67698691
+          67698693;}\n@list l1:level1\n\t{mso-level-start-at:0;\n\tmso-level-number-format:bullet;\n\tmso-level-text:-;\n\tmso-level-tab-stop:none;\n\tmso-level-number-position:left;\n\ttext-indent:-18.0pt;\n\tfont-family:\"Calibri\",sans-serif;\n\tmso-fareast-font-family:Calibri;}\n@list
+          l1:level2\n\t{mso-level-number-format:bullet;\n\tmso-level-text:o;\n\tmso-level-tab-stop:none;\n\tmso-level-number-position:left;\n\ttext-indent:-18.0pt;\n\tfont-family:\"Courier
+          New\";}\n@list l1:level3\n\t{mso-level-number-format:bullet;\n\tmso-level-text:;\n\tmso-level-tab-stop:none;\n\tmso-level-number-position:left;\n\ttext-indent:-18.0pt;\n\tfont-family:Wingdings;}\n@list
+          l1:level4\n\t{mso-level-number-format:bullet;\n\tmso-level-text:;\n\tmso-level-tab-stop:none;\n\tmso-level-number-position:left;\n\ttext-indent:-18.0pt;\n\tfont-family:Symbol;}\n@list
+          l1:level5\n\t{mso-level-number-format:bullet;\n\tmso-level-text:o;\n\tmso-level-tab-stop:none;\n\tmso-level-number-position:left;\n\ttext-indent:-18.0pt;\n\tfont-family:\"Courier
+          New\";}\n@list l1:level6\n\t{mso-level-number-format:bullet;\n\tmso-level-text:;\n\tmso-level-tab-stop:none;\n\tmso-level-number-position:left;\n\ttext-indent:-18.0pt;\n\tfont-family:Wingdings;}\n@list
+          l1:level7\n\t{mso-level-number-format:bullet;\n\tmso-level-text:;\n\tmso-level-tab-stop:none;\n\tmso-level-number-position:left;\n\ttext-indent:-18.0pt;\n\tfont-family:Symbol;}\n@list
+          l1:level8\n\t{mso-level-number-format:bullet;\n\tmso-level-text:o;\n\tmso-level-tab-stop:none;\n\tmso-level-number-position:left;\n\ttext-indent:-18.0pt;\n\tfont-family:\"Courier
+          New\";}\n@list l1:level9\n\t{mso-level-number-format:bullet;\n\tmso-level-text:;\n\tmso-level-tab-stop:none;\n\tmso-level-number-position:left;\n\ttext-indent:-18.0pt;\n\tfont-family:Wingdings;}\nol\n\t{margin-bottom:0cm;}\nul\n\t{margin-bottom:0cm;}\n--></style><!--[if
+          gte mso 10]><style>/* Style Definitions */\ntable.MsoNormalTable\n\t{mso-style-name:\"Table
+          Normal\";\n\tmso-tstyle-rowband-size:0;\n\tmso-tstyle-colband-size:0;\n\tmso-style-noshow:yes;\n\tmso-style-priority:99;\n\tmso-style-parent:\"\";\n\tmso-padding-alt:0cm
+          5.4pt 0cm 5.4pt;\n\tmso-para-margin:0cm;\n\tmso-para-margin-bottom:.0001pt;\n\tmso-pagination:widow-orphan;\n\tfont-size:12.0pt;\n\tfont-family:\"Calibri\",sans-serif;\n\tmso-ascii-font-family:Calibri;\n\tmso-hansi-font-family:Calibri;\n\tmso-bidi-font-family:\"Times
+          New Roman\";}\n</style><![endif]--><!--[if gte mso 9]><xml>\n<o:shapedefaults
+          v:ext=\"edit\" spidmax=\"1026\" />\n</xml><![endif]--><!--[if gte mso 9]><xml>\n<o:shapelayout
+          v:ext=\"edit\">\n<o:idmap v:ext=\"edit\" data=\"1\" />\n</o:shapelayout></xml><![endif]--></head><body
+          lang=EN-NZ link=\"#0563C1\" vlink=\"#954F72\" style='tab-interval:36.0pt'><div
+          class=WordSection1><p class=MsoNormal><a name=\"_MailOriginal\"><span lang=EN-GB
+          style='font-size:11.0pt;mso-ansi-language:EN-GB'>Hello,<o:p></o:p></span></a></p><p
+          class=MsoNormal><span style='mso-bookmark:_MailOriginal'><span lang=EN-GB
+          style='font-size:11.0pt;mso-ansi-language:EN-GB'><o:p>&nbsp;</o:p></span></span></p><p
+          class=MsoNormal><span style='mso-bookmark:_MailOriginal'><span lang=EN-GB
+          style='font-size:11.0pt;mso-ansi-language:EN-GB'>${incident.emailbody}<o:p></o:p></span></span></p>"
+      option1:
+        simple: "YES"
+      option2:
+        simple: "NO"
+      persistent:
+        simple: "true"
+      playbookTaskID: {}
+      replyAddress: {}
+      replyEntriesTag: {}
+      retries: {}
+      roles: {}
+      subject:
+        simple: Security Operations Incident
+      task:
+        simple: emailrsp
+    separatecontext: false
+    task:
+      brand: ""
+      description: 'Ask a user a question via email and process the reply directly
+        into the investigation. '
+      id: 6ae9b60b-74e7-43a1-8dfe-f23b24bbd148
+      iscommand: false
+      name: Email User
+      script: EmailAskUser_Edit
+      type: regular
+      version: -1
+    taskid: 6ae9b60b-74e7-43a1-8dfe-f23b24bbd148
+    timertriggers:
+    - action: start
+      fieldname: emailtimer
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": -600,
+          "y": 15
+        }
+      }
+  "50":
+    id: "50"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "67"
+    note: false
+    scriptarguments:
+      append: {}
+      key:
+        simple: temp.timeout
+      value:
+        simple: "1"
+    separatecontext: false
+    task:
+      brand: ""
+      id: 95f61404-5b4e-4f23-8045-2684e0f87e74
+      iscommand: false
+      name: Set temp.timeout to 1 day
+      script: Set
+      type: regular
+      version: -1
+    taskid: 95f61404-5b4e-4f23-8045-2684e0f87e74
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": -170,
+          "y": -640
+        }
+      }
+  "52":
+    id: "52"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "67"
+    note: false
+    scriptarguments:
+      append: {}
+      key:
+        simple: temp.timeout
+      value:
+        simple: "1"
+    separatecontext: false
+    task:
+      brand: ""
+      id: 7bfe32bb-4cb1-4b37-8580-e0f84661b142
+      iscommand: false
+      name: Set temp.timeout to 2 hours
+      script: Set
+      type: regular
+      version: -1
+    taskid: 7bfe32bb-4cb1-4b37-8580-e0f84661b142
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 240,
+          "y": -640
+        }
+      }
+  "54":
+    id: "54"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "67"
+    note: false
+    scriptarguments:
+      append: {}
+      key:
+        simple: temp.timeout
+      value:
+        simple: "1"
+    separatecontext: false
+    task:
+      brand: ""
+      id: f2603640-df38-455c-83c2-93b81b090a84
+      iscommand: false
+      name: Set temp.timeout to 30 mins
+      script: Set
+      type: regular
+      version: -1
+    taskid: f2603640-df38-455c-83c2-93b81b090a84
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 650,
+          "y": -640
+        }
+      }
+  "56":
+    id: "56"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "67"
+    note: false
+    scriptarguments:
+      append: {}
+      key:
+        simple: temp.timeout
+      value:
+        simple: "1"
+    separatecontext: false
+    task:
+      brand: ""
+      id: 7ac34ea6-cc10-4def-8551-8b530dacde59
+      iscommand: false
+      name: Set temp.timeout to 15 mins
+      script: Set
+      type: regular
+      version: -1
+    taskid: 7ac34ea6-cc10-4def-8551-8b530dacde59
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1060,
+          "y": -640
+        }
+      }
+  "58":
+    id: "58"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "13"
+    note: false
+    scriptarguments:
+      fieldName:
+        simple: caserunerrors
+      newValue:
+        simple: '{"errors":"Alert severity could not be determined - MA - User Verify"}'
+    separatecontext: false
+    task:
+      brand: ""
+      id: c518bb7d-b138-431c-867f-d51fa4c1df41
+      iscommand: false
+      name: 'ERROR: Alert severity could not be determined '
+      script: AppendRowToGrid
+      type: regular
+      version: -1
+    taskid: c518bb7d-b138-431c-867f-d51fa4c1df41
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1470,
+          "y": -640
+        }
+      }
+  "59":
+    id: "59"
+    ignoreworker: false
+    nexttasks:
+      '#default#':
+      - "64"
+      "NO":
+      - "62"
+      "YES":
+      - "9"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 8775ee01-1778-4bed-8ab5-84bb50fe7481
+      iscommand: false
+      name: Check users Yes/No answer from Email
+      tags:
+      - emailrsp
+      - emailsla
+      type: condition
+      version: -1
+    taskid: 8775ee01-1778-4bed-8ab5-84bb50fe7481
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": -600,
+          "y": 335
+        }
+      }
+  "62":
+    evidencedata:
+      customfields: {}
+      description:
+        simple: User failed to confirm via email
+    id: "62"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "13"
+    note: false
+    scriptarguments:
+      action: {}
+      addLabels: {}
+      adgroup: {}
+      adsecurity: {}
+      affecteddata: {}
+      affecteddatatype: {}
+      affectedindividualscontactinformation: {}
+      alertcount: {}
+      app: {}
+      approximatenumberofaffecteddatasubjects: {}
+      assetid: {}
+      attachmentcount: {}
+      attachmentextension: {}
+      attachmenthash: {}
+      attachmentid: {}
+      attachmentname: {}
+      attachmentsize: {}
+      attachmenttype: {}
+      bugtraq: {}
+      caseclosenote: {}
+      caseclosereason: {}
+      caserunerror: {}
+      caserunerrors: {}
+      city: {}
+      closeNotes: {}
+      closeReason: {}
+      command: {}
+      companyaddress: {}
+      companycity: {}
+      companycountry: {}
+      companyhasinsuranceforthebreach: {}
+      companyname: {}
+      companypostalcode: {}
+      contactaddress: {}
+      contactname: {}
+      count: {}
+      country: {}
+      countrywherebusinesshasitsmainestablishment: {}
+      countrywherethebreachtookplace: {}
+      cs: {}
+      csid: {}
+      cssignature: {}
+      csurl: {}
+      customFields: {}
+      cve: {}
+      cvss: {}
+      cyphortsignature: {}
+      cyphorturl: {}
+      dataencryptionstatus: {}
+      datetimeofthebreach: {}
+      deleteEmptyField: {}
+      dest: {}
+      destcategory: {}
+      desthost: {}
+      destip: {}
+      destmanager: {}
+      destntdomain: {}
+      destos: {}
+      destport: {}
+      desttranslatedip: {}
+      desttranslatedport: {}
+      destuser: {}
+      details: {}
+      dpoemailaddress: {}
+      duration: {}
+      egid: {}
+      emailaddress: {}
+      emailbcc: {}
+      emailbody: {}
+      emailbodyformat: {}
+      emailbodyhtml: {}
+      emailcc: {}
+      emailclientname: {}
+      emailfrom: {}
+      emailinreplyto: {}
+      emailkeywords: {}
+      emailmessageid: {}
+      emailreceived: {}
+      emailreplyto: {}
+      emailreturnpath: {}
+      emailsenderip: {}
+      emailsize: {}
+      emailsource: {}
+      emailsubject: {}
+      emailto: {}
+      emailtocount: {}
+      emailurlclicked: {}
+      filehash: {}
+      filename: {}
+      filepath: {}
+      firstpasscount: {}
+      hash: {}
+      haurl: {}
+      hostname: {}
+      hostsscanned: {}
+      id: {}
+      ip: {}
+      iparray: {}
+      ipbool: {}
+      ipinternal: {}
+      isthedatasubjecttodpia: {}
+      labels: {}
+      likelyimpact: {}
+      loginagent: {}
+      loginagent1: {}
+      loginagent2: {}
+      logincity1: {}
+      logincity2: {}
+      logincountry1: {}
+      logincountry2: {}
+      loginregion1: {}
+      loginregion2: {}
+      maliciouscauseifthecauseisamaliciousattack: {}
+      malwarefamily: {}
+      measurestomitigate: {}
+      name: {}
+      "null": {}
+      objectcategory: {}
+      objectpath: {}
+      occurred: {}
+      os: {}
+      owner: {}
+      pancve: {}
+      pansignature: {}
+      pdmessage: {}
+      pdsubject: {}
+      phase: {}
+      possiblecauseofthebreach: {}
+      postalcode: {}
+      protocol: {}
+      replacePlaybook: {}
+      resstatus: {}
+      roles: {}
+      ruleid: {}
+      s1eventid: {}
+      s1signature: {}
+      searchcount: {}
+      secondpasscount: {}
+      sectorofaffectedparty: {}
+      servicefilename: {}
+      servicename: {}
+      severity: {}
+      signature: {}
+      sizenumberofemployees: {}
+      sizeturnover: {}
+      sla: {}
+      slaField: {}
+      slackmsg: {}
+      splunkdrilldown: {}
+      splunkearliest: {}
+      splunkepoch: {}
+      splunkeventid: {}
+      splunklatest: {}
+      splunkurl: {}
+      src: {}
+      srccategory: {}
+      srchost: {}
+      srcip: {}
+      srcmanager: {}
+      srcntdomain: {}
+      srcos: {}
+      srcport: {}
+      srctranslatedip: {}
+      srctranslatedport: {}
+      srcuser: {}
+      suspectapplication: {}
+      suspectdevice: {}
+      suspectdomain: {}
+      suspectemail: {}
+      suspectfile: {}
+      suspectfilename: {}
+      suspectfilepath: {}
+      suspecthash: {}
+      suspecthostname: {}
+      suspectip: {}
+      suspectmanager: {}
+      suspectos: {}
+      suspecturl: {}
+      suspectuser: {}
+      suspectverfied:
+        simple: emailfail
+      systems: {}
+      telephoneno: {}
+      threatvaultcve: {}
+      threatvaultdescription: {}
+      threatvaultdetails: {}
+      threatvaultrefs: {}
+      threatvaultseverity: {}
+      type: {}
+      url: {}
+      user: {}
+      userverified: {}
+      vendorid: {}
+      vendorproduct: {}
+      vulnerabilitycategory: {}
+      vulnhosts: {}
+      whereisdatahosted: {}
+    separatecontext: false
+    task:
+      brand: Builtin
+      id: 2399c27f-80d7-41a2-89fb-47abb39f5b30
+      iscommand: true
+      name: Populate incident.suspectverfied field as emailfail
+      script: Builtin|||setIncident
+      type: regular
+      version: -1
+    taskid: 2399c27f-80d7-41a2-89fb-47abb39f5b30
+    timertriggers:
+    - action: stop
+      fieldname: emailtimer
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": -820,
+          "y": 550
+        }
+      }
+  "64":
+    evidencedata:
+      customfields: {}
+      description:
+        simple: User confirmed via email
+      tags:
+        simple: emailsla
+    id: "64"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "13"
+    note: false
+    scriptarguments:
+      action: {}
+      addLabels: {}
+      adgroup: {}
+      adsecurity: {}
+      affecteddata: {}
+      affecteddatatype: {}
+      affectedindividualscontactinformation: {}
+      alertcount: {}
+      app: {}
+      approximatenumberofaffecteddatasubjects: {}
+      assetid: {}
+      attachmentcount: {}
+      attachmentextension: {}
+      attachmenthash: {}
+      attachmentid: {}
+      attachmentname: {}
+      attachmentsize: {}
+      attachmenttype: {}
+      bugtraq: {}
+      caseclosenote: {}
+      caseclosereason: {}
+      caserunerror: {}
+      caserunerrors: {}
+      city: {}
+      closeNotes: {}
+      closeReason: {}
+      command: {}
+      companyaddress: {}
+      companycity: {}
+      companycountry: {}
+      companyhasinsuranceforthebreach: {}
+      companyname: {}
+      companypostalcode: {}
+      contactaddress: {}
+      contactname: {}
+      count: {}
+      country: {}
+      countrywherebusinesshasitsmainestablishment: {}
+      countrywherethebreachtookplace: {}
+      cs: {}
+      csid: {}
+      cssignature: {}
+      csurl: {}
+      customFields: {}
+      cve: {}
+      cvss: {}
+      cyphortsignature: {}
+      cyphorturl: {}
+      dataencryptionstatus: {}
+      datetimeofthebreach: {}
+      deleteEmptyField: {}
+      dest: {}
+      destcategory: {}
+      desthost: {}
+      destip: {}
+      destmanager: {}
+      destntdomain: {}
+      destos: {}
+      destport: {}
+      desttranslatedip: {}
+      desttranslatedport: {}
+      destuser: {}
+      details: {}
+      dpoemailaddress: {}
+      duration: {}
+      egid: {}
+      emailaddress: {}
+      emailbcc: {}
+      emailbody: {}
+      emailbodyformat: {}
+      emailbodyhtml: {}
+      emailcc: {}
+      emailclientname: {}
+      emailfrom: {}
+      emailinreplyto: {}
+      emailkeywords: {}
+      emailmessageid: {}
+      emailreceived: {}
+      emailreplyto: {}
+      emailreturnpath: {}
+      emailsenderip: {}
+      emailsize: {}
+      emailsource: {}
+      emailsubject: {}
+      emailto: {}
+      emailtocount: {}
+      emailurlclicked: {}
+      filehash: {}
+      filename: {}
+      filepath: {}
+      firstpasscount: {}
+      hash: {}
+      haurl: {}
+      hostname: {}
+      hostsscanned: {}
+      id: {}
+      ip: {}
+      iparray: {}
+      ipbool: {}
+      ipinternal: {}
+      isthedatasubjecttodpia: {}
+      labels: {}
+      likelyimpact: {}
+      loginagent: {}
+      loginagent1: {}
+      loginagent2: {}
+      logincity1: {}
+      logincity2: {}
+      logincountry1: {}
+      logincountry2: {}
+      loginregion1: {}
+      loginregion2: {}
+      maliciouscauseifthecauseisamaliciousattack: {}
+      malwarefamily: {}
+      measurestomitigate: {}
+      name: {}
+      "null": {}
+      objectcategory: {}
+      objectpath: {}
+      occurred: {}
+      os: {}
+      owner: {}
+      pancve: {}
+      pansignature: {}
+      pdmessage: {}
+      pdsubject: {}
+      phase: {}
+      possiblecauseofthebreach: {}
+      postalcode: {}
+      protocol: {}
+      replacePlaybook: {}
+      resstatus: {}
+      roles: {}
+      ruleid: {}
+      s1eventid: {}
+      s1signature: {}
+      searchcount: {}
+      secondpasscount: {}
+      sectorofaffectedparty: {}
+      servicefilename: {}
+      servicename: {}
+      severity: {}
+      signature: {}
+      sizenumberofemployees: {}
+      sizeturnover: {}
+      sla: {}
+      slaField: {}
+      slackmsg: {}
+      splunkdrilldown: {}
+      splunkearliest: {}
+      splunkepoch: {}
+      splunkeventid: {}
+      splunklatest: {}
+      splunkurl: {}
+      src: {}
+      srccategory: {}
+      srchost: {}
+      srcip: {}
+      srcmanager: {}
+      srcntdomain: {}
+      srcos: {}
+      srcport: {}
+      srctranslatedip: {}
+      srctranslatedport: {}
+      srcuser: {}
+      suspectapplication: {}
+      suspectdevice: {}
+      suspectdomain: {}
+      suspectemail: {}
+      suspectfile: {}
+      suspectfilename: {}
+      suspectfilepath: {}
+      suspecthash: {}
+      suspecthostname: {}
+      suspectip: {}
+      suspectmanager: {}
+      suspectos: {}
+      suspecturl: {}
+      suspectuser: {}
+      suspectverfied:
+        simple: emailtimeout
+      systems: {}
+      telephoneno: {}
+      threatvaultcve: {}
+      threatvaultdescription: {}
+      threatvaultdetails: {}
+      threatvaultrefs: {}
+      threatvaultseverity: {}
+      type: {}
+      url: {}
+      user: {}
+      userverified: {}
+      vendorid: {}
+      vendorproduct: {}
+      vulnerabilitycategory: {}
+      vulnhosts: {}
+      whereisdatahosted: {}
+    separatecontext: false
+    task:
+      brand: Builtin
+      id: c6c43a6d-c93d-474c-8cce-2f89dd115135
+      iscommand: true
+      name: Populate incident.suspectverfied field as emailtimeout
+      script: Builtin|||setIncident
+      type: regular
+      version: -1
+    taskid: c6c43a6d-c93d-474c-8cce-2f89dd115135
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": -330,
+          "y": 570
+        }
+      }
+  "65":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: incident.severity
+          operator: isEqualString
+          right:
+            value:
+              simple: "1"
+      label: low
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: incident.severity
+          operator: isEqualString
+          right:
+            value:
+              simple: "2"
+      label: medium
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: incident.severity
+          operator: isEqualString
+          right:
+            value:
+              simple: "3"
+      label: high
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: incident.severity
+          operator: isEqualString
+          right:
+            value:
+              simple: "4"
+      label: critical
+    id: "65"
+    ignoreworker: false
+    nexttasks:
+      '#default#':
+      - "58"
+      critical:
+      - "56"
+      high:
+      - "54"
+      low:
+      - "50"
+      medium:
+      - "52"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 9c53bef5-1a8e-4cb4-8dca-216c70a07786
+      iscommand: false
+      name: Check Alert Severity
+      type: condition
+      version: -1
+    taskid: 9c53bef5-1a8e-4cb4-8dca-216c70a07786
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": -820
+        }
+      }
+  "66":
+    evidencedata:
+      customfields: {}
+      description:
+        simple: User failed to confirm via Duo
+    id: "66"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "13"
+    note: false
+    reputationcalc: 2
+    scriptarguments:
+      action: {}
+      addLabels: {}
+      adgroup: {}
+      adsecurity: {}
+      alertcount: {}
+      app: {}
+      assetid: {}
+      attachmentcount: {}
+      attachmentextension: {}
+      attachmenthash: {}
+      attachmentid: {}
+      attachmentname: {}
+      attachmentsize: {}
+      attachmenttype: {}
+      bugtraq: {}
+      caseclosenote: {}
+      caseclosereason: {}
+      caserunerror: {}
+      closeNotes: {}
+      closeReason: {}
+      cs: {}
+      customFields: {}
+      cve: {}
+      cvss: {}
+      deleteEmptyField: {}
+      dest: {}
+      destcategory: {}
+      desthost: {}
+      destip: {}
+      destmanager: {}
+      destntdomain: {}
+      destos: {}
+      destport: {}
+      desttranslatedip: {}
+      desttranslatedport: {}
+      destuser: {}
+      details: {}
+      duration: {}
+      emailbcc: {}
+      emailbody: {}
+      emailbodyformat: {}
+      emailbodyhtml: {}
+      emailcc: {}
+      emailclientname: {}
+      emailfrom: {}
+      emailinreplyto: {}
+      emailkeywords: {}
+      emailmessageid: {}
+      emailreceived: {}
+      emailreplyto: {}
+      emailreturnpath: {}
+      emailsenderip: {}
+      emailsize: {}
+      emailsource: {}
+      emailsubject: {}
+      emailto: {}
+      emailtocount: {}
+      emailurlclicked: {}
+      filehash: {}
+      filename: {}
+      filepath: {}
+      firstpasscount: {}
+      hash: {}
+      hostname: {}
+      id: {}
+      ip: {}
+      ipbool: {}
+      ipinternal: {}
+      labels: {}
+      malwarefamily: {}
+      name: {}
+      "null": {}
+      occurred: {}
+      os: {}
+      owner: {}
+      pancve: {}
+      pansignature: {}
+      phase: {}
+      protocol: {}
+      replacePlaybook: {}
+      roles: {}
+      ruleid: {}
+      searchcount: {}
+      secondpasscount: {}
+      servicefilename: {}
+      servicename: {}
+      severity: {}
+      signature: {}
+      sla: {}
+      slaField: {}
+      slackmsg: {}
+      splunkurl: {}
+      src: {}
+      srccategory: {}
+      srchost: {}
+      srcip: {}
+      srcmanager: {}
+      srcntdomain: {}
+      srcos: {}
+      srcport: {}
+      srctranslatedip: {}
+      srctranslatedport: {}
+      srcuser: {}
+      suspectapplication: {}
+      suspectdomain: {}
+      suspectfile: {}
+      suspecthostname: {}
+      suspectip: {}
+      suspectos: {}
+      suspecturl: {}
+      suspectuser: {}
+      suspectverfied:
+        simple: fail
+      systems: {}
+      type: {}
+      url: {}
+      user: {}
+      userverified: {}
+      vendorid: {}
+      vendorproduct: {}
+      vulnerabilitycategory: {}
+    separatecontext: false
+    task:
+      brand: Builtin
+      id: 7278bac8-363f-4474-848c-0961fd1ce622
+      iscommand: true
+      name: Populate incident.suspectverfied field as fail
+      script: Builtin|||setIncident
+      type: regular
+      version: -1
+    taskid: 7278bac8-363f-4474-848c-0961fd1ce622
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": -760,
+          "y": 1525
+        }
+      }
+  "67":
+    id: "67"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "32"
+    note: false
+    scriptarguments:
+      action: {}
+      addLabels: {}
+      adgroup: {}
+      adsecurity: {}
+      adsignature: {}
+      affecteddata: {}
+      affecteddatatype: {}
+      affectedindividualscontactinformation: {}
+      alertcount: {}
+      app: {}
+      approximatenumberofaffecteddatasubjects: {}
+      assetid: {}
+      attachmentcount: {}
+      attachmentextension: {}
+      attachmenthash: {}
+      attachmentid: {}
+      attachmentname: {}
+      attachmentsize: {}
+      attachmenttype: {}
+      avdata: {}
+      bugtraq: {}
+      caseclosenote: {}
+      caseclosereason: {}
+      caserunerror: {}
+      caserunerrors: {}
+      city: {}
+      closeNotes: {}
+      closeReason: {}
+      command: {}
+      companyaddress: {}
+      companycity: {}
+      companycountry: {}
+      companyhasinsuranceforthebreach: {}
+      companyname: {}
+      companypostalcode: {}
+      contactaddress: {}
+      contactname: {}
+      count: {}
+      country: {}
+      countrywherebusinesshasitsmainestablishment: {}
+      countrywherethebreachtookplace: {}
+      cs: {}
+      csid: {}
+      cssignature: {}
+      csurl: {}
+      customFields: {}
+      cve: {}
+      cvss: {}
+      cyphortsignature: {}
+      cyphorturl: {}
+      dataencryptionstatus: {}
+      datetimeofthebreach: {}
+      deleteEmptyField: {}
+      dest: {}
+      destcategory: {}
+      desthost: {}
+      destip: {}
+      destmanager: {}
+      destntdomain: {}
+      destos: {}
+      destport: {}
+      desttranslatedip: {}
+      desttranslatedport: {}
+      destuser: {}
+      details: {}
+      dmsignature: {}
+      domainarray: {}
+      dpoemailaddress: {}
+      duration: {}
+      egid: {}
+      emailaddress: {}
+      emailbcc: {}
+      emailbody: {}
+      emailbodyformat: {}
+      emailbodyhtml: {}
+      emailcc: {}
+      emailclientname: {}
+      emailfrom: {}
+      emailinreplyto: {}
+      emailkeywords: {}
+      emailmessageid: {}
+      emailreceived: {}
+      emailreplyto: {}
+      emailreturnpath: {}
+      emailsenderip: {}
+      emailsize: {}
+      emailsource: {}
+      emailsubject: {}
+      emailto: {}
+      emailtocount: {}
+      emailurlclicked: {}
+      filehash: {}
+      filename: {}
+      filepath: {}
+      firstpasscount: {}
+      gridtest: {}
+      gridtest3: {}
+      gridtest5: {}
+      hash: {}
+      haurl: {}
+      hostname: {}
+      hostsscanned: {}
+      id: {}
+      ip: {}
+      iparray: {}
+      ipbool: {}
+      ipinternal: {}
+      isthedatasubjecttodpia: {}
+      labels: {}
+      likelyimpact: {}
+      loginagent: {}
+      loginagent1: {}
+      loginagent2: {}
+      logincity1: {}
+      logincity2: {}
+      logincountry1: {}
+      logincountry2: {}
+      loginregion1: {}
+      loginregion2: {}
+      maliciouscauseifthecauseisamaliciousattack: {}
+      malwarefamily: {}
+      measurestomitigate: {}
+      name: {}
+      objectcategory: {}
+      objectpath: {}
+      occurred: {}
+      os: {}
+      owner: {}
+      pancve: {}
+      pansignature: {}
+      pdmessage: {}
+      pdsubject: {}
+      phase: {}
+      possiblecauseofthebreach: {}
+      postalcode: {}
+      protocol: {}
+      replacePlaybook: {}
+      resstatus: {}
+      roles: {}
+      ruleid: {}
+      s1eventid: {}
+      s1signature: {}
+      searchcount: {}
+      secondpasscount: {}
+      sectorofaffectedparty: {}
+      severity: {}
+      signature: {}
+      signaturearray: {}
+      sizenumberofemployees: {}
+      sizeturnover: {}
+      sla:
+        simple: ${temp.timeout}
+      slaField:
+        simple: slacktimer
+      slackmsg: {}
+      splunkdrilldown: {}
+      splunkearliest: {}
+      splunkepoch: {}
+      splunkeventid: {}
+      splunklatest: {}
+      splunkurl: {}
+      src: {}
+      srccategory: {}
+      srchost: {}
+      srcip: {}
+      srcmanager: {}
+      srcntdomain: {}
+      srcos: {}
+      srcport: {}
+      srctranslatedip: {}
+      srctranslatedport: {}
+      srcuser: {}
+      suspectaccount: {}
+      suspectapplication: {}
+      suspectdevice: {}
+      suspectdomain: {}
+      suspectemail: {}
+      suspectfile: {}
+      suspectfilename: {}
+      suspectfilepath: {}
+      suspecthash: {}
+      suspecthostname: {}
+      suspectip: {}
+      suspectmanager: {}
+      suspectos: {}
+      suspecturl: {}
+      suspectuser: {}
+      suspectverfied: {}
+      systems: {}
+      tapdetail: {}
+      tapreplies: {}
+      tapsender: {}
+      tapsubject: {}
+      tapurl: {}
+      telephoneno: {}
+      threatvaultcve: {}
+      threatvaultdescription: {}
+      threatvaultdetails: {}
+      threatvaultrefs: {}
+      threatvaultseverity: {}
+      type: {}
+      url: {}
+      urlarray: {}
+      user: {}
+      userverified: {}
+      vendorid: {}
+      vendorproduct: {}
+      vulnerabilitycategory: {}
+      vulnhosts: {}
+      whereisdatahosted: {}
+    separatecontext: false
+    task:
+      brand: Builtin
+      id: 228505fe-c32c-4ef8-869e-a81cf9ca46a7
+      iscommand: true
+      name: Set SLA for Slack Timer
+      script: Builtin|||setIncident
+      type: regular
+      version: -1
+    taskid: 228505fe-c32c-4ef8-869e-a81cf9ca46a7
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 460,
+          "y": -470
+        }
+      }
+  "68":
+    id: "68"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "59"
+    note: false
+    scriptarguments:
+      action: {}
+      addLabels: {}
+      adgroup: {}
+      adsecurity: {}
+      adsignature: {}
+      affecteddata: {}
+      affecteddatatype: {}
+      affectedindividualscontactinformation: {}
+      alertcount: {}
+      app: {}
+      approximatenumberofaffecteddatasubjects: {}
+      assetid: {}
+      attachmentcount: {}
+      attachmentextension: {}
+      attachmenthash: {}
+      attachmentid: {}
+      attachmentname: {}
+      attachmentsize: {}
+      attachmenttype: {}
+      avdata: {}
+      bugtraq: {}
+      caseclosenote: {}
+      caseclosereason: {}
+      caserunerror: {}
+      caserunerrors: {}
+      city: {}
+      closeNotes: {}
+      closeReason: {}
+      command: {}
+      companyaddress: {}
+      companycity: {}
+      companycountry: {}
+      companyhasinsuranceforthebreach: {}
+      companyname: {}
+      companypostalcode: {}
+      contactaddress: {}
+      contactname: {}
+      count: {}
+      country: {}
+      countrywherebusinesshasitsmainestablishment: {}
+      countrywherethebreachtookplace: {}
+      cs: {}
+      csid: {}
+      cssignature: {}
+      csurl: {}
+      customFields: {}
+      cve: {}
+      cvss: {}
+      cyphortsignature: {}
+      cyphorturl: {}
+      dataencryptionstatus: {}
+      datetimeofthebreach: {}
+      deleteEmptyField: {}
+      dest: {}
+      destcategory: {}
+      desthost: {}
+      destip: {}
+      destmanager: {}
+      destntdomain: {}
+      destos: {}
+      destport: {}
+      desttranslatedip: {}
+      desttranslatedport: {}
+      destuser: {}
+      details: {}
+      dmsignature: {}
+      domainarray: {}
+      dpoemailaddress: {}
+      duration: {}
+      egid: {}
+      emailaddress: {}
+      emailbcc: {}
+      emailbody: {}
+      emailbodyformat: {}
+      emailbodyhtml: {}
+      emailcc: {}
+      emailclientname: {}
+      emailfrom: {}
+      emailinreplyto: {}
+      emailkeywords: {}
+      emailmessageid: {}
+      emailreceived: {}
+      emailreplyto: {}
+      emailreturnpath: {}
+      emailsenderip: {}
+      emailsize: {}
+      emailsource: {}
+      emailsubject: {}
+      emailto: {}
+      emailtocount: {}
+      emailurlclicked: {}
+      filehash: {}
+      filename: {}
+      filepath: {}
+      firstpasscount: {}
+      gridtest: {}
+      gridtest3: {}
+      gridtest5: {}
+      hash: {}
+      haurl: {}
+      hostname: {}
+      hostsscanned: {}
+      id: {}
+      ip: {}
+      iparray: {}
+      ipbool: {}
+      ipinternal: {}
+      isthedatasubjecttodpia: {}
+      labels: {}
+      likelyimpact: {}
+      loginagent: {}
+      loginagent1: {}
+      loginagent2: {}
+      logincity1: {}
+      logincity2: {}
+      logincountry1: {}
+      logincountry2: {}
+      loginregion1: {}
+      loginregion2: {}
+      maliciouscauseifthecauseisamaliciousattack: {}
+      malwarefamily: {}
+      measurestomitigate: {}
+      name: {}
+      objectcategory: {}
+      objectpath: {}
+      occurred: {}
+      os: {}
+      owner: {}
+      pancve: {}
+      pansignature: {}
+      pdmessage: {}
+      pdsubject: {}
+      phase: {}
+      possiblecauseofthebreach: {}
+      postalcode: {}
+      protocol: {}
+      replacePlaybook: {}
+      resstatus: {}
+      roles: {}
+      ruleid: {}
+      s1eventid: {}
+      s1signature: {}
+      searchcount: {}
+      secondpasscount: {}
+      sectorofaffectedparty: {}
+      severity: {}
+      signature: {}
+      signaturearray: {}
+      sizenumberofemployees: {}
+      sizeturnover: {}
+      sla:
+        simple: ${temp.timeout}
+      slaField:
+        simple: emailtimer
+      slackmsg: {}
+      splunkdrilldown: {}
+      splunkearliest: {}
+      splunkepoch: {}
+      splunkeventid: {}
+      splunklatest: {}
+      splunkurl: {}
+      src: {}
+      srccategory: {}
+      srchost: {}
+      srcip: {}
+      srcmanager: {}
+      srcntdomain: {}
+      srcos: {}
+      srcport: {}
+      srctranslatedip: {}
+      srctranslatedport: {}
+      srcuser: {}
+      suspectaccount: {}
+      suspectapplication: {}
+      suspectdevice: {}
+      suspectdomain: {}
+      suspectemail: {}
+      suspectfile: {}
+      suspectfilename: {}
+      suspectfilepath: {}
+      suspecthash: {}
+      suspecthostname: {}
+      suspectip: {}
+      suspectmanager: {}
+      suspectos: {}
+      suspecturl: {}
+      suspectuser: {}
+      suspectverfied: {}
+      systems: {}
+      tapdetail: {}
+      tapreplies: {}
+      tapsender: {}
+      tapsubject: {}
+      tapurl: {}
+      telephoneno: {}
+      threatvaultcve: {}
+      threatvaultdescription: {}
+      threatvaultdetails: {}
+      threatvaultrefs: {}
+      threatvaultseverity: {}
+      type: {}
+      url: {}
+      urlarray: {}
+      user: {}
+      userverified: {}
+      vendorid: {}
+      vendorproduct: {}
+      vulnerabilitycategory: {}
+      vulnhosts: {}
+      whereisdatahosted: {}
+    separatecontext: false
+    task:
+      brand: Builtin
+      id: d1697dc2-6f7f-4ad5-88d0-56a998205adb
+      iscommand: true
+      name: Set SLA for Email Timer
+      script: Builtin|||setIncident
+      type: regular
+      version: -1
+    taskid: d1697dc2-6f7f-4ad5-88d0-56a998205adb
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": -600,
+          "y": 160
+        }
+      }
+  "69":
+    id: "69"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "70"
+    note: false
+    scriptarguments:
+      filename:
+        simple: sig2.png
+      isZipFile: {}
+      listname:
+        simple: sig2
+    separatecontext: false
+    task:
+      brand: ""
+      description: Converts Base64 file in a list to a binary file and upload to warroom
+      id: 4896470a-20ee-466c-8b53-ddd9f27bc01a
+      iscommand: false
+      name: Load Sig2
+      script: Base64ListToFile
+      type: regular
+      version: -1
+    taskid: 4896470a-20ee-466c-8b53-ddd9f27bc01a
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": -600,
+          "y": -320
+        }
+      }
+  "70":
+    id: "70"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "48"
+    note: false
+    scriptarguments:
+      filename:
+        simple: sig1.png
+      isZipFile: {}
+      listname:
+        simple: sig1
+    separatecontext: false
+    task:
+      brand: ""
+      description: Converts Base64 file in a list to a binary file and upload to warroom
+      id: 5e726b9d-ba05-4622-8b65-bd557338971c
+      iscommand: false
+      name: Load Sig1
+      script: Base64ListToFile
+      type: regular
+      version: -1
+    taskid: 5e726b9d-ba05-4622-8b65-bd557338971c
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": -600,
+          "y": -145
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {
+      "43_39_ALLOW": 0.9
+    },
+    "paper": {
+      "dimensions": {
+        "height": 3195,
+        "width": 2670,
+        "x": -820,
+        "y": -1110
+      }
+    }
+  }

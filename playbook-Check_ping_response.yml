@@ -1,0 +1,182 @@
+id: a7065296-75a8-47a4-80dd-1dc9d4e4493e
+inputs: []
+name: Check ping response
+outputs: []
+starttaskid: "0"
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "7"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: ecaf2288-0ac6-4312-8271-034648ca6f29
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: ecaf2288-0ac6-4312-8271-034648ca6f29
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 50
+        }
+      }
+  "4":
+    id: "4"
+    ignoreworker: false
+    note: false
+    scriptarguments:
+      append:
+        simple: "false"
+      key:
+        simple: Response Received
+      value:
+        simple: "Yes"
+    separatecontext: false
+    task:
+      brand: ""
+      id: 43d7ce70-d6b9-45c4-8998-9e50cbe41286
+      iscommand: false
+      name: Set
+      script: Set
+      type: regular
+      version: -1
+    taskid: 43d7ce70-d6b9-45c4-8998-9e50cbe41286
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 720
+        }
+      }
+  "5":
+    id: "5"
+    ignoreworker: false
+    loop:
+      builtincondition:
+      - - left:
+            iscontext: true
+            value:
+              simple: ${iteration}
+          operator: isEqualString
+          right:
+            value:
+              simple: "3"
+        - left:
+            iscontext: true
+            value:
+              simple: ${Ping}
+          operator: isExists
+      exitCondition: ""
+      iscommand: false
+      wait: 1
+    nexttasks:
+      '#none#':
+      - "4"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: a463df43-62af-41ce-8df7-1b0df786497d
+      iscommand: false
+      name: Ping Website
+      playbookId: 440836de-2d7c-40af-89f3-a5acbe201e32
+      type: playbook
+      version: -1
+    taskid: a463df43-62af-41ce-8df7-1b0df786497d
+    timertriggers: []
+    type: playbook
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 545
+        }
+      }
+  "6":
+    id: "6"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "5"
+    note: false
+    scriptarguments:
+      append: {}
+      key:
+        simple: iteration
+      value:
+        simple: "0"
+    separatecontext: false
+    task:
+      brand: ""
+      id: cf017256-c403-4ece-89ea-1733195f4448
+      iscommand: false
+      name: Variable to check iterations
+      script: Set
+      type: regular
+      version: -1
+    taskid: cf017256-c403-4ece-89ea-1733195f4448
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 370
+        }
+      }
+  "7":
+    id: "7"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "6"
+    note: false
+    scriptarguments:
+      all:
+        simple: "yes"
+      index: {}
+      key: {}
+      keysToKeep: {}
+      subplaybook: {}
+    separatecontext: false
+    task:
+      brand: ""
+      id: 1905e002-1bfa-473d-86d0-12f9c4cb5e39
+      iscommand: false
+      name: Delete Context
+      script: DeleteContext
+      type: regular
+      version: -1
+    taskid: 1905e002-1bfa-473d-86d0-12f9c4cb5e39
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 195
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 765,
+        "width": 380,
+        "x": 50,
+        "y": 50
+      }
+    }
+  }

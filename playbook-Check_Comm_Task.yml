@@ -1,0 +1,244 @@
+description: Playbook to test comm task return values
+id: 907ad2a8-a94a-45fa-8bdc-17a8f9daea5b
+inputs: []
+name: Check_Comm_Task
+outputs: []
+starttaskid: "0"
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "1"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 46c5a556-7b8f-430a-80bd-2697e822e7a8
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: 46c5a556-7b8f-430a-80bd-2697e822e7a8
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 50
+        }
+      }
+  "1":
+    form:
+      description: Hi This is a short description of the task
+      expired: false
+      questions:
+      - defaultrows: []
+        fieldassociated: ""
+        gridcolumns: []
+        id: "0"
+        label: ""
+        labelarg:
+          simple: 'Please answer Question 1: '
+        options: []
+        placeholder: ""
+        readonly: false
+        required: false
+        tooltip: ""
+        type: shortText
+      - defaultrows: []
+        fieldassociated: ""
+        gridcolumns: []
+        id: "1"
+        label: ""
+        labelarg:
+          simple: 'Please answer Question 2: '
+        options: []
+        placeholder: ""
+        readonly: false
+        required: false
+        tooltip: ""
+        type: shortText
+      - defaultrows: []
+        fieldassociated: ""
+        gridcolumns: []
+        id: "2"
+        label: ""
+        labelarg:
+          simple: 'Please answer Question 3: '
+        options: []
+        placeholder: ""
+        readonly: false
+        required: false
+        tooltip: ""
+        type: shortText
+      sender: ""
+      title: Demisto Survey
+      totalanswers: 0
+    id: "1"
+    ignoreworker: false
+    message:
+      bcc: null
+      body:
+        simple: 'Hi This is a message from Demisto '
+      cc: null
+      format: ""
+      methods:
+      - email
+      subject:
+        simple: 'Mail from Demisto '
+      timings:
+        completeafterreplies: 1
+        retriescount: 2
+        retriesinterval: 360
+      to:
+        simple: branganathan@paloaltonetworks.com
+    nexttasks:
+      '#none#':
+      - "3"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: f092ea35-aca7-42e8-8d63-278808403c4b
+      iscommand: false
+      name: Comm Task
+      type: collection
+      version: -1
+    taskid: f092ea35-aca7-42e8-8d63-278808403c4b
+    timertriggers: []
+    type: collection
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 190
+        }
+      }
+  "2":
+    id: "2"
+    ignoreworker: false
+    note: false
+    scriptarguments:
+      assetid: {}
+      closeNotes: {}
+      closeReason: {}
+      id: {}
+    separatecontext: false
+    task:
+      brand: Builtin
+      id: 516b53d7-6518-4bd3-8989-5f6fcf4060a2
+      iscommand: true
+      name: Close Investigation
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: 516b53d7-6518-4bd3-8989-5f6fcf4060a2
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 660
+        }
+      }
+  "3":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: Demisto Survey.Answers.0
+          operator: isExists
+      - - left:
+            iscontext: true
+            value:
+              simple: Demisto Survey.Answers.0
+          operator: isEmpty
+      - - left:
+            iscontext: true
+            value:
+              simple: Demisto Survey.Answers.1
+          operator: isExists
+      - - left:
+            iscontext: true
+            value:
+              simple: Demisto Survey.Answers.1
+          operator: isEmpty
+      - - left:
+            iscontext: true
+            value:
+              simple: Demisto Survey.Answers.2
+          operator: isExists
+      - - left:
+            iscontext: true
+            value:
+              simple: Demisto Survey.Answers.2
+          operator: isEmpty
+      label: "yes"
+    id: "3"
+    ignoreworker: false
+    nexttasks:
+      '#default#':
+      - "2"
+      "yes":
+      - "4"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 957e760c-c4f6-4fcf-8ff1-538cc938496f
+      iscommand: false
+      name: Check to See if the Answers are Empty
+      type: condition
+      version: -1
+    taskid: 957e760c-c4f6-4fcf-8ff1-538cc938496f
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 360
+        }
+      }
+  "4":
+    id: "4"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "2"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 0c04cf87-b5cc-46ac-893e-59a4c43d6f20
+      iscommand: false
+      name: All Fields are Empty
+      type: regular
+      version: -1
+    taskid: 0c04cf87-b5cc-46ac-893e-59a4c43d6f20
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": -30,
+          "y": 510
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 705,
+        "width": 860,
+        "x": -30,
+        "y": 50
+      }
+    }
+  }

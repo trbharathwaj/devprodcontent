@@ -1,0 +1,19 @@
+{
+	"brandName": "Symantec DLP",
+	"custom": false,
+	"defaultIncidentType": "",
+	"id": "Symantec DLP",
+	"incidentSamples": null,
+	"instanceId": "",
+	"instanceName": "",
+	"isDefault": true,
+	"keyTypeMap": null,
+	"mapping": null,
+	"sortValues": null,
+	"transformer": {
+		"complex": null,
+		"simple": ""
+	},
+	"unclassifiedCases": null,
+	"version": -1
+}

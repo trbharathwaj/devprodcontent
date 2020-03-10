@@ -1,0 +1,100 @@
+id: 02251a4b-68fa-43c0-896e-05a321b0f972
+inputs: []
+name: Slack_Send_Markdown
+outputs: []
+starttaskid: "0"
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "1"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: ccd5b1e6-12f5-4c3d-884e-a932d05ff335
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: ccd5b1e6-12f5-4c3d-884e-a932d05ff335
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 50
+        }
+      }
+  "1":
+    form:
+      description: ""
+      expired: false
+      questions:
+      - defaultrows: []
+        fieldassociated: ""
+        gridcolumns: []
+        id: "0"
+        label: ""
+        labelarg:
+          simple: Q1
+        options: []
+        placeholder: ""
+        readonly: false
+        required: false
+        tooltip: ""
+        type: shortText
+      sender: ""
+      title: Title
+      totalanswers: 0
+    id: "1"
+    ignoreworker: false
+    message:
+      bcc: null
+      body:
+        simple: '*This is the message*'
+      cc: null
+      format: ""
+      methods:
+      - slack
+      subject: null
+      timings:
+        completeafterreplies: 1
+        retriescount: 2
+        retriesinterval: 360
+      to:
+        simple: branganathan
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: d8436588-a3cf-4899-8f5b-03a31f0ec2bc
+      iscommand: false
+      name: Slack
+      type: collection
+      version: -1
+    taskid: d8436588-a3cf-4899-8f5b-03a31f0ec2bc
+    timertriggers: []
+    type: collection
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 200
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 245,
+        "width": 380,
+        "x": 450,
+        "y": 50
+      }
+    }
+  }

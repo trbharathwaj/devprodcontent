@@ -1,0 +1,47 @@
+category: Data Enrichment & Threat Intelligence
+commonfields:
+  id: Shriki Fails
+  version: -1
+configuration: []
+display: Shriki Fails
+name: Shriki Fails
+script:
+  runonce: false
+  script: |
+    // The command input arg holds the command sent from the user.
+    switch (command) {
+        // This is the call made when pressing the integration test button.
+        case 'test-module':
+            return 'not ok';
+    }
+
+    /*
+     * Sample function for http GET request with query string
+     */
+    var sendRequest = function(url, param) {
+
+        // handle '/' at the end of the url
+        if (url[url.length - 1] === '/') {
+            url = url.substring(0, url.length - 1);
+        }
+
+        // prepare the request url (make sure to encode the query parameter value)
+        var requestUrl = url + '?sample_param=' + encodeURIComponent(param);
+
+        var res = http(
+            requestUrl,
+            {
+                Method: 'GET', // Can be POST, PUT, DELETE, HEAD, OPTIONS or CONNECT
+                Headers: {
+                    Accept: ['application/json']
+                }
+            }
+        );
+
+        if (res.StatusCode < 200 || res.StatusCode >= 300) {
+            throw 'Request Failed.\nStatus code: ' + res.StatusCode + '.\nBody: ' + JSON.stringify(res) + '.';
+        }
+
+        return res;
+    };
+  type: javascript

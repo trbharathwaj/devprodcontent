@@ -1,0 +1,259 @@
+description: Activates network lists in Staging or Production on Akamai WAF. The playbook
+  finishes running when the network list is active on the requested enviorment.
+id: Akamai WAF - Activate Network Lists
+inputs:
+- description: ' A comma-separated list of network list IDs to activate. For example:
+    id_list1,id_list2. '
+  key: network_list_ids
+  required: true
+  value: {}
+- description: Enviorment type to activate the network list. Can be "STAGING" or "PRODUCTION".
+  key: env
+  required: true
+  value: {}
+- description: A comment to log when activating the network lists.
+  key: comment
+  required: false
+  value: {}
+- description: A comma-separated list of email addresses to notify when the network
+    lists are activated.
+  key: notify
+  required: false
+  value: {}
+name: Akamai WAF - Activate Network Lists
+outputs: []
+starttaskid: "0"
+system: true
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "1"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 6db69c54-1ff3-4b46-8b6c-60506443f3ef
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: 6db69c54-1ff3-4b46-8b6c-60506443f3ef
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 265,
+          "y": 50
+        }
+      }
+  "1":
+    id: "1"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "4"
+    note: false
+    scriptarguments:
+      comment:
+        simple: ${inputs.comment}
+      env:
+        simple: ${inputs.env}
+      network_list_ids:
+        simple: ${inputs.network_list_ids}
+      notify:
+        simple: ${inputs.notify}
+    separatecontext: false
+    task:
+      brand: ""
+      id: fb437f2c-767d-46d7-8000-482a1b4a77c4
+      iscommand: true
+      name: Activate network list in selected enviorment
+      script: '|||akamai-activate-network-list'
+      type: regular
+      version: -1
+    taskid: fb437f2c-767d-46d7-8000-482a1b4a77c4
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 265,
+          "y": 195
+        }
+      }
+  "3":
+    id: "3"
+    ignoreworker: false
+    loop:
+      exitCondition: ""
+      iscommand: false
+      wait: 1
+    nexttasks:
+      '#none#':
+      - "7"
+    note: false
+    scriptarguments:
+      AdditionalPollingCommandArgNames:
+        simple: env
+      AdditionalPollingCommandArgValues:
+        simple: ${inputs.env}
+      Ids:
+        simple: ${inputs.network_list_ids}
+      Interval:
+        simple: "1"
+      PollingCommandArgName:
+        simple: network_list_ids
+      PollingCommandName:
+        simple: akamai-get-network-list-activation-status
+      Timeout:
+        simple: "30"
+      dt:
+        simple: Akamai.NetworkLists.ActivationStatus(val.StagingStatus != 'ACTIVE').UniqueID
+    separatecontext: true
+    task:
+      brand: ""
+      id: e74b46f9-4d31-4520-84cf-8b05d070ab29
+      iscommand: false
+      name: Generic Polling
+      playbookId: GenericPolling
+      type: playbook
+      version: -1
+    taskid: e74b46f9-4d31-4520-84cf-8b05d070ab29
+    timertriggers: []
+    type: playbook
+    view: |-
+      {
+        "position": {
+          "x": 480,
+          "y": 545
+        }
+      }
+  "4":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: inputs.env
+          operator: isEqualString
+          right:
+            value:
+              simple: PRODUCTION
+      label: "yes"
+    id: "4"
+    ignoreworker: false
+    nexttasks:
+      '#default#':
+      - "3"
+      "yes":
+      - "5"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 0f81a60a-8b9b-4e5d-8e81-a87fa0a83372
+      iscommand: false
+      name: Environment Type - Staging or Production
+      type: condition
+      version: -1
+    taskid: 0f81a60a-8b9b-4e5d-8e81-a87fa0a83372
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 265,
+          "y": 370
+        }
+      }
+  "5":
+    id: "5"
+    ignoreworker: false
+    loop:
+      exitCondition: ""
+      iscommand: false
+      wait: 1
+    nexttasks:
+      '#none#':
+      - "7"
+    note: false
+    scriptarguments:
+      AdditionalPollingCommandArgNames:
+        simple: env
+      AdditionalPollingCommandArgValues:
+        simple: ${inputs.env}
+      Ids:
+        simple: ${inputs.network_list_ids}
+      Interval:
+        simple: "1"
+      PollingCommandArgName:
+        simple: network_list_ids
+      PollingCommandName:
+        simple: akamai-get-network-list-activation-status
+      Timeout:
+        simple: "30"
+      dt:
+        simple: Akamai.NetworkLists.ActivationStatus(val.StagingStatus != 'ACTIVE'
+          ).UniqueID
+    separatecontext: true
+    task:
+      brand: ""
+      id: e406cad5-9503-498d-8595-4e64281daf62
+      iscommand: false
+      name: Generic Polling
+      playbookId: GenericPolling
+      type: playbook
+      version: -1
+    taskid: e406cad5-9503-498d-8595-4e64281daf62
+    timertriggers: []
+    type: playbook
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 545
+        }
+      }
+  "7":
+    id: "7"
+    ignoreworker: false
+    note: false
+    scriptarguments:
+      value:
+        simple: Akamai networklists - activation **${inputs.network_list_ids}** in
+          **${inputs.env}** finished **succefully**
+    separatecontext: false
+    task:
+      brand: ""
+      id: 85bfe24f-9929-4200-88d8-12da83e72e87
+      iscommand: false
+      name: Print
+      script: Print
+      type: regular
+      version: -1
+    taskid: 85bfe24f-9929-4200-88d8-12da83e72e87
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 265,
+          "y": 720
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 765,
+        "width": 810,
+        "x": 50,
+        "y": 50
+      }
+    }
+  }

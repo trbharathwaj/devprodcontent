@@ -1,0 +1,270 @@
+id: f2b962cd-40a4-45ee-8761-a2a6e51d35db
+inputs:
+- description: ""
+  key: Test
+  required: false
+  value:
+    simple: Tester
+name: Accel_Send_Message_v1.0
+outputs: []
+starttaskid: "0"
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "4"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: ac8e62e5-5705-4d58-8fec-c077e9dca5e3
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: ac8e62e5-5705-4d58-8fec-c077e9dca5e3
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 50
+        }
+      }
+  "1":
+    id: "1"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "2"
+    note: false
+    scriptarguments:
+      attachCIDs: {}
+      attachIDs: {}
+      attachNames: {}
+      bcc: {}
+      body: {}
+      cc: {}
+      htmlBody:
+        simple: 'Hi User! <br> Hope you are doing well. '
+      replyTo: {}
+      subject:
+        simple: Accel Subject
+      templateParams: {}
+      to:
+        simple: ${Mail_Recipients}
+      transientFile: {}
+      transientFileCID: {}
+      transientFileContent: {}
+    separatecontext: false
+    task:
+      brand: ""
+      id: 0e443982-8a72-4391-8171-4b2cef98ec49
+      iscommand: true
+      name: 'Send Mail '
+      script: '|||send-mail'
+      type: regular
+      version: -1
+    taskid: 0e443982-8a72-4391-8171-4b2cef98ec49
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": -160,
+          "y": 570
+        }
+      }
+  "2":
+    id: "2"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "6"
+    note: false
+    scriptarguments:
+      assetid: {}
+      closeNotes: {}
+      closeReason: {}
+      id: {}
+    separatecontext: false
+    task:
+      brand: Builtin
+      id: b353d8a3-5279-47fa-8c2d-82b7fd56857f
+      iscommand: true
+      name: Close Investigation
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: b353d8a3-5279-47fa-8c2d-82b7fd56857f
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 895
+        }
+      }
+  "3":
+    id: "3"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "7"
+    note: false
+    scriptarguments:
+      IgnoreAddURL: {}
+      channel: {}
+      entry: {}
+      group: {}
+      message:
+        simple: 'Hi User! '
+      threadID: {}
+      to:
+        simple: Bharathwaj
+    separatecontext: false
+    task:
+      brand: ""
+      id: 574a3a33-4c97-463b-8b85-315560fa27b6
+      iscommand: true
+      name: Send Slack
+      script: '|||slack-send'
+      type: regular
+      version: -1
+    taskid: 574a3a33-4c97-463b-8b85-315560fa27b6
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 310,
+          "y": 570
+        }
+      }
+  "4":
+    id: "4"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "5"
+    note: false
+    scriptarguments:
+      extend-context:
+        simple: .
+      listName:
+        simple: Accel_Mail_Recipients
+    separatecontext: false
+    task:
+      brand: Builtin
+      id: 58425242-0ced-4dfe-8101-68d4f10fca79
+      iscommand: true
+      name: Get list of mail id
+      script: Builtin|||getList
+      type: regular
+      version: -1
+    taskid: 58425242-0ced-4dfe-8101-68d4f10fca79
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 195
+        }
+      }
+  "5":
+    id: "5"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "1"
+      - "3"
+    note: false
+    scriptarguments:
+      contextKey:
+        simple: Mail_Recipients
+      entryId:
+        simple: ${lastCompletedTaskEntries}
+      listSeperator: {}
+    separatecontext: false
+    task:
+      brand: ""
+      id: a1456e92-a275-4975-833e-f709472e8f36
+      iscommand: false
+      name: Set Mail Ids to context
+      script: commentsToContext
+      type: regular
+      version: -1
+    taskid: a1456e92-a275-4975-833e-f709472e8f36
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 370
+        }
+      }
+  "6":
+    id: "6"
+    ignoreworker: false
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 640c68fe-4111-4bf7-8304-e22b7b4a8993
+      iscommand: false
+      name: Done
+      type: title
+      version: -1
+    taskid: 640c68fe-4111-4bf7-8304-e22b7b4a8993
+    timertriggers: []
+    type: title
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 1050
+        }
+      }
+  "7":
+    id: "7"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "2"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 83ef4bea-16ff-4edb-84a0-eee7d3874298
+      iscommand: false
+      name: test
+      type: title
+      version: -1
+    taskid: 83ef4bea-16ff-4edb-84a0-eee7d3874298
+    timertriggers: []
+    type: title
+    view: |-
+      {
+        "position": {
+          "x": 600,
+          "y": 770
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 1065,
+        "width": 1140,
+        "x": -160,
+        "y": 50
+      }
+    }
+  }

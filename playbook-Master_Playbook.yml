@@ -1,0 +1,127 @@
+id: 32391ff1-010e-45fa-8fcb-5884dcb8904c
+inputs: []
+name: Master Playbook
+outputs: []
+starttaskid: "0"
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "1"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 1169b898-1e73-481e-8bee-a5fa5b7ca96d
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: 1169b898-1e73-481e-8bee-a5fa5b7ca96d
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 50
+        }
+      }
+  "1":
+    id: "1"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "2"
+    note: false
+    scriptarguments:
+      value:
+        simple: Hello World
+    separatecontext: false
+    task:
+      brand: ""
+      description: Prints text to war room (Markdown supported)
+      id: 0f28b5bc-00ea-4281-8ed3-83ebd2e41877
+      iscommand: false
+      name: print stuff
+      script: Print
+      type: regular
+      version: -1
+    taskid: 0f28b5bc-00ea-4281-8ed3-83ebd2e41877
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 220
+        }
+      }
+  "2":
+    id: "2"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "3"
+    note: false
+    separatecontext: true
+    task:
+      brand: ""
+      id: 225a1e00-38e2-4b57-8554-69de9cd34243
+      iscommand: false
+      name: Sub Playbook
+      playbookId: 071a1fc8-0e35-4632-85b7-072b761da72a
+      type: playbook
+      version: -1
+    taskid: 225a1e00-38e2-4b57-8554-69de9cd34243
+    timertriggers: []
+    type: playbook
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 400
+        }
+      }
+  "3":
+    id: "3"
+    ignoreworker: false
+    note: false
+    scriptarguments:
+      assetid: {}
+      closeNotes: {}
+      closeReason: {}
+      id: {}
+    separatecontext: false
+    task:
+      brand: Builtin
+      id: 5cac85db-fef0-4b53-8918-c969e8b07ae9
+      iscommand: true
+      name: CLose
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: 5cac85db-fef0-4b53-8918-c969e8b07ae9
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 570
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 615,
+        "width": 380,
+        "x": 450,
+        "y": 50
+      }
+    }
+  }

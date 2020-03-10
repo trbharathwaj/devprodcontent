@@ -1,0 +1,19 @@
+{
+	"brandName": "Sample Incident Generator_copy",
+	"custom": false,
+	"defaultIncidentType": "",
+	"id": "Sample Incident Generator_copy",
+	"incidentSamples": null,
+	"instanceId": "",
+	"instanceName": "",
+	"isDefault": true,
+	"keyTypeMap": null,
+	"mapping": null,
+	"sortValues": null,
+	"transformer": {
+		"complex": null,
+		"simple": ""
+	},
+	"unclassifiedCases": null,
+	"version": -1
+}

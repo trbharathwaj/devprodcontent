@@ -1,0 +1,497 @@
+id: 37940f7e-083c-4cca-8a84-0702941e3522
+inputs: []
+name: Training_Playbook_1
+outputs: []
+starttaskid: "0"
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "1"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: beca30df-dcb7-43fa-83d9-2df3dc4bed81
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: beca30df-dcb7-43fa-83d9-2df3dc4bed81
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 50
+        }
+      }
+  "1":
+    id: "1"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "2"
+    note: false
+    scriptarguments:
+      value:
+        simple: ${incident.name}
+    separatecontext: false
+    task:
+      brand: ""
+      description: Prints text to war room (Markdown supported)
+      id: 1ca27376-f476-44fa-8e4d-1bebe5569e95
+      iscommand: false
+      name: Print the Incident Name
+      script: Print
+      type: regular
+      version: -1
+    taskid: 1ca27376-f476-44fa-8e4d-1bebe5569e95
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 170
+        }
+      }
+  "2":
+    id: "2"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "4"
+    note: false
+    scriptarguments:
+      append: {}
+      key:
+        simple: MyName
+      value:
+        simple: Bharath
+    separatecontext: false
+    task:
+      brand: ""
+      description: Sets a value into the context with the given context key
+      id: 6b934dc7-3bc2-4f85-8a76-34e37bc80599
+      iscommand: false
+      name: 'Save Name to Context '
+      script: Set
+      type: regular
+      version: -1
+    taskid: 6b934dc7-3bc2-4f85-8a76-34e37bc80599
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 340
+        }
+      }
+  "4":
+    id: "4"
+    ignoreworker: false
+    nexttasks:
+      "no":
+      - "6"
+      "yes":
+      - "5"
+    note: false
+    scriptarguments:
+      string:
+        simple: ${MyName}
+      substring:
+        simple: a
+      substringSeperator: {}
+    separatecontext: false
+    task:
+      brand: ""
+      description: |
+        Checks whether substring is within string. Returns:
+        yes - string contains substring.
+        no - string does not contain substring.
+        If stringSeperator is provided, the substring will be split using the separator, and each item will be checked.
+        If one of the items will be found in the string, the srcipt will return yes.
+        This script is deprecated. The StringContainsArray filter implements the exact functionality.
+      id: 0600cd31-309e-46da-8371-3e65e13d4da6
+      iscommand: false
+      name: Check if Name has A
+      script: StringContains
+      type: condition
+      version: -1
+    taskid: 0600cd31-309e-46da-8371-3e65e13d4da6
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 500
+        }
+      }
+  "5":
+    id: "5"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "7"
+    note: false
+    scriptarguments:
+      value:
+        simple: hurray
+    separatecontext: false
+    task:
+      brand: ""
+      description: Prints text to war room (Markdown supported)
+      id: 2a4b0535-441a-4983-827d-3ee360f45db5
+      iscommand: false
+      name: Contains A
+      script: Print
+      type: regular
+      version: -1
+    taskid: 2a4b0535-441a-4983-827d-3ee360f45db5
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 220,
+          "y": 680
+        }
+      }
+  "6":
+    id: "6"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "7"
+    note: false
+    scriptarguments:
+      value:
+        simple: Oh No
+    separatecontext: false
+    task:
+      brand: ""
+      description: Prints text to war room (Markdown supported)
+      id: cba06ec0-b21b-4e93-8699-a1a064fdbeb1
+      iscommand: false
+      name: Does not Contain A
+      script: Print
+      type: regular
+      version: -1
+    taskid: cba06ec0-b21b-4e93-8699-a1a064fdbeb1
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 720,
+          "y": 685
+        }
+      }
+  "7":
+    id: "7"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "15"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: c687adda-4c8a-4e82-8199-3c6ba2d95842
+      iscommand: false
+      name: Upload File
+      type: regular
+      version: -1
+    taskid: c687adda-4c8a-4e82-8199-3c6ba2d95842
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 860
+        }
+      }
+  "8":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: File
+          operator: isExists
+      label: "yes"
+    id: "8"
+    ignoreworker: false
+    nexttasks:
+      '#default#':
+      - "10"
+      "yes":
+      - "9"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      description: Filter context keys by applying one of the various available manipulations
+        and storing in a new context key. Please notice that the resulting context
+        key will not be available automatically as an option but you can still specify
+        it.
+      id: 6d4bd944-63f2-4e41-8a51-6262e91fa9de
+      iscommand: false
+      name: Check if File exists
+      type: condition
+      version: -1
+    taskid: 6d4bd944-63f2-4e41-8a51-6262e91fa9de
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 1140
+        }
+      }
+  "9":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: File.Extension
+          operator: isEqualString
+          right:
+            value:
+              simple: txt
+      label: txt
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: File.Extension
+          operator: isEqualString
+          right:
+            value:
+              simple: zip
+      label: zip
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: File.Extension
+          operator: isEqualString
+          right:
+            value:
+              simple: csv
+      label: csv
+    id: "9"
+    ignoreworker: false
+    nexttasks:
+      csv:
+      - "16"
+      txt:
+      - "17"
+      zip:
+      - "14"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      description: Check whether the values provided in arguments are equal. If either
+        of the arguments are missing, no is returned.
+      id: 533b8532-17eb-421d-8c82-9780855a0d7c
+      iscommand: false
+      name: Check File Extension
+      type: condition
+      version: -1
+    taskid: 533b8532-17eb-421d-8c82-9780855a0d7c
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": -310,
+          "y": 1270
+        }
+      }
+  "10":
+    id: "10"
+    ignoreworker: false
+    note: false
+    scriptarguments:
+      assetid: {}
+      closeNotes: {}
+      closeReason: {}
+      id: {}
+    separatecontext: false
+    task:
+      brand: Builtin
+      id: e9e42ea9-c97b-47fd-8b79-c7625ed11af6
+      iscommand: true
+      name: Close Investigation
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: e9e42ea9-c97b-47fd-8b79-c7625ed11af6
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 1790
+        }
+      }
+  "14":
+    id: "14"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "10"
+    note: false
+    scriptarguments:
+      entryID: {}
+      fileName:
+        simple: ${File.Name}
+      lastZipFileInWarroom: {}
+      password: {}
+    separatecontext: false
+    task:
+      brand: ""
+      description: Unzip a file using fileName or entryID to specify a file. Unzipped
+        files will be loaded to the War Room and names will be put into the context.
+      id: f0d7649b-bf50-453c-8339-b4a9e7523c51
+      iscommand: false
+      name: Unzip File
+      script: UnzipFile
+      type: regular
+      version: -1
+    taskid: f0d7649b-bf50-453c-8339-b4a9e7523c51
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": -310,
+          "y": 1460
+        }
+      }
+  "15":
+    id: "15"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "8"
+    note: false
+    scriptarguments:
+      append: {}
+      key:
+        simple: FileEntryId
+      value:
+        simple: ${lastCompletedTaskEntries}
+    separatecontext: false
+    task:
+      brand: ""
+      description: Sets a value into the context with the given context key
+      id: e07bb45d-a89e-4abf-8604-986621ae3c98
+      iscommand: false
+      name: Save Entry ID
+      script: Set
+      type: regular
+      version: -1
+    taskid: e07bb45d-a89e-4abf-8604-986621ae3c98
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 990
+        }
+      }
+  "16":
+    id: "16"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "10"
+    note: false
+    scriptarguments:
+      codec: {}
+      domains: {}
+      entryID: {}
+      file:
+        simple: ${File.Name}
+      hashes: {}
+      ips: {}
+      parseAll: {}
+    separatecontext: false
+    task:
+      brand: ""
+      description: This script will parse a CSV file and place the unique IPs, Domains
+        and Hashes into the context.
+      id: b2022eb1-a1e2-4ed6-82ee-6af94ebeeaca
+      iscommand: false
+      name: Parse CSV
+      script: ParseCSV
+      type: regular
+      version: -1
+    taskid: b2022eb1-a1e2-4ed6-82ee-6af94ebeeaca
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 170,
+          "y": 1460
+        }
+      }
+  "17":
+    id: "17"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "10"
+    note: false
+    scriptarguments:
+      encoding: {}
+      entryID:
+        simple: ${FileEntryId}
+      maxFileSize: {}
+    separatecontext: false
+    task:
+      brand: ""
+      description: Load the contents of a file into context.
+      id: e82868ff-666c-4281-8581-9476791aeed4
+      iscommand: false
+      name: Read TXT
+      script: ReadFile
+      type: regular
+      version: -1
+    taskid: e82868ff-666c-4281-8581-9476791aeed4
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": -780,
+          "y": 1460
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 1835,
+        "width": 1880,
+        "x": -780,
+        "y": 50
+      }
+    }
+  }

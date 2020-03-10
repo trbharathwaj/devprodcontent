@@ -1,0 +1,616 @@
+category: Forensics & Malware Analysis
+commonfields:
+  id: Accessdata
+  version: -1
+configuration:
+- defaultvalue: server_url
+  display: Server URL with scheme (FQDN or IP address in X.X.X.X format with scheme
+    specified)
+  name: server_name
+  required: true
+  type: 0
+- defaultvalue: 1861a70a-3287-4289-938b-bbab1446e2d2
+  display: The token is required to connect to Quinc.
+  name: Token
+  required: true
+  type: 0
+- defaultvalue: ""
+  display: Trust any certificate (not secure)
+  name: insecure
+  required: false
+  type: 8
+- defaultvalue: ""
+  display: Use system proxy settings
+  name: proxy
+  required: false
+  type: 8
+description: Use the Accessdata integration to protect against and provide additional
+  visibility into phishing and other malicious email attacks.
+detaileddescription: |
+  To use the Accessdata integration specify as a token the domain or the IP address of the Quin-C instance and the EnterpriseAPI Key.
+    To get the token follow these steps:
+    1. Open the Quin-C UI.
+    2. Log in to the Quin-C.
+    3. Go to http(s)://_____/api/security/1000/getenterpriseapiguid (specify Quin-C IP and port), which returns an XML like <string xmlns="http://schemas.microsoft.com/2003/10/Serialization/">TOKEN_STRING</string>, where in place of TOKEN_STRING is your EnterpriseAPI Key.
+display: Accessdata
+image: data:image/png;base64,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
+name: Accessdata
+script:
+  commands:
+  - arguments:
+    - description: The ID of the case.
+      name: caseid
+    - defaultValue: locallhost
+      description: The IP address of the agent.
+      name: target_ip
+      required: true
+    description: Returns a list of processes from the legacy agent.
+    name: accessdata-legacyagent-get-processlist
+    outputs:
+    - contextPath: Accessdata.Job.ID
+      description: The ID of the job.
+      type: string
+    - contextPath: Accessdata.Job.CaseID
+      description: The Case ID.
+      type: string
+    - contextPath: Accessdata.Job.CaseJobID
+      description: The concatenated CaseID and JobID (such as "1_800").
+      type: string
+    - contextPath: Accessdata.Job.Type
+      description: The job type.
+      type: string
+    - contextPath: Accessdata.Job.State
+      description: The execution state of the job.
+      type: string
+  - arguments:
+    - description: The ID of the case.
+      name: caseid
+    - defaultValue: locallhost
+      description: The IP address of the agent.
+      name: target_ip
+      required: true
+    description: Creates a legacy agent memory dump.
+    name: accessdata-legacyagent-get-memorydump
+    outputs:
+    - contextPath: Accessdata.Job.ID
+      description: The ID of the job.
+      type: string
+    - contextPath: Accessdata.Job.CaseID
+      description: The ID of the case.
+      type: string
+    - contextPath: Accessdata.Job.CaseJobID
+      description: The concatenated CaseID and JobID (such as "1_800").
+      type: string
+    - contextPath: Accessdata.Job.Type
+      description: The job type.
+      type: string
+    - contextPath: Accessdata.Job.State
+      description: The execution state of the job.
+      type: string
+  - arguments:
+    - defaultValue: localhost
+      description: The path of the case file.
+      name: filepath
+      required: true
+    description: Reads the file from a case folder and returns the contents to the
+      current context.
+    name: accessdata-read-casefile
+    outputs:
+    - contextPath: Accessdata.File.Contents
+      description: The contents of the file.
+      type: string
+  - arguments:
+    - description: The concatenated CaseID and JobID (such as "1_800").
+      isArray: true
+      name: caseJobID
+      required: true
+    description: Checks status of the job.
+    name: accessdata-jobstatus-scan
+    outputs:
+    - contextPath: Accessdata.Job.CaseID
+      description: The case ID.
+      type: string
+    - contextPath: Accessdata.Job.ID
+      description: The job ID.
+      type: string
+    - contextPath: Accessdata.Job.CaseJobID
+      description: The concatenated CaseID and JobID (such as "1_800").
+      type: string
+    - contextPath: Accessdata.Job.State
+      description: The state of the job's execution.
+      type: string
+  - arguments:
+    - defaultValue: "1"
+      description: The ID of the case.
+      name: caseID
+      required: true
+    - defaultValue: "1"
+      description: The ID of the job.
+      name: jobID
+      required: true
+    description: Returns a snapshot path from the results of the process list job.
+    name: accessdata-get-jobstatus-processlist
+    outputs:
+    - contextPath: Accessdata.Job.State
+      description: The state of the job.
+      type: string
+    - contextPath: Accessdata.Job.Result
+      description: The path to the snapshot with the processes list.
+      type: string
+    - contextPath: Accessdata.Job.ID
+      description: The ID of the job.
+      type: number
+    - contextPath: Accessdata.Job.CaseID
+      description: The case ID of the job.
+      type: number
+    - contextPath: Accessdata.Job.CaseJobID
+      description: The concatenated CaseID and JobID (such as "1_800").
+      type: string
+  - arguments:
+    - defaultValue: "1"
+      description: The ID of the case.
+      name: caseID
+      required: true
+    - defaultValue: "1"
+      description: The ID of the job.
+      name: jobID
+      required: true
+    description: Returns the memory dump path from the result of the memory dump job.
+    name: accessdata-get-jobstatus-memorydump
+    outputs:
+    - contextPath: Accessdata.Job.State
+      description: The state of the job.
+      type: string
+    - contextPath: Accessdata.Job.Result
+      description: The path to the memory dump.
+      type: string
+    - contextPath: Accessdata.Job.ID
+      description: The ID of the job.
+      type: number
+    - contextPath: Accessdata.Job.CaseID
+      description: The case ID of the job.
+      type: number
+    - contextPath: Accessdata.Job.CaseJobID
+      description: The concatenated CaseID and JobID (such as "1_800").
+      type: string
+  - arguments: []
+    description: Returns the ID of the Quin-C processing case.
+    name: accessdata-get-processing-case-id
+    outputs:
+    - contextPath: Accessdata.ProcessingCaseId
+      description: The ID of Quin-C processing case.
+      type: string
+  dockerimage: demisto/python3:3.7.4.977
+  runonce: false
+  script: |2
+
+
+
+
+
+    ''' IMPORTS '''
+
+    import os
+    import json
+    import requests
+    from requests.exceptions import HTTPError
+
+    # Disable insecure warnings
+    requests.packages.urllib3.disable_warnings()
+
+
+    ''' CONSTANTS '''
+    DATE_FORMAT = "%Y-%m-%dT%H:%M:%SZ"
+
+    ACCESS_DATA = 'Accessdata'
+    JOBID_KEY = 'Accessdata.Job.ID'
+    JOBRESULT_KEY = 'Accessdata.Job.Result'
+    JOBSTATE_KEY = 'Accessdata.Job.State'
+    JOB_KEY = 'Accessdata.Job'
+
+    ''' HELPERS '''
+
+
+    def create_jobstate_context(contents):
+        if 'CaseJobID' not in contents:
+            return {
+                JOB_KEY + '(val.ID == obj.ID)': contents
+            }
+        return {
+            JOB_KEY + '(val.CaseJobID == obj.CaseJobID)': contents
+        }
+
+
+    def create_contents(caseID, jobID, state=None, result=None):
+        ec = {
+            'CaseID': caseID,
+            'ID': jobID,
+            'CaseJobID': str(caseID) + "_" + str(jobID)
+        }
+        if state is not None:
+            ec['State'] = state
+        if result is not None:
+            ec['Result'] = result
+        return ec
+
+
+    def wrap_jobstate_context(contents, humanReadableMessage=""):
+        return {
+            'Type': entryTypes['note'],
+            'ContentsFormat': formats['json'],
+            'Contents': contents,
+            'HumanReadable': humanReadableMessage,
+            'EntryContext': create_jobstate_context(contents)
+        }
+
+
+    class Client:
+        """
+        Client will implement the service API, should not contain Demisto logic.
+        Should do requests and return data
+        # """
+        def __init__(self, base_url=None, verify=None, proxy=None, token=None):
+            self.base_url = base_url
+            self.verify = verify
+            self.headers = {
+                'EnterpriseApiKey': token,
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+            self.proxy = proxy
+
+        def http_request(self, method, url_suffix, body=None, params=None):
+            try:
+                full_url = self.base_url + url_suffix
+                res = requests.request(
+                    method, full_url, data=body, headers=self.headers,
+                    params=params, proxies=self.proxy, verify=self.verify)
+                res.raise_for_status()
+                return res.json()
+
+            except ValueError:
+                return res.text
+            except HTTPError:
+                err_json = res.json()
+                err_msg = ''
+                if 'message' in err_json:
+                    err_msg = err_msg + \
+                        'Error: {0}.\n'.format(err_json['message'])
+                elif 'http_response' in err_json:
+                    err_msg = err_msg + \
+                        'Error: {0}.\n'.format(err_json['http_response'])
+                if 'code' in err_json:
+                    err_msg = err_msg + \
+                        'QRadar Error Code: {0}'.format(err_json['code'])
+                return_error(err_msg)
+            return ""
+
+        def test_quinc(self):
+            res = self.http_request('GET', 'api/v2/enterpriseapi/statuscheck')
+            return res.lower()
+
+        def get_jobstatus(self, args):
+            caseID = args['caseID']
+            jobID = args['jobID']
+            url = 'api/v2/enterpriseapi/core/' + str(caseID) + \
+                '/getjobstatus/' + str(jobID)
+            res = self.http_request('GET', url)
+
+            if 'resultData' not in res:  # if no data take state from first level of nesting
+                contents = create_contents(caseID, jobID, res['state'], res)
+                return wrap_jobstate_context(contents, "Current job state: " + res['state'])
+
+            resultData = json.loads(res['resultData'])
+
+            if 'RealData' not in resultData:  # if no data take state from first level of nesting
+                contents = create_contents(caseID, jobID, res['state'], resultData)
+                return wrap_jobstate_context(contents, "Current job state: " + res['state'])
+
+            RealData = json.loads(resultData['RealData'])
+
+            if 'TaskStatusList' not in RealData:  # if no data take state from first level of nesting
+                contents = create_contents(caseID, jobID, res['state'], RealData)
+                return wrap_jobstate_context(contents, "Current job state: " + res['state'])
+
+            task = RealData['TaskStatusList'][0]
+
+            if task is not None:
+
+                if task['State'] is None:
+                    contents = create_contents(caseID, jobID, 'Unknown', task)
+                    return wrap_jobstate_context(contents, "Cannot get job state")
+                if task['State'] != 'Success':
+                    contents = create_contents(caseID, jobID, task['State'], task)
+                    return wrap_jobstate_context(contents, "Current job state: " + task['State'])
+                else:
+                    result = json.loads(task['Results'][0]['Data'])
+                    res = json.loads(task['Results'][1]['Data'])
+                    if result['OperationType'] == 24:  # software inventory
+                        contents = create_contents(
+                            caseID, jobID, 'Success', res['Applications'])
+                        return wrap_jobstate_context(
+                            contents,
+                            tableToMarkdown(
+                                'Applications', res['Applications'],
+                                [
+                                    'Name', 'Version', 'Publisher', 'InstallDate',
+                                    'InstallLocation', 'InstallSource',
+                                    'EstimatedSizeInBytes'
+                                ]))
+                    elif result['OperationType'] == 12:  # volatile data
+                        contents = create_contents(caseID, jobID, 'Success', res)
+                        return wrap_jobstate_context(contents, "Job completed successfully")
+                    elif result['OperationType'] == 11:  # memory dump
+                        memdumpres = json.loads(task['Results'][2]['Data'])
+                        contents = create_contents(caseID, jobID, 'Success', memdumpres)
+                        return wrap_jobstate_context(contents, "Job completed successfully")
+                    else:
+                        contents = create_contents(caseID, jobID, 'Success', task)
+                        return wrap_jobstate_context(contents, "Job completed successfully")
+
+            contents = create_contents(caseID, jobID, 'Failed', None)
+            return wrap_jobstate_context(contents, "Job exited unexpectedly")
+
+        def get_jobstatus_processlist(self, args):
+            jobStatus = self.get_jobstatus(args)
+            contents = jobStatus['Contents']
+            newContents = create_contents(contents['CaseID'], contents['ID'], contents['State'], "")
+
+            message = "(to get path to snapshot job should be finished) "
+
+            if 'Result' not in contents:
+                message += "No Result in response scheme"
+                return wrap_jobstate_context(newContents, message)
+
+            if 'SnapshotDetails' not in contents['Result']:
+                message += "No Result.SnapshotDetails in response scheme"
+                return wrap_jobstate_context(newContents, message)
+
+            if 'File' not in contents['Result']['SnapshotDetails']:
+                message += "No Result.SnapshotDetails.File in response scheme"
+                return wrap_jobstate_context(newContents, message)
+            newContents['Result'] = contents['Result']['SnapshotDetails']['File']
+
+            return wrap_jobstate_context(newContents, newContents['Result'])
+
+        def get_jobstatus_memorydump(self, args):
+            jobStatus = self.get_jobstatus(args)
+            contents = jobStatus['Contents']
+            newContents = create_contents(
+                contents['CaseID'],
+                contents['ID'],
+                contents['State'],
+                "")
+            contents = contents['Result']
+
+            message = "(to get path to memory dump job should be finished) "
+
+            if 'ResultFiles' not in contents:
+                message += "No ResultFiles in response scheme"
+                return wrap_jobstate_context(newContents, message)
+
+            if not contents['ResultFiles']:
+                message += "ResultFiles is empty"
+                return wrap_jobstate_context(newContents, message)
+            contents = contents['ResultFiles'][0]
+
+            if 'Path' not in contents:
+                message += "No Path in response scheme"
+                return wrap_jobstate_context(newContents, message)
+            newContents['Result'] = contents['Path']
+
+            return wrap_jobstate_context(newContents, newContents['Result'])
+
+        def jobstatus_scan(self, args):
+            caseJobID = args['caseJobID']
+            preparedParameters = caseJobID.split("_")
+            preparedParameters = {
+                'caseID': preparedParameters[0],
+                'jobID': preparedParameters[1]
+            }
+            jobStatus = self.get_jobstatus(preparedParameters)
+            contents = jobStatus['Contents']
+
+            newContents = create_contents(preparedParameters['caseID'],
+                                          preparedParameters['jobID'],
+                                          'Unknown')
+            if 'State' not in contents:
+                return wrap_jobstate_context(newContents, "No state in job result")
+            newContents['State'] = contents['State']
+            return wrap_jobstate_context(newContents, "Current job state: " + newContents['State'])
+
+        def legacyagent_runvolatilejob(self, args):
+
+            if ('caseid' not in args or args['caseid'] is None):
+                args['caseid'] = self.get_processing_case_id()['Contents']
+
+            url = 'api/v2/enterpriseapi/agent/' + str(args['caseid']) + '/volatile'
+            data = {
+                'ips': {'targets': [args['target_ip']]},
+                'Volatile': {
+                    'Operation': 12,
+                    'IncludeProcessTree': True,
+                    'ProcessTreeOptions': {
+                        'DetectHiddenProcesses': True,
+                        'IncludeDlls': True,
+                        'IncludeSockets': True
+                    }
+                }
+            }
+            jobID = self.http_request('POST', url, json.dumps(data))
+            contents = create_contents(args['caseid'], jobID, 'Unknown')
+            contents['Type'] = 'Volatile'
+
+            return {
+                'Type': entryTypes['note'],
+                'ContentsFormat': formats['text'],
+                'Contents': contents,
+                'HumanReadable': "JobID: " + str(jobID),
+                'EntryContext': create_jobstate_context(contents)
+            }
+
+        def legacyagent_runmemoryacquisition(self, args):
+
+            if ('caseid' not in args or args['caseid'] is None):
+                args['caseid'] = self.get_processing_case_id()['Contents']
+
+            url = 'api/v2/enterpriseapi/agent/' + str(args['caseid']) + \
+                '/memoryacquistion'
+            data = {
+                'ips': {'targets': [args['target_ip']]},
+                'MemoryAcquistion': {'Operation': 11}
+            }
+            jobID = self.http_request('POST', url, json.dumps(data))
+            contents = create_contents(args['caseid'], jobID, 'Unknown')
+            contents['Type'] = 'LegacyMemoryDump'
+
+            return {
+                'Type': entryTypes['note'],
+                'ContentsFormat': formats['json'],
+                'Contents': contents,
+                'HumanReadable': "JobID: " + str(jobID),
+                'EntryContext': create_jobstate_context(contents)
+            }
+
+        def read_casefile(self, args):
+
+            url = 'api/v2/enterpriseapi/core/readfilecontents'
+            filepath = args['filepath']
+            data = self.http_request('POST', url, json.dumps(filepath))
+
+            return {
+                'Type': entryTypes['note'],
+                'ContentsFormat': formats['text'],
+                'Contents': data,
+                'EntryContext': {'Accessdata.File.Contents': data}
+            }
+
+        def get_processing_case_id(self):
+
+            url = 'api/v2/enterpriseapi/processingcaseid'
+            processingcaseId = self.http_request('GET', url)
+
+            return {
+                'Type': entryTypes['note'],
+                'ContentsFormat': formats['text'],
+                'Contents': processingcaseId,
+                'EntryContext': {ACCESS_DATA + '.ProcessingCaseId': processingcaseId}
+            }
+
+
+    def test_module(client):
+        return client.test_quinc()
+
+
+    def quinc_get_jobstatus_command(client, args):
+        return client.get_jobstatus(args)
+
+
+    def quinc_get_jobstatus_processlist_command(client, args):
+        return client.get_jobstatus_processlist(args)
+
+
+    def quinc_get_jobstatus_memorydump_command(client, args):
+        return client.get_jobstatus_memorydump(args)
+
+
+    def quinc_jobstatus_scan_command(client, args):
+        return client.jobstatus_scan(args)
+
+
+    def quinc_legacyagent_runvolatilejob_command(client, args):
+        return client.legacyagent_runvolatilejob(args)
+
+
+    def quinc_legacyagent_runmemoryacquisition_command(client, args):
+        return client.legacyagent_runmemoryacquisition(args)
+
+
+    def quinc_read_casefile_command(client, args):
+        return client.read_casefile(args)
+
+
+    def quinc_get_processing_case_id_command(client):
+        return client.get_processing_case_id()
+
+
+    def main():
+
+        use_ssl = not demisto.params().get('insecure', True)
+        url = demisto.params().get('server_name') + ':4443/'
+        token = demisto.params()['Token']
+
+        if not demisto.params().get('proxy'):
+            if 'HTTP_PROXY' in os.environ:
+                del os.environ['HTTP_PROXY']
+            if 'HTTPS_PROXY' in os.environ:
+                del os.environ['HTTPS_PROXY']
+            if 'http_proxy' in os.environ:
+                del os.environ['http_proxy']
+            if 'https_proxy' in os.environ:
+                del os.environ['https_proxy']
+
+            PROXIES = {
+                'http': None,
+                'https': None
+            }  # type: dict
+        else:
+            PROXIES = {
+                'http': os.environ['http_proxy'] or os.environ['HTTP_PROXY'],
+                'https': os.environ['https_proxy'] or os.environ['HTTPS_PROXY']
+            }
+
+        LOG('Command being called is %s' % (demisto.command()))
+
+        try:
+            client = Client(url, use_ssl, PROXIES, token)
+
+            if demisto.command() == 'test-module':
+                # This is the call made when pressing the integration Test button.
+                demisto.results(test_module(client))
+
+            if demisto.command() == 'accessdata-get-jobstatus-processlist':
+                demisto.results(
+                    quinc_get_jobstatus_processlist_command(
+                        client, demisto.args()))
+
+            if demisto.command() == 'accessdata-get-jobstatus-memorydump':
+                demisto.results(
+                    quinc_get_jobstatus_memorydump_command(
+                        client, demisto.args()))
+
+            if demisto.command() == 'accessdata-jobstatus-scan':
+                demisto.results(
+                    quinc_jobstatus_scan_command(
+                        client, demisto.args()))
+
+            if demisto.command() == 'accessdata-legacyagent-get-processlist':
+                demisto.results(
+                    quinc_legacyagent_runvolatilejob_command(
+                        client, demisto.args()))
+
+            if demisto.command() == 'accessdata-legacyagent-get-memorydump':
+                demisto.results(
+                    quinc_legacyagent_runmemoryacquisition_command(
+                        client, demisto.args()))
+
+            if demisto.command() == 'accessdata-read-casefile':
+                demisto.results(
+                    quinc_read_casefile_command(
+                        client, demisto.args()))
+
+            if demisto.command() == 'accessdata-get-processing-case-id':
+                demisto.results(
+                    quinc_get_processing_case_id_command(client))
+
+        except Exception as e:
+            return_error(
+                "Failed to execute {} command. Error: {}".format(
+                    demisto.command(), str(e)))
+
+
+    if __name__ in ['__main__', 'builtin', 'builtins']:
+        main()
+  subtype: python3
+  type: python
+system: true

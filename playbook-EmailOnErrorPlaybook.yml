@@ -1,0 +1,430 @@
+id: 80d829cb-81cc-4637-8ec1-8ce8a9c8a658
+inputs: []
+name: EmailOnErrorPlaybook
+outputs: []
+starttaskid: "0"
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "1"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 4b2f1143-0251-4243-876e-8e6ca062dee7
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: 4b2f1143-0251-4243-876e-8e6ca062dee7
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 265,
+          "y": 50
+        }
+      }
+  "1":
+    id: "1"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "2"
+    note: false
+    scriptarguments:
+      details: {}
+      fromclosedate: {}
+      fromdate: {}
+      fromduedate: {}
+      id: {}
+      level: {}
+      name: {}
+      notstatus: {}
+      owner: {}
+      page: {}
+      query:
+        simple: runStatus:error and occurred:>="24 hours ago"
+      reason: {}
+      size: {}
+      sort: {}
+      status: {}
+      toclosedate: {}
+      todate: {}
+      toduedate: {}
+      type: {}
+    separatecontext: false
+    task:
+      brand: ""
+      id: a7dd0b59-9fd4-46ac-8bb5-d3677e86efd7
+      iscommand: false
+      name: Search for incidents with error
+      script: SearchIncidents
+      type: regular
+      version: -1
+    taskid: a7dd0b59-9fd4-46ac-8bb5-d3677e86efd7
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 265,
+          "y": 195
+        }
+      }
+  "2":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: foundIncidents
+          operator: isExists
+      label: "yes"
+    id: "2"
+    ignoreworker: false
+    nexttasks:
+      '#default#':
+      - "13"
+      "yes":
+      - "11"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 35532770-d524-42ac-8cfe-8d5dc841ba66
+      iscommand: false
+      name: Are there incidents with error?
+      type: condition
+      version: -1
+    taskid: 35532770-d524-42ac-8cfe-8d5dc841ba66
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 265,
+          "y": 370
+        }
+      }
+  "3":
+    id: "3"
+    ignoreworker: false
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: e56d0cfb-af01-410f-886d-ec6689573849
+      iscommand: false
+      name: End
+      type: title
+      version: -1
+    taskid: e56d0cfb-af01-410f-886d-ec6689573849
+    timertriggers: []
+    type: title
+    view: |-
+      {
+        "position": {
+          "x": 265,
+          "y": 1780
+        }
+      }
+  "4":
+    id: "4"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "13"
+    note: false
+    scriptarguments:
+      attachIDs: {}
+      bcc: {}
+      body: {}
+      cc: {}
+      htmlBody:
+        simple: ${fullHTML}
+      noteEntryID: {}
+      replyTo: {}
+      subject:
+        simple: Error summary in Demisto incidents
+      to: {}
+    separatecontext: false
+    task:
+      brand: ""
+      id: d340d7b8-bbc7-4b17-8014-25787a35c71a
+      iscommand: false
+      name: Notify user on failures
+      script: SendEmail
+      type: regular
+      version: -1
+    taskid: d340d7b8-bbc7-4b17-8014-25787a35c71a
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 700,
+          "y": 1180
+        }
+      }
+  "5":
+    id: "5"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "3"
+    note: false
+    scriptarguments:
+      assetid: {}
+      closeNotes:
+        simple: ${ErrorMsg}
+      closeReason: {}
+      id: {}
+      threatfindings: {}
+    separatecontext: false
+    task:
+      brand: Builtin
+      id: d8ffb643-05ee-4a37-803e-4b82f3a6a6af
+      iscommand: true
+      name: close the investigation
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: d8ffb643-05ee-4a37-803e-4b82f3a6a6af
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 265,
+          "y": 1600
+        }
+      }
+  "7":
+    id: "7"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "12"
+    note: false
+    scriptarguments:
+      key:
+        simple: fullHTML
+      listTemplate:
+        simple: list_template
+      object: {}
+      removeNotFound: {}
+    separatecontext: false
+    task:
+      brand: ""
+      description: |-
+        This script allows sending an HTML email, using a template stored as a list item under Lists (Settings -> Advanced -> Lists).
+        Placeholders are marked in DT format (i.e. ${incident.id} for incident ID).
+        Available placeholders for example:
+        - ${incident.labels.Email/from}
+        - ${incident.name}
+        - ${object.value}
+        See incident Context Data menu for available placeholders
+
+        Note: Sending emails require an active  Mail Sender integration instance.
+      id: d2fe43df-3a9a-4a3e-8d49-7f8926788422
+      iscommand: false
+      name: CreateEmailHtmlBody
+      script: CreateEmailHtmlBody
+      type: regular
+      version: -1
+    taskid: d2fe43df-3a9a-4a3e-8d49-7f8926788422
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 700,
+          "y": 900
+        }
+      }
+  "8":
+    continueonerror: true
+    id: "8"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "10"
+    note: false
+    scriptarguments:
+      foundIncidents:
+        simple: ${foundIncidents}
+      listName:
+        simple: TableAtt1
+    separatecontext: false
+    task:
+      brand: ""
+      id: 782e1fbc-8820-47a1-8fa5-dbee44aca826
+      iscommand: false
+      name: Format html
+      script: bcf5d87e-77af-4edd-8e1c-10e494229469
+      type: regular
+      version: -1
+    taskid: 782e1fbc-8820-47a1-8fa5-dbee44aca826
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 800,
+          "y": 540
+        }
+      }
+  "9":
+    id: "9"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "13"
+    note: false
+    scriptarguments:
+      extend-context:
+        simple: ErrorMsg=
+      value:
+        simple: Failed to create HTML message
+    separatecontext: false
+    task:
+      brand: ""
+      id: e9e1568c-ce6c-469d-8d0d-72b54d3e7c92
+      iscommand: false
+      name: Error parsing html
+      script: Print
+      type: regular
+      version: -1
+    taskid: e9e1568c-ce6c-469d-8d0d-72b54d3e7c92
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1130,
+          "y": 900
+        }
+      }
+  "10":
+    id: "10"
+    ignoreworker: false
+    nexttasks:
+      '#default#':
+      - "9"
+      "no":
+      - "7"
+    note: false
+    scriptarguments:
+      entryId:
+        simple: ${lastCompletedTaskEntries}
+    separatecontext: false
+    task:
+      brand: ""
+      id: 3888bc44-1dda-470f-89ee-7f24839a1495
+      iscommand: false
+      name: Check for Error
+      script: isError
+      type: condition
+      version: -1
+    taskid: 3888bc44-1dda-470f-89ee-7f24839a1495
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 800,
+          "y": 690
+        }
+      }
+  "11":
+    id: "11"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "8"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 4a7f333a-bcba-4fd3-81d0-c2b8a23c19d3
+      iscommand: false
+      name: Construct Message
+      type: title
+      version: -1
+    taskid: 4a7f333a-bcba-4fd3-81d0-c2b8a23c19d3
+    timertriggers: []
+    type: title
+    view: |-
+      {
+        "position": {
+          "x": 800,
+          "y": 400
+        }
+      }
+  "12":
+    id: "12"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "4"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 79e4b2dd-95be-4f4c-8b41-7d4c8e2900a1
+      iscommand: false
+      name: Send Message
+      type: title
+      version: -1
+    taskid: 79e4b2dd-95be-4f4c-8b41-7d4c8e2900a1
+    timertriggers: []
+    type: title
+    view: |-
+      {
+        "position": {
+          "x": 700,
+          "y": 1050
+        }
+      }
+  "13":
+    id: "13"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "5"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 725ec2a8-c497-4ea9-854e-06939e0e6578
+      iscommand: false
+      name: Close Job
+      type: title
+      version: -1
+    taskid: 725ec2a8-c497-4ea9-854e-06939e0e6578
+    timertriggers: []
+    type: title
+    view: |-
+      {
+        "position": {
+          "x": 265,
+          "y": 1425
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 1795,
+        "width": 1245,
+        "x": 265,
+        "y": 50
+      }
+    }
+  }

@@ -1,0 +1,370 @@
+category: Network Security
+commonfields:
+  id: PaloAltoNetworks_PrismaCloudCompute
+  version: -1
+configuration:
+- defaultvalue: ""
+  display: Fetch incidents
+  name: isFetch
+  required: false
+  type: 8
+- defaultvalue: https://example.net:1234
+  display: |-
+    Prisma Cloud Compute Console URL and Port
+    (e.g., https://example.net:1234)
+  name: address
+  required: true
+  type: 0
+- defaultvalue: ""
+  display: Prisma Cloud Compute Project Name (if applicable)
+  name: project
+  required: false
+  type: 0
+- defaultvalue: ""
+  display: Trust any certificate (not secure)
+  name: insecure
+  required: false
+  type: 8
+- defaultvalue: ""
+  display: Use system proxy settings
+  name: proxy
+  required: false
+  type: 8
+- defaultvalue: ""
+  display: Credentials
+  name: credentials
+  required: true
+  type: 9
+- defaultvalue: ""
+  display: Prisma Cloud Compute CA Certificate
+  name: certificate
+  required: false
+  type: 12
+- defaultvalue: ""
+  display: Incident type
+  name: incidentType
+  required: false
+  type: 13
+description: Use the Prisma Cloud Compute integration to fetch incidents from your
+  Prisma Cloud Compute environment.
+detaileddescription: |
+  This integration provides the ability to import **Palo Alto Networks - Prisma Cloud Compute** alerts into Demisto.
+
+  **Important**: Before you can use the Prisma Cloud Compute integration in Demisto, there are several configuration steps required on the Prisma Cloud Compute console.
+
+  ## Configure Prisma Cloud Compute to send alerts to Demisto by creating an alert profile.
+
+  1. Log in to your Prisma Cloud Compute console.
+  2. Navigate to **Manage > Alerts**.
+  3. Click **Add Profile** to create a new alert profile.
+  4. On the left, select **Demisto** from the provider list.
+  5. On the right, select the alert triggers. Alert triggers specify which alerts are sent to Demisto.
+  6. Click **Save** to save the alert profile.
+display: Palo Alto Networks - Prisma Cloud Compute
+image: data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHgAAAAyCAYAAACXpx/YAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAYMSURBVHgB7ZrPbxZFGMe/s30FlBhfPXB1OYiBiyXxzsJBqiFQDtwMfXsFseg/0OUfEAg2hERlm3jSRKoHLRza15sXbblYDGqXGBOCMW1Dxe2btzvO8+4M7+yyP18Kvi3zSSb77szzzMzO8zwzz24LGAwGg8FgMBgMBoPBYDAYDAaDwdC/DMLQ99TQG1dFuSPKPAx9jYXqkHEbMGwKqhrYGHeTUWWLfhrGpXO9nlK/jOzjoI78fGBe6hfp5skNIj6GnyNvy6JoonjsovGT8r4sGwYZl2tlURQX8QfZCBYT4yTHPJui4+ToqELzrxfoOinttKBzOf2OpOh4JWSI2YScg3w8xNeiFGUiOC1yXVF2izIuyig2nnl0I9bWynlZ38zQm0I3CuqyOIjmv4J0B8nCRmQE6sMX5WvZN92/IfvdXaIfV5TJRJ2DYoMm5zKScj+JxyQZubr3uCjneVVQEewm6mlRl9CNRh0H+VFwDdlen6c7rLUdS9G1M8bzpE5T00861qw2pzIR7Gnyum4heUlWWuQSbuJ+PEWG6q7JPmxsLCsVZOva+MuoRlP7TTsDLewFUcYQGcNH9k5CkAFUhI2je0Q46BrzHIqx0Y1eV9PR6yuTFrlJr3GR7n3nUe4MSkN59JycgypLyPZ0R2tbkn2oouu5KeM5yI+gYWTnBVSf5tweujuNrc3Ble1zWruD4gj28Ojaz6LiWaxTR3ZiMazJuVr9rFZftKh5ZC2mMl4vSRY9y0jGeLqug2xsRM/uItqZ9Hkmt28P8aPE1eY/punZJca3EV9LW5YGsrf/UqQZeTYh4yI9C5zT5MfkfVnUwnnobmVU8l6DHKQvku7ldkVdgtagjGO4iTYPcQPr+QNPtDnIN7CHfOdVjpP2htAhK4um8+ogokVSi1t0XowjOpMoq6Zt+iIiby9zziTxkX++leE4IueyET3HflQ7h2nRPETnLmXu32v1BzQ5r6AfGpPWQm3nPqqfvR6iT8PJ+Y3JK0Wxm9ZJrWBiysi2HEz3aBpwNGXQealHjrEf/9/3ajV/ZeRr8r6KfhPxnSTZTs/voxiVnNH6TJbUceXVR/arqHpdG5NjPOLADMXQpPRIVpxD9TO2CEdefZT/UlP0NcpGd4tOthfp6jK2Vqe/pydRX+N8xJ9B1evj5I3vyGuyHx0b2c9WCZrIT4jv/S4MfU/ZPzaQZxxCtYTJ0AeUNTBhjLwJqfoHf2XkGTwh3v78NthKjfFtbQyEId7cs4e7BxkOf/IHs3YE/Lt3X4vJN64u4t4DdORZq4ZdL4B7o9En4iNX/kTYbrFvT+/muqy6P375VxbUOj87ujuxk395ehe2ElUiWKGMvOHZ8YmJewhX1sdCrM3w1vpv7Tb/7Iebt+xOY+ufj6hNl3dnOe6uBgeVPF3p/sQXkdFarZXhkK09dEbR5uj3D8L2V0Lvd6V7ny01yAm2Er3+yw4ZeQobzH383WBgZxHy0XVrfdnilsO2R4k+C/nLIrWLfYfuGP85NhOy8LjF2DxCkXlabGb5r9ud1zOLs7rQsWODaPeMoy56v8gH+FTY5oPMYleFE/h4/HfwvqFXAz8ZOBsRsXfx+pm9TVmTu0vwAXZWGMi7cWqfcjZv6OMFp8baDZT8hMdDvjz93l5f/PSHLi0MwuKk18QWoZct+snBYItILf0uxxivi2iPf+Hh8DkGXkIvCF0wqzfdPqXPIpg3McAOHLnyy2Rt2zYehmvsFWv7w6SJGJZn5BTVkUGE/NFPbzFLyLVEAiXO0hHhKG5HiJGxWf2diUW2c3sN99dWKbtaSg5LfXZ0eeB0+txC9JeBB8TXsRAzlFy1W8EdbrGjd8PgQ6gt02IHgtXAldJu0A4u7LCeP7kW4EcWBt9QOxnw+qnXO3+HnRZb/eGJW4uUQK2u/XuTc3ZSnLMf6EOyGjsm+rRJV2wJr4ot+hC2EGU+VT5Vhi4v2J1kKewkQ81peR6L89HRE6Tp9/d66vdbl34etsAGQ/D5G2f2PZL8DU0sNJL9pfUZvBhMNUf39/y5z2AwGAwGg8FgMBgMBoPBYDAYDIZnkf8Alvuuofkjq0gAAAAASUVORK5CYII=
+name: PaloAltoNetworks_PrismaCloudCompute
+script:
+  dockerimage: demisto/python3:3.7.4.2245
+  isfetch: true
+  runonce: false
+  script: |2
+
+
+
+    ''' IMPORTS '''
+    import requests
+    import tempfile
+
+    # Disable insecure warnings
+    requests.packages.urllib3.disable_warnings()
+
+    ''' CONSTANTS '''
+
+    ALERT_TITLE = 'Prisma Cloud Compute Alert - '
+    ALERT_TYPE_VULNERABILITY = 'vulnerability'
+    ALERT_TYPE_COMPLIANCE = 'compliance'
+    ALERT_TYPE_AUDIT = 'audit'
+    # this is a list of known headers arranged in the order to be displayed in the markdown table
+    HEADERS_BY_NAME = {
+        'vulnerabilities': ['severity', 'cve', 'status', 'packages', 'sourcePackage', 'packageVersion', 'link'],
+        'entities': ['name', 'containerGroup', 'resourceGroup', 'nodesCount', 'image', 'status', 'runningTasksCount',
+                     'activeServicesCount', 'version', 'createdAt', 'runtime', 'arn', 'lastModified', 'protected'],
+        'compliance': ['type', 'id', 'description']
+    }
+
+    ''' COMMANDS + REQUESTS FUNCTIONS '''
+
+
+    class Client(BaseClient):
+        def __init__(self, base_url, verify, project, proxy=False, ok_codes=tuple(), headers=None, auth=None):
+            """
+            Extends the init method of BaseClient by adding the arguments below,
+
+            verify: A 'True' or 'False' string, in which case it controls whether we verify
+                the server's TLS certificate, or a string that represents a path to a CA bundle to use.
+            project: A projectID string, set in the integration parameters.
+                the projectID is saved under self._project
+            """
+
+            self._project = project
+
+            if verify in ['True', 'False']:
+                super().__init__(base_url, str_to_bool(verify), proxy, ok_codes, headers, auth)
+            else:
+                # verify points a path to certificate
+                super().__init__(base_url, True, proxy, ok_codes, headers, auth)
+                self._verify = verify
+
+        def _http_request(self, method, url_suffix, full_url=None, headers=None,
+                          auth=None, json_data=None, params=None, data=None, files=None,
+                          timeout=10, resp_type='json', ok_codes=None, **kwargs):
+            """
+            Extends the _http_request method of BaseClient.
+            If self._project is available, a 'project=projectID' query param is automatically added to all requests.
+            """
+
+            # if project is given add it to params and call super method
+            if self._project:
+                params = params or {}
+                params.update({'project': self._project})
+
+            return super()._http_request(method, url_suffix, full_url, headers, auth, json_data, params, data, files,
+                                         timeout, resp_type, ok_codes, **kwargs)
+
+        def test(self):
+            """
+            Calls the fetch alerts endpoint with to=epoch_time to check connectivity, authentication and authorization
+            """
+            return self.list_incidents(to_=time.strftime('%Y-%m-%d', time.gmtime(0)))
+
+        def list_incidents(self, to_=None, from_=None):
+            """
+            Sends a request to fetch available alerts from last call
+            No need to pass here TO/FROM query params, the API returns new alerts from the last request
+            Can be used with TO/FROM query params to get alerts in a specific time period
+            REMARK: alerts are deleted from the endpoint once were successfully fetched
+            """
+            params = {}
+            if to_:
+                params['to'] = to_
+            if from_:
+                params['from'] = from_
+
+            return self._http_request(
+                method='GET',
+                url_suffix='demisto-alerts',
+                params=params
+            )
+
+
+    def str_to_bool(s):
+        """
+        Translates string representing boolean value into boolean value
+        """
+        if s == 'True':
+            return True
+        elif s == 'False':
+            return False
+        else:
+            raise ValueError
+
+
+    def translate_severity(sev):
+        """
+        Translates Prisma Cloud Compute alert severity into Demisto's severity score
+        """
+
+        sev = sev.capitalize()
+
+        if sev == 'Critical':
+            return 4
+        elif sev == 'High':
+            return 3
+        elif sev == 'Important':
+            return 3
+        elif sev == 'Medium':
+            return 2
+        elif sev == 'Low':
+            return 1
+        return 0
+
+
+    def camel_case_transformer(s):
+        """
+        Converts a camel case string into space separated words starting with a capital letters
+        E.g. input: 'camelCase' output: 'Camel Case'
+        REMARK: the exceptions list below is returned uppercase, e.g. "cve" => "CVE"
+        """
+
+        str = re.sub('([a-z])([A-Z])', r'\g<1> \g<2>', s)
+        if str in ['id', 'cve', 'arn']:
+            return str.upper()
+        return str.title()
+
+
+    def get_headers(name: str, data: list) -> list:
+        """
+        Returns a list of headers to the given list of objects
+        If the list name is known (listed in the HEADERS_BY_NAME) it returns the list and checks for any additional headers
+         in the given list
+        Else returns the given headers from the given list
+        Args:
+            name: name of the list (e.g. vulnerabilities)
+            data: list of dicts
+
+        Returns: list of headers
+        """
+
+        # check the list for any additional headers that might have been added
+        known_headers = HEADERS_BY_NAME.get(name)
+        if known_headers:
+            headers = known_headers[:]
+        else:
+            headers = []
+
+        if isinstance(data, list):
+            for d in data:
+                if isinstance(d, dict):
+                    for key in d.keys():
+                        if key not in headers:
+                            headers.append(key)
+        return headers
+
+
+    def test_module(client):
+        """
+        Test connection, authentication and user authorization
+        Args:
+            client: Requests client
+        Returns:
+            'ok' if test passed, error from client otherwise
+        """
+
+        client.test()
+        return 'ok'
+
+
+    def fetch_incidents(client):
+        """
+        Fetches new alerts from Prisma Cloud Compute and returns them as a list of Demisto incidents
+        - A markdown table will be added for alerts with a list object,
+          If the alert has a list under field "tableField", another field will be added to the
+          incident "tableFieldMarkdownTable" representing the markdown table
+        Args:
+            client: Prisma Compute client
+        Returns:
+            list of incidents
+        """
+        incidents = []
+        alerts = client.list_incidents()
+
+        if alerts:
+            for a in alerts:
+                alert_type = a.get('kind')
+                name = ALERT_TITLE
+                severity = 0
+
+                # fix the audit category from camel case to display properly
+                if alert_type == ALERT_TYPE_AUDIT:
+                    a['category'] = camel_case_transformer(a.get('category'))
+
+                # always save the raw JSON data under this argument (used in scripts)
+                a['rawJSONAlert'] = json.dumps(a)
+
+                # parse any list into a markdown table, since tableToMarkdown takes the headers from the first object in
+                # the list check headers manually since some entries might have omit empty fields
+                tables = {}
+                for key, value in a.items():
+                    # check only if we got a non empty list of dict
+                    if isinstance(value, list) and value and isinstance(value[0], dict):
+                        tables[key + 'MarkdownTable'] = tableToMarkdown(camel_case_transformer(key + ' table'),
+                                                                        value,
+                                                                        headers=get_headers(key, value),
+                                                                        headerTransform=camel_case_transformer,
+                                                                        removeNull=True)
+
+                a.update(tables)
+
+                if alert_type == ALERT_TYPE_VULNERABILITY:
+                    # E.g. "Prisma Cloud Compute Alert - imageName Vulnerabilities"
+                    name += a.get('imageName') + ' Vulnerabilities'
+                    # Set the severity to the highest vulnerability, take the first from the list
+                    severity = translate_severity(a.get('vulnerabilities')[0].get('severity'))
+
+                elif alert_type == ALERT_TYPE_COMPLIANCE or alert_type == ALERT_TYPE_AUDIT:
+                    # E.g. "Prisma Cloud Compute Alert - Incident"
+                    name += camel_case_transformer(a.get('type'))
+                    # E.g. "Prisma Cloud Compute Alert - Image Compliance" \ "Prisma Compute Alert - Host Runtime Audit"
+                    if a.get('type') != "incident":
+                        name += ' ' + camel_case_transformer(alert_type)
+
+                else:
+                    # E.g. "Prisma Cloud Compute Alert - Cloud Discovery"
+                    name += camel_case_transformer(alert_type)
+
+                incidents.append({
+                    'name': name,
+                    'occurred': a.get('time'),
+                    'severity': severity,
+                    'rawJSON': json.dumps(a)
+                })
+
+        return incidents
+
+
+    def main():
+        """
+            PARSE AND VALIDATE INTEGRATION PARAMS
+        """
+        params = demisto.params()
+        username = params.get('credentials').get('identifier')
+        password = params.get('credentials').get('password')
+        base_url = params.get('address')
+        project = params.get('project', '')
+        verify_certificate = not params.get('insecure', False)
+        cert = params.get('certificate')
+        proxy = params.get('proxy', False)
+
+        # If checked to verify and given a certificate, save the certificate as a temp file
+        # and set the path to the requests client
+        if verify_certificate and cert:
+            tmp = tempfile.NamedTemporaryFile(delete=False, mode='w')
+            tmp.write(cert)
+            tmp.close()
+            verify = tmp.name
+        else:
+            # Save boolean as a string
+            verify = str(verify_certificate)
+
+        try:
+            LOG(f'Command being called is {demisto.command()}')
+
+            # Init the client
+            client = Client(
+                base_url=urljoin(base_url, 'api/v1/'),
+                verify=verify,
+                auth=(username, password),
+                proxy=proxy,
+                project=project)
+
+            if demisto.command() == 'test-module':
+                # This is the call made when pressing the integration test button
+                result = test_module(client)
+                demisto.results(result)
+
+            elif demisto.command() == 'fetch-incidents':
+                # Fetch incidents from Prisma Cloud Compute
+                # this method is called periodically when 'fetch incidents' is checked
+                incidents = fetch_incidents(client)
+                demisto.incidents(incidents)
+
+        # Log exceptions
+        except Exception as e:
+            return_error(f'Failed to execute {demisto.command()} command. Error: {str(e)}')
+
+
+    if __name__ in ('__main__', '__builtin__', 'builtins'):
+        main()
+  subtype: python3
+  type: python
+system: true

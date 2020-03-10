@@ -1,0 +1,590 @@
+category: Network Security
+commonfields:
+  id: Indeni
+  version: -1
+configuration:
+- defaultvalue: "false"
+  display: Trust any certificate (not secure)
+  name: insecure
+  required: false
+  type: 8
+- defaultvalue: ""
+  display: Server URL
+  name: url
+  required: true
+  type: 0
+- defaultvalue: ""
+  display: API Key
+  name: apikey
+  required: true
+  type: 4
+- defaultvalue: ""
+  display: Fetch incidents
+  name: isFetch
+  required: false
+  type: 8
+- defaultvalue: ""
+  display: Incident type
+  name: incidentType
+  required: false
+  type: 13
+- defaultvalue: "true"
+  display: Only Pull Palo Alto Networks Vulnerability Issues
+  name: onlyPullPanCveIssues
+  required: false
+  type: 8
+- defaultvalue: ""
+  display: Use system proxy settings
+  name: proxy
+  required: false
+  type: 8
+- defaultvalue: INFO
+  display: Lowest Issue Severity To Pull
+  name: issueSeverity
+  options:
+  - CRITICAL
+  - ERROR
+  - WARN
+  - INFO
+  required: false
+  type: 15
+- defaultvalue: "20"
+  display: Number of issues to pull per fetch
+  name: maxPullSize
+  required: false
+  type: 0
+- defaultvalue: ""
+  display: Long running instance
+  name: longRunning
+  required: false
+  type: 8
+description: Indeni is a turn-key automated monitoring providing visibility for security
+  infrastructure. Indeni's production-ready Knowledge is curated from vetted, community-sourced
+  experience, to deliver automation of tedious tasks with integration with your existing
+  processes.
+detaileddescription: |
+  ## Indeni
+  You can retrieve the API Key from the Indeni UI
+
+  Navigate to:
+  - Settings
+  - About
+
+  Use the *API Key* shown in the *API INFO* section
+display: Indeni
+image: data:image/png;base64,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
+name: Indeni
+script:
+  commands:
+  - arguments:
+    - description: device id string
+      name: device_id
+      required: true
+    description: get the device information
+    name: indeni-get-device-info
+    outputs:
+    - contextPath: Indeni.DeviceInfo.DeviceId
+      description: device id string
+      type: string
+    - contextPath: Indeni.DeviceInfo.DeviceIP
+      description: device ip string
+      type: string
+    - contextPath: Indeni.DeviceInfo.DeviceName
+      description: device hostname
+      type: string
+    - contextPath: Indeni.DeviceInfo.DeviceModel
+      description: device model
+      type: string
+    - contextPath: Indeni.DeviceInfo.OSVersion
+      description: device OS version
+      type: string
+    - contextPath: Indeni.DeviceInfo.CriticalAlertStats
+      description: '# of critical alerts on the device'
+      type: number
+    - contextPath: Indeni.DeviceInfo.ErrorAlertStats
+      description: '# of error alerts on the device'
+      type: number
+    - contextPath: Indeni.DeviceInfo.WarnAlertStats
+      description: '# of warn alerts on the device'
+      type: number
+    - contextPath: Indeni.DeviceInfo.InfoAlertStats
+      description: '# of info alerts on the device'
+      type: number
+  - arguments:
+    - description: the id of the alert
+      name: alert_id
+      required: true
+    description: Get detailed alert info
+    name: indeni-get-alert-info
+    outputs:
+    - contextPath: Indeni.AlertInfo.AlertId
+      description: id of the alert
+      type: string
+    - contextPath: Indeni.AlertInfo.Headline
+      description: headline of the alert
+      type: string
+    - contextPath: Indeni.AlertInfo.DeviceId
+      description: device id
+      type: string
+    - contextPath: Indeni.AlertInfo.AlertType
+      description: the alert type unique identifier
+      type: string
+  - arguments:
+    - description: identifier for alert type
+      name: alert_type_identifier
+      required: true
+    description: Get summary of given alert type for all devices
+    name: indeni-get-alert-summary
+    outputs:
+    - contextPath: Indeni.AffectedDevices.AlertType
+      description: Alert type that's affecting the devices
+      type: String
+    - contextPath: Indeni.AffectedDevices.Device.DeviceName
+      description: Name of the affected device
+      type: String
+    - contextPath: Indeni.AffectedDevices.Device.DeviceId
+      description: Id of the affected device
+      type: String
+  - arguments:
+    - description: the id of the alert
+      name: alert_id
+      required: true
+    - description: the content of the note
+      name: note
+      required: true
+    description: Post a note to a given issue id
+    name: indeni-post-note
+  - arguments:
+    - description: the alert id of the issue
+      name: alert_id
+      required: true
+    description: Archive an issue for the given alert id
+    name: indeni-archive-issue
+  - arguments:
+    - description: the alert id of the issue
+      name: alert_id
+      required: true
+    description: Unarchive an existing issue
+    name: indeni-unarchive-issue
+  - arguments:
+    - description: The id of the alert
+      name: alert_id
+      required: true
+    description: Get the notes from issue
+    name: indeni-get-notes
+    outputs:
+    - contextPath: Indeni.AlertInfo.Note
+      description: Notes for the given issue
+      type: Unknown
+  dockerimage: demisto/python3:3.8.1.5734
+  isfetch: true
+  longRunning: true
+  runonce: false
+  script: |2
+
+    ''' IMPORTS '''
+
+    from typing import List
+    import json
+    import requests
+
+    # Disable insecure warnings
+    requests.packages.urllib3.disable_warnings()
+
+    ''' GLOBALS/PARAMS '''
+    API_KEY = demisto.params().get('apikey')
+    # Remove trailing slash to prevent wrong URL path to serviceaa
+    SERVER = demisto.params().get('url', '')
+    USE_SSL = not demisto.params().get('insecure', False)
+    # Service base URL
+    BASE_URL = SERVER + '/api/v2/'
+    # Headers to be sent in requests
+    HEADERS = {
+        'x-api-key': API_KEY,
+        'accept': 'application/json',
+        'Content-Type': 'application/json'
+    }
+
+    ''' HELPER FUNCTIONS '''
+
+
+    def http_request(method, full_url, params=None, data=None):
+        # A wrapper for requests lib to send our requests and handle requests and responses better
+        res = requests.request(
+            method,
+            full_url,
+            verify=USE_SSL,
+            params=params,
+            json=data,
+            headers=HEADERS
+        )
+        # Handle error responses gracefully
+        if res.status_code not in {200, 201}:
+            return_error('Error in API call to Indeni Integration [%d] - %s for endpoint %s' %
+                         (res.status_code, res.reason, full_url))
+
+        return res.json()
+
+
+    def item_to_incident(item):
+        incident = {}
+
+        # Incident occurrence time, usually item creation date in service
+        incident['occurred'] = item.get('create_at')
+        incident['updated'] = item.get('updated_at')
+        incident['name'] = item.get('headline')
+        incident['rawJSON'] = json.dumps(item)
+
+        indeni_severity = item.get('severity').get('level')
+        # Demisto: CRITICAL: 4, HIGH: 3, MEDIUM: 2, LOW: 1, Unknown: 0
+        # Indeni: CRITICAL: 0, ERROR: 1, WARN: 2, INFO: 3
+        if indeni_severity == 0:
+            demisto_severity = 4
+        elif indeni_severity == 1:
+            demisto_severity = 3
+        elif indeni_severity == 2:
+            demisto_severity = 2
+        elif indeni_severity == 3:
+            demisto_severity = 1
+        else:
+            demisto_severity = 0
+        incident['severity'] = demisto_severity
+
+        alert_blocks = item.get('alert_blocks')
+        details = ''
+        for block in alert_blocks:
+            details = details + block.get('header') + '\n'
+            if block.get('body') is not None:
+                details = details + block.get('body') + '\n'
+        incident['details'] = details
+
+        return incident
+
+
+    ''' COMMANDS + REQUESTS FUNCTIONS '''
+
+
+    def test_module(base_url):
+        """
+        Performs basic get request to get item samples
+        """
+        http_request('GET', base_url + 'labels')
+        demisto.results('ok')
+
+
+    def get_device_request(device_id, base_url):
+        # The service endpoint to request from
+        endpoint_url = 'devices/' + device_id
+        # Send a request using our http_request wrapper
+        response = http_request('GET', base_url + endpoint_url)
+        return response
+
+
+    def get_alert_detail_request(alert_id, base_url):
+        endpoint_url = 'issues/' + alert_id
+        response = http_request('GET', base_url + endpoint_url)
+        return response
+
+
+    def get_all_active_issues(per_page, sort_by, base_url):
+        issues: List[dict] = []
+        # The service endpoint to request from
+        endpoint_url = 'issues'
+        # Dictionary of params for the request
+        params = {
+            'page': 1,
+            'per_page': per_page,
+            'sort_by': sort_by,
+            'resolved': 'false'
+        }
+        # Send a request using our http_request wrapper
+        response = http_request('GET', base_url + endpoint_url, params)
+        # testing remove the loop
+        while response:
+            issues.extend(response)
+            params['page'] = params['page'] + 1
+            response = http_request('GET', base_url + endpoint_url, params)
+        return issues
+
+
+    def get_limited_active_issues(per_page, alert_id_index, size, only_Pan_Cve_Issues, lowest_issue_severity_level, base_url):
+        issues = []
+        issue_count = 0
+        # The service endpoint to request from
+        endpoint_url = 'issues'
+        # Dictionary of params for the request
+        params = {
+            'page': 1,
+            'per_page': per_page,
+            'sort_by': 'alert_id.asc',
+            'resolved': 'false'
+        }
+        # Send a request using our http_request wrapper
+        response = http_request('GET', base_url + endpoint_url, params)
+        # testing remove the loop
+        while response:
+            for item in response:
+                alert_id = item.get('alert_id')
+                if alert_id <= alert_id_index:
+                    continue
+                else:
+                    alert_id_index = alert_id
+                    if (only_Pan_Cve_Issues is False) or \
+                            (only_Pan_Cve_Issues and item.get('unique_identifier').startswith('panos_vulnerability')):
+                        alert_severity_level = item.get('severity').get('level')
+                        if alert_severity_level <= lowest_issue_severity_level:
+                            issues.append(item)
+                            issue_count = issue_count + 1
+                            if issue_count == size:
+                                return issues, alert_id_index
+            params['page'] = params['page'] + 1
+            response = http_request('GET', base_url + endpoint_url, params)
+        return issues, alert_id_index
+
+
+    def get_device_info(base_url):
+        device_id = demisto.args().get('device_id')
+        device_response = get_device_request(device_id, base_url)
+
+        content = {
+            'DeviceId': device_id,
+            'DeviceIP': device_response.get('ip_address'),
+            'DeviceName': device_response.get('tags').get('device-name'),
+            'DeviceModel': device_response.get('tags').get('model'),
+            'OSVersion': device_response.get('tags').get('os.version'),
+            'CriticalAlertStats': device_response.get('alert_statistics').get('CRITICAL'),
+            'ErrorAlertStats': device_response.get('alert_statistics').get('ERROR'),
+            'WarnAlertStats': device_response.get('alert_statistics').get('WARN'),
+            'InfoAlertStats': device_response.get('alert_statistics').get('INFO')
+        }
+        ec = {
+            'Indeni.DeviceInfo(val.DeviceId==obj.DeviceId)': content
+        }
+
+        demisto.results({
+            'Type': entryTypes['note'],
+            'ContentsFormat': formats['json'],
+            'Contents': content,
+            'ReadableContentsFormat': formats['markdown'],
+            'HumanReadable': tableToMarkdown('Device Info', content, removeNull=True),
+            'EntryContext': ec
+        })
+
+
+    def get_alert_info(base_url):
+        alert_id = demisto.args().get('alert_id')
+        alert_response = get_alert_detail_request(alert_id, base_url)
+
+        ec = {
+            'Indeni.AlertInfo(val.AlertId==obj.AlertId)': {
+                'AlertId': alert_id,
+                'Headline': alert_response.get('headline'),
+                'DeviceId': alert_response.get('device_id'),
+                'AlertType': alert_response.get('unique_identifier')
+            }
+        }
+        # ADD HUMAN READABLE FOR ALERT BLOCKS
+        human_format = alert_response
+        if 'notes' in human_format:
+            n = human_format['notes']
+            human_format['notes'] = '\n'.join([a['text'] for a in n]) if isinstance(n, list) else n
+        if 'alert_blocks' in human_format:
+            n = human_format['alert_blocks']
+            if isinstance(n, list):
+                bodies: List[str] = []
+                for a in n:
+                    body = a.get('body', None)
+                    if body:
+                        bodies.append(body)
+                if len(bodies) > 0:
+                    human_format['alert_blocks'] = '\n'.join(bodies)
+            else:
+                human_format['alert_blocks'] = n
+
+        demisto.results({
+            'Type': entryTypes['note'],
+            'ContentsFormat': formats['json'],
+            'Contents': alert_response,
+            'ReadableContentsFormat': formats['markdown'],
+            'HumanReadable': tableToMarkdown('Alert ID {}'.format(alert_id), human_format, removeNull=True),
+            'EntryContext': ec
+        })
+
+
+    def get_alert_summary(base_url):
+
+        alert_type = demisto.args().get('alert_type_identifier')
+        active_alerts = get_all_active_issues(500, 'created_at.desc', base_url)
+        devices = []
+        for alert in active_alerts:
+            if alert.get('unique_identifier') == alert_type:
+                device_response = get_device_request(alert.get('device_id'), base_url)
+                device_name = device_response.get('name')
+
+                alert_response = get_alert_detail_request(alert.get('id'), base_url)
+                items = []
+                for alert_block in alert_response.get('alert_blocks'):
+                    if alert_block.get('type') == 'items':
+                        for alert_item in alert_block.get('items'):
+                            items.append({
+                                'Name': alert_item.get('name'),
+                                'Description': alert_item.get('description')
+                            }
+                            )
+                devices.append({
+                    'DeviceName': device_name,
+                    'DeviceId': alert.get('device_id'),
+                    'Items': items
+                }
+                )
+
+        content = {
+            'Indeni.AffectedDevices(val.AlertType == obj.AlertType)': {
+                'AlertType': alert_type,
+                'Device': devices
+            }
+        }
+
+        demisto.results({
+            'Type': entryTypes['note'],
+            'ContentsFormat': formats['json'],
+            'Contents': content,
+            'ReadableContentsFormat': formats['markdown'],
+            'HumanReadable': tableToMarkdown(f'Devices Experiencing Alert {alert_type}', devices, removeNull=True),
+            'EntryContext': content
+        })
+
+
+    def post_note(base_url):
+        alert_id = demisto.args().get('alert_id')
+        alert_note = demisto.args().get('note')
+
+        endpoint_url = 'issues/' + alert_id + '/notes'
+        body = {
+            'text': alert_note
+        }
+        http_request('POST', base_url + endpoint_url, data=body)
+
+
+    def get_notes(base_url):
+        alert_id = demisto.args().get('alert_id')
+        endpoint_url = 'issues/' + alert_id + '/notes'
+        response = http_request('GET', base_url + endpoint_url)
+        readable_notes = []
+        context_notes = {
+            'AlertID': alert_id
+        }
+        notes = []
+        for note in response:
+            text = note.get('text', None)
+            if text:
+                readable_notes.append({
+                    'note': text,
+                    'timestamp': timestamp_to_datestring(note.get('timestamp'))
+                })
+                notes.append(text)
+        if len(notes) > 0:
+            context_notes['Note'] = notes
+
+        content = {
+            'Indeni.AlertInfo(val.AlertID == obj.AlertID)': context_notes
+        }
+        demisto.results({
+            'Type': entryTypes['note'],
+            'ContentsFormat': formats['json'],
+            'Contents': content,
+            'ReadableContentsFormat': formats['markdown'],
+            'HumanReadable': tableToMarkdown('Issue Notes', readable_notes, removeNull=True),
+            'EntryContext': content
+        })
+
+
+    def archive_issue(base_url):
+        alert_id = demisto.args().get('alert_id')
+        endpoint_url = 'issues/' + alert_id
+        body = {
+            'archived': True
+        }
+        http_request('PATCH', base_url + endpoint_url, data=body)
+
+
+    def unarchive_issue(base_url):
+        alert_id = demisto.args().get('alert_id')
+        endpoint_url = 'issues/' + alert_id
+        body = {
+            'archived': False
+        }
+        http_request('PATCH', base_url + endpoint_url, data=body)
+
+
+    # Indeni: CRITICAL: 0, ERROR: 1, WARN: 2, INFO: 3
+    def issue_severity_to_issue_level(issue_severity):
+        if issue_severity == 'CRITICAL':
+            return 0
+        elif issue_severity == 'ERROR':
+            return 1
+        elif issue_severity == 'WARN':
+            return 2
+        elif issue_severity == 'INFO':
+            return 3
+        else:
+            return -1
+
+
+    def fetch_incidents(base_url):
+        last_run = demisto.getLastRun()
+        # Get the last fetch time, if exists
+        alert_id_index = last_run.get('alert_id', 0)
+        only_pan_cve_issues = demisto.params().get('onlyPullPanCveIssues', False)
+        max_pull_size = int(demisto.params().get('maxPullSize', 20))
+        lowest_issue_severity = demisto.params().get('issueSeverity', 'INFO')
+        lowest_issue_severity_level = issue_severity_to_issue_level(lowest_issue_severity)
+        incidents = []
+
+        # Handle first time fetch, fetch only currently un-resolved active issues
+        result = get_limited_active_issues(100, alert_id_index, max_pull_size, only_pan_cve_issues,
+                                           lowest_issue_severity_level, base_url)
+        for item in result[0]:
+            incident = item_to_incident(item)
+            incidents.append(incident)
+
+        demisto.setLastRun({'alert_id': result[1]})
+        demisto.incidents(incidents)
+
+        ''' COMMANDS MANAGER / SWITCH PANEL '''
+
+
+    def main():
+        try:
+            if demisto.command() == 'test-module':
+                # This is the call made when pressing the integration test button.
+                test_module(BASE_URL)
+            elif demisto.command() == 'fetch-incidents':
+                # Set and define the fetch incidents command to run after activated via integration settings.
+                fetch_incidents(BASE_URL)
+            elif demisto.command() == 'indeni-get-device-info':
+                get_device_info(BASE_URL)
+            elif demisto.command() == 'indeni-get-alert-info':
+                get_alert_info(BASE_URL)
+            elif demisto.command() == 'indeni-get-alert-summary':
+                get_alert_summary(BASE_URL)
+            elif demisto.command() == 'indeni-post-note':
+                post_note(BASE_URL)
+                demisto.results('Done')
+            elif demisto.command() == 'indeni-archive-issue':
+                archive_issue(BASE_URL)
+                demisto.results('Done')
+            elif demisto.command() == 'indeni-unarchive-issue':
+                unarchive_issue(BASE_URL)
+                demisto.results('Done')
+            elif demisto.command() == 'indeni-get-notes':
+                get_notes(BASE_URL)
+        except Exception as e:
+            return_error(f'Failed to execute {demisto.command()} command. Error: {str(e)}')
+
+
+    if __name__ in ('__main__', '__builtin__', 'builtins'):
+        main()
+  subtype: python3
+  type: python
+system: true

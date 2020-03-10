@@ -1,0 +1,226 @@
+{
+	"fromDate": "0001-01-01T00:00:00Z",
+	"fromDateLicense": "0001-01-01T00:00:00Z",
+	"id": "c5c1eb49-4f26-434e-85a8-6f82568490ce",
+	"isCommon": true,
+	"layout": [
+		{
+			"forceRange": false,
+			"h": 2,
+			"i": "ecd5a900-54e9-11ea-84e9-bd2d393b9617",
+			"id": "ecd5a900-54e9-11ea-84e9-bd2d393b9617",
+			"w": 2,
+			"widget": {
+				"category": "",
+				"commitMessage": "",
+				"dataType": "incidents",
+				"dateRange": {
+					"fromDate": "0001-01-01T00:00:00Z",
+					"fromDateLicense": "0001-01-01T00:00:00Z",
+					"period": {
+						"by": "",
+						"byFrom": "days",
+						"byTo": "",
+						"field": "",
+						"fromValue": 7,
+						"toValue": null
+					},
+					"toDate": "0001-01-01T00:00:00Z"
+				},
+				"id": "closed-incidents-by-role",
+				"isPredefined": true,
+				"modified": "2020-02-18T17:58:18.41332604Z",
+				"name": "Closed Incidents by Role",
+				"params": {
+					"groupBy": [
+						"roles"
+					]
+				},
+				"prevName": "Closed Incidents by Role",
+				"query": "status:closed",
+				"shouldCommit": false,
+				"size": 10,
+				"sort": null,
+				"sortValues": null,
+				"vcShouldIgnore": false,
+				"version": 20,
+				"widgetType": "bar"
+			},
+			"x": 0,
+			"y": 0
+		},
+		{
+			"forceRange": false,
+			"h": 3,
+			"i": "ed1ceb30-54e9-11ea-84e9-bd2d393b9617",
+			"id": "ed1ceb30-54e9-11ea-84e9-bd2d393b9617",
+			"w": 4,
+			"widget": {
+				"category": "",
+				"commitMessage": "",
+				"dataType": "incidents",
+				"dateRange": {
+					"fromDate": "0001-01-01T00:00:00Z",
+					"fromDateLicense": "0001-01-01T00:00:00Z",
+					"period": {
+						"by": "",
+						"byFrom": "days",
+						"byTo": "",
+						"field": "",
+						"fromValue": null,
+						"toValue": null
+					},
+					"toDate": "0001-01-01T00:00:00Z"
+				},
+				"description": "A widget that shows the Containment Timer, by incident type.",
+				"id": "containment-timer",
+				"isPredefined": false,
+				"modified": "2020-02-18T17:58:18.311429616Z",
+				"name": "Containment Timer",
+				"params": {
+					"groupBy": [
+						"occurred(d)",
+						"type"
+					],
+					"keys": [
+						"avg|containmenttimer.totalDuration / 3600"
+					],
+					"tableColumns": [
+						{
+							"isDefault": true,
+							"key": "id",
+							"position": 0,
+							"width": 110
+						},
+						{
+							"isDefault": true,
+							"key": "name",
+							"position": 2,
+							"width": 300
+						},
+						{
+							"isDefault": true,
+							"key": "type",
+							"position": 3,
+							"width": 200
+						},
+						{
+							"isDefault": true,
+							"key": "severity",
+							"position": 4,
+							"width": 80
+						},
+						{
+							"isDefault": true,
+							"key": "status",
+							"position": 5,
+							"width": 80
+						},
+						{
+							"isDefault": true,
+							"key": "owner",
+							"position": 6,
+							"width": 160
+						},
+						{
+							"isDefault": true,
+							"key": "roles",
+							"position": 7,
+							"width": 160
+						},
+						{
+							"isDefault": true,
+							"key": "playbookId",
+							"position": 8,
+							"width": 150
+						},
+						{
+							"isDefault": true,
+							"key": "occurred",
+							"position": 9,
+							"width": 200
+						},
+						{
+							"isDefault": true,
+							"key": "dueDate",
+							"position": 10,
+							"width": 200
+						}
+					]
+				},
+				"prevName": "Containment Timer",
+				"query": "-category:job and containmenttimer.runStatus:ended",
+				"shouldCommit": false,
+				"size": 0,
+				"sort": null,
+				"sortValues": null,
+				"vcShouldIgnore": false,
+				"version": 4,
+				"widgetType": "line"
+			},
+			"x": 2,
+			"y": 0
+		},
+		{
+			"forceRange": false,
+			"h": 2,
+			"i": "ed687320-54e9-11ea-84e9-bd2d393b9617",
+			"id": "ed687320-54e9-11ea-84e9-bd2d393b9617",
+			"w": 2,
+			"widget": {
+				"category": "",
+				"commitMessage": "",
+				"dataType": "incidents",
+				"dateRange": {
+					"fromDate": "0001-01-01T00:00:00Z",
+					"fromDateLicense": "0001-01-01T00:00:00Z",
+					"period": {
+						"by": "",
+						"byFrom": "days",
+						"byTo": "",
+						"field": "",
+						"fromValue": 30,
+						"toValue": null
+					},
+					"toDate": "0001-01-01T00:00:00Z"
+				},
+				"description": "The detection SLA status of all incidents that their severity was determined. The widget takes into account incidents from the last 30 days by default, and inherits new time range when the dashboard time changes.",
+				"id": "detection-sla-by-status",
+				"isPredefined": true,
+				"modified": "2020-02-18T17:58:18.381707276Z",
+				"name": "Detection SLA by Status",
+				"params": {
+					"groupBy": [
+						"detectionsla.slaStatus"
+					]
+				},
+				"prevName": "Detection SLA by Status",
+				"query": "-category:job and -detectionsla.runStatus:idle",
+				"shouldCommit": false,
+				"size": 0,
+				"sort": null,
+				"sortValues": null,
+				"vcShouldIgnore": false,
+				"version": 26,
+				"widgetType": "pie"
+			},
+			"x": 4,
+			"y": 3
+		}
+	],
+	"name": "Dash - 2",
+	"owner": "bharath",
+	"period": {
+		"by": "",
+		"byFrom": "days",
+		"byTo": "",
+		"field": "",
+		"fromValue": 7,
+		"toValue": null
+	},
+	"shared": false,
+	"sortValues": null,
+	"system": false,
+	"toDate": "0001-01-01T00:00:00Z",
+	"version": -1
+}

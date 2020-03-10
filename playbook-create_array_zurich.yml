@@ -1,0 +1,170 @@
+id: ed59613a-db2b-49e8-8560-6df760cae521
+inputs: []
+name: create array zurich
+outputs: []
+starttaskid: "0"
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "4"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 6a49679f-8e10-4538-8172-d6c5dbc7c5bf
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: 6a49679f-8e10-4538-8172-d6c5dbc7c5bf
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": -40
+        }
+      }
+  "1":
+    id: "1"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "2"
+    note: false
+    scriptarguments:
+      arrayData:
+        simple: 1,2,3,4,5
+      contextKey:
+        simple: array1
+      separator: {}
+    separatecontext: false
+    task:
+      brand: ""
+      description: 'Will create an array object in context from given string input '
+      id: 43d36f55-5757-45f9-8fd2-ab99282b82da
+      iscommand: false
+      name: Array 1
+      script: CreateArray
+      type: regular
+      version: -1
+    taskid: 43d36f55-5757-45f9-8fd2-ab99282b82da
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 230
+        }
+      }
+  "2":
+    id: "2"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "3"
+    note: false
+    scriptarguments:
+      arrayData:
+        simple: a,b,c,d,e
+      contextKey:
+        simple: array2
+      separator: {}
+    separatecontext: false
+    task:
+      brand: ""
+      description: 'Will create an array object in context from given string input '
+      id: 13f7d97b-aa37-4dab-8b46-71c72ae08991
+      iscommand: false
+      name: Array 2
+      script: CreateArray
+      type: regular
+      version: -1
+    taskid: 13f7d97b-aa37-4dab-8b46-71c72ae08991
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 430
+        }
+      }
+  "3":
+    id: "3"
+    ignoreworker: false
+    note: false
+    scriptarguments:
+      value:
+        simple: ${array1} + ${array2}
+    separatecontext: false
+    task:
+      brand: ""
+      description: Prints text to war room (Markdown supported)
+      id: 00e6fcfb-a9e9-40d4-8abf-42f5f78fb2e4
+      iscommand: false
+      name: Print
+      script: Print
+      type: regular
+      version: -1
+    taskid: 00e6fcfb-a9e9-40d4-8abf-42f5f78fb2e4
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 620
+        }
+      }
+  "4":
+    id: "4"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "1"
+    note: false
+    scriptarguments:
+      all:
+        simple: "yes"
+      index: {}
+      key: {}
+      keysToKeep: {}
+      subplaybook: {}
+    separatecontext: false
+    task:
+      brand: ""
+      description: Delete field from context
+      id: aa739dc7-3fee-4bc4-8dce-3c1521ea3047
+      iscommand: false
+      name: Delete Context
+      script: DeleteContext
+      type: regular
+      version: -1
+    taskid: aa739dc7-3fee-4bc4-8dce-3c1521ea3047
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 90
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 755,
+        "width": 380,
+        "x": 450,
+        "y": -40
+      }
+    }
+  }

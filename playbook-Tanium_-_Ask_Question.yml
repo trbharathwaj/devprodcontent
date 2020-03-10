@@ -1,0 +1,171 @@
+description: This playbook used generic polling to gets question result.
+id: Tanium - Ask Question
+inputs:
+- description: ""
+  key: question-text
+  required: false
+  value: {}
+- description: ""
+  key: parameters
+  required: false
+  value: {}
+name: Tanium - Ask Question
+outputs:
+- contextPath: Tanium.QuestionResult.Results
+  description: The question results.
+- contextPath: Tanium.Question.ID
+  description: The unique ID of the question object
+starttaskid: "0"
+system: true
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "1"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: fd08b385-0693-43a8-8523-e4e344e47c7e
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: fd08b385-0693-43a8-8523-e4e344e47c7e
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 50
+        }
+      }
+  "1":
+    id: "1"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "2"
+    note: false
+    scriptarguments:
+      parameters:
+        complex:
+          root: inputs.parameters
+      question-text:
+        complex:
+          root: inputs.question-text
+    separatecontext: false
+    task:
+      brand: ""
+      id: 22bd1506-813b-4c50-8d9d-9d1b019f2908
+      iscommand: true
+      name: Ask question
+      script: '|||tn-ask-question'
+      type: regular
+      version: -1
+    taskid: 22bd1506-813b-4c50-8d9d-9d1b019f2908
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 195
+        }
+      }
+  "2":
+    id: "2"
+    ignoreworker: false
+    loop:
+      exitCondition: ""
+      iscommand: false
+      wait: 1
+    nexttasks:
+      '#none#':
+      - "4"
+    note: false
+    scriptarguments:
+      AdditionalPollingCommandArgNames: {}
+      AdditionalPollingCommandArgValues: {}
+      Ids:
+        complex:
+          accessor: Question.ID
+          root: Tanium
+      Interval:
+        simple: "1"
+      PollingCommandArgName:
+        simple: question-id
+      PollingCommandName:
+        simple: tn-get-question-result
+      Timeout:
+        simple: "60"
+      dt:
+        simple: Tanium.QuestionResult(val.Status != 'Completed').QuestionID
+    separatecontext: true
+    task:
+      brand: ""
+      description: |-
+        Use this playbook as a sub-playbook to block execution of the master playbook until a remote action is complete.
+        This playbook implements polling by continuously running the command in Step \#2 until the operation completes.
+        The remote action should have the following structure:
+
+        1. Initiate the operation.
+        2. Poll to check if the operation completed.
+        3. (optional) Get the results of the operation.
+      id: 28bd0645-0f75-4f9c-84bb-3caf5f6a40f5
+      iscommand: false
+      name: GenericPolling
+      playbookId: GenericPolling
+      type: playbook
+      version: -1
+    taskid: 28bd0645-0f75-4f9c-84bb-3caf5f6a40f5
+    timertriggers: []
+    type: playbook
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 370
+        }
+      }
+  "4":
+    id: "4"
+    ignoreworker: false
+    note: false
+    scriptarguments:
+      question-id:
+        simple: ${Tanium.Question.ID}
+    separatecontext: false
+    task:
+      brand: ""
+      id: a45adf8d-4f2a-492c-8a1d-11118c892a5d
+      iscommand: true
+      name: Get results
+      script: '|||tn-get-question-result'
+      type: regular
+      version: -1
+    taskid: a45adf8d-4f2a-492c-8a1d-11118c892a5d
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 545
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 590,
+        "width": 380,
+        "x": 50,
+        "y": 50
+      }
+    }
+  }

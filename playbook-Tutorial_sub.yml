@@ -1,0 +1,78 @@
+id: 610fb59c-a80c-435f-8433-738a36ddebba
+inputs:
+- description: ""
+  key: Playbook_input
+  required: false
+  value: {}
+name: Tutorial_sub
+outputs: []
+starttaskid: "0"
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "1"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 6d9a3fd2-dbe1-4973-893c-0684d7510a2f
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: 6d9a3fd2-dbe1-4973-893c-0684d7510a2f
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 50
+        }
+      }
+  "1":
+    id: "1"
+    ignoreworker: false
+    note: false
+    scriptarguments:
+      value:
+        complex:
+          accessor: Playbook_input}
+          root: ${inputs
+          transformers:
+          - operator: toUpperCase
+    separatecontext: false
+    task:
+      brand: ""
+      description: Prints text to war room (Markdown supported)
+      id: 3306d54b-d440-4bf8-878e-ed175511417e
+      iscommand: false
+      name: Print
+      script: Print
+      type: regular
+      version: -1
+    taskid: 3306d54b-d440-4bf8-878e-ed175511417e
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 260
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 305,
+        "width": 380,
+        "x": 450,
+        "y": 50
+      }
+    }
+  }

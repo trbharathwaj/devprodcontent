@@ -1,0 +1,19 @@
+{
+	"brandName": "SlackV2_fix",
+	"custom": true,
+	"defaultIncidentType": "Unclassified",
+	"id": "SlackV2_fix",
+	"incidentSamples": null,
+	"instanceId": "",
+	"instanceName": "",
+	"isDefault": true,
+	"keyTypeMap": null,
+	"mapping": null,
+	"sortValues": null,
+	"transformer": {
+		"complex": null,
+		"simple": ""
+	},
+	"unclassifiedCases": null,
+	"version": -1
+}

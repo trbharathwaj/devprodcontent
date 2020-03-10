@@ -1,0 +1,712 @@
+description: |
+  This playbook remediates Prisma Cloud AWS EC2 alerts.  It calls the following sub-playbooks to perform the remediation:
+  - AWS Default Security Group Does Not Restrict All Traffic
+  - AWS Security Groups Allow Internet Traffic
+  - AWS Security Groups With Inbound Rule Overly Permissive To All Traffic
+  - AWS Security Groups allow internet traffic from internet to FTP-Data port (20)
+  - AWS Security Groups allow internet traffic from internet to FTP port (21)
+  - AWS Security Groups allow internet traffic to SSH port (22)
+  - AWS Security Groups allow internet traffic from internet to Telnet port (23)
+  - AWS Security Groups allow internet traffic from internet to SMTP port (25)
+  - AWS Security Groups allow internet traffic from internet to DNS port (53)
+  - AWS Security Groups allow internet traffic from internet to Windows RPC port (135)
+  - AWS Security Groups allow internet traffic from internet to NetBIOS port (137)
+  - AWS Security Groups allow internet traffic from internet to NetBIOS port (138)
+  - AWS Security Groups allow internet traffic from internet to CIFS port (445)
+  - AWS Security Groups allow internet traffic from internet to SQLServer port (1433)
+  - AWS Security Groups allow internet traffic from internet to SQLServer port (1434)
+  - AWS Security Groups allow internet traffic from internet to MYSQL port (3306)
+  - AWS Security Groups allow internet traffic from internet to RDP port (3389)
+  - AWS Security Groups allow internet traffic from internet to MSQL port (4333)
+  - AWS Security Groups allow internet traffic from internet to PostgreSQL port (5432)
+  - AWS Security Groups allow internet traffic from internet to VNC Listener port (5500)
+  - AWS Security Groups allow internet traffic from internet to VNC Server port (5900)
+id: Prisma Cloud Remediation - AWS EC2 Instance Misconfiguration
+inputs:
+- description: Update AWS EC2 instance automatically?
+  key: AutoUpdateEC2
+  required: false
+  value:
+    simple: "no"
+- description: Get the Prisma Cloud policy ID.
+  key: policyId
+  required: false
+  value:
+    complex:
+      accessor: labels.policy
+      root: incident
+      transformers:
+      - operator: ParseJSON
+      - args:
+          field:
+            value:
+              simple: policyId
+        operator: getField
+name: Prisma Cloud Remediation - AWS EC2 Instance Misconfiguration
+outputs: []
+starttaskid: "0"
+system: true
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "1"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 972c2cba-e9e8-4b4e-8f92-407ca7fb7917
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: 972c2cba-e9e8-4b4e-8f92-407ca7fb7917
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 930,
+          "y": -400
+        }
+      }
+  "1":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              complex:
+                accessor: brand
+                filters:
+                - - left:
+                      iscontext: true
+                      value:
+                        simple: modules.state
+                    operator: isEqualString
+                    right:
+                      value:
+                        simple: active
+                - - left:
+                      iscontext: true
+                      value:
+                        simple: modules.brand
+                    operator: isEqualString
+                    right:
+                      value:
+                        simple: AWS - EC2
+                root: modules
+          operator: isEqualString
+          right:
+            value:
+              simple: AWS - EC2
+      label: "yes"
+    id: "1"
+    ignoreworker: false
+    nexttasks:
+      '#default#':
+      - "8"
+      "yes":
+      - "14"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      description: Verifies that AWS - EC2 integration is enabled.
+      id: 9089a365-5d5e-44fe-8d37-d0ef1bb270bd
+      iscommand: false
+      name: Is AWS - EC2 integration enabled?
+      type: condition
+      version: -1
+    taskid: 9089a365-5d5e-44fe-8d37-d0ef1bb270bd
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 930,
+          "y": -260
+        }
+      }
+  "3":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              complex:
+                root: inputs.AutoUpdateEC2
+                transformers:
+                - operator: toLowerCase
+          operator: isEqualString
+          right:
+            value:
+              simple: "yes"
+      label: "yes"
+    id: "3"
+    ignoreworker: false
+    nexttasks:
+      '#default#':
+      - "5"
+      "yes":
+      - "10"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      description: Should we auto-remediate?
+      id: 77885611-1518-41c5-8929-0da5c8de85cb
+      iscommand: false
+      name: Update EC2 automatically?
+      type: condition
+      version: -1
+    taskid: 77885611-1518-41c5-8929-0da5c8de85cb
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 80,
+          "y": 80
+        }
+      }
+  "5":
+    id: "5"
+    ignoreworker: false
+    message:
+      bcc: null
+      body:
+        simple: ${incident.id} Autoremediate?
+      cc: null
+      format: ""
+      methods: []
+      replyOptions:
+      - "Yes"
+      - "No"
+      subject: null
+      timings:
+        completeafterreplies: 1
+        retriescount: 2
+        retriesinterval: 360
+      to: null
+    nexttasks:
+      '#default#':
+      - "6"
+      "Yes":
+      - "10"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      description: Determines whether or not to auto-remediate?
+      id: a1526b70-d9ce-4d1c-8e36-4aaa1cf5d850
+      iscommand: false
+      name: Auto remediate?
+      type: condition
+      version: -1
+    taskid: a1526b70-d9ce-4d1c-8e36-4aaa1cf5d850
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 420,
+          "y": 250
+        }
+      }
+  "6":
+    id: "6"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "9"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      description: Follow the steps outlined in the appropriate sub-playbook to remediate
+        the issue.
+      id: f8dfdf9c-3271-4644-89ce-2fdfd9f25e9f
+      iscommand: false
+      name: Manually remediate EC2
+      type: regular
+      version: -1
+    taskid: f8dfdf9c-3271-4644-89ce-2fdfd9f25e9f
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 700,
+          "y": 420
+        }
+      }
+  "7":
+    id: "7"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "8"
+    note: false
+    scriptarguments:
+      assetid: {}
+      closeNotes: {}
+      closeReason: {}
+      emailclassification: {}
+      id:
+        complex:
+          accessor: id
+          root: incident
+      phishingsubtype: {}
+    separatecontext: false
+    task:
+      brand: Builtin
+      description: Close the current incident.
+      id: 599730fe-9f1e-4a63-89c5-e941732683b6
+      iscommand: true
+      name: Close investigation
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: 599730fe-9f1e-4a63-89c5-e941732683b6
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 700,
+          "y": 935
+        }
+      }
+  "8":
+    id: "8"
+    ignoreworker: false
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 5bfb7869-0a96-4ca5-875c-1ec4c9072953
+      iscommand: false
+      name: Done
+      type: title
+      version: -1
+    taskid: 5bfb7869-0a96-4ca5-875c-1ec4c9072953
+    timertriggers: []
+    type: title
+    view: |-
+      {
+        "position": {
+          "x": 930,
+          "y": 1110
+        }
+      }
+  "9":
+    continueonerror: true
+    id: "9"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "7"
+    note: false
+    scriptarguments:
+      alert-id:
+        complex:
+          accessor: labels
+          root: incident
+          transformers:
+          - args:
+              field:
+                value:
+                  simple: id
+            operator: getField
+      alert-rule-name: {}
+      alert-status: {}
+      cloud-account: {}
+      cloud-region: {}
+      cloud-type: {}
+      dismissal-note:
+        simple: ${incident.labels.id} has been remediated by Demisto.
+      policy-compliance-standard: {}
+      policy-id:
+        complex:
+          accessor: labels.policy
+          root: incident
+          transformers:
+          - operator: ParseJSON
+          - args:
+              field:
+                value:
+                  simple: policyId
+            operator: getField
+      policy-label: {}
+      policy-name: {}
+      policy-severity: {}
+      policy-type: {}
+      resource-id: {}
+      resource-name: {}
+      resource-type: {}
+      risk-grade: {}
+      time-range-date-from: {}
+      time-range-date-to: {}
+      time-range-unit: {}
+      time-range-value: {}
+    separatecontext: false
+    task:
+      brand: RedLock
+      description: Dismiss the alerts matching the given filter. You must provide
+        either the policy IDs or alert IDs.
+      id: bd2eb7f2-5e30-4623-8e11-ea91b99c23d8
+      iscommand: true
+      name: Dismiss Prisma Cloud alert
+      script: RedLock|||redlock-dismiss-alerts
+      type: regular
+      version: -1
+    taskid: bd2eb7f2-5e30-4623-8e11-ea91b99c23d8
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 700,
+          "y": 765
+        }
+      }
+  "10":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              complex:
+                root: inputs.policyId
+          operator: isEqualString
+          right:
+            value:
+              simple: 2378dbf4-b104-4bda-9b05-7417affbba3f
+        - left:
+            iscontext: true
+            value:
+              complex:
+                root: inputs.policyId
+          operator: isEqualString
+          right:
+            value:
+              simple: 2dbda57f-33d4-459a-97ae-dec7e81f9ec4
+        - left:
+            iscontext: true
+            value:
+              complex:
+                root: inputs.policyId
+          operator: isEqualString
+          right:
+            value:
+              simple: 566686e8-0581-4df5-ae22-5a901ed37b58
+      label: securityGroups
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              complex:
+                root: inputs.policyId
+          operator: isEqualString
+          right:
+            value:
+              simple: 520308c5-57e3-4061-b9bf-1ce5325a2d61
+        - left:
+            iscontext: true
+            value:
+              complex:
+                root: inputs.policyId
+          operator: isEqualString
+          right:
+            value:
+              simple: 6eaf6455-1659-4c4b-bff5-c8c7b0fda201
+        - left:
+            iscontext: true
+            value:
+              complex:
+                root: inputs.policyId
+          operator: isEqualString
+          right:
+            value:
+              simple: 14d10ad2-51df-4b07-be69-e94951cc7067
+        - left:
+            iscontext: true
+            value:
+              complex:
+                root: inputs.policyId
+          operator: isEqualString
+          right:
+            value:
+              simple: cdcd663c-e9c9-4472-9779-e5f38751524a
+        - left:
+            iscontext: true
+            value:
+              complex:
+                root: inputs.policyId
+          operator: isEqualString
+          right:
+            value:
+              simple: ab7f8eda-18ab-457c-b5d3-fd4f53c722bc
+        - left:
+            iscontext: true
+            value:
+              complex:
+                root: inputs.policyId
+          operator: isEqualString
+          right:
+            value:
+              simple: 65daa6a0-e040-434e-aca3-9d5765c96e7c
+        - left:
+            iscontext: true
+            value:
+              complex:
+                root: inputs.policyId
+          operator: isEqualString
+          right:
+            value:
+              simple: 5599b97c-2965-4fd2-9370-927c368abd2d
+        - left:
+            iscontext: true
+            value:
+              complex:
+                root: inputs.policyId
+          operator: isEqualString
+          right:
+            value:
+              simple: a9f1b983-f216-486e-b8ea-7259764fc420
+        - left:
+            iscontext: true
+            value:
+              complex:
+                root: inputs.policyId
+          operator: isEqualString
+          right:
+            value:
+              simple: 3b642d25-4534-487a-9399-c2622754ecb5
+        - left:
+            iscontext: true
+            value:
+              complex:
+                root: inputs.policyId
+          operator: isEqualString
+          right:
+            value:
+              simple: b82f90ce-ed8b-4b49-970c-2268b0a6c2e5
+        - left:
+            iscontext: true
+            value:
+              complex:
+                root: inputs.policyId
+          operator: isEqualString
+          right:
+            value:
+              simple: c2074d5a-aa28-4dde-90c1-82f528cec55e
+        - left:
+            iscontext: true
+            value:
+              complex:
+                root: inputs.policyId
+          operator: isEqualString
+          right:
+            value:
+              simple: 760f2823-997e-495f-a538-5fb073c0ee78
+        - left:
+            iscontext: true
+            value:
+              complex:
+                root: inputs.policyId
+          operator: isEqualString
+          right:
+            value:
+              simple: ee03a420-89d6-4745-a0ac-98878cb56cf4
+        - left:
+            iscontext: true
+            value:
+              complex:
+                root: inputs.policyId
+          operator: isEqualString
+          right:
+            value:
+              simple: 519456f2-f9eb-407b-b32d-064f1ac7f0ca
+        - left:
+            iscontext: true
+            value:
+              complex:
+                root: inputs.policyId
+          operator: isEqualString
+          right:
+            value:
+              simple: 8dd9e369-0c09-4477-97a2-ff0d50507fe2
+        - left:
+            iscontext: true
+            value:
+              complex:
+                root: inputs.policyId
+          operator: isEqualString
+          right:
+            value:
+              simple: 89cbc2f1-fcb0-48b9-be71-4cbe2d18a5f7
+        - left:
+            iscontext: true
+            value:
+              complex:
+                root: inputs.policyId
+          operator: isEqualString
+          right:
+            value:
+              simple: ab8b6bb8-a730-4bdf-a4d5-080c01e97335
+      label: internetPorts
+    defaultassigneecomplex: {}
+    id: "10"
+    ignoreworker: false
+    nexttasks:
+      internetPorts:
+      - "16"
+      securityGroups:
+      - "15"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      description: Execute the appropriate sub-playbook to perform the actual remediation.
+      id: 7c40b3ff-f089-453e-816c-c3830ebf15fe
+      iscommand: false
+      name: Execute playbook
+      type: condition
+      version: -1
+    taskid: 7c40b3ff-f089-453e-816c-c3830ebf15fe
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 80,
+          "y": 420
+        }
+      }
+  "14":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              complex:
+                root: inputs.policyId
+          operator: isNotEmpty
+      label: "yes"
+    defaultassigneecomplex: {}
+    id: "14"
+    ignoreworker: false
+    nexttasks:
+      '#default#':
+      - "6"
+      "yes":
+      - "3"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      description: Verify that a Prisma Cloud policy ID exists.
+      id: 0d732bc3-22a0-4b2e-8b03-4d8aa68b9389
+      iscommand: false
+      name: Is there a policy to remediate?
+      type: condition
+      version: -1
+    taskid: 0d732bc3-22a0-4b2e-8b03-4d8aa68b9389
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 700,
+          "y": -90
+        }
+      }
+  "15":
+    id: "15"
+    ignoreworker: false
+    loop:
+      exitCondition: ""
+      iscommand: false
+      wait: 1
+    nexttasks:
+      '#none#':
+      - "9"
+    note: false
+    scriptarguments:
+      policyId:
+        complex:
+          root: inputs.policyId
+    separatecontext: true
+    task:
+      brand: ""
+      id: b5281377-31ef-472b-8699-6c94c222e807
+      iscommand: false
+      name: Prisma Cloud Remediation - AWS EC2 Security Group Misconfiguration
+      playbookId: Prisma Cloud Remediation - AWS EC2 Security Group Misconfiguration
+      type: playbook
+      version: -1
+    taskid: b5281377-31ef-472b-8699-6c94c222e807
+    timertriggers: []
+    type: playbook
+    view: |-
+      {
+        "position": {
+          "x": 420,
+          "y": 590
+        }
+      }
+  "16":
+    id: "16"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "9"
+    note: false
+    separatecontext: true
+    task:
+      brand: ""
+      id: 3d9a9afc-e7e3-4be6-8142-57b5ef3bffb2
+      iscommand: false
+      name: Prisma Cloud Remediation - AWS Security Groups Allows Internet Traffic
+        To TCP Port
+      playbookId: Prisma Cloud Remediation - AWS Security Groups Allows Internet Traffic
+        To TCP
+      type: playbook
+      version: -1
+    taskid: 3d9a9afc-e7e3-4be6-8142-57b5ef3bffb2
+    timertriggers: []
+    type: playbook
+    view: |-
+      {
+        "position": {
+          "x": -220,
+          "y": 590
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {
+      "10_15_securityGroups": 0.54,
+      "10_16_internetPorts": 0.56,
+      "14_3_yes": 0.49,
+      "14_6_#default#": 0.26,
+      "1_14_yes": 0.5,
+      "1_8_#default#": 0.18,
+      "3_10_yes": 0.48,
+      "3_5_#default#": 0.48,
+      "5_10_Yes": 0.51,
+      "5_6_#default#": 0.52
+    },
+    "paper": {
+      "dimensions": {
+        "height": 1575,
+        "width": 1530,
+        "x": -220,
+        "y": -400
+      }
+    }
+  }

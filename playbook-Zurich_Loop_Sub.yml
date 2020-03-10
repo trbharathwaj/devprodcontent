@@ -1,0 +1,87 @@
+id: a2fe844a-0175-48a3-8d9f-60df3ac6e72d
+inputs:
+- description: array1
+  key: array1
+  required: false
+  value: {}
+- description: array2
+  key: array2
+  required: false
+  value: {}
+name: Zurich Loop Sub
+outputs: []
+starttaskid: "0"
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "1"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: d6ef0222-98ab-4161-860f-6b2043fed69a
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: d6ef0222-98ab-4161-860f-6b2043fed69a
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 50
+        }
+      }
+  "1":
+    id: "1"
+    ignoreworker: false
+    note: false
+    scriptarguments:
+      value:
+        complex:
+          root: inputs.array1
+          transformers:
+          - args:
+              prefix: {}
+              suffix:
+                iscontext: true
+                value:
+                  simple: inputs.array2
+            operator: concat
+    separatecontext: false
+    task:
+      brand: ""
+      description: Prints text to war room (Markdown supported)
+      id: 01417e48-7e30-4248-88bd-a35ab37bb5b1
+      iscommand: false
+      name: Concat
+      script: Print
+      type: regular
+      version: -1
+    taskid: 01417e48-7e30-4248-88bd-a35ab37bb5b1
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 200
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 245,
+        "width": 380,
+        "x": 450,
+        "y": 50
+      }
+    }
+  }

@@ -1,0 +1,43 @@
+{
+	"associatedToAll": false,
+	"associatedTypes": [
+		"Employee Offboarding"
+	],
+	"breachScript": "",
+	"caseInsensitive": true,
+	"cliName": "mailboxdelegation",
+	"closeForm": false,
+	"columns": null,
+	"content": true,
+	"defaultRows": null,
+	"description": "Whether the mailbox of the user was delegated to the user's manager. Can be either \"Unchanged\" or \"Delegated\".",
+	"editForm": true,
+	"fieldCalcScript": "",
+	"group": 0,
+	"hidden": false,
+	"id": "incident_mailboxdelegation",
+	"isReadOnly": false,
+	"locked": false,
+	"name": "Mailbox Delegation",
+	"neverSetAsRequired": false,
+	"ownerOnly": false,
+	"placeholder": "",
+	"required": false,
+	"script": "",
+	"selectValues": [
+		"Unchanged",
+		"Delegated"
+	],
+	"sla": 0,
+	"sortValues": null,
+	"system": false,
+	"systemAssociatedTypes": null,
+	"threshold": 72,
+	"type": "singleSelect",
+	"unmapped": false,
+	"unsearchable": false,
+	"useAsKpi": false,
+	"validatedError": "",
+	"validationRegex": "",
+	"version": -1
+}

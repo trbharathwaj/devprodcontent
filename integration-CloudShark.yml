@@ -1,0 +1,434 @@
+category: Data Enrichment & Threat Intelligence
+commonfields:
+  id: CloudShark
+  version: -1
+configuration:
+- defaultvalue: ""
+  display: CS Enterprise URL
+  name: url
+  required: true
+  type: 0
+- defaultvalue: ""
+  display: API Token
+  name: apikey
+  required: true
+  type: 4
+- defaultvalue: "false"
+  display: Use system proxy settings
+  name: proxy
+  required: false
+  type: 8
+- defaultvalue: "false"
+  display: Trust any certificate (not secure)
+  name: insecure
+  required: false
+  type: 8
+description: Use the CloudShark integration to upload, share, and collaborate on network
+  packet capture files using your on-premises CS Enterprise system.
+detaileddescription: |
+  CS Enterprise is a browser-based packet capture analysis platform built for collaboration and organization. This integration provides the ability to upload, manage, and share pcap files with your team using CS Enterprise.
+
+  To use all the commands provided by this integration you will need to create an API Token with the following permissions enabled:
+
+  * Get Info/Annotations
+  * Delete capture files
+  * Download original
+  * Upload capture files
+display: CloudShark
+image: data:image/png;base64,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
+name: CloudShark
+script:
+  commands:
+  - arguments:
+    - description: Capture ID of the capture in CS Enterprise.
+      name: capture_id
+    description: Deletes a capture file from CS Enterprise.
+    name: cloudshark-delete
+    outputs:
+    - contextPath: CloudShark.Result
+      description: Result of the delete command.
+  - arguments:
+    - description: Capture ID of the capture in CS Enterprise.
+      name: capture_id
+    description: Downloads a capture file from CS Enterprise.
+    name: cloudshark-download
+    outputs:
+    - contextPath: File
+      description: The file downloaded from CS Enterprise
+  - arguments:
+    - description: Capture ID of the capture in CS Enterprise.
+      name: capture_id
+      required: true
+    description: Retrieves meta-information about a capture file from CS Enterprise.
+    name: cloudshark-info
+    outputs:
+    - contextPath: CloudShark.CaptureInfo.CaptureID
+      description: Capture ID of the capture.
+      type: string
+    - contextPath: CloudShark.CaptureInfo.GroupWrite
+      description: Group permission setting.
+      type: boolean
+    - contextPath: CloudShark.CaptureInfo.Size
+      description: Size of the capture file.
+      type: number
+    - contextPath: CloudShark.CaptureInfo.DataByteRate
+      description: Data byte rate.
+      type: string
+    - contextPath: CloudShark.CaptureInfo.TagList
+      description: List of the capture file's tags.
+      type: string
+    - contextPath: CloudShark.CaptureInfo.DataBitRate
+      description: Data bit rate
+      type: string
+    - contextPath: CloudShark.CaptureInfo.FileName
+      description: Filename
+      type: string
+    - contextPath: CloudShark.CaptureInfo.SHA1
+      description: SHA1 hash of the capture file.
+      type: string
+    - contextPath: CloudShark.CaptureInfo.AvgPacketRate
+      description: Average packet rate.
+      type: string
+    - contextPath: CloudShark.CaptureInfo.StartTime
+      description: Start time of the capture.
+      type: date
+    - contextPath: CloudShark.CaptureInfo.CreatedAt
+      description: When the capture file was added.
+      type: date
+    - contextPath: CloudShark.CaptureInfo.AvgPacketSize
+      description: Average packet size.
+      type: string
+    - contextPath: CloudShark.CaptureInfo.User
+      description: Owner of the capture file.
+      type: string
+    - contextPath: CloudShark.CaptureInfo.LastAccessed
+      description: When the capture was last accessed.
+      type: date
+    - contextPath: CloudShark.CaptureInfo.DisableAutodelete
+      description: Whether autodelete is enabled or disabled.
+      type: boolean
+    - contextPath: CloudShark.CaptureInfo.CapFileID
+      description: Capture file ID.
+      type: number
+    - contextPath: CloudShark.CaptureInfo.EndTime
+      description: End time of the capture.
+      type: date
+    - contextPath: CloudShark.CaptureInfo.NumPackets
+      description: Number of packets in the capture.
+      type: number
+    - contextPath: CloudShark.CaptureInfo.Encapsulation
+      description: Encapsulation type.
+      type: string
+    - contextPath: CloudShark.CaptureInfo.Duration
+      description: Duration of the capture.
+      type: string
+    - contextPath: CloudShark.CaptureInfo.Comments
+      description: Comments for the capture.
+      type: string
+    - contextPath: CloudShark.CaptureInfo.Public
+      description: Whether permission settings are public.
+      type: boolean
+    - contextPath: CloudShark.CaptureInfo.DataSize
+      description: Size of data in the capture.
+      type: number
+    - contextPath: CloudShark.CaptureInfo.File
+      description: Location of capture file on disk
+      type: string
+    - contextPath: CloudShark.CaptureInfo.FileType
+      description: File type
+      type: string
+    - contextPath: CloudShark.CaptureInfo.FileSource
+      description: Source of capture file
+      type: string
+    - contextPath: CloudShark.CaptureInfo.Truncated
+      description: Whether the capture file is truncated.
+      type: string
+    - contextPath: CloudShark.CaptureInfo.Group
+      description: Group with which the capture file is shared.
+      type: string
+  - arguments:
+    - description: EntryID of the network capture file to upload.
+      name: file
+      required: true
+    - description: A comma-separated list of tags to apply to the capture file.
+      name: additional_tags
+    - description: The filename of the capture in CS Enterprise.
+      name: filename
+    description: Uploads a capture file into CS Enterprise
+    name: cloudshark-upload
+    outputs:
+    - contextPath: URL.Data
+      description: URL of the capture file in CS Enterprise.
+      type: string
+    - contextPath: CloudShark.CaptureID
+      description: Capture ID of the capture in CS Enterprise.
+      type: string
+  dockerimage: demisto/python3:3.7.3.286
+  runonce: false
+  script: |2
+
+
+    import requests
+    import collections
+
+    # disable insecure warnings
+    requests.packages.urllib3.disable_warnings()
+
+    BASE_URL = demisto.params().get('url')
+    USE_SSL = not demisto.params().get('insecure', False)
+    PROXY = demisto.params().get('proxy')
+    API_KEY = demisto.params().get('apikey')
+
+    '''HELPER FUNCTIONS'''
+    capture_info_outputs = {
+        'id': 'CaptureID',
+        'group_write?': 'GroupWrite',
+        'size': 'Size',
+        'data_byte_rate': 'DataByteRate',
+        'tag_list': 'TagList',
+        'data_bit_rate': 'DataBitRate',
+        'filename': 'FileName',
+        'sha1_hash': 'SHA1',
+        'avg_packet_rate': 'AvgPacketRate',
+        'start_time': 'StartTime',
+        'created_at': 'CreatedAt',
+        'avg_packet_size': 'AvgPacketSize',
+        'user': 'User',
+        'last_accessed': 'LastAccessed',
+        'disable_autodelete': 'DisableAutodelete',
+        'cap_file_id': 'CapFileID',
+        'end_time': 'EndTime',
+        'num_packets': 'NumPackets',
+        'encapsulation': 'Encapsulation',
+        'duration': 'Duration',
+        'comments': 'Comments',
+        'public?': 'Public',
+        'data_size': 'DataSize',
+        'file': 'File',
+        'file_type': 'FileType',
+        'file_source': 'FileSource',
+        'truncated': 'Truncated',
+        'group': 'Group',
+    }
+
+
+    # Translates the capture info field names to standard outputs
+    def transalte_capture_info(capture_info):
+        translated_output = {}
+        for field_name, standard_name in capture_info_outputs.items():
+            if field_name in capture_info:
+                translated_output[standard_name] = capture_info.get(field_name)
+        return translated_output
+
+
+    # Allows nested keys to be accesible
+    def makehash():
+        return collections.defaultdict(makehash)
+
+
+    def parse_error_response(http_response):
+        try:
+            response = http_response.json()
+        except ValueError:
+            return f'Error in API call. Recived status code: {http_response.status_code};' \
+                f' Reason: {http_response.reason}; contents: {http_response.content}'
+        exceptions = response.get('exceptions', '')
+        if exceptions:
+            return f'Call Failed. status code:{http_response.status_code}, reason: {exceptions}'
+
+
+    def http(method, url_suffix, params=None, data=None, files=None):
+        try:
+            response = requests.request(
+                method,
+                BASE_URL + '/api/v1/' + API_KEY + url_suffix,
+                verify=USE_SSL,
+                params=params,
+                data=data,
+                files=files)
+            if response.status_code == 200:
+                return response
+            elif (response.status_code == 403) and (url_suffix == "/search/"):
+                # API Token cannot execute API method.
+                # If testing toekn is valid using the /search/ endpoint this is ok
+                return response
+            elif response.status_code == 404:
+                return_error(parse_error_response(response))
+            else:
+                return_error(parse_error_response(response))
+        except requests.exceptions.ConnectionError as err:
+            return_error("Could not connect to CS Enterprise URL ", str(err))
+        except requests.exceptions.MissingSchema:
+            return_error("Invalid Schema. URL must start with http:// or https://")
+        except requests.exceptions.InvalidSchema:
+            return_error("Invalid Schema. URL must start with http:// or https://")
+
+
+    '''MAIN FUNCTIONS'''
+
+
+    def upload(file_entry_id, additional_tags=None, filename=None):
+        # Get file
+        cmd_res = demisto.getFilePath(file_entry_id)
+        file_path = cmd_res.get('path')
+        name = cmd_res.get('name')
+
+        # Setup optional parameters
+        params = {}
+        if filename is not None:
+            params['filename'] = filename
+        if additional_tags is not None:
+            params['additional_tags'] = additional_tags
+
+        files = {'file': (name, open(file_path, 'rb'))}
+        response = http('POST', '/upload', files=files, params=params)
+        capture_id = response.json()['id']
+        return capture_id
+
+
+    def upload_command():
+        # Get arguments
+        file_entry_id = demisto.args().get('file')
+        filename = demisto.args().get('filename')
+        additional_tags = demisto.args().get('additional_tags')
+
+        # Create hashes
+        contxt = makehash()
+
+        # Upload capture and get capture_id
+        capture_id = upload(file_entry_id, additional_tags=additional_tags, filename=filename)
+        url = BASE_URL + '/captures/' + capture_id
+
+        # Set Demisto Context
+        contxt['URL']['Data'] = url
+        contxt['CloudShark']['CaptureID'] = capture_id
+        ec = contxt
+
+        # Create markdown link to capture
+        markdown_url = "CaptureID: " + capture_id + " - [Open Capture in CloudShark](" + url + ")"
+
+        demisto.results({
+            'Type': entryTypes['note'],
+            'ContentsFormat': formats['markdown'],
+            'Contents': ec,
+            'HumanReadable': markdown_url,
+            'EntryContext': ec
+        })
+
+
+    def info(capture_id):
+        url_suffix = '/info/' + capture_id
+        response = http('GET', url_suffix)
+        info = response.json()
+        return info
+
+
+    def info_command():
+        # Get arguments
+        capture_id = demisto.args().get('capture_id')
+
+        # Create hashes
+        contxt = makehash()
+
+        # Request meta-info from CloudShark
+        file_info = info(capture_id)
+        # Set Demisto Context
+        capture_info = transalte_capture_info(file_info)
+        contxt['CloudShark.CaptureInfo(val.CaptureID && val.CaptureID == obj.CaptureID)'] = capture_info
+        ec = contxt
+
+        # Create table with capture info
+        info_table = tableToMarkdown('Capture file info', capture_info)
+
+        demisto.results({
+            'Type': entryTypes['note'],
+            'ContentsFormat': formats['markdown'],
+            'Contents': file_info,
+            'HumanReadable': info_table,
+            'EntryContext': ec
+        })
+
+
+    def download(capture_id):
+        url_suffix = '/download/' + capture_id
+        response = http('GET', url_suffix)
+        filename = re.findall("filename=(.+)", response.headers['Content-Disposition'])[0]
+        file = response.content
+        files = {'filename': filename, 'file': file}
+        return files
+
+
+    def download_command():
+        # Get argument
+        capture_id = demisto.args().get('capture_id')
+
+        # Download file
+        files = download(capture_id)
+
+        demisto.results(fileResult(files['filename'], files['file']))
+
+
+    def delete(capture_id):
+        url_suffix = '/delete/' + capture_id
+        response = http('POST', url_suffix)
+        msg = response.json()
+        return msg
+
+
+    def delete_command():
+        # Get argument
+        capture_id = demisto.args().get('capture_id')
+
+        # Create hashes
+        contxt = makehash()
+        human_readable = makehash()
+
+        # Delete capture
+        result = delete(capture_id)
+
+        # Set result
+        contents = result
+        human_readable['Response'] = result
+        contxt['CloudShark']['Result'] = result
+        ec = contxt
+
+        demisto.results({
+            'Type': entryTypes['note'],
+            'ContentsFormat': formats['markdown'],
+            'Contents': contents,
+            'HumanReadable': tableToMarkdown('Result', human_readable),
+            'EntryContext': ec
+        })
+
+
+    ''' EXECUTION CODE '''
+    LOG('command is %s' % (demisto.command(),))
+    try:
+        handle_proxy()
+        # The command demisto.command() holds the command sent from the user.
+        if demisto.command() == 'cloudshark-upload':
+            upload_command()
+        elif demisto.command() == 'cloudshark-info':
+            info_command()
+        elif demisto.command() == 'cloudshark-download':
+            download_command()
+        elif demisto.command() == 'cloudshark-delete':
+            delete_command()
+        elif demisto.command() == 'test-module':
+            # This is the call made when pressing the integration test button.
+            if API_KEY == "":
+                return_error("Must enter API Token")
+            response = http("GET", "/search/")
+            if response.status_code == 200 or response.status_code == 403:
+                # Token is valid but search method not allowed
+                demisto.results('ok')
+            else:
+                demisto.results('Error: Server returned %s: %s' % (response.status_code, response.reason))
+            sys.exit(0)
+    except Exception as e:
+        LOG(e)
+        LOG.print_log()
+        raise
+  subtype: python3
+  type: python
+system: true

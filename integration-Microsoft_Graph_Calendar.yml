@@ -1,0 +1,1369 @@
+category: IT Services
+commonfields:
+  id: Microsoft Graph Calendar
+  version: -1
+configuration:
+- defaultvalue: https://graph.microsoft.com
+  display: Server URL
+  name: url
+  required: true
+  type: 0
+- defaultvalue: ""
+  display: ID (received from the admin consent - see Detailed Instructions (?)
+  name: auth_id
+  required: true
+  type: 4
+- defaultvalue: ""
+  display: Token (received from the admin consent - see Detailed Instructions (?)
+    section)
+  name: tenant_id
+  required: true
+  type: 4
+- defaultvalue: ""
+  display: Key (received from the admin consent - see Detailed Instructions (?)
+  name: enc_key
+  required: true
+  type: 4
+- defaultvalue: ""
+  display: Default user
+  name: default_user
+  required: false
+  type: 0
+- defaultvalue: ""
+  display: Trust any certificate (not secure)
+  name: insecure
+  required: false
+  type: 8
+- defaultvalue: ""
+  display: Use system proxy settings
+  name: proxy
+  required: false
+  type: 8
+description: Microsoft Graph Calendar enables you to create and manage different calendars
+  and events according to your requirements.
+detaileddescription: |
+  To allow access to Microsoft Graph Calendar, an administrator has to approve the Demisto app using an admin consent flow, by clicking on the following [link](https://oproxy.demisto.ninja/ms-graph-calendar).
+  After authorizing the Demisto app, you will get an ID, Token, and Key, which needs to be added to the integration instance configuration's corresponding fields.
+
+  Required Permissions in the MS Graph Groups App:
+  Directory.ReadWrite.All - Delegated
+  Directory.ReadWrite.All - Application
+  Group.ReadWrite.All - Application
+
+
+  - Calendars.Read - Delegated
+  - Calendars.Read - Application
+  - Calendars.ReadWrite - Delegated
+  - Calendars.ReadWrite - Application
+display: Microsoft Graph Calendar
+image: data:image/png;base64,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
+name: Microsoft Graph Calendar
+script:
+  commands:
+  - arguments:
+    - description: User ID or userPrincipalName.
+      name: user
+    - description: Sorts the order of the items returned from Microsoft Graph.
+      name: order_by
+    - description: The link for the next page of results, if it exists. See docs.microsoft.com/en-us/graph/api/event-list?view=graph-rest-1.0
+        for more details.
+      name: next_link
+    - description: Specifies the page size of the result set.
+      name: top
+    description: Retrieves a list of user Calendar.
+    name: msgraph-calendar-list-calendars
+    outputs:
+    - contextPath: MSGraphCalendar.Calendar.Name
+      description: The calendar name.
+      type: String
+    - contextPath: MSGraphCalendar.Calendar.CanShare
+      description: Whether the user has the permission to share the calendar. Only
+        the user who created the calendar can share.
+      type: Boolean
+    - contextPath: MSGraphCalendar.Calendar.CanEdit
+      description: Whether the user can write to the calendar (true for the user who
+        created the calendar and for a user who has been shared a calendar and granted
+        write access).
+      type: Boolean
+    - contextPath: MSGraphCalendar.Calendar.ChangeKey
+      description: Identifies the version of the calendar object. Every time the calendar
+        is changed, the changeKey changes as well, which allows the exchange to apply
+        changes to the correct version of the object. Read-only.
+      type: String
+    - contextPath: MSGraphCalendar.Calendar.Owner
+      description: The user who created or added the calendar.
+      type: Unknown
+    - contextPath: MSGraphCalendar.Calendar.ID
+      description: The unique ID of the calendar. Read-only.
+      type: String
+    - contextPath: MSGraphCalendar.Calendar.CanViewPrivateItems
+      description: Whether the user can read calendar items that have been marked
+        private.
+      type: Boolean
+  - arguments:
+    - description: The user ID or the userPrincipalName.
+      name: user
+    - description: The calendar ID or name. If not specified, it retrieves the user's
+        default calendar.
+      name: calendar_id
+    description: Retrieves one of user's Calendars.
+    name: msgraph-calendar-get-calendar
+    outputs:
+    - contextPath: MSGraphCalendar.Calendar.Name
+      description: The name of the calendar.
+      type: String
+    - contextPath: MSGraphCalendar.Calendar.CanShare
+      description: Whether the user has the permission to share the calendar. Only
+        the user who created the calendar can share it.
+      type: Boolean
+    - contextPath: MSGraphCalendar.Calendar.CanEdit
+      description: Whether the user can write to the calendar (true for the user who
+        created the calendar and for a user who has been shared a calendar and granted
+        write access).
+      type: Boolean
+    - contextPath: MSGraphCalendar.Calendar.ChangeKey
+      description: Identifies the version of the calendar object. Every time the calendar
+        is changed, the changeKey changes as well, which allows the Exchange to apply
+        changes to the correct version of the object. Read-only.
+      type: String
+    - contextPath: MSGraphCalendar.Calendar.Owner
+      description: The user who created or added the calendar.
+      type: Unknown
+    - contextPath: MSGraphCalendar.Calendar.ID
+      description: The unique ID of the calendar. Read-only.
+      type: String
+    - contextPath: MSGraphCalendar.Calendar.CanViewPrivateItems
+      description: Whether the user can read calendar items that have been marked
+        private.
+  - arguments:
+    - description: The User ID or userPrincipalName.
+      name: user
+    - description: The calendar ID or name. If not provided, the default calendar
+        is used.
+      name: calendar_id
+    - description: Sorts the order of the items returned from Microsoft Graph.
+      name: order_by
+    - description: Link for the next page of results, if it exists. See docs.microsoft.com/en-us/graph/api/event-list?view=graph-rest-1.0
+        for more details.
+      name: next_link
+    - description: Specifies the page size of the result set.
+      name: top
+    - description: Filter Results. For more information, see https://docs.microsoft.com/en-us/graph/query-parameters#filter-parameter.
+      name: filter_by
+    description: Retrieves a list of Calendar's events.
+    name: msgraph-calendar-list-events
+    outputs:
+    - contextPath: MSGraphCalendar.ID
+      description: User's ID.
+      type: Unknown
+    - contextPath: MSGraphCalendar.DisplayName
+      description: The display name of the user.
+      type: Unknown
+    - contextPath: MSGraphCalendar.GivenName
+      description: The given name of the user.
+      type: Unknown
+    - contextPath: MSGraphCalendar.BusinessPhones
+      description: The business phone numbers of the user.
+      type: Unknown
+    - contextPath: MSGraphCalendar.JobTitle
+      description: The job title of the user.
+      type: Unknown
+    - contextPath: MSGraphCalendar.Mail
+      description: The mail address of the user.
+      type: Unknown
+    - contextPath: MSGraphCalendar.MobilePhone
+      description: The mobile phone number of the user.
+      type: Unknown
+    - contextPath: MSGraphCalendar.OfficeLocation
+      description: The office location of the user.
+      type: Unknown
+    - contextPath: MSGraphCalendar.PreferredLanguage
+      description: The preferred language of the user.
+      type: Unknown
+    - contextPath: MSGraphCalendar.Surname
+      description: The surname of the user.
+      type: Unknown
+    - contextPath: MSGraphCalendar.UserPrincipalName
+      description: The principal name of the user.
+      type: Unknown
+  - arguments:
+    - description: The user ID or the userPrincipalName.
+      name: user
+    - description: The event ID.
+      name: event_id
+      required: true
+    description: Retrieves an event by event ID.
+    name: msgraph-calendar-get-event
+    outputs:
+    - contextPath: MSGraphCalendar.Event.OriginalStartTimeZone
+      description: The start time zone when the event was created.
+      type: String
+    - contextPath: MSGraphCalendar.Event.HasAttachments
+      description: Whether the event has attachments.
+      type: Boolean
+    - contextPath: MSGraphCalendar.Event.ResponseRequested
+      description: Whether the sender requests a response when the event is accepted
+        or declined.
+      type: Boolean
+    - contextPath: MSGraphCalendar.Event.WebLink
+      description: The URL to open the event in Outlook on the web.
+      type: String
+    - contextPath: MSGraphCalendar.Event.Recurrence
+      description: The recurrence pattern for the event.
+      type: Unknown
+    - contextPath: MSGraphCalendar.Event.Start
+      description: The date, time, and time zone that the event starts. By default,
+        the start time is in UTC.
+      type: Unknown
+    - contextPath: MSGraphCalendar.Event.End
+      description: The date, time, and time zone that the event ends. By default,
+        the end time is in UTC.
+      type: Unknown
+    - contextPath: MSGraphCalendar.Event.Location
+      description: The location of the event.
+      type: Unknown
+    - contextPath: MSGraphCalendar.Event.Attendees
+      description: The collection of attendees for the event.
+      type: Unknown
+    - contextPath: MSGraphCalendar.Event.Type
+      description: The event type. For example, singleInstance, occurrence, exception,
+        seriesMaster. Read-only.
+      type: String
+    - contextPath: MSGraphCalendar.Event.ResponseStatus.response
+      description: Indicates the type of response sent in response to an event message.
+      type: Unknown
+    - contextPath: MSGraphCalendar.Event.Importance
+      description: The importance of the event. For example, low, normal, high.
+      type: String
+    - contextPath: MSGraphCalendar.Event.ICalUId
+      description: A unique identifier that is shared by all instances of an event
+        across different calendars.
+      type: String
+    - contextPath: MSGraphCalendar.Event.IsCancelled
+      description: Whether the event has been canceled.
+      type: Boolean
+    - contextPath: MSGraphCalendar.Event.IsAllDay
+      description: Whether the event lasts all day.
+      type: Boolean
+    - contextPath: MSGraphCalendar.Event.ReminderMinutesBeforeStart
+      description: The number of minutes before the event start time of the reminder
+        alert.
+      type: Number
+    - contextPath: MSGraphCalendar.Event.LastModifiedDateTime
+      description: The last time the event was modified, using ISO 8601 format in
+        in UTC time. For example, midnight UTC on Jan 1, 2014 is '2014-01-01T00:00:00Z'
+      type: String
+    - contextPath: MSGraphCalendar.Event.OriginalEndTimeZone
+      description: The end time zone when the event was created.
+      type: String
+    - contextPath: MSGraphCalendar.Event.CreatedDateTime
+      description: 'The date the event was created using ISO 8601 format in UTC time.
+        For example, midnight UTC on Jan 1, 2014 would be: ''2014-01-01T00:00:00Z'''
+      type: String
+    - contextPath: MSGraphCalendar.Event.ChangeKey
+      description: Identifies the version of the event object. Every time the event
+        is changed, the ChangeKey changes as well, which allows the Exchange to apply
+        changes to the correct version of the object.
+      type: String
+    - contextPath: MSGraphCalendar.Event.ID
+      description: The ID of the event.
+      type: String
+    - contextPath: MSGraphCalendar.Event.IsOrganizer
+      description: Whether the message sender is also the organizer.
+      type: Boolean
+    - contextPath: MSGraphCalendar.Event.Sensitivity
+      description: 'The sensitivity of the event. Possible values are: normal, personal,
+        private, confidential.'
+      type: String
+    - contextPath: MSGraphCalendar.Event.IsReminderOn
+      description: Whether an alert is set to remind the user of the event.
+      type: Boolean
+    - contextPath: MSGraphCalendar.Event.Organizer
+      description: The organizer of the event.
+      type: Unknown
+    - contextPath: MSGraphCalendar.Event.Subject
+      description: The text of the event's subject line.
+      type: String
+    - contextPath: MSGraphCalendar.Event.OnlineMeetingUrl
+      description: A URL for an online meeting, which is used when an organizer specifies
+        an event as an online meeting, such as a Skype meeting. Read-only.
+      type: Unknown
+  - arguments:
+    - description: The user ID or userPrincipalName.
+      name: user
+    - description: The unique ID of the Calendar or name. If not provided, the default
+        calendar is used.
+      name: calendar_id
+    - description: The collection of attendees for the event.
+      name: attendees
+    - description: The body of the message associated with the event in HTML or text
+        format.
+      name: body
+    - description: The text of the event's subject line.
+      name: subject
+    - description: The location of the event for an online meeting, such as a Skype
+        meeting. Read-only.
+      name: location
+    - description: The date and time the event ends. For example, '2017-05-28T12:00:00'.
+        By default, the start time is in UTC.
+      name: end
+    - description: The end time zone when the event was created.
+      name: original_end_time_zone
+    - description: The original start time of the calendar item using ISO 8601 format
+        in UTC time. For example, midnight UTC on Jan 1, 2014 is '2014-01-01T00:00:00Z'
+      name: original_start
+    - description: The date and time the event starts at, for example '2017-05-28T12:00:00'.
+        By default, the start time is in UTC.
+      name: start
+    - description: Represents a time zone. For example, 'Pacific Standard Time'. For
+        more information, see https://docs.microsoft.com/en-us/graph/api/resources/datetimetimezone?view=graph-rest-1.0
+      name: time_zone
+    - description: The start time zone when the event was created.
+      name: original_start_time_zone
+    description: Creates a new event.
+    name: msgraph-calendar-create-event
+    outputs:
+    - contextPath: MSGraphCalendar.Event.OriginalStartTimeZone
+      description: The start time zone when the event was created.
+      type: String
+    - contextPath: MSGraphCalendar.Event.HasAttachments
+      description: Whether the event has attachments.
+      type: Boolean
+    - contextPath: MSGraphCalendar.Event.ResponseRequested
+      description: Whether the sender would like a response when the event is accepted
+        or declined.
+      type: Boolean
+    - contextPath: MSGraphCalendar.Event.WebLink
+      description: The URL to open the event in Outlook on the web.
+      type: String
+    - contextPath: MSGraphCalendar.Event.Recurrence
+      description: The recurrence pattern for the event.
+      type: Unknown
+    - contextPath: MSGraphCalendar.Event.Start
+      description: The date, time, and time zone that the event starts. By default,
+        the start time is in UTC.
+      type: Unknown
+    - contextPath: MSGraphCalendar.Event.End
+      description: The date, time, and time zone that the event ends. By default,
+        the end time is in UTC.
+      type: Unknown
+    - contextPath: MSGraphCalendar.Event.Location
+      description: The location of the event.
+      type: Unknown
+    - contextPath: MSGraphCalendar.Event.Attendees
+      description: The collection of attendees for the event.
+      type: Unknown
+    - contextPath: MSGraphCalendar.Event.Type
+      description: The event type. For example, singleInstance, occurrence, exception,
+        seriesMaster. Read-only.
+      type: String
+    - contextPath: MSGraphCalendar.Event.ResponseStatus.response
+      description: Indicates the type of response sent in response to an event message.
+      type: Unknown
+    - contextPath: MSGraphCalendar.Event.Importance
+      description: The importance of the event. For example, low, normal, high.
+      type: String
+    - contextPath: MSGraphCalendar.Event.ICalUId
+      description: A unique identifier that is shared by all instances of an event
+        across different calendars.
+      type: String
+    - contextPath: MSGraphCalendar.Event.IsCancelled
+      description: Whether the event has been canceled.
+      type: Boolean
+    - contextPath: MSGraphCalendar.Event.IsAllDay
+      description: Whether the event lasts all day.
+      type: Boolean
+    - contextPath: MSGraphCalendar.Event.ReminderMinutesBeforeStart
+      description: The number of minutes before the event start time of the reminder
+        alert.
+      type: Number
+    - contextPath: MSGraphCalendar.Event.LastModifiedDateTime
+      description: Last modified time and date of the event using ISO 8601 format
+        in UTC time. For example, midnight UTC on Jan 1, 2014 is '2014-01-01T00:00:00Z'
+      type: String
+    - contextPath: MSGraphCalendar.Event.OriginalEndTimeZone
+      description: The end time zone when the event was created.
+      type: String
+    - contextPath: MSGraphCalendar.Event.CreatedDateTime
+      description: The time and date the event was created using ISO 8601 format in
+        UTC time. For example, midnight UTC on Jan 1, 2014 is '2014-01-01T00:00:00Z'
+      type: String
+    - contextPath: MSGraphCalendar.Event.ChangeKey
+      description: Identifies the version of the event object. Every time the event
+        is changed, the ChangeKey changes as well, which allows the Exchange to apply
+        changes to the correct version of the object.
+      type: String
+    - contextPath: MSGraphCalendar.Event.ID
+      description: Event's ID.
+      type: String
+    - contextPath: MSGraphCalendar.Event.IsOrganizer
+      description: Whether the message sender is also the organizer.
+      type: Boolean
+    - contextPath: MSGraphCalendar.Event.Sensitivity
+      description: 'The sensitivity of the event. Possible values are: normal, personal,
+        private, confidential.'
+      type: String
+    - contextPath: MSGraphCalendar.Event.IsReminderOn
+      description: Whether an alert is set to remind the user of the event.
+      type: Boolean
+    - contextPath: MSGraphCalendar.Event.Organizer
+      description: The organizer of the event.
+      type: Unknown
+    - contextPath: MSGraphCalendar.Event.Subject
+      description: The text of the event's subject line.
+      type: String
+    - contextPath: MSGraphCalendar.Event.OnlineMeetingUrl
+      description: A URL for an online meeting, which is used only when an organizer
+        specifies an event as an online meeting, such as a Skype meeting. Read-only.
+      type: Unknown
+  - arguments:
+    - description: The user ID or userPrincipalName.
+      name: user
+    - description: The event ID.
+      name: event_id
+      required: true
+    - description: The collection of attendees for the event.
+      name: attendees
+    - description: The body of the message associated with the event. It can be in
+        HTML or text format.
+      name: body
+    - description: The text of the event's subject line.
+      name: subject
+    - description: The location of the event for an online meeting, such as a Skype
+        meeting. Read-only.
+      name: location
+    - description: The date and time the event ends. For example '2017-05-28T12:00:00'.
+        By default, the start time is in UTC.
+      name: end
+    - description: The end time zone when the event was created.
+      name: original_end_time_zone
+    - description: The date and time the event starts. For example '2017-05-28T12:00:00'.
+        By default, the start time is in UTC.
+      name: start
+    - description: Represents a time zone, for example, 'Pacific Standard Time'. For
+        more information, see https://docs.microsoft.com/en-us/graph/api/resources/datetimetimezone?view=graph-rest-1.0
+      name: time_zone
+    - description: The original start time of the calendar item, using ISO 8601 format
+        in UTC time. For example, midnight UTC on Jan 1, 2014 is '2014-01-01T00:00:00Z'
+      name: original_start
+    - description: The start time zone when the event was created.
+      name: original_start_time_zone
+    description: Updates an existing event.
+    name: msgraph-calendar-update-event
+    outputs:
+    - contextPath: MSGraphCalendar.Event.OriginalStartTimeZone
+      description: The start time zone when the event was created.
+      type: String
+    - contextPath: MSGraphCalendar.Event.HasAttachments
+      description: Whether the event has attachments.
+      type: Boolean
+    - contextPath: MSGraphCalendar.Event.ResponseRequested
+      description: Whether the sender requests a response when the event is accepted
+        or declined.
+      type: Boolean
+    - contextPath: MSGraphCalendar.Event.WebLink
+      description: The URL to open the event in Outlook on the web.
+      type: String
+    - contextPath: MSGraphCalendar.Event.Recurrence
+      description: The recurrence pattern for the event.
+      type: Unknown
+    - contextPath: MSGraphCalendar.Event.Start
+      description: The date, time, and time zone that the event starts. By default,
+        the start time is in UTC.
+      type: Unknown
+    - contextPath: MSGraphCalendar.Event.End
+      description: The date, time, and time zone that the event ends. By default,
+        the end time is in UTC.
+      type: Unknown
+    - contextPath: MSGraphCalendar.Event.Location
+      description: The location of the event.
+      type: Unknown
+    - contextPath: MSGraphCalendar.Event.Attendees
+      description: The collection of attendees for the event.
+      type: Unknown
+    - contextPath: MSGraphCalendar.Event.Type
+      description: The event type. For example, singleInstance, occurrence, exception,
+        seriesMaster. Read-only.
+      type: String
+    - contextPath: MSGraphCalendar.Event.ResponseStatus.response
+      description: Indicates the type of response sent in response to an event message.
+      type: Unknown
+    - contextPath: MSGraphCalendar.Event.Importance
+      description: The importance of the event. For example, low, normal, high.
+      type: String
+    - contextPath: MSGraphCalendar.Event.ICalUId
+      description: A unique identifier that is shared by all instances of an event
+        across different calendars.
+      type: String
+    - contextPath: MSGraphCalendar.Event.IsCancelled
+      description: Whether the event has been canceled.
+      type: Boolean
+    - contextPath: MSGraphCalendar.Event.IsAllDay
+      description: Whether the event lasts all day.
+      type: Boolean
+    - contextPath: MSGraphCalendar.Event.ReminderMinutesBeforeStart
+      description: The number of minutes before the event start time of the reminder
+        alert.
+      type: Number
+    - contextPath: MSGraphCalendar.Event.LastModifiedDateTime
+      description: The last time and date the event was modified using ISO 8601 format
+        in UTC time. For example, midnight UTC on Jan 1, 2014 is '2014-01-01T00:00:00Z'
+      type: String
+    - contextPath: MSGraphCalendar.Event.OriginalEndTimeZone
+      description: The end time zone that was set when the event was created.
+      type: String
+    - contextPath: MSGraphCalendar.Event.CreatedDateTime
+      description: The date and time the event was created using ISO 8601 format in
+        UTC time. For example, midnight UTC on Jan 1, 2014 is '2014-01-01T00:00:00Z'
+      type: String
+    - contextPath: MSGraphCalendar.Event.ChangeKey
+      description: Identifies the version of the event object. Every time the event
+        is changed, the ChangeKey changes as well, which allows Exchange to apply
+        changes to the correct version of the object.
+      type: String
+    - contextPath: MSGraphCalendar.Event.ID
+      description: The ID of the event.
+      type: String
+    - contextPath: MSGraphCalendar.Event.IsOrganizer
+      description: Whether the message sender is also the organizer.
+      type: Boolean
+    - contextPath: MSGraphCalendar.Event.Sensitivity
+      description: 'The sensitvity of the event. Possible values are: normal, personal,
+        private, confidential.'
+      type: String
+    - contextPath: MSGraphCalendar.Event.IsReminderOn
+      description: Whether an alert is set to remind the user of the event.
+      type: Boolean
+    - contextPath: MSGraphCalendar.Event.Organizer
+      description: The organizer of the event.
+      type: Unknown
+    - contextPath: MSGraphCalendar.Event.Subject
+      description: The text of the event's subject line.
+      type: String
+    - contextPath: MSGraphCalendar.Event.OnlineMeetingUrl
+      description: A URL for an online meeting, used only when an organizer specifies
+        an event as an online meeting, such as a Skype meeting. Read-only.
+      type: Unknown
+  - arguments:
+    - description: The user ID or userPrincipalName.
+      name: user
+    - description: The event ID.
+      name: event_id
+      required: true
+    description: Updates an existing event.
+    name: msgraph-calendar-delete-event
+    outputs:
+    - contextPath: MSGraphCalendar.Event.OriginalStartTimeZone
+      description: The start time zone when the event was created.
+      type: String
+    - contextPath: MSGraphCalendar.Event.HasAttachments
+      description: Whether the event has attachments.
+      type: Boolean
+    - contextPath: MSGraphCalendar.Event.ResponseRequested
+      description: Whether the sender receives a response when the event is accepted
+        or declined.
+      type: Boolean
+    - contextPath: MSGraphCalendar.Event.WebLink
+      description: The URL to open the event in Outlook on the web.
+      type: String
+    - contextPath: MSGraphCalendar.Event.Recurrence
+      description: The recurrence pattern for the event.
+      type: Unknown
+    - contextPath: MSGraphCalendar.Event.Start
+      description: The date, time, and time zone that the event starts. By default,
+        the start time is in UTC.
+      type: Unknown
+    - contextPath: MSGraphCalendar.Event.End
+      description: The date, time, and time zone that the event ends. By default,
+        the end time is in UTC.
+      type: Unknown
+    - contextPath: MSGraphCalendar.Event.Location
+      description: The location of the event.
+      type: Unknown
+    - contextPath: MSGraphCalendar.Event.Attendees
+      description: The collection of attendees for the event.
+      type: Unknown
+    - contextPath: MSGraphCalendar.Event.Type
+      description: The event type. For example, singleInstance, occurrence, exception,
+        seriesMaster. Read-only.
+      type: String
+    - contextPath: MSGraphCalendar.Event.ResponseStatus.response
+      description: Indicates the type of response sent in response to an event message.
+      type: Unknown
+    - contextPath: MSGraphCalendar.Event.Importance
+      description: The importance of the event. For example, low, normal, high.
+      type: String
+    - contextPath: MSGraphCalendar.Event.ICalUId
+      description: A unique identifier that is shared by all instances of an event
+        across different calendars.
+      type: String
+    - contextPath: MSGraphCalendar.Event.IsCancelled
+      description: Whether the event has been canceled.
+      type: Boolean
+    - contextPath: MSGraphCalendar.Event.IsAllDay
+      description: Whether the event lasts all day.
+      type: Boolean
+    - contextPath: MSGraphCalendar.Event.ReminderMinutesBeforeStart
+      description: The number of minutes before the event start time of the reminder
+        alert.
+      type: Number
+    - contextPath: MSGraphCalendar.Event.LastModifiedDateTime
+      description: The time and date the event was last modified using the ISO 8601
+        format in UTC time. For example, midnight UTC on Jan 1, 2014 is '2014-01-01T00:00:00Z'
+      type: String
+    - contextPath: MSGraphCalendar.Event.OriginalEndTimeZone
+      description: The end time zone that was set when the event was created.
+      type: String
+    - contextPath: MSGraphCalendar.Event.CreatedDateTime
+      description: The time and date the event was created using ISO 8601 format and
+        is always in UTC time. For example, midnight UTC on Jan 1, 2014 is '2014-01-01T00:00:00Z'.
+      type: String
+    - contextPath: MSGraphCalendar.Event.ChangeKey
+      description: Identifies the version of the event object. Every time the event
+        is changed, the ChangeKey changes as well, which allows the Exchange to apply
+        changes to the correct version of the object.
+      type: String
+    - contextPath: MSGraphCalendar.Event.ID
+      description: The ID of the Event.
+      type: String
+    - contextPath: MSGraphCalendar.Event.IsOrganizer
+      description: Whether the message sender is also the organizer.
+      type: Boolean
+    - contextPath: MSGraphCalendar.Event.Sensitivity
+      description: 'The sensitivity of the event. Possible values are: normal, personal,
+        private, confidential.'
+      type: String
+    - contextPath: MSGraphCalendar.Event.IsReminderOn
+      description: Whether an alert is set to remind the user of the event.
+      type: Boolean
+    - contextPath: MSGraphCalendar.Event.Organizer
+      description: The organizer of the event.
+      type: Unknown
+    - contextPath: MSGraphCalendar.Event.Subject
+      description: The text of the event's subject line.
+      type: String
+    - contextPath: MSGraphCalendar.Event.OnlineMeetingUrl
+      description: A URL for an online meeting, used only when an organizer specifies
+        an event as an online meeting, such as a Skype meeting. Read-only.
+      type: Unknown
+  dockerimage: demisto/crypto:1.0.0.4759
+  runonce: false
+  script: |2
+
+    from typing import List, Dict, Tuple, Optional, Union
+    from datetime import datetime
+    import base64
+    import urllib3
+    import requests
+    from cryptography.hazmat.primitives.ciphers.aead import AESGCM
+
+    # Disable insecure warnings
+    urllib3.disable_warnings()
+
+    INTEGRATION_CONTEXT_NAME = 'MSGraphCalendar'
+    DEFAULT_PAGE_SIZE = 100
+    NO_OUTPUTS: dict = {}
+    APP_NAME = 'ms-graph-calendar'
+    EVENT_HEADERS = ['Subject', 'Organizer', 'Attendees', 'Start', 'End', 'ID']
+    CALENDAR_HEADERS = ['Name', 'Owner Name', 'Owner Address', 'ID']
+
+
+    def camel_case_to_readable(cc: Union[str, Dict], fields_to_drop: List[str] = None) -> Union[str, Dict]:
+        """
+        'camelCase' -> 'Camel Case' (text or dictionary keys)
+
+        Args:
+            cc: either a dictionary or a text to transform
+            fields_to_drop: keys to drop from input dictionary
+
+        Returns:
+            A Camel Cased string of Dict.
+        """
+        if fields_to_drop is None:
+            fields_to_drop = []
+        if isinstance(cc, str):
+            if cc == 'id':
+                return 'ID'
+            return ''.join(' ' + char if char.isupper() else char.strip() for char in cc).strip().title()
+
+        elif isinstance(cc, Dict):
+            return {camel_case_to_readable(field): value for field, value in cc.items() if field not in fields_to_drop}
+        return cc
+
+
+    def snakecase_to_camelcase(sc: Union[str, Dict], fields_to_drop: List[str] = None) -> Union[str, Dict]:
+        """
+        'snake_case' -> 'snakeCase' (text or dictionary keys)
+
+        Args:
+            sc: either a dictionary or a text to transform
+            fields_to_drop: keys to drop from input dictionary
+
+        Returns:
+            A connectedCamelCased string of Dict.
+        """
+        if fields_to_drop is None:
+            fields_to_drop = []
+        if isinstance(sc, str):
+            return ''.join([word.title() for word in sc.split('_')])
+
+        elif isinstance(sc, Dict):
+            return {snakecase_to_camelcase(field): value for field, value in sc.items() if field not in fields_to_drop}
+        return sc
+
+
+    def parse_events(raw_events: Union[Dict, List[Dict]]) -> Tuple[List[Dict], List[Dict]]:
+        """
+        Parse Calendar Events json data coming from Microsoft Graph into Demisto readable format
+        :param raw_events: raw events data
+        """
+        # Fields to filter, dropping to not bloat the incident context.
+        fields_to_drop = ['@odata.etag', 'color']
+        if not isinstance(raw_events, list):
+            raw_events = [raw_events]
+
+        readable_events, context_output = [], []
+        for event in raw_events:
+            event_readable: Dict = camel_case_to_readable(event, fields_to_drop)  # type: ignore
+            if '@removed' in event:
+                event_readable['Status'] = 'deleted'
+            event_context = {field.replace(' ', ''): value for field, value in event_readable.items()}
+
+            event_readable = {
+                'Subject': event_readable.get('Subject'),
+                'ID': event_readable.get('ID'),
+                'Organizer': demisto.get(event_readable, 'Organizer.emailAddress.name'),
+                'Attendees': [att.get('emailAddress', {}).get('name') for att in event_readable.get('Attendees', [])],
+                'Start': event_readable.get('Start', {}).get('dateTime'),
+                'End': event_readable.get('End', {}).get('dateTime')
+            }
+            readable_events.append(event_readable)
+            context_output.append(event_context)
+
+        return readable_events, context_output
+
+
+    def parse_calendar(raw_calendars: Union[Dict, List[Dict]]) -> Tuple[List[Dict], List[Dict]]:
+        """
+        Parse Calendar json data coming from Microsoft Graph into Demisto readable format
+        :param raw_calendars: raw calendars data
+        """
+        if not isinstance(raw_calendars, list):
+            raw_calendars = [raw_calendars]
+
+        readable_calendars, context_output = [], []
+        for raw_calendar in raw_calendars:
+            readable_calendar: Dict = camel_case_to_readable(raw_calendar, ['@odata.context', 'color'])  # type: ignore
+            if '@removed' in readable_calendar:
+                readable_calendar['Status'] = 'deleted'
+            context_calendar = {field.replace(' ', ''): value for field, value in readable_calendar.items()}
+
+            readable_calendar = {
+                'Name': readable_calendar.get('Name'),
+                'Owner Name': readable_calendar.get('Owner', {}).get('name'),
+                'Owner Address': readable_calendar.get('Owner', {}).get('address'),
+                'ID': readable_calendar.get('ID')
+            }
+            context_output.append(context_calendar)
+            readable_calendars.append(readable_calendar)
+
+        return readable_calendars, context_output
+
+
+    def process_event_params(body: str = '', start: str = '', end: str = '', time_zone: str = '',
+                             attendees: str = '', location: str = '', **other_params) -> Dict:
+        # some parameters don't need any processing
+        event_params: Dict[str, Union[str, Dict, List[Dict]]] = other_params
+
+        event_params['body'] = {"content": body}
+        event_params['location'] = {"displayName": location}
+        if start:
+            event_params['start'] = {"dateTime": start, "timeZone": time_zone}
+        if end:
+            event_params['end'] = {"dateTime": end, "timeZone": time_zone}
+        event_params['attendees'] = [{'emailAddress': {'address': attendee}} for attendee in attendees.split(',')]
+        return event_params
+
+
+    def epoch_seconds() -> int:
+        """
+        Returns the number of seconds for return current date.
+        """
+        return int((datetime.utcnow() - datetime.utcfromtimestamp(0)).total_seconds())
+
+
+    def get_encrypted(content: str, key: str) -> str:
+        """
+
+        Args:
+            content: content to encrypt. For a request to Demistobot for a new access token, content should be
+                the tenant id
+            key: encryption key from Demistobot
+
+        Returns:
+            encrypted timestamp:content
+        """
+
+        def create_nonce() -> bytes:
+            return os.urandom(12)
+
+        def encrypt(string: str, enc_key: str) -> bytes:
+            """
+            Args:
+            :argument enc_key:
+            :argument string:
+            """
+            # String to bytes
+            enc_key = base64.b64decode(enc_key)
+            # Create key
+            aes_gcm = AESGCM(enc_key)
+            # Create nonce
+            nonce = create_nonce()
+            # Create ciphered data
+            data = string.encode()
+            ct_ = aes_gcm.encrypt(nonce, data, None)
+            return base64.b64encode(nonce + ct_)
+
+        now = epoch_seconds()
+        encrypted = encrypt(f'{now}:{content}', key).decode('utf-8')
+        return encrypted
+
+
+    class Client(BaseClient):
+        """
+        Client to use in the MS Graph Groups integration. Overrides BaseClient
+        """
+
+        def __init__(self, base_url: str, tenant: str, auth_and_token_url: str, auth_id: str, token_retrieval_url: str,
+                     enc_key: str, verify: bool, proxy: bool, default_user: str):
+            super().__init__(base_url, verify, proxy)
+            self.tenant = tenant
+            self.auth_and_token_url = auth_and_token_url
+            self.auth_id = auth_id
+            self.token_retrieval_url = token_retrieval_url
+            self.enc_key = enc_key
+            self.default_user = default_user
+
+        def get_access_token(self):
+            """
+            Get the Microsoft Graph Access token from the instance token or generates a new one if needed.
+            """
+            integration_context = demisto.getIntegrationContext()
+            access_token = integration_context.get('access_token')
+            valid_until = integration_context.get('valid_until')
+            if access_token and valid_until:
+                if epoch_seconds() < valid_until:
+                    return access_token
+            try:
+                dbot_response = requests.post(
+                    self.token_retrieval_url,
+                    headers={'Accept': 'application/json'},
+                    data=json.dumps({
+                        'app_name': APP_NAME,
+                        'registration_id': self.auth_id,
+                        'encrypted_token': get_encrypted(self.tenant, self.enc_key)
+                    }),
+                    verify=self._verify
+                )
+            except requests.exceptions.SSLError as err:
+                demisto.debug(str(err))
+                raise Exception(f'Connection error in the API call to Microsoft Graph.\n'
+                                f'Check your not secure parameter.\n\n{err}')
+            except requests.ConnectionError as err:
+                demisto.debug(str(err))
+                raise Exception(f'Connection error in the API call to Microsoft Graph.\n'
+                                f'Check your Server URL parameter.\n\n{err}')
+            if not dbot_response.ok:
+                msg = 'Error in authentication. Try checking the credentials you entered.'
+                try:
+                    demisto.info(f'Authentication failure from server: {dbot_response.status_code}'
+                                 f' {dbot_response.reason} {dbot_response.text}')
+                    err_response = dbot_response.json()
+                    server_msg = err_response.get('message')
+                    if not server_msg:
+                        title = err_response.get('title')
+                        detail = err_response.get('detail')
+                        if title:
+                            server_msg = f'{title}. {detail}'
+                    if server_msg:
+                        msg += f' Server message: {server_msg}'
+                except Exception as err:
+                    demisto.error(f'Failed parsing error response - Exception: {err}')
+                raise Exception(msg)
+            try:
+                gcloud_function_exec_id = dbot_response.headers.get('Function-Execution-Id')
+                demisto.info(f'Google Cloud Function Execution ID: {gcloud_function_exec_id}')
+                parsed_response = dbot_response.json()
+            except ValueError:
+                raise Exception(
+                    'There was a problem in retrieving an updated access token.\n'
+                    'The response from the Demistobot server did not contain the expected content.'
+                )
+            access_token = parsed_response.get('access_token')
+            expires_in = parsed_response.get('expires_in', 3595)
+            time_buffer = 5  # seconds by which to shorten the validity period
+            if expires_in - time_buffer > 0:
+                # err on the side of caution with a slightly shorter access token validity period
+                expires_in = expires_in - time_buffer
+
+            demisto.setIntegrationContext({
+                'access_token': access_token,
+                'valid_until': epoch_seconds() + expires_in
+            })
+            return access_token
+
+        def http_request(self, method: str = 'GET', url_suffix: str = None, params: Dict = None, body: Optional[str] = None,
+                         next_link: str = None):
+            """
+            Generic request to Microsoft Graph
+            """
+            token = self.get_access_token()
+            if next_link:
+                url = next_link
+            else:
+                url = f'{self._base_url}{url_suffix}'
+
+            try:
+                response = requests.request(
+                    method,
+                    url,
+                    headers={
+                        'Authorization': 'Bearer ' + token,
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    params=params,
+                    data=body,
+                    verify=self._verify,
+                )
+            except requests.exceptions.SSLError as err:
+                demisto.debug(str(err))
+                raise Exception(f'Connection error in the API call to Microsoft Graph.\n'
+                                f'Check your not secure parameter.\n\n{err}')
+            except requests.ConnectionError as err:
+                demisto.debug(str(err))
+                raise Exception(f'Connection error in the API call to Microsoft Graph.\n'
+                                f'Check your Server URL parameter.\n\n{err}')
+            try:
+                data = response.json() if response.text else {}
+                if not response.ok:
+                    raise Exception(f'API call to MS Graph failed [{response.status_code}]'
+                                    f' - {demisto.get(data, "error.message")}')
+                elif response.status_code == 206:  # 206 indicates Partial Content, reason will be in the warning header
+                    demisto.debug(str(response.headers))
+
+                return data
+
+            except TypeError as exc:
+                demisto.debug(str(exc))
+                raise Exception(f'Error in API call to Microsoft Graph, could not parse result [{response.status_code}]')
+
+        def test_function(self):
+            """
+            Performs basic GET request to check if the API is reachable and authentication is successful.
+
+            Returns ok if successful.
+            """
+            self.http_request('GET', 'users/')
+            return 'ok', NO_OUTPUTS, NO_OUTPUTS
+
+        def get_calendar(self, user: str, calendar_id: str = None) -> Dict:
+            """Returns a single calendar by sending a GET request.
+
+            Args:
+            :argument user: the user id | userPrincipalName
+            :argument calendar_id: calendar id  | name
+            """
+            if not user and not self.default_user:
+                return_error('No user was provided. Please make sure to enter the use either in the instance setting,'
+                             ' or in the command parameter.')
+            calendar_raw = self.http_request(
+                method='GET',
+                url_suffix=f'users/{user}/calendar' + f's/{calendar_id}' if calendar_id else '')
+
+            return calendar_raw
+
+        def list_calendars(self, user: str, order_by: str = None, next_link: str = None, top: int = DEFAULT_PAGE_SIZE,
+                           filter_by: str = None) -> Dict:
+            """
+            Lists all calendars by sending a GET request.
+
+            Args:
+            :argument user: the user id | userPrincipalName
+            :argument order_by: specify the sort order of the items returned from Microsoft Graph
+            :argument next_link: link for the next page of results, if exists. See Microsoft documentation for more details.
+                docs.microsoft.com/en-us/graph/api/event-list?view=graph-rest-1.0
+            :argument top: specify the page size of the result set.
+            filter_by: filters results.
+            """
+            params = {'$orderby': order_by} if order_by else {}
+            if next_link:  # pagination
+                calendars = self.http_request(
+                    url_suffix=f'users/{user}/calendars',
+                    next_link=next_link
+                )
+            elif filter_by:
+                calendars = self.http_request(
+                    url_suffix=f'users/{user}/calendars?$filter={filter_by}&$top={top}',
+                    params=params
+                )
+            else:
+                calendars = self.http_request(
+                    url_suffix=f'users/{user}/calendars?$top={top}',
+                    params=params
+                )
+
+            return calendars
+
+        def list_events(self, user: str, calendar_id: str = '', order_by: str = None, next_link: str = None,
+                        top: int = DEFAULT_PAGE_SIZE, filter_by: str = None) -> Dict:
+            """
+            Returns all events by sending a GET request.
+
+            Args:
+            :argument user: the user id | userPrincipalName
+            :argument calendar_id: calendar id  | name
+            :argument order_by: specify the sort order of the items returned from Microsoft Graph
+            :argument next_link: the link for the next page of results. see Microsoft documentation for more details.
+            :argument top: specify the page size of the result set.
+            :argument filter_by: filters results.
+            """
+            calendar_url = f'{user}/calendars/{calendar_id}' if calendar_id else user
+            params = {'$orderby': order_by} if order_by else {}
+            if next_link:  # pagination
+                events = self.http_request(url_suffix=f'users/{calendar_url}/events', next_link=next_link)
+            elif filter_by:
+                events = self.http_request(url_suffix=f'users/{calendar_url}/events?$filter={filter_by}&$top={top}',
+                                           params=params)
+            else:
+                events = self.http_request(url_suffix=f'users/{calendar_url}/events?$top={top}', params=params)
+            return events
+
+        def get_event(self, user: str, event_id: str) -> Dict:
+            """
+            Create a single event in a user calendar, or the default calendar of an Office 365 group.
+
+            Args:
+            :argument user: the user id | userPrincipalName
+            :argument event_id: the event id
+            """
+            event = self.http_request('GET', url_suffix=f'users/{user}/calendar/events/{event_id}')
+
+            return event
+
+        def create_event(self, user: str, calendar_id: str = '', **kwargs) -> Dict:
+            """
+            Create a single event in a user calendar, or the default calendar of an Office 365 group.
+
+            Args:
+            :argument user: the user id | userPrincipalName
+            :argument calendar_id: calendar id  | name
+
+            Event Properties:
+            :keyword attendees: The collection of attendees for the event.
+            :keyword body: The body of the message associated with the event. It can be in HTML or text format.
+            :keyword subject: The text of the event's subject line.
+            :keyword location: The location of the event. an event as an online meeting such as a Zoom meeting. Read-only.
+            :keyword end: The date, time, and time zone that the event ends. By default, the end time is in UTC.
+            :keyword originalEndTimeZone: The end time zone that was set when the event was created.
+            :keyword originalStart: The Timestamp type represents date and time using ISO 8601 format in UTC time.
+             For example, midnight UTC on Jan 1, 2014 would look like this: '2014-01-01T00:00:00Z'
+            :keyword originalStartTimeZone: The start time zone that was set when the event was created.
+            """
+            if calendar_id:
+                event = self.http_request(
+                    method='POST',
+                    url_suffix=f'/users/{user}/calendars/{calendar_id}/events',
+                    body=json.dumps(kwargs)
+                )
+            else:
+                event = self.http_request(
+                    method='POST',
+                    url_suffix=f'users/{user}/calendar/events',
+                    body=json.dumps(kwargs)
+                )
+            return event
+
+        def update_event(self, user: str, event_id: str, **kwargs) -> Dict:
+            """
+            Create a single event in a user calendar, or the default calendar of an Office 365 group.
+
+            Args:
+            :argument user: the user id | userPrincipalName
+            :argument event_id: the event ID
+
+            Event Properties:
+            :keyword attendees: The collection of attendees for the event.
+            :keyword body: The body of the message associated with the event. It can be in HTML or text format.
+            :keyword subject:The text of the event's subject line.
+            :keyword location: The location of the event.
+             an event as an online meeting such as a Skype meeting. Read-only.
+            :keyword end: The date, time, and time zone that the event ends. By default, the end time is in UTC.
+            :keyword originalEndTimeZone: The end time zone that was set when the event was created.
+            :keyword originalStart: The Timestamp type represents date and time using ISO 8601 format in UTC time.
+             For example, midnight UTC on Jan 1, 2014 would look like this: '2014-01-01T00:00:00Z'
+            :keyword originalStartTimeZone: The start time zone that was set when the event was created.
+            """
+            event = self.http_request(
+                method='PATCH',
+                url_suffix=f'users/{user}/calendar/events/{event_id}',
+                body=json.dumps(kwargs)
+            )
+            return event
+
+        def delete_event(self, user: str, event_id: str):
+            """
+            Delete a single event by sending a DELETE request.
+
+            Args:
+            :argument user: the user id | userPrincipalName
+            :argument id: the event id
+            """
+            #  If successful, this method returns 204 No Content response code.
+            #  It does not return anything in the response body.
+            self.http_request(
+                method='DELETE',
+                url_suffix=f'users/{user}/calendar/events/{event_id}'
+            )
+
+
+    def list_events_command(client: Client, args: Dict) -> Tuple[str, Dict, Dict]:
+        """
+        Lists all events and return outputs in Demisto's format.
+
+        Args:
+            client: Client object with request
+            args: Usually demisto.args()
+        """
+        events = client.list_events(**args)
+
+        events_readable, events_outputs = parse_events(events.get('value'))  # type: ignore
+
+        next_link_response = ''
+        if '@odata.nextLink' in events:
+            next_link_response = events['@odata.nextLink']
+
+        if next_link_response:
+            entry_context = {f'{INTEGRATION_CONTEXT_NAME}.Event(val.ID === obj.ID).NextLink': next_link_response,
+                             f'{INTEGRATION_CONTEXT_NAME}.Event(val.ID === obj.ID)': events_outputs}
+            title = 'Events (Note that there are more results. Please use the next_link argument to see them.):'
+        else:
+            entry_context = {f'{INTEGRATION_CONTEXT_NAME}.Event(val.ID === obj.ID)': events_outputs}
+            title = 'Events:'
+
+        human_readable = tableToMarkdown(
+            name=title,
+            t=events_readable,
+            headers=EVENT_HEADERS,
+            removeNull=True
+        )
+
+        return human_readable, entry_context, events
+
+
+    def get_event_command(client: Client, args: Dict) -> Tuple[str, Dict, Dict]:
+        """
+        Retrieves an event by event id and return outputs in Demisto's format
+
+        Args:
+            client: Client object with request
+            args: Usually demisto.args()
+        """
+        event = client.get_event(**args)
+
+        # display the event and it's properties
+        event_readable, event_outputs = parse_events(event)
+        human_readable = tableToMarkdown(
+            name=f"Event - {event_outputs[0].get('Subject')}",
+            t=event_readable,
+            headers=EVENT_HEADERS,
+            removeNull=True
+        )
+        entry_context = {f'{INTEGRATION_CONTEXT_NAME}.Event(val.ID === obj.ID)': event_outputs}
+        return human_readable, entry_context, event
+
+
+    def create_event_command(client: Client, args: Dict) -> Tuple[str, Dict, Dict]:
+        """
+        Creates an event by event id and return outputs in Demisto's format
+
+        Args:
+            client: Client object with request
+            args: Usually demisto.args()
+        """
+        args = process_event_params(**args)
+        params: Dict = snakecase_to_camelcase(args, fields_to_drop=['user', 'calendar_id'])  # type: ignore
+
+        # create the event
+        event = client.create_event(user=args.get('user', ''), calendar_id=args.get('calendar_id', ''), **params)
+
+        # display the new event and it's properties
+        event_readable, event_outputs = parse_events(event)
+        human_readable = tableToMarkdown(
+            name=f"Event was created successfully:",
+            t=event_readable,
+            headers=EVENT_HEADERS,
+            removeNull=True
+        )
+        entry_context = {f'{INTEGRATION_CONTEXT_NAME}.Event(val.ID === obj.ID)': event_outputs}
+        return human_readable, entry_context, event
+
+
+    def update_event_command(client: Client, args: Dict) -> Tuple[str, Dict, Dict]:
+        """
+        Get a event by event id and return outputs in Demisto's format.
+
+        Args:
+            client: Client object with request
+            args: Usually demisto.args()
+        """
+        event_id = args.get('event_id', '')
+        args = process_event_params(**args)
+        params: Dict = snakecase_to_camelcase(args, fields_to_drop=['user', 'calendar_id', 'event_id'])  # type: ignore
+
+        # update the event
+        event = client.update_event(user=args.get('user', ''), event_id=args.get('event_id', ''), **params)
+
+        # display the updated event and it's properties
+        event_readable, event_outputs = parse_events(event)
+        human_readable = tableToMarkdown(
+            name="Event:",
+            t=event_readable,
+            headers=EVENT_HEADERS,
+            removeNull=True
+        )
+        entry_context = {f'{INTEGRATION_CONTEXT_NAME}(obj.ID === {event_id})': event_outputs}
+        return human_readable, entry_context, event
+
+
+    def delete_event_command(client: Client, args: Dict) -> Tuple[str, Dict, Dict]:
+        """
+        Delete an event by event id and return outputs in Demisto's format
+
+        Args:
+            client: Client object with request
+            args: Usually demisto.args()
+        """
+        event_id = str(args.get('event_id'))
+        client.delete_event(**args)
+
+        # get the event data from the context
+        event_data = demisto.dt(demisto.context(), f'{INTEGRATION_CONTEXT_NAME}.Event(val.ID === "{event_id}")')
+        if isinstance(event_data, list):
+            event_data = event_data[0]
+
+        # add a field that indicates that the event was deleted
+        event_data['Deleted'] = True  # add a field with the members to the event
+        entry_context = {f'{INTEGRATION_CONTEXT_NAME}.Event(val.ID === obj.ID)': event_data}
+
+        human_readable = f'Event was deleted successfully.'
+        return human_readable, entry_context, NO_OUTPUTS
+
+
+    def list_calendars_command(client: Client, args: Dict) -> Tuple[str, Dict, Dict]:
+        """
+        Get all the user's calendars (/calendars navigation property)
+
+        Args:
+            client: Client object with request
+            args: Usually demisto.args()
+        """
+        calendar = client.list_calendars(**args)
+
+        calendar_readable, calendar_outputs = parse_calendar(calendar.get('value'))  # type: ignore
+
+        entry_context = {f'{INTEGRATION_CONTEXT_NAME}.Calendar(val.ID === obj.ID)': calendar_outputs}
+        title = 'Calendar:'
+
+        human_readable = tableToMarkdown(
+            name=title,
+            t=calendar_readable,
+            headers=CALENDAR_HEADERS,
+            removeNull=True
+        )
+
+        return human_readable, entry_context, calendar
+
+
+    def get_calendar_command(client: Client, args: Dict) -> Tuple[str, Dict, Dict]:
+        """
+        Get the properties and relationships of a calendar object.
+        The calendar can be one for a user, or the default calendar of an Office 365 group.
+
+        Args:
+            client: Client object with request
+            args: Usually demisto.args()
+        """
+        calendar = client.get_calendar(**args)
+
+        calendar_readable, calendar_outputs = parse_calendar(calendar)
+
+        entry_context = {f'{INTEGRATION_CONTEXT_NAME}.Calendar(val.ID === obj.ID)': calendar_outputs}
+        title = 'Calendar:'
+
+        human_readable = tableToMarkdown(
+            name=title,
+            t=calendar_readable,
+            headers=CALENDAR_HEADERS,
+            removeNull=True
+        )
+
+        return human_readable, entry_context, calendar
+
+
+    def module_test_function_command(client: Client, args: Dict) -> Tuple[str, Dict, Dict]:
+        """
+        Performs a basic GET request to check if the API is reachable and authentication is successful.
+
+        Args:
+            client: Client object with request
+        """
+        return client.test_function()
+
+
+    def main():
+        url = demisto.params().get('url').rstrip('/') + '/v1.0/'
+        tenant = demisto.params().get('tenant_id')
+        auth_and_token_url = demisto.params().get('auth_id').split('@')
+        auth_id = auth_and_token_url[0]
+        enc_key = demisto.params().get('enc_key')
+        verify = not demisto.params().get('insecure', False)
+        proxy = demisto.params().get('proxy', False)
+        default_user = demisto.params().get('default_user')
+
+        if len(auth_and_token_url) != 2:
+            token_retrieval = 'https://oproxy.demisto.ninja/obtain-token'  # disable-secrets-detection
+        else:
+            token_retrieval = auth_and_token_url[1]
+
+        commands = {
+            'test-module': module_test_function_command,
+            'msgraph-calendar-list-calendars': list_calendars_command,
+            'msgraph-calendar-get-calendar': get_calendar_command,
+            'msgraph-calendar-list-events': list_events_command,
+            'msgraph-calendar-get-event': get_event_command,
+            'msgraph-calendar-create-event': create_event_command,
+            'msgraph-calendar-update-event': update_event_command,
+            'msgraph-calendar-delete-event': delete_event_command
+        }
+        command = demisto.command()
+        LOG(f'Command being called is {command}')
+
+        try:
+            client = Client(url, tenant, auth_and_token_url, auth_id, token_retrieval, enc_key, verify, proxy, default_user)
+            if 'user' not in demisto.args():
+                demisto.args()['user'] = client.default_user
+            # Run the command
+            human_readable, entry_context, raw_response = commands[command](client, demisto.args())  # type: ignore
+            # create a war room entry
+            return_outputs(readable_output=human_readable, outputs=entry_context, raw_response=raw_response)
+
+        except Exception as err:
+            return_error(str(err))
+
+
+    if __name__ in ['__main__', 'builtin', 'builtins']:
+        main()
+  subtype: python3
+  type: python
+system: true

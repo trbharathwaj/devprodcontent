@@ -1,0 +1,496 @@
+category: Data Enrichment & Threat Intelligence
+commonfields:
+  id: Pentera
+  version: -1
+configuration:
+- defaultvalue: https://pentera.com
+  display: Server URL (e.g. https://192.168.64.128)
+  name: url
+  required: true
+  type: 0
+- defaultvalue: "8181"
+  display: Pentera API port
+  name: port
+  required: true
+  type: 0
+- defaultvalue: ""
+  display: Client Id
+  name: clientId
+  required: true
+  type: 0
+- defaultvalue: ""
+  display: TGT  (The token from Pentera UI in Administration -> API Clients)
+  name: tgt
+  required: true
+  type: 4
+- defaultvalue: ""
+  display: Trust any certificate (not secure)
+  name: insecure
+  required: false
+  type: 8
+- defaultvalue: ""
+  display: Use system proxy settings
+  name: proxy
+  required: false
+  type: 8
+description: An Integration with Pentera by Pcysys
+detaileddescription: |-
+  ## Pentera Integration
+  ### Create A Client
+  A client is Pentera's embodiment of the end-user's API client. It is the logical entity which holds authentication tokens, the tokens expiration dates, and the connection between the client and the user entities in the system.
+
+  In order to use the API, a user must first create a client in the UI.
+
+  ##### Steps to create a client:
+  1. Login to the Pentera UI.
+  2. Go to Administration → API Clients.
+  3. Create a new client:
+      1. Enter a name for the client (something meaningful to the user).
+      2. Optional: Enter a description for the client.
+      3. Create the client. You'll see the client appears in the client's table on the same page.
+  4. Issue a TGT token for the new client by pressing the Issue TGT button in the client's row in the table.
+  5. Copy the new TGT. You can click on the TGT field and a popup will appear with a "copy" button which will copy the entire TGT when clicked.
+  6. You're now ready to authenticate with the API, passing in both the Client ID and the TGT.
+display: Pentera
+image: data:image/png;base64,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
+name: Pentera
+script:
+  commands:
+  - arguments:
+    - description: The name of the template that you want to run
+      name: template_name
+      required: true
+    description: Run a specific template by its name. Please add the template name
+      in the parameters
+    name: pentera-run-template-by-name
+    outputs:
+    - contextPath: Pentera.TaskRun.TemplateName
+      description: Returns the name of the template
+      type: String
+    - contextPath: Pentera.TaskRun.ID
+      description: The task run id
+      type: String
+    - contextPath: Pentera.TaskRun.StartTime
+      description: The date when the task run started
+      type: Date
+    - contextPath: Pentera.TaskRun.EndTime
+      description: The date when the task run ended
+      type: Date
+    - contextPath: Pentera.TaskRun.Status
+      description: 'The status of the task run; e.g.: Running, Done, etc.'
+      type: String
+  - arguments:
+    - description: The ID of the task run
+      name: task_run_id
+      required: true
+    description: Get the status of a task run by its task run id
+    name: pentera-get-task-run-status
+    outputs:
+    - contextPath: Pentera.TaskRun.ID
+      description: The task run id
+      type: String
+    - contextPath: Pentera.TaskRun.TemplateName
+      description: Returns the name of the template
+      type: String
+    - contextPath: Pentera.TaskRun.StartTime
+      description: The date when the task run started
+      type: Date
+    - contextPath: Pentera.TaskRun.EndTime
+      description: The date when the task run ended
+      type: Date
+    - contextPath: Pentera.TaskRun.Status
+      description: 'The status of the task run; e.g.: Running, Done, etc.'
+      type: String
+  - arguments:
+    - description: The ID of the task run
+      name: task_run_id
+      required: true
+    description: Get the full action report of a task run
+    name: pentera-get-task-run-full-action-report
+    outputs:
+    - contextPath: Pentera.TaskRun.ID
+      description: The task run id
+      type: String
+    - contextPath: Pentera.TaskRun.TemplateName
+      description: Returns the name of the template
+      type: String
+    - contextPath: Pentera.TaskRun.StartTime
+      description: The date when the task run started
+      type: Date
+    - contextPath: Pentera.TaskRun.EndTime
+      description: The date when the task run ended
+      type: Date
+    - contextPath: Pentera.TaskRun.Status
+      description: 'The status of the task run; e.g.: Running, Done, etc.'
+      type: String
+    - contextPath: Pentera.TaskRun.FullActionReport.Severity
+      description: The sevirity of the action, from N/A to 10.0
+      type: Number
+    - contextPath: Pentera.TaskRun.FullActionReport.Time
+      description: The full date the action took place
+      type: Date
+    - contextPath: Pentera.TaskRun.FullActionReport.Duration
+      description: The duration of the action in milliseconds
+      type: Number
+    - contextPath: Pentera.TaskRun.FullActionReport.OperationType
+      description: 'The type of the action that ran; e.g.: "Scanning hosts", "Malware
+        injected to host", etc.'
+      type: String
+    - contextPath: Pentera.TaskRun.FullActionReport.Techniques
+      description: The MITRE technique(s) used with the relevant MITRE ID
+      type: String
+    - contextPath: Pentera.TaskRun.FullActionReport.Parameters
+      description: 'The relevant parameters of the action; e.g.: List of hosts IP
+        addresses'
+      type: String
+    - contextPath: Pentera.TaskRun.FullActionReport.Status
+      description: 'The status of the action. Can be: success, failed, canceled, no_results'
+      type: String
+  dockerimage: demisto/pyjwt3:1.0.0.4946
+  runonce: false
+  script: |2
+
+
+
+
+    ''' IMPORTS '''
+    import jwt
+    from enum import Enum
+    import requests
+    import csv
+    import io
+    from typing import List
+
+    # Disable insecure warnings
+    requests.packages.urllib3.disable_warnings()
+
+    ''' CONSTANTS '''
+    HEADERS = {'Accept': 'application/json'}
+    DATE_FORMAT = '%Y-%m-%dT%H:%M:%SZ'
+    AUTH_URL_SUFFIX = '/auth/token'
+    LIST_TEMPLATES_URL_SUFFIX = '/api/v1/templates'
+    CANCEL_TASK_URL_SUFFIX = '/api/v1/taskRun/{taskRunId}/cancel'
+    GET_TASK_STATS_URL_SUFFIX = '/api/v1/taskRun/{taskRunId}'
+    RUN_BULK_URL_SUFFIX = '/api/v1/template/runBulk'
+    EXPORT_CSV_URL_SUFFIX = '/api/v1/taskRun/{taskRunId}/fullActionReportCSV'
+    FULL_ACTION_REPORT_FIELDNAMES = ['Severity', 'Time', 'Duration', 'Operation Type', 'Techniques', 'Parameters', 'Status']
+
+
+    class Request(Enum):
+        POST = 'POST'
+        GET = 'GET'
+
+
+    class AuthorizationError(Exception):
+        pass
+
+
+    class Client(BaseClient):
+        def __init__(self, base_url: str, client_id: str, verify: bool, proxy: bool, headers):
+            super().__init__(base_url=f'{base_url}', headers=headers, verify=verify, proxy=proxy)
+            self.client_id = client_id
+            self.session = requests.Session()
+            self.session.headers = headers
+
+        def generic_request(self, method: str, url_suffix: str = None, full_url: str = None, headers: dict = None,
+                            params: dict = None, data: dict = None, response_type: str = 'json'):
+
+            full_url = full_url if full_url else f'{self._base_url}{url_suffix}'
+            headers = headers if headers else self._headers
+            try:
+                res = self.session.request(
+                    method,
+                    full_url,
+                    headers=headers,
+                    verify=self._verify,
+                    data=data,
+                    params=params
+                )
+                demisto.debug(f'Got response: {res}')
+                if not res.ok:
+                    if res.status_code == requests.status_codes.codes.UNAUTHORIZED:  # pylint: disable=no-member
+                        raise AuthorizationError(
+                            f'Unauthorized access to Pentera API. Status code: {res.status_code}. Raw response: {res.text}')
+                    raise ValueError(f'Error in API call to Pentera. Status code: {res.status_code}. Reason: {res.text}')
+
+                try:
+                    if response_type == 'json':
+                        demisto.debug('result is JSON')
+                        return res.json()
+                    demisto.debug('result is TEXT')
+                    return res.text
+                except Exception:
+                    raise ValueError(
+                        f'Failed to parse http response to JSON format. Original response body: \n{res.text}')
+
+            except requests.exceptions.ConnectTimeout as exception:
+                err_msg = 'Connection Timeout Error - potential reasons might be that the Server URL parameter' \
+                          ' is incorrect or that the Server is not accessible from your host.'
+                raise DemistoException(err_msg, exception)
+
+            except requests.exceptions.SSLError as exception:
+                err_msg = 'SSL Certificate Verification Failed - try selecting \'Trust any certificate\' checkbox in' \
+                          ' the integration configuration.'
+                raise DemistoException(err_msg, exception)
+
+            except requests.exceptions.ProxyError as exception:
+                err_msg = 'Proxy Error - if the \'Use system proxy\' checkbox in the integration configuration is' \
+                          ' selected, try clearing the checkbox.'
+                raise DemistoException(err_msg, exception)
+
+            except requests.exceptions.ConnectionError as exception:
+                # Get originating Exception in Exception chain
+                error_class = str(exception.__class__)
+                err_type = '<' + error_class[error_class.find('\'') + 1: error_class.rfind('\'')] + '>'
+                err_msg = f'\nError Type: {err_type}\nError Number: [{exception.errno}]\nMessage: {exception.strerror}\n ' \
+                          f'Verify that the server URL parameter ' \
+                          f'is correct and that you have access to the server from your host.'
+                raise DemistoException(err_msg, exception)
+
+            except Exception as exception:
+                raise Exception(str(exception))
+
+        def authenticate(self, client_id, tgt):
+            data = {
+                'client_id': client_id,
+                'tgt': tgt
+            }
+            res = self.generic_request(method=Request.POST.value, url_suffix=AUTH_URL_SUFFIX, data=data)
+            tgt = res.get('tgt')
+            access_token = res.get('token')
+            return tgt, access_token
+
+        @staticmethod
+        def create_basic_authentication_header(token: str):
+            authentication_headers = HEADERS.copy()
+            token = token + ':'
+            encoded_bytes = base64.b64encode(token.encode("utf-8"))
+            encoded_str = str(encoded_bytes, "utf-8")
+            authentication_headers['Authorization'] = 'Basic ' + encoded_str
+            return authentication_headers
+
+        def run_template_by_name(self, template_name, access_token):
+            headers = self.create_basic_authentication_header(access_token)
+            data = {
+                'templateNames': [template_name]
+            }
+            res = self.generic_request(method=Request.POST.value, url_suffix=RUN_BULK_URL_SUFFIX, headers=headers,
+                                       data=data)
+            return res
+
+        def get_task_stats_by_task_run_id(self, task_run_id: str, access_token: str):
+            headers = self.create_basic_authentication_header(access_token)
+            url_suffix = GET_TASK_STATS_URL_SUFFIX.format(taskRunId=task_run_id)
+            res = self.generic_request(method=Request.GET.value, url_suffix=url_suffix, headers=headers, data={})
+            task_stats = res['taskRuns'][0]
+            return task_stats
+
+        def get_task_run_full_action_report_by_task_run_id(self, task_run_id: str, access_token: str):
+            headers = self.create_basic_authentication_header(access_token)
+            url_suffix = EXPORT_CSV_URL_SUFFIX.format(taskRunId=task_run_id)
+            res = self.generic_request(method=Request.GET.value, url_suffix=url_suffix, headers=headers,
+                                       response_type='csv')
+            return res
+
+        @staticmethod
+        def is_access_token_valid(access_token: str, expiry: int):
+            if not access_token or not expiry or expiry < int(datetime.utcnow().timestamp()):
+                return False
+            return True
+
+
+    def pentera_authentication(client: Client):
+        try:
+            tgt = demisto.getIntegrationContext().get('tgt')
+            client_id = demisto.params().get('clientId')
+            new_tgt, access_token = client.authenticate(client_id, tgt)
+            jwt_decode_dict = jwt.get_unverified_header(access_token)
+            expiry = jwt_decode_dict.get('exp', 0) if jwt_decode_dict else 0
+            demisto.setIntegrationContext({
+                'accessToken': access_token,
+                'tgt': new_tgt,
+                'expiry': expiry
+            })
+            return 'ok'
+
+        except Exception as e:
+            demisto.error(f'An error occurred during the authentication: {str(e)}')
+            raise e
+
+
+    def pentera_get_task_run_full_action_report_command(client: Client, args, access_token: str):
+        def _convert_csv_file_to_dict(csv_file):
+            csv_reader = csv.DictReader(io.StringIO(csv_file), fieldnames=FULL_ACTION_REPORT_FIELDNAMES)
+            data = [row for row in csv_reader]
+            if data and len(data) > 0:
+                return data[1:]
+            return []
+
+        def _convert_full_action_report_time(full_action_report_list: List[dict]):
+            def _parse_date(full_date, separator):
+                if isinstance(full_date, str) and isinstance(separator, str):
+                    date = full_date.split(separator)
+                    if len(date) > 2:
+                        first_arg = date[0]
+                        second_arg = date[1]
+                        third_arg = date[2]
+                        return first_arg, second_arg, third_arg
+
+            res_list: List[dict] = []
+            for ordered_dict in full_action_report_list:
+                full_date_to_convert = ordered_dict['Time'].replace(' ', '')
+                full_date_list = full_date_to_convert.split(',')
+                day, month, year = _parse_date(full_date_list[0], '/')
+                hours, minutes, seconds = _parse_date(full_date_list[1], ':')
+                converted_date = year + '-' + month + '-' + day + 'T' + hours + ':' + minutes + ':' + seconds + 'Z'
+                new_ordered_dict = ordered_dict.copy()
+                new_ordered_dict['Time'] = converted_date
+                res_list.append(new_ordered_dict)
+            return res_list
+
+        entries = []
+        task_run_id = args.get('task_run_id')
+        try:
+            response_csv = client.get_task_run_full_action_report_by_task_run_id(task_run_id, access_token)
+            readable_output = f"# Pentera Report for TaskRun ID {task_run_id}"
+            entry = fileResult(f'penterascan-{task_run_id}.csv', response_csv, entryTypes['entryInfoFile'])
+            entry["HumanReadable"] = readable_output
+            entry["ContentsFormat"] = formats["markdown"]
+            entries.append(entry)
+            csv_dict = _convert_csv_file_to_dict(response_csv)
+            date_converted_csv_dict = _convert_full_action_report_time(csv_dict)
+            human_readable = tableToMarkdown(readable_output, date_converted_csv_dict,
+                                             headers=FULL_ACTION_REPORT_FIELDNAMES)
+            entries.append({
+                "Type": entryTypes["note"],
+                "ContentsFormat": formats["json"],
+                "ReadableContentsFormat": formats["markdown"],
+                "Contents": date_converted_csv_dict,
+                "EntryContext": {
+                    'Pentera.TaskRun(val.ID == obj.ID)': {
+                        'FullActionReport': date_converted_csv_dict,
+                        'ID': task_run_id
+                    }
+                },
+                "HumanReadable": human_readable
+            })
+            return entries
+        except Exception as e:
+            demisto.error(f'An error occurred when tried to get task run id: {task_run_id} full action report: {str(e)}')
+            raise e
+
+
+    def pentera_get_task_run_stats_command(client: Client, args, access_token: str):
+        task_run_id = args.get('task_run_id')
+        try:
+            task_run_stats = client.get_task_stats_by_task_run_id(task_run_id, access_token)
+            parsed_response = parse_task_run_stats(task_run_stats)
+            title = parsed_response['TemplateName'] + ': ' + parsed_response['Status']
+            readable_output = tableToMarkdown(title, parsed_response, removeNull=True)
+            return (
+                readable_output,
+                {'Pentera.TaskRun(val.ID == obj.ID)': parsed_response},
+                task_run_stats  # raw response - the original response
+            )
+        except Exception as e:
+            demisto.error(f'An error occurred when tried to get task run id: {task_run_id} stats: {str(e)}')
+            raise e
+
+
+    def parse_task_run_stats(json_response):
+        def _convert_time_in_millis_to_date_format(time_in_millis):
+            time_in_date_format = None
+            try:
+                time_in_date_format = datetime.fromtimestamp(float(time_in_millis) / 1000).strftime(DATE_FORMAT)
+                return time_in_date_format
+            except TypeError:
+                return time_in_date_format
+
+        if isinstance(json_response, dict):
+            end_time_date_format = _convert_time_in_millis_to_date_format(json_response.get('endTime'))
+            start_time_date_format = _convert_time_in_millis_to_date_format(json_response.get('startTime'))
+            parsed_json_response = {
+                'ID': json_response.get('taskRunId'),
+                'TemplateName': json_response.get('taskRunName'),
+                'StartTime': start_time_date_format,
+                'EndTime': end_time_date_format,
+                'Status': json_response.get('status'),
+            }
+            return parsed_json_response
+
+
+    def pentera_run_template_command(client, args, access_token):
+        template_name = args.get('template_name')
+        try:
+            response = client.run_template_by_name(template_name, access_token)
+            task_run_json = response['taskRuns'][0]
+            parsed_response = parse_task_run_stats(task_run_json)
+            readable_output = tableToMarkdown(template_name, parse_task_run_stats(task_run_json),
+                                              removeNull=True)
+            return (
+                readable_output,
+                {'Pentera.TaskRun(val.ID == obj.ID)': parsed_response},
+                response  # raw response - the original response
+            )
+
+        except Exception as e:
+            demisto.error(f'An error occurred when tried to run a template by name. Template name: {template_name}. '
+                          f'Error message: {str(e)}')
+            raise e
+
+
+    def main():
+        client_id = demisto.params().get('clientId')
+        application_port = demisto.params().get('port')
+        base_url = demisto.params()['url'].rstrip('/') + ':' + application_port
+        verify_certificate = not demisto.params().get('insecure', False)
+        proxy = demisto.params().get('proxy', False)
+        tgt = demisto.getIntegrationContext().get('tgt', None)
+        if not tgt:
+            params_tgt = demisto.params()['tgt']
+            demisto.setIntegrationContext({
+                'tgt': params_tgt
+            })
+        access_token = demisto.getIntegrationContext().get('accessToken', None)
+        expiry = demisto.getIntegrationContext().get('expiry', 0)
+        demisto.debug(f'Got command: {demisto.command()}')
+        try:
+            client = Client(
+                base_url=base_url,
+                verify=verify_certificate,
+                client_id=client_id,
+                proxy=proxy,
+                headers=HEADERS
+            )
+            if demisto.command() == 'test-module':
+                demisto.results('ok')
+
+            elif demisto.command() == 'pentera-run-template-by-name':
+                if not client.is_access_token_valid(access_token, expiry):
+                    pentera_authentication(client)
+                return_outputs(*pentera_run_template_command(client, demisto.args(),
+                                                             demisto.getIntegrationContext().get('accessToken')))
+
+            elif demisto.command() == 'pentera-get-task-run-status':
+                if not client.is_access_token_valid(access_token, expiry):
+                    pentera_authentication(client)
+                return_outputs(*pentera_get_task_run_stats_command(client, demisto.args(),
+                                                                   demisto.getIntegrationContext()
+                                                                   .get('accessToken')))
+
+            elif demisto.command() == 'pentera-get-task-run-full-action-report':
+                if not client.is_access_token_valid(access_token, expiry):
+                    pentera_authentication(client)
+                demisto.results(pentera_get_task_run_full_action_report_command(client, demisto.args(),
+                                                                                demisto.getIntegrationContext().get(
+                                                                                    'accessToken')))
+        # Log exceptions
+        except Exception as e:
+            return_error(f'Failed to execute {demisto.command()} command. Error: {str(e)}')
+
+
+    if __name__ in ('__main__', '__builtin__', 'builtins'):
+        main()
+  subtype: python3
+  type: python
+system: true

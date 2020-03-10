@@ -1,0 +1,834 @@
+category: Data Enrichment & Threat Intelligence
+commonfields:
+  id: PhishLabs IOC EIR
+  version: -1
+configuration:
+- defaultvalue: https://caseapi.phishlabs.com
+  display: Server URL (e.g. https://example.net)
+  name: url
+  required: true
+  type: 0
+- defaultvalue: ""
+  display: User
+  name: credentials
+  required: true
+  type: 9
+- defaultvalue: ""
+  display: Fetch incidents
+  name: isFetch
+  required: false
+  type: 8
+- defaultvalue: 1 hours
+  display: First fetch timestamp (<number> <time unit>, e.g., 12 hours, 7 days)
+  name: fetchTime
+  required: false
+  type: 0
+- defaultvalue: "25"
+  display: Fetch limit
+  name: fetchLimit
+  required: false
+  type: 0
+- defaultvalue: ""
+  display: Trust any certificate (not secure)
+  name: insecure
+  required: false
+  type: 8
+- defaultvalue: ""
+  display: Use system proxy settings
+  name: proxy
+  required: false
+  type: 8
+- defaultvalue: ""
+  display: Incident type
+  name: incidentType
+  required: false
+  type: 13
+description: Get Email Incident Reports from PhishLabs
+detaileddescription: |-
+  [Phishlabs Email Incident Response (EIR)](https://www.phishlabs.com/email-incident-response) is a solution that protects
+  against threats that make it past your email security stack and into your employee inboxes.
+display: PhishLabs IOC EIR
+image: data:image/png;base64,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
+name: PhishLabs IOC EIR
+script:
+  commands:
+  - arguments:
+    - auto: PREDEFINED
+      description: Filter incidents by status. Can be "open" or "closed".
+      name: status
+      predefined:
+      - open
+      - closed
+    - description: |-
+        Return incidents created on or after this timestamp.
+        The timestamp is in RFC3339 format (2019-04-12T23:20:50Z).
+      name: created_after
+    - description: |-
+        Return Incidents created on or before this timestamp.
+        The timestamp is in RFC3339 format (2019-04-12T23:20:50Z).
+      name: created_before
+    - description: |-
+        Return Incidents closed on or after this timestamp.
+        The timestamp is in RFC3339 format (2019-04-12T23:20:50Z).
+      name: closed_after
+    - description: |-
+        Returns Incidents closed on or before the given timestamp
+        Timestamp is in RFC3339 format(2019-04-12T23:20:50Z).
+      name: closed_before
+    - auto: PREDEFINED
+      description: Returns incidents sorted by a column. Can be "created_at" or "closed_at".
+      name: sort
+      predefined:
+      - created_at
+      - closed_at
+    - auto: PREDEFINED
+      description: How to sort returned incidents. This will be applied to the given
+        sort parameter. Can be "asc" (ascending) or "desc" (descending).
+      name: direction
+      predefined:
+      - asc
+      - desc
+    - defaultValue: "25"
+      description: The maximum number of incidents to return (0-50). Default is 25.
+      name: limit
+    - defaultValue: "0"
+      description: Offset from last incident.
+      name: offset
+    - description: The time range for which to return incidents (<number> <time unit>,
+        e.g., 12 hours, 7 days)
+      name: period
+    description: Returns EIR incidents from PhishLabs-IOC EIR service. The default
+      number of incidents returned is 25.
+    name: phishlabs-ioc-eir-get-incidents
+    outputs:
+    - contextPath: PhishLabsIOC.EIR.CaseType
+      description: Incident reason type.
+      type: String
+    - contextPath: PhishLabsIOC.EIR.Classification
+      description: Incident classification.
+      type: String
+    - contextPath: PhishLabsIOC.EIR.SubClassification
+      description: Detailed classification.
+      type: String
+    - contextPath: PhishLabsIOC.EIR.Severity
+      description: Incident severity.
+      type: String
+    - contextPath: PhishLabsIOC.EIR.SubmissionMethod
+      description: Email submission method.
+      type: String
+    - contextPath: PhishLabsIOC.EIR.FurtherReviewReason
+      description: Incident further review reason.
+      type: String
+    - contextPath: PhishLabsIOC.EIR.ID
+      description: ID of the incident.
+      type: String
+    - contextPath: PhishLabsIOC.EIR.Title
+      description: Title of the reported incident.
+      type: String
+    - contextPath: PhishLabsIOC.EIR.Description
+      description: Description of the reported incident.
+      type: String
+    - contextPath: PhishLabsIOC.EIR.Status
+      description: Status of the reported incident.
+      type: Boolean
+    - contextPath: PhishLabsIOC.EIR.Created
+      description: Date that the incident was created.
+      type: Date
+    - contextPath: PhishLabsIOC.EIR.Modified
+      description: Date that the incident was last modified.
+      type: Date
+    - contextPath: PhishLabsIOC.EIR.Closed
+      description: Date that the incident was closed.
+      type: Date
+    - contextPath: PhishLabsIOC.EIR.Duration
+      description: Time until the incident will be closed (in seconds).
+      type: Number
+    - contextPath: PhishLabsIOC.EIR.EmailReportedBy
+      description: User who reported the incident.
+      type: String
+    - contextPath: PhishLabsIOC.EIR.Email.EmailBody
+      description: Email body.
+      type: String
+    - contextPath: PhishLabsIOC.EIR.Email.Sender
+      description: Email sender.
+      type: String
+    - contextPath: PhishLabsIOC.EIR.Email.URL.URL
+      description: URL found in the email body.
+      type: String
+    - contextPath: PhishLabsIOC.EIR.Email.URL.Malicious
+      description: Whether the URL is malicious.
+      type: Boolean
+    - contextPath: PhishLabsIOC.EIR.Email.URL.MaliciousDomain
+      description: Whether the URL domain is malicious.
+      type: Boolean
+    - contextPath: PhishLabsIOC.EIR.Email.Attachment.FileName
+      description: Name of the attached file.
+      type: String
+    - contextPath: PhishLabsIOC.EIR.Email.Attachment.MimeType
+      description: Attachment MIME type.
+      type: String
+    - contextPath: PhishLabsIOC.EIR.Email.Attachment.MD5
+      description: MD5 hash of the attachment.
+      type: String
+    - contextPath: PhishLabsIOC.EIR.Email.Attachment.SHA256
+      description: SHA256 hash of the attachment.
+      type: String
+    - contextPath: PhishLabsIOC.EIR.Email.Attachment.Malicious
+      description: Whether the file is malicious.
+      type: Boolean
+    - contextPath: Email.To
+      description: The recipient of the email.
+      type: String
+    - contextPath: Email.From
+      description: The sender of the email.
+      type: String
+    - contextPath: Email.Body/HTML
+      description: The plain-text version of the email.
+      type: String
+    - contextPath: File.Name
+      description: The full file name (including file extension).
+      type: String
+    - contextPath: File.SHA256
+      description: The SHA256 hash of the file.
+      type: Unknown
+    - contextPath: File.MD5
+      description: The MD5 hash of the file.
+      type: String
+    - contextPath: File.Malicious.Vendor
+      description: The vendor that reported the file as malicious.
+      type: String
+    - contextPath: File.Malicious.Description
+      description: A description explaining why the file was determined to be malicious.
+      type: String
+    - contextPath: URL.Data
+      description: The URL.
+      type: String
+    - contextPath: URL.Malicious.Vendor
+      description: The vendor reporting the URL as malicious.
+      type: String
+    - contextPath: URL.Malicious.Description
+      description: A description of the malicious URL.
+      type: String
+    - contextPath: DBotScore.Indicator
+      description: The indicator that was tested.
+      type: String
+    - contextPath: DBotScore.Type
+      description: The indicator type.
+      type: String
+    - contextPath: DBotScore.Vendor
+      description: The vendor used to calculate the score.
+      type: String
+    - contextPath: DBotScore.Score
+      description: The actual score.
+      type: String
+  - arguments:
+    - description: The ID of the incident.
+      name: incident_id
+      required: true
+    description: Returns a single Incident based on the given ID.
+    name: phishlabs-ioc-eir-get-incident-by-id
+    outputs:
+    - contextPath: PhishLabsIOC.EIR.CaseType
+      description: Incident reason type.
+      type: String
+    - contextPath: PhishLabsIOC.EIR.Classification
+      description: Incident classification.
+      type: String
+    - contextPath: PhishLabsIOC.EIR.SubClassification
+      description: Detailed classification..
+      type: String
+    - contextPath: PhishLabsIOC.EIR.Severity
+      description: Incident severity
+      type: String
+    - contextPath: PhishLabsIOC.EIR.SubmissionMethod
+      description: Email submission method.
+      type: String
+    - contextPath: PhishLabsIOC.EIR.FurtherReviewReason
+      description: Incident further review reason.
+      type: String
+    - contextPath: PhishLabsIOC.EIR.ID
+      description: ID of the incident.
+      type: String
+    - contextPath: PhishLabsIOC.EIR.Title
+      description: Title of the reported incident.
+      type: String
+    - contextPath: PhishLabsIOC.EIR.Description
+      description: Description of the reported incident.
+      type: String
+    - contextPath: PhishLabsIOC.EIR.Status
+      description: Status of the reported incident.
+      type: Boolean
+    - contextPath: PhishLabsIOC.EIR.Created
+      description: Date that the incident was created.
+      type: Date
+    - contextPath: PhishLabsIOC.EIR.Modified
+      description: Date that the incident was last modified.
+      type: Date
+    - contextPath: PhishLabsIOC.EIR.Closed
+      description: Date that the incident was closed.
+      type: Date
+    - contextPath: PhishLabsIOC.EIR.Duration
+      description: Time until the incident will be closed (in seconds).
+      type: Number
+    - contextPath: PhishLabsIOC.EIR.EmailReportedBy
+      description: User who reported the incident.
+      type: String
+    - contextPath: PhishLabsIOC.EIR.Email.EmailBody
+      description: Email body.
+      type: String
+    - contextPath: PhishLabsIOC.EIR.Email.Sender
+      description: Email sender.
+      type: String
+    - contextPath: PhishLabsIOC.EIR.Email.URL.URL
+      description: URL found in the email body.
+      type: String
+    - contextPath: PhishLabsIOC.EIR.Email.URL.Malicious
+      description: Whether the URL is malicious.
+      type: Boolean
+    - contextPath: PhishLabsIOC.EIR.Email.URL.MaliciousDomain
+      description: Whether the URL domain is malicious.
+      type: Boolean
+    - contextPath: PhishLabsIOC.EIR.Email.Attachment.FileName
+      description: Name of the attached file.
+      type: String
+    - contextPath: PhishLabsIOC.EIR.Email.Attachment.MimeType
+      description: Attachment MIME type.
+      type: String
+    - contextPath: PhishLabsIOC.EIR.Email.Attachment.MD5
+      description: MD5 hash of the attachment.
+      type: String
+    - contextPath: PhishLabsIOC.EIR.Email.Attachment.SHA256
+      description: SHA256 hash of the attachment.
+      type: String
+    - contextPath: PhishLabsIOC.EIR.Email.Attachment.Malicious
+      description: Whether the file is malicious.
+      type: Boolean
+    - contextPath: Email.To
+      description: The recipient of the email.
+      type: String
+    - contextPath: Email.From
+      description: The sender of the email.
+      type: String
+    - contextPath: Email.Body/HTML
+      description: The plain-text version of the email.
+      type: String
+    - contextPath: File.Name
+      description: The full file name (including file extension).
+      type: String
+    - contextPath: File.SHA256
+      description: The SHA256 hash of the file.
+      type: Unknown
+    - contextPath: File.MD5
+      description: The MD5 hash of the file.
+      type: String
+    - contextPath: File.Malicious.Vendor
+      description: The vendor that reported the file as malicious.
+      type: String
+    - contextPath: File.Malicious.Description
+      description: A description explaining why the file was determined to be malicious.
+      type: String
+    - contextPath: URL.Data
+      description: The URL.
+      type: String
+    - contextPath: URL.Malicious.Vendor
+      description: The vendor reporting the URL as malicious.
+      type: String
+    - contextPath: URL.Malicious.Description
+      description: A description of the malicious URL.
+      type: String
+    - contextPath: DBotScore.Indicator
+      description: The indicator that was tested.
+      type: String
+    - contextPath: DBotScore.Type
+      description: The indicator type.
+      type: String
+    - contextPath: DBotScore.Vendor
+      description: The vendor used to calculate the score.
+      type: String
+    - contextPath: DBotScore.Score
+      description: The actual score.
+      type: String
+  dockerimage: demisto/python3:3.7.5.4583
+  isfetch: true
+  runonce: false
+  script: |2
+
+
+
+
+
+    ''' IMPORTS '''
+    from typing import Dict, Tuple, Union, Optional, List, Any, AnyStr
+    import urllib3
+    # Disable insecure warnings
+    urllib3.disable_warnings()
+
+    """GLOBALS/PARAMS
+    Attributes:
+        INTEGRATION_NAME:
+            Name of the integration as shown in the integration UI, for example: Microsoft Graph User.
+
+        INTEGRATION_COMMAND_NAME:
+            Command names should be written in all lower-case letters,
+            and each word separated with a hyphen, for example: msgraph-user.
+
+        INTEGRATION_CONTEXT_NAME:
+            Context output names should be written in camel case, for example: MSGraphUser.
+    """
+    INTEGRATION_NAME = 'PhishLabs IOC - EIR'
+    INTEGRATION_COMMAND_NAME = 'phishlabs-ioc-eir'
+    INTEGRATION_CONTEXT_NAME = 'PhishLabsIOC'
+
+
+    class Client(BaseClient):
+        def test_module(self) -> Dict:
+            """Performs basic GET request to check if the API is reachable and authentication is successful.
+
+            Returns:
+                Response json
+            """
+            return self.get_incidents(limit=2)
+
+        def get_incidents(self, status: Optional[str] = None, created_after: Optional[str] = None,
+                          created_before: Optional[str] = None, closed_before: Optional[str] = None,
+                          closed_after: Optional[str] = None, sort: Optional[str] = None, direction: Optional[str] = None,
+                          limit: Union[str, int] = 25, offset: Union[str, int] = 0, period: str = None) -> Dict:
+            """
+            Query the specified kwargs with default parameters if not defined
+            Args:
+                status: open,closed
+                created_after: Timestamp is in RFC3339 format
+                created_before: Timestamp is in RFC3339 format
+                closed_before: Timestamp is in RFC3339 format
+                closed_after: Timestamp is in RFC3339 format
+                sort: created_at,closed_at
+                direction: asc,desc
+                limit: Limit amounts of incidents (0-50, default 50)
+                offset: Offset from last incident
+                period: timestamp (<number> <time unit>, e.g., 12 hours, 7 days)
+
+            Returns:
+                Raw response json as dictionary
+            """
+            suffix = "/incidents/EIR"
+            params: Dict[str, Any] = {}
+            if period:
+                created_after, created_before = parse_date_range(date_range=period,
+                                                                 date_format='%Y-%m-%dT%H:%M:%SZ')
+                params = {
+                    'created_after': created_after,
+                    'created_before': created_before
+                }
+            else:
+                params = {
+                    'created_after': created_after,
+                    'created_before': created_before,
+                    'closed_before': closed_before,
+                    'closed_after': closed_after
+                }
+            params.update({
+                'status': status,
+                'sort': sort,
+                'direction': direction,
+                'limit': limit,
+                'offset': offset
+            })
+            return self._http_request('GET',
+                                      url_suffix=suffix,
+                                      params=assign_params(**params))
+
+        def get_incident_by_id(self, incident_id: str) -> Dict:
+            """Query incident by ID
+
+            Args:
+                incident_id: ID of incident
+
+            Returns:
+                Response JSON as dictionary
+            """
+            suffix = f"/incidents/EIR/{incident_id}"
+            return self._http_request('GET',
+                                      url_suffix=suffix)
+
+
+    ''' HELPER FUNCTIONS '''
+
+
+    @logger
+    def indicator_ec(indicator: Dict, type_ec: AnyStr) -> Dict:
+        """indicator convert to ec format
+        Get an indicator from raw response and concert to demisto entry context format
+
+        Args:
+            indicator: raw response dictionary
+            type_ec: type of entry context
+
+        Returns:
+             indicator entry context
+        """
+        ec: Dict = {}
+        if type_ec == 'url-phishlabs':
+            ec = {
+                'URL': indicator.get('url'),
+                'Malicious': indicator.get('malicious'),
+                'MaliciousDomain': indicator.get('maliciousDomain'),
+            }
+        elif type_ec == 'attach-phishlabs':
+            ec = {
+                'fileName': indicator.get('fileName'),
+                'MimeType': indicator.get('mimeType'),
+                'MD5': indicator.get('md5'),
+                'SHA256': indicator.get('sha256'),
+                'Malicious': indicator.get('malicious')
+            }
+        elif type_ec == 'email-ec':
+            ec = {
+                'To': indicator.get('emailReportedBy'),
+                'From': indicator.get('sender'),
+                'Body/HTML': indicator.get('emailBody')
+            }
+
+        return ec
+
+
+    @logger
+    def indicator_dbot_ec(indicator: Dict, type_ec: AnyStr) -> Tuple[Dict, Dict]:
+        """Indicator convert to ec and dbotscore ec
+        Get an indicator from raw response and concert to demisto entry context format and demisto dbotscore entry context
+        format.
+
+        Args:
+            indicator: raw response dictionary
+            type_ec: type of entry context
+
+        Returns:
+            dbotscore entry context, indicator entry context
+        """
+        dbotscore: Dict = {}
+        ec: Dict = {}
+        if type_ec == 'url-ec':
+            ec = {
+                'Data': indicator.get('url'),
+                'Malicious': {
+                    'Vendor': INTEGRATION_NAME,
+                    'Description': indicator.get('malicious')
+                }
+            }
+            dbotscore = {
+                'Indicator': indicator.get('url'),
+                'Type': 'URL',
+                'Vendor': INTEGRATION_NAME,
+                'Score': dbotscores.get('High') if indicator.get('malicious') == 'true' else dbotscores.get('Low')
+            }
+        elif type_ec == 'file-ec':
+            ec = {
+                'Name': indicator.get('fileName'),
+                'SHA256': indicator.get('sha256'),
+                'MD5': indicator.get('md5'),
+                'Malicious': {
+                    'Vendor': INTEGRATION_NAME,
+                    'Description': indicator.get('malicious')
+                }
+            }
+            dbotscore = {
+                'Indicator': indicator.get('fileName'),
+                'Type': 'File',
+                'Vendor': INTEGRATION_NAME,
+                'Score': dbotscores.get('High') if indicator.get('malicious') == 'true' else dbotscores.get('Low')
+            }
+
+        return dbotscore, ec
+
+
+    @logger
+    def indicators_to_list_ec(indicators: List, type_ec: AnyStr) -> Union[Tuple[List, List], List]:
+        """Unpack list of indicators to demisto ec format
+        Convert list of indicators from raw response to demisto entry context format lists
+
+        Args:
+            indicators: lit of indicators from raw response
+            type_ec: type of indicators
+        Returns:
+             List of indicators entry context and if not integration context also dbotscore
+        """
+        dbots: List = []
+        ecs: List = []
+        if type_ec in ['url-ec', 'file-ec']:
+            for indicator in indicators:
+                dbotscore, ec = indicator_dbot_ec(indicator, type_ec)
+                ecs.append(ec)
+                dbots.append(dbotscore)
+            return ecs, dbots
+        else:
+            for indicator in indicators:
+                ec = indicator_ec(indicator, type_ec)
+                ecs.append(ec)
+            return ecs
+
+
+    @logger
+    def raw_response_to_context(incidents: Union[List, Any]) -> Tuple[List, List, List, List, List]:
+        """
+        Convert incidents list from raw response to demisto entry context list format
+        Args:
+            incidents: Incidents list
+
+        Returns:
+            Entry contexts of phishLabs, emails, files, urls, dbotScores
+        """
+        phishlabs_ec: List = []
+        email_ec: List = []
+        file_ec: List = []
+        url_ec: List = []
+        dbots_ec: List = []
+        for incident in incidents:
+            sc_incident: Dict = incident.get('details', {})
+            # Phishlabs entry context
+            phishlabs: Dict = {
+                'CaseType': sc_incident.get('caseType'),
+                'Classification': sc_incident.get('classification'),
+                'SubClassification': sc_incident.get('subClassification'),
+                'Severity': sc_incident.get('severity'),
+                'EmailReportedBy': sc_incident.get('emailReportedBy'),
+                'SubmissionMethod': sc_incident.get('submissionMethod'),
+                'FurtherReviewReason': sc_incident.get('furtherReviewReason'),
+                'ID': incident.get('id'),
+                'Title': incident.get('title'),
+                'Description': incident.get('description'),
+                'Status': incident.get('status'),
+                'Created': incident.get('created'),
+                'Modified': incident.get('modified'),
+                'Closed': incident.get('closed'),
+                'Duration': incident.get('duration'),
+                'Email': {
+                    'EmailBody': sc_incident.get('emailBody'),
+                    'Sender': sc_incident.get('sender'),
+                    'URL': indicators_to_list_ec(sc_incident.get('urls', []), type_ec='url-phishlabs'),
+                    'Attachment': indicators_to_list_ec(sc_incident.get('attachments', []), type_ec='attach-phishlabs')
+                }
+            }
+            phishlabs_ec.append(phishlabs)
+            # Email entry context
+            email = indicator_ec(sc_incident, type_ec='email-ec')
+            email_ec.append(email)
+            # Files + dbot entry context
+            files, dbotscores_files = indicators_to_list_ec(sc_incident.get('attachments', []), type_ec='file-ec')
+            file_ec += files
+            dbots_ec += dbotscores_files
+            # Urls + dbot entry context
+            urls, dbotscores_urls = indicators_to_list_ec(sc_incident.get('urls', []), type_ec='url-ec')
+            url_ec += urls
+            dbots_ec += dbotscores_urls
+
+        return phishlabs_ec, email_ec, file_ec, url_ec, dbots_ec
+
+
+    ''' COMMANDS '''
+
+
+    @logger
+    def test_module_command(client: Client, *_) -> Tuple[None, None, str]:
+        """Performs a basic GET request to check if the API is reachable and authentication is successful.
+
+        Args:
+            client: Client object with request
+            *_: Usually demisto.args()
+
+        Returns:
+            'ok' if test successful.
+
+        Raises:
+            DemistoException: If test failed.
+        """
+        results = client.test_module()
+        if 'incidents' in results:
+            return None, None, 'ok'
+        raise DemistoException(f'Test module failed, {results}')
+
+
+    @logger
+    def fetch_incidents_command(
+            client: Client,
+            fetch_time: str,
+            limit: str,
+            last_run: Optional[str] = None) -> Tuple[List[Dict[str, Any]], Dict]:
+        """Uses to fetch incidents into Demisto
+        Documentation: https://github.com/demisto/content/tree/master/docs/fetching_incidents
+
+        Args:
+            client: Client object with request
+            fetch_time: From when to fetch if first time, e.g. `3 days`
+            limit: limit of incidents in a fetch
+            last_run: Last fetch object occurs.
+
+        Returns:
+            incidents, new last_run
+        """
+        # Init
+        raws: List = []
+        incidents_raw: List = []
+        # Set last run time
+        occurred_format = '%Y-%m-%dT%H:%M:%SZ'
+        if not last_run:
+            datetime_new_last_run, _ = parse_date_range(date_range=fetch_time,
+                                                        date_format=occurred_format)
+        else:
+            datetime_new_last_run = last_run
+        # Query incidents by limit and creation time
+        total = 0
+        offset = 50
+        limit_incidents = int(limit)
+        limit_page = min(50, limit_incidents)
+        raw_response = client.get_incidents(created_after=datetime_new_last_run,
+                                            offset=offset,
+                                            limit=limit_page,
+                                            sort='created_at',
+                                            direction='asc')
+        while raw_response.get('metadata', {}).get('count') and total < limit_incidents:
+            raws.append(raw_response)
+            incidents_raw += raw_response.get('incidents', [])
+            total += int(raw_response.get('metadata', {}).get('count'))
+            offset += int(raw_response.get('metadata', {}).get('count'))
+            if total >= limit_incidents:
+                break
+            if limit_incidents - total < 50:
+                limit_page = limit_incidents - total
+            raw_response = client.get_incidents(offset=offset,
+                                                created_after=datetime_new_last_run,
+                                                limit=limit_page,
+                                                sort='created_at',
+                                                direction='asc')
+        # Gather incidents by demisto format
+        new_last_run: Optional[str] = None
+        incidents_report = []
+        if incidents_raw:
+            for incident_raw in incidents_raw:
+                # Creates incident entry
+                occurred = incident_raw.get('created')
+                incidents_report.append({
+                    'name': f"{INTEGRATION_NAME}: {incident_raw.get('id')}",
+                    'occurred': occurred,
+                    'rawJSON': json.dumps(incident_raw)
+                })
+
+            new_last_run = incidents_report[-1].get('occurred')
+        # Return results
+        return incidents_report, {'lastRun': new_last_run}
+
+
+    @logger
+    def get_incidents_command(client: Client, **kwargs: Dict) -> Tuple[object, dict, Union[List, Dict]]:
+        """Lists all incidents and return outputs in Demisto's context entry
+
+        Args:
+            client: Client object with request
+            kwargs: Usually demisto.args()
+
+        Returns:
+            human readable (markdown format), raw response and entry context
+        """
+        raw_response: Dict = client.get_incidents(**kwargs)  # type: ignore
+        if raw_response:
+            title = f'{INTEGRATION_NAME} - incidents'
+            phishlabs_ec, emails_ec, files_ec, urls_ec, dbots_ec = raw_response_to_context(raw_response.get('incidents'))
+            context_entry: Dict = {
+                outputPaths.get('dbotscore'): dbots_ec,
+                outputPaths.get('file'): files_ec,
+                outputPaths.get('url'): urls_ec,
+                'Email(val.Address && val.Address == obj.Address)': emails_ec,
+                f'{INTEGRATION_CONTEXT_NAME}(val.EIR.ID && val.EIR.ID === obj.EIR.ID && '
+                f'val.EIR.Modified && val.EIR.Modified === obj.EIR.Modified)': {
+                    'EIR': phishlabs_ec
+                }
+            }
+            human_readable = tableToMarkdown(name=title,
+                                             t=phishlabs_ec,
+                                             headers=['ID', 'Title', 'Status', 'Created', 'Classification',
+                                                      'SubClassification', 'EmailReportedBy'],
+                                             removeNull=True)
+
+            return human_readable, context_entry, raw_response
+        else:
+            return f'{INTEGRATION_NAME} - Could not find any results for given query', {}, {}
+
+
+    @logger
+    def get_incident_by_id_command(client: Client, incident_id: str) -> Tuple[object, Dict, Dict]:
+        """Lists all events and return outputs in Demisto's context entry
+
+        Args:
+            client: Client object with request
+            incident_id: ID of Incident
+
+        Returns:
+            human readable (markdown format), raw response and entry context
+        """
+        raw_response: Dict = client.get_incident_by_id(incident_id)
+        if raw_response:
+            title = f'{INTEGRATION_NAME} - incidents'
+            phishlabs_ec, emails_ec, files_ec, urls_ec, dbots_ec = raw_response_to_context(raw_response.get('incidents'))
+            context_entry: Dict = {
+                outputPaths.get('dbotscore'): dbots_ec,
+                outputPaths.get('file'): files_ec,
+                outputPaths.get('url'): urls_ec,
+                'Email(val.Address && val.Address == obj.Address)': emails_ec,
+                f'{INTEGRATION_CONTEXT_NAME}(val.EIR.ID && val.EIR.ID === obj.EIR.ID && '
+                f'val.EIR.Modified && val.EIR.Modified === obj.EIR.Modified)': {
+                    'EIR': phishlabs_ec
+                }
+            }
+            human_readable = tableToMarkdown(name=title,
+                                             t=phishlabs_ec,
+                                             headers=['ID', 'Title', 'Status', 'Created', 'Classification',
+                                                      'SubClassification', 'EmailReportedBy'],
+                                             removeNull=True)
+
+            return human_readable, context_entry, raw_response
+        else:
+            return f'{INTEGRATION_NAME} - Could not find any results for given query', {}, {}
+
+
+    ''' COMMANDS MANAGER / SWITCH PANEL '''
+
+
+    def main():
+        params = demisto.params()
+        base_url = urljoin(params.get('url'), 'idapi/v1')
+        verify_ssl = not params.get('insecure', False)
+        proxy = params.get('proxy')
+        client = Client(
+            base_url=base_url,
+            verify=verify_ssl,
+            proxy=proxy,
+            auth=(params.get('credentials', {}).get('identifier'),
+                  params.get('credentials', {}).get('password'))
+        )
+        command = demisto.command()
+        demisto.debug(f'Command being called is {command}')
+        commands = {
+            'test-module': test_module_command,
+            f'{INTEGRATION_COMMAND_NAME}-get-incidents': get_incidents_command,
+            f'{INTEGRATION_COMMAND_NAME}-get-incident-by-id': get_incident_by_id_command
+        }
+        try:
+            if command == 'fetch-incidents':
+                incidents, new_last_run = fetch_incidents_command(client,
+                                                                  fetch_time=params.get('fetchTime'),
+                                                                  last_run=demisto.getLastRun().get('lastRun'),
+                                                                  limit=params.get('fetchLimit'))
+                demisto.incidents(incidents)
+                demisto.setLastRun(new_last_run)
+            else:
+                readable_output, outputs, raw_response = commands[command](client=client, **demisto.args())
+                return_outputs(readable_output, outputs, raw_response)
+        # Log exceptions
+        except Exception as e:
+            err_msg = f'Error in {INTEGRATION_NAME} Integration [{e}]'
+            return_error(err_msg, error=e)
+
+
+    if __name__ == 'builtins':
+        main()
+  subtype: python3
+  type: python
+system: true

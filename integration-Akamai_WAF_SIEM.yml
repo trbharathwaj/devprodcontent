@@ -1,0 +1,575 @@
+category: Analytics & SIEM
+commonfields:
+  id: Akamai WAF SIEM
+  version: -1
+configuration:
+- defaultvalue: https://akaa-xxxxxxxxxxxxxxxx-xxxxxxxxxxxxxxxx.luna.akamaiapis.net
+  display: Server URL (e.g., https://akaa-xxxxxxxxxxxxxxxx-xxxxxxxxxxxxxxxx.luna.akamaiapis.net)
+  name: host
+  required: true
+  type: 0
+- defaultvalue: ""
+  display: Client token
+  name: clientToken
+  required: true
+  type: 4
+- defaultvalue: ""
+  display: Access token
+  name: accessToken
+  required: true
+  type: 4
+- defaultvalue: ""
+  display: Client secret
+  name: clientSecret
+  required: true
+  type: 4
+- defaultvalue: "50170"
+  display: Config IDs to fetch
+  name: configIds
+  required: true
+  type: 0
+- defaultvalue: ""
+  display: Incident type
+  name: incidentType
+  required: false
+  type: 13
+- defaultvalue: 1 hours
+  display: First fetch timestamp (<number> <time unit>, e.g., 12 hours, 7 days)
+  name: fetchTime
+  required: false
+  type: 0
+- defaultvalue: "20"
+  display: Fetch limit (minimum is 20)
+  name: fetchLimit
+  required: false
+  type: 0
+- defaultvalue: ""
+  display: Fetch incidents
+  name: isFetch
+  required: false
+  type: 8
+- defaultvalue: ""
+  display: Trust any certificate (not secure)
+  name: insecure
+  required: false
+  type: 8
+- defaultvalue: ""
+  display: Use system proxy settings
+  name: proxy
+  required: false
+  type: 8
+description: Use the Akamai WAF SIEM integration to retrieve security events from
+  Akamai Web Application Firewall (WAF) service.
+detaileddescription: |+
+  [Akamai’s security](https://www.akamai.com/us/en/products/security/) solutions provide protection for your websites, applications, APIs, and users.
+  ## API keys generating steps
+  1. [Open Control panel](https://control.akamai.com/) and login with admin account.
+  2. Open `identity and access management` menu.
+  3. Create user with assign roles `Manage SIEM` or make sure the admin has rights for manage SIEM.
+  4. Log in to new account you created in the last step.
+  5. Open `identity and access management` menu.
+  6. Create `new api client for me`
+  7. Assign API key to the relevant users group, and assign on next page `Read/Write` access for `SIEM`.
+  8. Save configuration and go to API detail you created.
+  9. Press `new credentials` and download or copy it.
+  10. Now use the credentials for configure Akamai WAF in Demisto.
+
+display: Akamai WAF SIEM
+image: data:image/png;base64,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
+name: Akamai WAF SIEM
+script:
+  commands:
+  - arguments:
+    - description: 'Unique identifier for each security configuration. To report on
+        more than one configuration, separate the integer identifiers with semicolons
+        (;), for example: 12892;29182;82912.'
+      name: config_ids
+      required: true
+    - description: This token denotes the last message. If specified, this operation
+        fetches only security events that have occurred from the offset. This is a
+        required parameter for offset mode and you can’t use it in time-based requests.
+      name: offset
+    - defaultValue: "30"
+      description: Defines the maximum number of security events returned per fetch.
+      name: limit
+    - description: The start of a specified time range, expressed in Unix epoch seconds.
+      name: from_epoch
+    - description: The end of a specified time range, expressed in Unix epoch seconds.
+      name: to_epoch
+    - description: Timestamp of events (<number> <time unit>. For example, 12 hours,
+        7 days.
+      name: time_stamp
+    description: Get security events from Akamai WAF
+    name: akamai-siem-get-events
+    outputs:
+    - contextPath: Akamai.SIEM.AttackData.clientIP
+      description: IP address involved in the attack.
+      type: String
+    - contextPath: Akamai.SIEM.AttackData.ConfigID
+      description: Unique identifier of the security configuration involved.
+      type: String
+    - contextPath: Akamai.SIEM.AttackData.PolicyID
+      description: Unique identifier of the policy configuration involved.
+      type: String
+    - contextPath: Akamai.SIEM.AttackData.PolicyID
+      description: The policy ID that was triggered.
+      type: String
+    - contextPath: Akamai.SIEM.AttackData.Geo.Asn
+      description: Geographic ASN location of the IP address involved in the attack.
+      type: String
+    - contextPath: Akamai.SIEM.AttackData.Geo.City
+      description: City of the IP address involved in the attack.
+      type: String
+    - contextPath: Akamai.SIEM.AttackData.Geo.Continent
+      description: Continent of the IP address involved in the attack.
+      type: String
+    - contextPath: Akamai.SIEM.AttackData.Geo.Country
+      description: Country of the IP address involved in the attack.
+      type: String
+    - contextPath: Akamai.SIEM.AttackData.Geo.RegionCode
+      description: Region code of the IP address involved in the attack.
+      type: String
+    - contextPath: Akamai.SIEM.AttackData.HttpMessage.Bytes
+      description: HTTP messege size in bytes.
+      type: Number
+    - contextPath: Akamai.SIEM.AttackData.HttpMessage.Host
+      description: HTTP messege host.
+      type: String
+    - contextPath: Akamai.SIEM.AttackData.HttpMessage.Method
+      description: HTTP messege method.
+      type: String
+    - contextPath: Akamai.SIEM.AttackData.HttpMessage.Path
+      description: HTTP messege path.
+      type: String
+    - contextPath: Akamai.SIEM.AttackData.HttpMessage.Port
+      description: HTTP messege port.
+      type: String
+    - contextPath: Akamai.SIEM.AttackData.HttpMessage.Protocol
+      description: HTTP messege protocol.
+      type: String
+    - contextPath: Akamai.SIEM.AttackData.HttpMessage.Query
+      description: HTTP messege query.
+      type: String
+    - contextPath: Akamai.SIEM.AttackData.HttpMessage.RequestHeaders
+      description: HTTP messege request headers.
+      type: String
+    - contextPath: Akamai.SIEM.AttackData.HttpMessage.RequestID
+      description: HTTP messege request ID.
+      type: String
+    - contextPath: Akamai.SIEM.AttackData.HttpMessage.ResponseHeaders
+      description: HTTP message response headers.
+      type: String
+    - contextPath: Akamai.SIEM.AttackData.HttpMessage.Start
+      description: HTTP messege epoch start time.
+      type: Date
+    - contextPath: Akamai.SIEM.AttackData.HttpMessage.Status
+      description: HTTP messege status code.
+      type: Number
+    - contextPath: IP.Address
+      description: IP address.
+      type: String
+    - contextPath: IP.ASN
+      description: 'The autonomous system name for the IP address, for example: "AS8948"."'
+      type: String
+    - contextPath: IP.Geo.Country
+      description: The country in which the IP address is located.
+      type: String
+  dockerimage: demisto/akamai:1.0.0.5063
+  isfetch: true
+  runonce: false
+  script: |
+    """ IMPORTS """
+    # Std imports
+    from datetime import datetime, timezone
+    from base64 import b64decode
+
+    # 3-rd party imports
+    from typing import Dict, Tuple, Union, Optional, List, Any, Sequence
+    import urllib.parse
+    import urllib3
+    from akamai.edgegrid import EdgeGridAuth
+
+    # Local imports
+
+
+
+
+    """GLOBALS/PARAMS
+
+    Attributes:
+        INTEGRATION_NAME:
+            Name of the integration as shown in the integration UI, for example: Microsoft Graph User.
+
+        INTEGRATION_COMMAND_NAME:
+            Command names should be written in all lower-case letters,
+            and each word separated with a hyphen, for example: msgraph-user.
+
+        INTEGRATION_CONTEXT_NAME:
+            Context output names should be written in camel case, for example: MSGraphUser.
+    """
+    INTEGRATION_NAME = 'Akamai SIEM'
+    INTEGRATION_COMMAND_NAME = 'akamai-siem'
+    INTEGRATION_CONTEXT_NAME = 'Akamai'
+
+    # Disable insecure warnings
+    urllib3.disable_warnings()
+
+
+    class Client(BaseClient):
+        def get_events(self, config_ids: str, offset: Optional[str] = None, limit: Optional[Union[str, int]] = None,
+                       from_epoch: Optional[str] = None, to_epoch: Optional[str] = None) \
+                -> Tuple[List[Any], Any]:
+            """
+                Get security events from Akamai WAF service by - https://developer.akamai.com/api/cloud_security/siem/v1.html,
+                Pay attention response as text of multiple json objects
+                Allowed query parameters combinations:
+                    1. offset - Since a prior request.
+                    2. offset, limit - Since a prior request, limited.
+                    3. from - Since a point in time.
+                    4. from, limit - Since a point in time, limited.
+                    5. from, to - Over a range of time.
+                    6. from, to, limit - Over a range of time, limited.
+            Args:
+                config_ids: Unique identifier for each security configuration. To report on more than one configuration, separate
+                          integer identifiers with semicolons, e.g. 12892;29182;82912.
+                offset: This token denotes the last message. If specified, this operation fetches only security events that have
+                        occurred from offset. This is a required parameter for offset mode and you can’t use it in time-based
+                        requests.
+                limit: Defines the approximate maximum number of security events each fetch returns, in both offset and
+                       time-based modes. The default limit is 10000. Expect requests to return a slightly higher number of
+                       security events than you set in the limit parameter, because data is stored in different buckets.
+                from_epoch: The start of a specified time range, expressed in Unix epoch seconds.
+                            This is a required parameter to get time-based results for a set period, and you can’t use it in
+                            offset mode.
+                to_epoch: The end of a specified time range, expressed in Unix epoch seconds. You can’t use this parameter in
+                          offset mode and it’s an optional parameter in time-based mode. If omitted, the value defaults to the
+                          current time.
+
+            Returns:
+                Multiple json objects as list of dictionaries, offset for next pagnination
+            """
+            params = {
+                'offset': offset,
+                'limit': limit,
+                'to': to_epoch,
+                'from': from_epoch,
+            }
+            raw_response: str = self._http_request(method='GET',
+                                                   url_suffix=f'/{config_ids}',
+                                                   params=assign_params(**params),
+                                                   resp_type='text')
+            events: List = []
+            if '{ "total": 0' not in raw_response:
+                events = [json.loads(event) for event in raw_response.split('\n')[:-2]]
+            offset_new = json.loads(raw_response.split('\n')[-2]).get('offset')
+            return events, offset_new
+
+
+    '''HELPER FUNCIONS'''
+
+
+    def date_format_converter(from_format: str, date_before: str, readable_format: str = '%Y-%m-%dT%H:%M:%SZ%Z') -> str:
+        """
+            Convert datatime object from epoch time to follow format %Y-%m-%dT%H:%M:%SZ
+        Args:
+            from_format: format to convert from.
+            date_before: date before conversion epoch time or %Y-%m-%dT%H:%M:%SZ format
+            readable_format: readable format by default %Y-%m-%dT%H:%M:%SZ
+        Examples:
+            >>> date_format_converter(from_format='epoch', date_before='1576570098')
+            '2019-12-17T08:08:18Z'
+            >>> date_format_converter(from_format='epoch', date_before='1576570098', readable_format='%Y-%m-%d %H:%M:%S')
+            '2019-12-17 08:08:18'
+            >>> date_format_converter(from_format='readable', date_before='2019-12-17T08:08:18Z')
+            '1576570098'
+
+        Returns:
+            Converted date as Datetime object or string object
+        """
+        converted_date: Union[str, int] = ''
+        if from_format == 'epoch':
+            converted_date = datetime.utcfromtimestamp(int(date_before)).strftime(readable_format)
+        elif from_format == 'readable':
+            date_before += 'UTC'
+            converted_date = int(datetime.strptime(date_before, readable_format).replace(tzinfo=timezone.utc).timestamp())
+
+        return str(converted_date)
+
+
+    def decode_message(msg: str) -> Sequence[Optional[str]]:
+        """
+            Follow these steps for data members that appear within the event’s attackData section:
+                1. If the member name is prefixed rule, URL-decode the value.
+                2. The result is a series of base64-encoded chunks delimited with semicolons.
+                3. Split the value at semicolon (;) characters.
+                4. base64-decode each chunk of split data.
+                 The example above would yield a sequence of alert, alert, and deny.
+        Args:
+            msg: Messeage to decode
+
+        Returns:
+            Decoded message as array
+
+        Examples:
+            >>> decode_message(msg='ZGVueQ%3d%3d')
+            ['deny']
+            >>> decode_message(msg='Q3VzdG9tX1JlZ0VYX1J1bGU%3d%3bTm8gQWNjZXB0IEhlYWRlciBBTkQgTm8gVXNlciBBZ2VudCBIZWFkZXI%3d')
+            ['Custom_RegEX_Rule', 'No Accept Header AND No User Agent Header']
+        """
+        readable_msg = []
+        translated_msg = urllib.parse.unquote(msg).split(';')
+        for word in translated_msg:
+            word = b64decode(word.encode('utf8')).decode('utf8')
+            if word:
+                readable_msg.append(word)
+        return readable_msg
+
+
+    def events_to_ec(raw_response: List) -> Tuple[List, List, List]:
+        """
+            Convert raw response response to ec
+        Args:
+            raw_response: events as list from raw response
+
+        Returns:
+            events as defined entry context and events for human readable
+        """
+        events_ec: List[Dict] = []
+        ip_ec: List[Dict] = []
+        events_human_readable: List[Dict] = []
+
+        for event in raw_response:
+            events_ec.append(
+                {
+                    "AttackData": assign_params(**{
+                        "ConfigID": event.get('attackData', {}).get('configId'),
+                        "PolicyID": event.get('attackData', {}).get('policyId'),
+                        "ClientIP": event.get('attackData', {}).get('clientIP'),
+                        "Rules": decode_message(event.get('attackData', {}).get('rules')),
+                        "RuleMessages": decode_message(event.get('attackData', {}).get('ruleMessages')),
+                        "RuleTags": decode_message(event.get('attackData', {}).get('ruleTags')),
+                        "RuleData": decode_message(event.get('attackData', {}).get('ruleData')),
+                        "RuleSelectors": decode_message(event.get('attackData', {}).get('ruleSelectors')),
+                        "RuleActions": decode_message(event.get('attackData', {}).get('ruleActions'))
+                    }),
+                    "HttpMessage": assign_params(**{
+                        "RequestId": event.get('httpMessage', {}).get('requestId'),
+                        "Start": event.get('httpMessage', {}).get('start'),
+                        "Protocol": event.get('httpMessage', {}).get('protocol'),
+                        "Method": event.get('httpMessage', {}).get('method'),
+                        "Host": event.get('httpMessage', {}).get('host'),
+                        "Port": event.get('httpMessage', {}).get('port'),
+                        "Path": event.get('httpMessage', {}).get('path'),
+                        "RequestHeaders": event.get('httpMessage', {}).get('requestHeaders'),
+                        "Status": event.get('httpMessage', {}).get('status'),
+                        "Bytes": event.get('httpMessage', {}).get('bytes'),
+                        "ResponseHeaders": event.get('httpMessage', {}).get('responseHeaders')
+                    }),
+                    "Geo": assign_params(**{
+                        "Continent": event.get('geo', {}).get('continent'),
+                        "Country": event.get('geo', {}).get('country'),
+                        "City": event.get('geo', {}).get('city'),
+                        "RegionCode": event.get('geo', {}).get('regionCode'),
+                        "Asn": event.get('geo', {}).get('asn')
+                    })
+                }
+            )
+
+            ip_ec.append(assign_params(**{
+                "Address": event.get('attackData', {}).get('clientIP'),
+                "ASN": event.get('geo', {}).get('asn'),
+                "Geo": {
+                    "Country": event.get('geo', {}).get('country')
+                }
+            }))
+
+            events_human_readable.append(assign_params(**{
+                'Attacking IP': event.get('attackData', {}).get('clientIP'),
+                "Config ID": event.get('attackData', {}).get('configId'),
+                "Policy ID": event.get('attackData', {}).get('policyId'),
+                "Rules": decode_message(event.get('attackData', {}).get('rules')),
+                "Rule messages": decode_message(event.get('attackData', {}).get('ruleMessages')),
+                "Rule actions": decode_message(event.get('attackData', {}).get('ruleActions')),
+                'Date occured': date_format_converter(from_format='epoch',
+                                                      date_before=event.get('httpMessage', {}).get('start')),
+                "Location": {
+                    'Country': event.get('geo', {}).get('country'),
+                    'City': event.get('geo', {}).get('city')
+                }
+            }))
+
+        return events_ec, ip_ec, events_human_readable
+
+
+    ''' COMMANDS '''
+
+
+    @logger
+    def test_module_command(client: Client) -> Tuple[None, None, str]:
+        """Performs a basic GET request to check if the API is reachable and authentication is successful.
+
+        Args:
+            client: Client object with request
+            *_: Usually demisto.args()
+
+        Returns:
+            'ok' if test successful.
+
+        Raises:
+            DemistoException: If test failed.
+        """
+        # Test on the following date Monday, 6 March 2017 16:07:22
+        events, offset = client.get_events(config_ids=demisto.params().get('configIds'),
+                                           from_epoch='1488816442',
+                                           limit='1')
+        if isinstance(events, list):
+            return None, None, 'ok'
+        raise DemistoException(f'Test module failed, {events}')
+
+
+    @logger
+    def fetch_incidents_command(
+            client: Client,
+            fetch_time: str,
+            fetch_limit: Union[str, int],
+            config_ids: str,
+            last_run: Optional[str] = None) -> Tuple[List[Dict[str, Any]], Dict]:
+        """Uses to fetch incidents into Demisto
+        Documentation: https://github.com/demisto/content/tree/master/docs/fetching_incidents
+
+        Args:
+            client: Client object with request
+            fetch_time: From when to fetch if first time, e.g. `3 days`
+            fetch_limit: limit of incidents in a fetch
+            config_ids: security configuration ids to fetch, e.g. `51000;56080`
+            last_run: Last fetch object occurs.
+
+        Returns:
+            incidents, new last_run
+        """
+        raw_response: Optional[List] = []
+        if not last_run:
+            datetime_new_last_run, _ = parse_date_range(date_range=fetch_time,
+                                                        date_format='%s')
+            raw_response, offset = client.get_events(config_ids=config_ids,
+                                                     from_epoch=datetime_new_last_run,
+                                                     limit=fetch_limit)
+        else:
+            raw_response, offset = client.get_events(config_ids=config_ids,
+                                                     offset=last_run,
+                                                     limit=fetch_limit)
+
+        incidents = []
+        if raw_response:
+            for event in raw_response:
+                incidents.append({
+                    'name': f"{INTEGRATION_NAME}: {event.get('attackData').get('configId')}",
+                    'occurred': date_format_converter(from_format='epoch',
+                                                      date_before=event.get('httpMessage', {}).get('start')),
+                    'rawJSON': json.dumps(event)
+                })
+
+        return incidents, {'lastRun': offset}
+
+
+    def get_events_command(client: Client, config_ids: str, offset: Optional[str] = None, limit: Optional[str] = None,
+                           from_epoch: Optional[str] = None, to_epoch: Optional[str] = None, time_stamp: Optional[str] = None) \
+            -> Tuple[object, dict, Union[List, Dict]]:
+        """
+            Get security events from Akamai WAF service
+            Allowed query parameters combinations:
+                1. offset - Since a prior request.
+                2. offset, limit - Since a prior request, limited.
+                3. from - Since a point in time.
+                4. from, limit - Since a point in time, limited.
+                5. from, to - Over a range of time.
+                6. from, to, limit - Over a range of time, limited.
+        Args:
+            client: Client object
+            config_ids: Unique identifier for each security configuration. To report on more than one configuration, separate
+                      integer identifiers with semicolons, e.g. 12892;29182;82912.
+            offset: This token denotes the last message. If specified, this operation fetches only security events that have
+                    occurred from offset. This is a required parameter for offset mode and you can’t use it in time-based requests.
+            limit: Defines the approximate maximum number of security events each fetch returns, in both offset and
+                   time-based modes. The default limit is 10000. Expect requests to return a slightly higher number of
+                   security events than you set in the limit parameter, because data is stored in different buckets.
+            from_epoch: The start of a specified time range, expressed in Unix epoch seconds.
+                        This is a required parameter to get time-based results for a set time_stamp, and you can’t use it in
+                        offset mode.
+            to_epoch: The end of a specified time range, expressed in Unix epoch seconds. You can’t use this parameter in
+                      offset mode and it’s an optional parameter in time-based mode. If omitted, the value defaults to the
+                      current time.
+            time_stamp: timestamp (<number> <time unit>, e.g., 12 hours, 7 days of events
+
+        Returns:
+            Human readable, entry context, raw response
+        """
+        if time_stamp:
+            from_epoch, to_epoch = parse_date_range(date_range=time_stamp,
+                                                    date_format="%s")
+        raw_response, offset = client.get_events(config_ids=config_ids,
+                                                 offset=offset,
+                                                 limit=limit,
+                                                 from_epoch=from_epoch,
+                                                 to_epoch=to_epoch)
+        if raw_response:
+            events_ec, ip_ec, events_human_readable = events_to_ec(raw_response)
+            entry_context = {
+                "Akamai.SIEM(val.HttpMessage.RequestId && val.HttpMessage.RequestId == obj.HttpMessage.RequestId)": events_ec,
+                outputPaths.get('ip'): ip_ec
+            }
+            title = f'{INTEGRATION_NAME} - Attacks data'
+
+            human_readable = tableToMarkdown(name=title,
+                                             t=events_human_readable,
+                                             removeNull=True)
+
+            return human_readable, entry_context, raw_response
+        else:
+            return f'{INTEGRATION_NAME} - Could not find any results for given query', {}, {}
+
+
+    ''' COMMANDS MANAGER / SWITCH PANEL '''
+
+
+    def main():
+        params = demisto.params()
+        client = Client(
+            base_url=urljoin(params.get('host'), '/siem/v1/configs'),
+            verify=not params.get('insecure', False),
+            proxy=params.get('proxy'),
+            auth=EdgeGridAuth(
+                client_token=params.get('clientToken'),
+                access_token=params.get('accessToken'),
+                client_secret=params.get('clientSecret')
+            )
+        )
+        commands = {
+            f"test-module": test_module_command,
+            f"{INTEGRATION_COMMAND_NAME}-get-events": get_events_command
+        }
+        command = demisto.command()
+        demisto.debug(f'Command being called is {command}')
+        try:
+            if command == 'fetch-incidents':
+                incidents, new_last_run = fetch_incidents_command(client,
+                                                                  fetch_time=params.get('fetchTime'),
+                                                                  fetch_limit=params.get('fetchLimit'),
+                                                                  config_ids=params.get('configIds'),
+                                                                  last_run=demisto.getLastRun().get('lastRun'))
+                demisto.incidents(incidents)
+                demisto.setLastRun(new_last_run)
+            else:
+                human_readable, entry_context, raw_response = commands[command](client, **demisto.args())
+                return_outputs(human_readable, entry_context, raw_response)
+
+        except Exception as e:
+            err_msg = f'Error in {INTEGRATION_NAME} Integration [{e}]'
+            return_error(err_msg, error=e)
+
+
+    if __name__ == 'builtins':
+        main()
+  subtype: python3
+  type: python
+system: true

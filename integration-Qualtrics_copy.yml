@@ -1,0 +1,250 @@
+category: IT Services
+commonfields:
+  id: Qualtrics_copy
+  version: -1
+configuration:
+- defaultvalue: ""
+  display: Qualtrics API credentials
+  name: api_creds
+  required: false
+  type: 9
+- defaultvalue: ""
+  display: Fetch incidents
+  name: isFetch
+  required: false
+  type: 8
+- defaultvalue: ""
+  display: Incident type
+  name: incidentType
+  required: false
+  type: 13
+description: Integration with Qualtrics API
+detaileddescription: |
+  # Qualtrics Wrapper
+  This module acts as a wrapper for specific Qualtrics API calls.
+display: Qualtrics_copy
+image: data:image/png;base64,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
+name: Qualtrics_copy
+script:
+  commands:
+  - arguments:
+    - description: URL of API to run GET on
+      name: url
+      required: true
+    - auto: PREDEFINED
+      defaultValue: "true"
+      description: List of parameters to send in GET request
+      name: params
+      predefined:
+      - "true"
+      - "false"
+    description: Wrapper for sending GET requests to Qualtrics API
+    name: qualtrics-get
+    outputs:
+    - contextPath: Qualtrics.Get.Results
+      description: Results of GET on Qualtrics API
+      type: String
+  - arguments: []
+    description: Wrapper for sending POST requests to Qualtrics API
+    name: qualtrics-post
+  - arguments: []
+    description: Test to ensure that integration with Qualtrics API is functional
+    name: qualtrics-test-integration
+  isfetch: true
+  runonce: false
+  script: |2-
+
+
+
+    ''' IMPORTS '''
+
+    import json
+    import requests
+    import traceback
+    from distutils.util import strtobool
+
+    # Disable insecure warnings
+    requests.packages.urllib3.disable_warnings()
+
+
+    ## Helper Functions ##
+    def get_request(_url, _params):
+        """
+        Wrapper for GET requests against Qualtrics API
+        :param _url: URL to hit with request
+        :param _params: parameters to pass in with request
+        :return: response or response error from request
+        """
+        try:
+            get_response = requests.get(
+                url=_url,
+                headers={'content-type': 'application/json; charset=utf-8',
+                         'x-api-token': demisto.params()['api_creds']['password'], },
+                params=_params,
+            )
+            if get_response.status_code == 200:
+                demisto.debug('GET response: {}'.format(get_response.content))
+                get_response = json.loads(get_response.content)
+                demisto.debug(get_response)
+                return get_response
+            else:
+                return_error('HTTP GET Request to Qualtrics API failed with error status code: {}'.format(
+                    str(get_response.status_code)))
+        except requests.exceptions.RequestException:
+            return_error('HTTP GET Request to Qualtrics API failed with runtime exception: RequestException: {}'.format(
+                traceback.format_exc()))
+
+
+    def post_request_v3(_url, _params, _data):
+        """
+        Wrapper for v3 POST requests against Qualtrics API
+        :param _url: URL to hit with request
+        :param _params: parameters to pass in with request
+        :param _data: body to pass in with request
+        :return: response or response error from request
+        """
+        try:
+            post_response = requests.post(
+                url=_url,
+                headers={'content-type': 'application/json; charset=utf-8',
+                         'x-api-token': demisto.params()['api_creds']['password'], },
+                params=_params,
+                data=_data
+            )
+            if post_response.status_code == 200:
+                demisto.debug('POST response: {}'.format(post_response.content))
+                post_response = json.loads(post_response.content)
+                demisto.debug(post_response)
+                return post_response
+            else:
+                return_error('HTTP POST Request to Qualtrics API failed with error status code: {}'.format(
+                    str(post_response.status_code)))
+        except requests.exceptions.RequestException:
+            return_error('HTTP POST Request to Qualtrics API failed with runtime exception: RequestException: {}'.format(
+                traceback.format_exc()))
+
+
+    def post_request_v1(_url, _params, _data):
+        """
+        Wrapper for v1 POST requests against Qualtrics API
+        :param _url: URL to hit with request
+        :param _params: parameters to pass in with request
+        :param _data: body to pass in with request
+        :return: response or response error from request
+        """
+        try:
+            post_response = requests.post(
+                url=_url,
+                headers={'content-type':'application/json; charset=utf-8'},
+                params=_params,
+                data=_data
+            )
+            if post_response.status_code == 200:
+                demisto.debug('POST response: {}'.format(post_response.content))
+                post_response = json.loads(post_response.content)
+                demisto.debug(post_response)
+                return post_response
+            else:
+                return_error('HTTP POST Request to Qualtrics API failed with error status code: {}'.format(
+                    str(post_response.status_code)))
+        except requests.exceptions.RequestException:
+            return_error('HTTP POST Request to Qualtrics API failed with runtime exception: RequestException: {}'.format(
+                traceback.format_exc()))
+
+
+    def fetch_incidents():
+        """
+        Demisto function used to denote that this should be run periodically to poll for, in this case, Qualtrics tickets
+        generated from the security survey and turn them into Demisto tickets
+        :return:
+        """
+        demisto.debug('Fetching Qualtrics tickets')
+        # Get all tickets that are not closed
+        response = get_request('https://ca1.qualtrics.com/API/v3/tickets', {'ticketStatus': 0})
+        demisto.debug('Fetched Tickets Response: {}'.format(response))
+        # demisto.debug('Fetched Tickets Contents: {}'.format(response['result']['contents'].decode('utf-8')))
+        tickets = json.dumps(response['result']['contents'])
+        ingest_tickets(json.loads(tickets))
+        demisto.results(response)
+
+
+    def ingest_tickets(tickets):
+        """
+        Helper function to fetch_incidents used for turning the Qualtrics tickets into Demisto tickets
+        :param tickets:
+        :return:
+        """
+        demisto.debug('Ingesting Tickets: {}'.format(tickets))
+        incidents = []
+        for ticket in tickets:
+            details = ticket['keyvalues']
+            incident = {
+                'name': str(ticket['ticketName']),
+                'occurred': str(ticket['createdAt']),
+                'details': get_details(details),
+                'severity': 1,
+                'rawJSON': json.dumps(ticket),
+                'type': 'Survey',
+                'CustomFields': {'ticketstatus': 'Active', 'reporter': 'Employee'}
+            }
+            demisto.debug('Creating Demisto Incident: {}'.format(incident))
+            incidents.append(incident)
+            close_ticket(ticket)
+        demisto.incidents(incidents)
+
+
+    def close_ticket(ticket):
+        """
+        Helper function to close a Qualtrics ticket after it has been ingested
+        :param ticket:
+        :return:
+        """
+        params = {'User': demisto.params()['api_creds']['identifier'], 'Token': demisto.params()['api_creds']['password']}
+        post_request_v1('https://ca1.qualtrics.com/tickets/v1/tickets/{}'.format(
+            ticket['ticketKey']), params, json.dumps({'status': '2'}))
+
+
+    def get_details(details):
+        """
+        Helper function to ingest the details of a Qualtrics ticket correctly
+        :param details: Details body in Qualtrics ticket
+        :return: string containing formatted details
+        """
+        details_string = ''
+        demisto.debug('Getting Ticket Details: {}'.format(details))
+        for pair in details:
+            details_string += '{}: {}\n\n'.format(pair['key'], pair['value'])
+        return details_string
+
+
+    ## Main driver ##
+    try:
+        # The command demisto.command() holds the command sent from the user.
+        if demisto.command() == 'test-module':
+            # This is the call made when pressing the integration test button.
+            demisto.debug('Integrating Qualtrics module')
+            response = get_request('https://ca1.qualtrics.com/API/v3/tickets', None)
+            demisto.results('ok')
+        if demisto.command() == 'qualtrics-test-integration':
+            response = get_request('https://ca1.qualtrics.com/API/v3/tickets', {'ticketStatus': 0})
+            demisto.results(response)
+            demisto.results('ok')
+        if demisto.command() == 'fetch-incidents':
+            # Demisto specific function for integrations that fetch alerts
+            fetch_incidents()
+        if demisto.command() == 'qualtrics-get':
+            # Wrapper for Qualtrics API GET requests
+            url = demisto.args().get('url')
+            params = demisto.args().get('params')
+            get_request(url, params)
+        if demisto.command() == 'qualtrics-post':
+            # Wrapper for Qualtrics API POST requests
+            url = demisto.args().get('url')
+            params = demisto.args().get('params')
+            data = demisto.args().get('data')
+            post_request_v3(url, params, data)
+    except Exception as e:
+        return_error('Qualtrics Integration Failed: {}'.format(e.message))
+  subtype: python3
+  type: python
+sourcemoduleid: Qualtrics

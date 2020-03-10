@@ -1,0 +1,372 @@
+id: d23731f3-0c05-4d7c-895a-248a62316d7d
+inputs:
+- description: ""
+  key: hostname
+  required: false
+  value: {}
+- description: ""
+  key: counter
+  required: false
+  value: {}
+- description: ""
+  key: hostnameSize
+  required: false
+  value: {}
+name: Sub Loop Playbook
+outputs:
+- contextPath: counterVal
+  type: unknown
+starttaskid: "0"
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "15"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 7fcd3867-ac87-4923-8f6b-41a5df5389d9
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: 7fcd3867-ac87-4923-8f6b-41a5df5389d9
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 265,
+          "y": 50
+        }
+      }
+  "1":
+    id: "1"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "7"
+    note: true
+    scriptarguments:
+      value:
+        simple: ${host}
+    separatecontext: false
+    task:
+      brand: ""
+      description: Prints text to war room (Markdown supprted)
+      id: 4490cd1d-3fdc-4736-81ca-a38d6b6f83cb
+      iscommand: false
+      name: Print out host
+      script: Print
+      type: regular
+      version: -1
+    taskid: 4490cd1d-3fdc-4736-81ca-a38d6b6f83cb
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 265,
+          "y": 895
+        }
+      }
+  "3":
+    id: "3"
+    ignoreworker: false
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 4e31022b-199b-427c-8519-629a64f2353a
+      iscommand: false
+      name: Done
+      type: title
+      version: -1
+    taskid: 4e31022b-199b-427c-8519-629a64f2353a
+    timertriggers: []
+    type: title
+    view: |-
+      {
+        "position": {
+          "x": 265,
+          "y": 1245
+        }
+      }
+  "7":
+    id: "7"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "3"
+    note: false
+    scriptarguments:
+      append:
+        simple: "false"
+      key:
+        simple: counterVal
+      value:
+        complex:
+          root: ${counterVal}
+          transformers:
+          - args:
+              by:
+                value:
+                  simple: "1"
+            operator: addition
+    separatecontext: false
+    task:
+      brand: ""
+      id: 2c3ec670-6f2a-4136-8ff6-3f08f7556e55
+      iscommand: false
+      name: Set counter based on previous value
+      script: Set
+      type: regular
+      version: -1
+    taskid: 2c3ec670-6f2a-4136-8ff6-3f08f7556e55
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 265,
+          "y": 1070
+        }
+      }
+  "8":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: inputs.counter
+          operator: isNotExists
+        - left:
+            iscontext: true
+            value:
+              simple: inputs.counter
+          operator: isEqualNumber
+          right:
+            value:
+              simple: "0"
+      label: "yes"
+    id: "8"
+    ignoreworker: false
+    nexttasks:
+      '#default#':
+      - "10"
+      "yes":
+      - "9"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 1f8e8403-170e-4888-812a-192ce7d204e1
+      iscommand: false
+      name: check if starting of the loop
+      type: condition
+      version: -1
+    taskid: 1f8e8403-170e-4888-812a-192ce7d204e1
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 265,
+          "y": 370
+        }
+      }
+  "9":
+    id: "9"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "12"
+    note: false
+    scriptarguments:
+      append:
+        simple: "false"
+      key:
+        simple: host
+      value:
+        complex:
+          root: inputs.hostname
+          transformers:
+          - args:
+              index:
+                value:
+                  simple: "0"
+            operator: atIndex
+    separatecontext: false
+    task:
+      brand: ""
+      id: 3d80a7dc-5880-42c1-82cd-a0d536c4f321
+      iscommand: false
+      name: get the Ist host from the list
+      script: Set
+      type: regular
+      version: -1
+    taskid: 3d80a7dc-5880-42c1-82cd-a0d536c4f321
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 545
+        }
+      }
+  "10":
+    id: "10"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "13"
+    note: false
+    scriptarguments:
+      append:
+        simple: "false"
+      key:
+        simple: host
+      value:
+        complex:
+          root: inputs.hostname
+          transformers:
+          - args:
+              index:
+                iscontext: true
+                value:
+                  simple: ${counterVal}
+            operator: atIndex
+    separatecontext: false
+    task:
+      brand: ""
+      id: 09a095ff-8c91-4b3a-861f-78221b3f806d
+      iscommand: false
+      name: Get the next host from the list
+      script: Set
+      type: regular
+      version: -1
+    taskid: 09a095ff-8c91-4b3a-861f-78221b3f806d
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 480,
+          "y": 545
+        }
+      }
+  "12":
+    id: "12"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "1"
+    note: false
+    scriptarguments:
+      append:
+        simple: "false"
+      key:
+        simple: counterVal
+      value:
+        simple: "0"
+    separatecontext: false
+    task:
+      brand: ""
+      id: c111eaaf-a7c7-4b71-84af-cda8e38ee195
+      iscommand: false
+      name: set counterVal
+      script: Set
+      type: regular
+      version: -1
+    taskid: c111eaaf-a7c7-4b71-84af-cda8e38ee195
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 720
+        }
+      }
+  "13":
+    id: "13"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "1"
+    note: false
+    scriptarguments:
+      append:
+        simple: "false"
+      key:
+        simple: counterVal
+      value:
+        simple: ${inputs.counter}
+    separatecontext: false
+    task:
+      brand: ""
+      id: 7d2c8c7b-33f4-4dfb-8502-2b1cb479c0f1
+      iscommand: false
+      name: set counterVal
+      script: Set
+      type: regular
+      version: -1
+    taskid: 7d2c8c7b-33f4-4dfb-8502-2b1cb479c0f1
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 480,
+          "y": 720
+        }
+      }
+  "15":
+    id: "15"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "8"
+    note: false
+    scriptarguments:
+      append: {}
+      key:
+        simple: hostnameSize
+      value:
+        simple: ${inputs.hostnameSize}
+    separatecontext: false
+    task:
+      brand: ""
+      description: Sets a value into the context with the given context key
+      id: 92a0fce6-959f-4f18-81ff-62451d53bfc4
+      iscommand: false
+      name: set hostname size
+      script: Set
+      type: regular
+      version: -1
+    taskid: 92a0fce6-959f-4f18-81ff-62451d53bfc4
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 265,
+          "y": 195
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 1260,
+        "width": 810,
+        "x": 50,
+        "y": 50
+      }
+    }
+  }

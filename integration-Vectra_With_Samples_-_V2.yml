@@ -1,0 +1,4394 @@
+category: Network Security
+commonfields:
+  id: Vectra With Samples - V2
+  version: -1
+configuration:
+- defaultvalue: ""
+  display: Server URL (e.g. https://192.168.0.1)
+  name: server
+  required: true
+  type: 0
+- defaultvalue: ""
+  display: Credentials
+  name: credentials
+  required: true
+  type: 9
+- defaultvalue: ""
+  display: Fetch incidents
+  name: isFetch
+  required: false
+  type: 8
+- defaultvalue: ""
+  display: Trust any certificate (unsecure)
+  name: insecure
+  required: false
+  type: 8
+- defaultvalue: ""
+  display: Incident type
+  name: incidentType
+  required: false
+  type: 13
+description: Automated attacker behavior analytics
+display: Vectra With Samples - V2
+image: data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHgAAAAPCAYAAAAvQwurAAAI/klEQVR42sVZCVBUVxZtQERQdgIIogIuiCiIKKCoMDigYsSwGZZBQhQpliAqggKGtRRQVhGVxBFnGATiWIO4wBiEcQfUCJYbqLHEEQHRwZkiJEWcc7tep7o6v393V6XCp079/vffd9/777x7370PgSBNoAaEABkA118O4CjAhbsKEAe4CsSue/fumW3bti13z549qb29vToCBa7bt28b7Nq1KyMpKSmrra1Nl2QXLlxw37p1ax7J5EA22u/FNU3Sdmtrq0ZQUNDmJUuW1BsbG38P0ZCysvJbc3Pzh5B9Ex4e/vnp06c1xdts377dEDYzyC5HX5kESXliYmJeaWmpE7UvKytbs2PHDqlj3717d1Z0dHS2vb19Ql5enkd1dbWWIvN16NChiNjY2IJz587ZS777IibW/VP/gF3FhYUBfX392icqKnyJtCPABx78CNgyG6RfIpR/KfASib5r/05/8uTJL/HzAwYQrMiAMRnp1G7dunV1IhkmLItk8kJJSemDmpqam7jdnTt3BlhaWnaLdFRUVEY1NTWHNTQ0foD+zyI5iO8BqXFXrlxRY02tgZ/onSKYN29ePDVetGhRsSLtDA0N/52fn79anrmqr693wXcIx+7q6tok+f6Pf3A3+zzsM7+cvXsjvi7/KurLlNRsIqxfBsEljNhowACYweR/FTdeW1vrRx3PmTPnzuPHj9XlGTA8bNG4ceNG9fT0+h48eGAmktNKJ1sbN27Mx4JZhQn4hA8FBQW+8Bx9UfuwsLAyak+2Q0JCCuLj450jIiJmlJSUmGRkZJjGxMRYxcXFuXt6epaPHz9+lHRnz57defXqVfMjR46M379//3rY9RHZpzHAZj7pLV269BI9Hzhw4Jf+8Tvg1KlTFtS3g4NDEem5u7v/5ejRox4cYyX9TzCucOhUqKqq/kD65eXln8maLycnpxbSNTAw6Kd7Tk5OnPj70JAQw9x9+7wuNTVZ1pw8uaG2psaeiGuS4b02jOBnQCz7fRU4IzmAFStWNFDHBw8ejJGH4NWrV/+D9DMzMxPoWZLglJSUDQIFrxRczDP6MJEesvQRWp3h6R3w5P5Hjx6ZSdPD9rOB7ILoP/PZgwcLCcY2kCTPeIuLi9eSvpWVVee1a9dUpOnduHHDkek9OH78uBf7xldoYySuh2clOItyz4sepVvt7UpE1koegs8wQpez5y5AFfAEKiUHcfnyZVt1dfVhfX39AQzIgu/DsPetYqux7+XLl8ZcBCPMBipCLmwuofCLiNDf3NxsJ2+7hoYGfXivDZ9OQkJCII0pODi4QoaXCQnGHMhF8N27d9XNzMyeY95GQI4Jl053d7cqcoZ/kd2T8EySwfvP03Nubm6CzE5AVoMUgqPY+7+JyWKYzJ/LFELPCeoYyc1Rvi4DAgJqSA8Tl0zPXASnpqYq5MF+fn5fUbstW7aUCX7jC4tNIYIREeQiuKurSx/XG21t7bdILvW4dBARI8gmIuR5kQwJ6WKSmZqa9nR2durLItiNg9xuYAJgDQyLyW8ByiyjVpI0dfbsWQfsaz/q6Oj85+nTp9O5ujt27JgPDQ77Vfvg4KCGNIIp+wVp2evXr88TwcvLq0SaZ1tYWNxkiZ7PWBNsZGSURs/Tp0/XlsSUKVO0srOzjdPS0tYsX75c6ImbN28u4bJHFQoS2FekgwWwTPzdpk2bckmOaqCUj1xtdq+XIDiRyYs5yF8qzRwrNfZLG/TQ0JAG9pF7LNys4mpPpQhf5ol9rkqyjbW1tTLCXCeSlg/+/v72Y00wyrFhZLyDwFtxIPEbnDBhwqtJkyYNUfbPErIGLPSJXPbS09Pjmff+Kmt++PChHjz4Bb3H9ugsjeBkdv+TGIGvAD3gI6CPg+Bv+D4SIcPQxMTke9oPsS86ib9DvZpIA1q5cuUv4UaaB9va2tZoaWklgLiUiRMnCoEJynRzc/Pmajdt2rQ2aoc60W2sCUZuMYDk7RE8tksEJF6PEbqFhBAcHR0bfX19U0CONpet169fGyIqPSVd1MsuXDo4A9hH71ERnJFG8AtgDqAOPGcEprF3YTwJmKuMgjyEOkYIujw6OqrEws2kqVOnPiN5XV3dx7IIxupVaA9GVl7Nsu/0sSbYzs4umS1o1aysLCHwPcqVlZUaNCekg3JtL58tlHYlbMEWSNNBSWqEpPI16WFfduAieAQ4zn4nEnlipdHfeQjmTaIGBgZ0sYKFqw+lQCjJkDR9Qc9r166tpWdZBOPAI1DBUx5vajd37txO6n/sCObPohFarfC+l/RQ8oRx6aCudqYISAchyGUm8/WJE7FosuXh4XEeXq8kSfA7RpgdoA1UMLk98DMPwdWyJqWwsHAjS5a+xUqbqqur+w57z39RGljKQzDCz6eKEoGQV8MiRwsmyVieNocPHzbH4Ubkb5xk8WbROPQQLnbaizE3vyopQVYjqwj2yfMN2KNbWNkULknwG0ZYEXvWZPdSkvOgUlan/f39Ki4uLsJwtGDBglt0p3NeeicPwVFRUUlVVVUzscrt+IBToIU4ajSltk+ePDGEB7exEuJFcnJycFFRkSVOsLQxqcos9Kkhi/0IJ1vWICwJC2+A6veLFy/O+L0Ifv/+vTLykDrSDQwMPCFRl9si1/gJofctnMFCHoJramrWkK2ZM2d2Yd51xQn+JyOsFxCGAsnSiKdGlnldv359geg4DhP5Bgcgpjzqip9FM4SGhhaK2uOQQwfbQAWyVuE7uqPOHJw1a9Z9nBl3oOx4hkx2WJTFUlmHo8uUjo6OcTyVQRCr73kJRulXTHooE3czEd82pjl//vw7pI/+D5BsZGREydnZ+QrJEAEj5Y1cPT09KosXL77BIt8OcYLNgHKgHfBiMn+gFfhWAk3AJWA7oKLAPxTSbGxsOuE1ifLo4zw4HP9taVu2bFkzIkCLLCxcuPAWbMdwHBA4Itk5CW+6j3800J73P2AYC+4dstznyFBbEdLT4OEyvQRn3e6w1YFIwOuZkZGRsfDi+97e3kHyfGtLS4sjyr5rCLHNN2/eNGlsbLQBUe0+Pj5VSJo0BApc+A+TJyqPO6iLD4tk/wdVoC7ng/3wNgAAAABJRU5ErkJggg==
+name: Vectra With Samples - V2
+script:
+  commands:
+  - arguments:
+    - description: Filter by detection ID
+      name: detection_id
+    - description: Filters objects listed
+      name: fields
+    - description: Page number. Possible values are a positive integer or last
+      name: page
+    - description: Page size. Possible values are a positive integer or all
+      name: page_size
+    - description: Orders records by last timestamp, threat score and certainty score.
+        The default out sorts threat and certainty score in ascending order. Scores
+        can sorted in descending order by prepending the query with “minus” symbol
+      name: ordering
+    - description: '>= the id provided'
+      name: min_id
+    - description: <= the id provided
+      name: max_id
+    - description: 'filter by state: active, inactive, ignored, ignored for all'
+      name: state
+    - description: filter by the detection type (verbose name)
+      name: type_vname
+    - description: filter by the detection category
+      name: category
+    - description: filter by source (ip address)
+      name: src_ip
+    - description: filter by threat score
+      name: t_score
+    - description: filter by threat score >= the score provided
+      name: t_score_gte
+    - description: filter by certainty score
+      name: c_score
+    - description: filter by certainty score >= the score provided
+      name: c_score_gte
+    - description: filter by last timestamp
+      name: last_timestamp
+    - description: filter by id of the host object a detection is attributed to
+      name: host_id
+    - description: filter by a tag or a comma-separated list of tags
+      name: tags
+    - description: filter by destination in the detection detail set
+      name: destination
+    - description: filter by the protocol in the detection detail set
+      name: proto
+    - description: filter by the destination port in the detection detail set
+      name: dst_port
+    - description: filter by the inbound_ip in the relayed comm set
+      name: inbound_ip
+    - description: filter by the inbound_proto in the relayed comm set
+      name: inbound_proto
+    - description: filter by the inbound_port in the relayed comm set
+      name: inbound_port
+    - description: filter by the inbound_dns in the relayed comm set
+      name: inbound_dns
+    - description: filter by the outbound_ip in the relayed comm set
+      name: outbound_ip
+    - description: filter by the outbound_proto in the relayed comm set
+      name: outbound_proto
+    - description: filter by the outbound_port in the relayed comm set
+      name: outbound_port
+    - description: filter by the outbound_dns in the relayed_comm_set
+      name: outbound_dns
+    - description: filter by the dns_ip in the dns_set
+      name: dns_ip
+    - description: filter by the dns_request in the dns_set
+      name: dns_request
+    - description: filter by the resp_code in the dns_set
+      name: resp_code
+    - description: filter by the resp in the dns_set
+      name: resp
+    deprecated: true
+    description: Detection objects contain all the information related to security
+      events detected on the network
+    name: vec-detections
+    outputs:
+    - contextPath: Vectra.Detections.DetectionId
+      description: The learned hostname
+    - contextPath: Vectra.Detections.TypeVName
+      description: Vectra detection id
+    - contextPath: Vectra.Detections.Category
+      description: The detection category
+    - contextPath: Vectra.Detections.SrcIP
+      description: The detection source IP
+    - contextPath: Vectra.Detections.State
+      description: The detection state
+    - contextPath: Vectra.Detections.TScore
+      description: The detection tscore
+    - contextPath: Vectra.Detections.CScore
+      description: The detection cscore
+    - contextPath: Vectra.Detections.TargetsKeyAsset
+      description: Is detection targets key asset
+    - contextPath: Vectra.Detections.Tags
+      description: The detection tags
+    - contextPath: Vectra.Detections.FirstTimestamp
+      description: The detection first time stamp
+    - contextPath: Vectra.Detections.LastTimestamp
+      description: The detection last time stamp
+    - contextPath: Vectra.Detections.HostID
+      description: The detection host id
+  - arguments:
+    - description: Filter by detection ID
+      name: detection_id
+    - description: Filters objects listed
+      name: fields
+    - description: Page number. Possible values are a positive integer or last
+      name: page
+    - description: Page size. Possible values are a positive integer or all
+      name: page_size
+    - description: Orders records by last timestamp, threat score and certainty score.
+        The default out sorts threat and certainty score in ascending order. Scores
+        can sorted in descending order by prepending the query with “minus” symbol
+      name: ordering
+    - description: '>= the id provided'
+      name: min_id
+    - description: <= the id provided
+      name: max_id
+    - description: 'filter by state: active, inactive, ignored, ignored for all'
+      name: state
+    - description: filter by the detection type (verbose name)
+      name: type_vname
+    - description: filter by the detection category
+      name: category
+    - description: filter by source (ip address)
+      name: src_ip
+    - description: filter by threat score
+      name: t_score
+    - description: filter by threat score >= the score provided
+      name: t_score_gte
+    - description: filter by certainty score
+      name: c_score
+    - description: filter by certainty score >= the score provided
+      name: c_score_gte
+    - description: filter by last timestamp
+      name: last_timestamp
+    - description: filter by id of the host object a detection is attributed to
+      name: host_id
+    - description: filter by a tag or a comma-separated list of tags
+      name: tags
+    - description: filter by destination in the detection detail set
+      name: destination
+    - description: filter by the protocol in the detection detail set
+      name: proto
+    - description: filter by the destination port in the detection detail set
+      name: dst_port
+    - description: filter by the inbound_ip in the relayed comm set
+      name: inbound_ip
+    - description: filter by the inbound_proto in the relayed comm set
+      name: inbound_proto
+    - description: filter by the inbound_port in the relayed comm set
+      name: inbound_port
+    - description: filter by the inbound_dns in the relayed comm set
+      name: inbound_dns
+    - description: filter by the outbound_ip in the relayed comm set
+      name: outbound_ip
+    - description: filter by the outbound_proto in the relayed comm set
+      name: outbound_proto
+    - description: filter by the outbound_port in the relayed comm set
+      name: outbound_port
+    - description: filter by the outbound_dns in the relayed_comm_set
+      name: outbound_dns
+    - description: filter by the dns_ip in the dns_set
+      name: dns_ip
+    - description: filter by the dns_request in the dns_set
+      name: dns_request
+    - description: filter by the resp_code in the dns_set
+      name: resp_code
+    - description: filter by the resp in the dns_set
+      name: resp
+    description: Detection objects contain all the information related to security
+      events detected on the network
+    name: vectra-detections
+    outputs:
+    - contextPath: Vectra.Detections.DetectionId
+      description: The learned hostname
+    - contextPath: Vectra.Detections.TypeVName
+      description: Vectra detection id
+    - contextPath: Vectra.Detections.Category
+      description: The detection category
+    - contextPath: Vectra.Detections.SrcIP
+      description: The detection source IP
+    - contextPath: Vectra.Detections.State
+      description: The detection state
+    - contextPath: Vectra.Detections.TScore
+      description: The detection tscore
+    - contextPath: Vectra.Detections.CScore
+      description: The detection cscore
+    - contextPath: Vectra.Detections.TargetsKeyAsset
+      description: Is detection targets key asset
+    - contextPath: Vectra.Detections.Tags
+      description: The detection tags
+    - contextPath: Vectra.Detections.FirstTimestamp
+      description: The detection first time stamp
+    - contextPath: Vectra.Detections.LastTimestamp
+      description: The detection last time stamp
+    - contextPath: Vectra.Detections.HostID
+      description: The detection host id
+  - arguments:
+    - description: Filter by host ID
+      name: host_id
+    - description: Filters objects listed
+      name: fields
+    - description: Page number. Possible values are a positive integer or last
+      name: page
+    - description: Page size. Possible values are a positive integer or all
+      name: page_size
+    - description: Orders records by last timestamp, threat score and certainty score.
+        The default out sorts threat and certainty score in ascending order. Scores
+        can sorted in descending order by prepending the query with “minus” symbol
+      name: ordering
+    - description: filter by name
+      name: name
+    - description: 'filter by state: active, inactive, suspended, ignored, ignored4all'
+      name: state
+    - description: filter by last_source (ip address)
+      name: last_source
+    - description: filter by threat score
+      name: t_score
+    - description: filter by threat score >= the score provided
+      name: t_score_gte
+    - description: filter by certainty score
+      name: c_score
+    - description: filter by certainty score >= the score provided
+      name: c_score_gte
+    - description: filter by last_detection_timestamp
+      name: last_detection_timestamp
+    - description: filter by a tag or a comma-separated list of tags (returns hosts
+        that contain any of the tags specified), e.g.tags=baz | tags=foo,bar"
+      name: tags
+    - description: 'filter by key asset: True, False'
+      name: key_assest
+    - description: filter by mac address
+      name: mac_address
+    deprecated: true
+    description: Host information includes data that correlates the host data to detected
+      security events
+    name: vec-hosts
+    outputs:
+    - contextPath: Endpoint.Hostname
+      description: The learned hostname
+    - contextPath: Endpoint.VectraID
+      description: Vectra object id
+    - contextPath: Endpoint.State
+      description: The state of this record
+    - contextPath: Endpoint.IP
+      description: Last source IP associated with this host
+    - contextPath: Endpoint.LastDetection
+      description: Last detection activity from this host
+    - contextPath: Endpoint.Detection.ID
+      description: List of Detections for Host
+    - contextPath: Endpoint.TScore
+      description: The current threat score correlated to this host
+    - contextPath: Endpoint.CScore
+      description: The current certainty score correlated to this host
+  - arguments:
+    - description: Filter by host ID
+      name: host_id
+    - description: Filters objects listed
+      name: fields
+    - description: Page number. Possible values are a positive integer or last
+      name: page
+    - description: Page size. Possible values are a positive integer or all
+      name: page_size
+    - description: Orders records by last timestamp, threat score and certainty score.
+        The default out sorts threat and certainty score in ascending order. Scores
+        can sorted in descending order by prepending the query with “minus” symbol
+      name: ordering
+    - description: filter by name
+      name: name
+    - description: 'filter by state: active, inactive, suspended, ignored, ignored4all'
+      name: state
+    - description: filter by last_source (ip address)
+      name: last_source
+    - description: filter by threat score
+      name: t_score
+    - description: filter by threat score >= the score provided
+      name: t_score_gte
+    - description: filter by certainty score
+      name: c_score
+    - description: filter by certainty score >= the score provided
+      name: c_score_gte
+    - description: filter by last_detection_timestamp
+      name: last_detection_timestamp
+    - description: filter by a tag or a comma-separated list of tags (returns hosts
+        that contain any of the tags specified), e.g.tags=baz | tags=foo,bar"
+      name: tags
+    - description: 'filter by key asset: True, False'
+      name: key_assest
+    - description: filter by mac address
+      name: mac_address
+    description: Host information includes data that correlates the host data to detected
+      security events
+    name: vectra-hosts
+    outputs:
+    - contextPath: Endpoint.Hostname
+      description: The learned hostname
+    - contextPath: Endpoint.VectraID
+      description: Vectra object id
+    - contextPath: Endpoint.State
+      description: The state of this record
+    - contextPath: Endpoint.IP
+      description: Last source IP associated with this host
+    - contextPath: Endpoint.LastDetection
+      description: Last detection activity from this host
+    - contextPath: Endpoint.Detection.ID
+      description: List of Detections for Host
+    - contextPath: Endpoint.TScore
+      description: The current threat score correlated to this host
+    - contextPath: Endpoint.CScore
+      description: The current certainty score correlated to this host
+  - arguments: []
+    deprecated: true
+    description: The settings information includes S-series sensor and X-series configurations
+      input by the administrator
+    name: vec-settings
+  - arguments: []
+    description: he settings information includes S-series sensor and X-series configurations
+      input by the administrator
+    name: vectra-settings
+  - arguments:
+    - description: the path to query
+      name: path
+    deprecated: true
+    description: The health configuration can be used to retrieve system health statistics
+      such as subnet counts, traffic bandwidth, headend and sensor information
+    name: vec-health
+  - arguments:
+    - description: the path to query
+      name: path
+    description: The health configuration can be used to retrieve system health statistics
+      such as subnet counts, traffic bandwidth, headend and sensor information
+    name: vectra-health
+  - arguments: []
+    deprecated: true
+    description: The rules branch can be used to retrieve a listing of configured
+      Triage rules
+    name: vec-triage
+    outputs:
+    - contextPath: Vectra.Rule.ID
+      description: The record id
+    - contextPath: Vectra.Rule.SmartCategory
+      description: Custom Triage label used to recategorize specified detections
+    - contextPath: Vectra.Rule.Description
+      description: Name of Triage filter
+    - contextPath: Vectra.Rule.Type
+      description: Original detection type
+    - contextPath: Vectra.Rule.Category
+      description: Original detection category
+    - contextPath: Vectra.Rule.Created
+      description: The timestamp when this Triage filter was created
+    - contextPath: Vectra.Rule.LastUpdate
+      description: The timestamp when this Triage filter was triggered
+    - contextPath: Vectra.Rule.Host.ID
+      description: Host(s) that this Triage filter applies to
+    - contextPath: Vectra.Rule.IP
+      description: Host IP
+    - contextPath: Vectra.Rule.Priority
+      description: Used in ordering execution of Triage filters
+    - contextPath: Vectra.Rule.Remote.IP
+      description: Destination IP where this Triage filter will be applied to
+    - contextPath: Vectra.Rule.Remote.Protocol
+      description: Destination protocol where this Triage filter will be applied to
+    - contextPath: Vectra.Rule.Remote.Port
+      description: Destination port where this Triage filter will be applied to
+    - contextPath: Vectra.Rule.Remote.DNS
+      description: Destination FQDN where this Triage filter will apply to
+    - contextPath: Vectra.Rule.Remote.Kerberos.Account
+      description: Kerberos Account
+    - contextPath: Vectra.Rule.Remote.Kerberos.Service
+      description: Kerberos Service
+  - arguments: []
+    description: The rules branch can be used to retrieve a listing of configured
+      Triage rules
+    name: vectra-triage
+    outputs:
+    - contextPath: Vectra.Rule.ID
+      description: The record id
+    - contextPath: Vectra.Rule.SmartCategory
+      description: Custom Triage label used to recategorize specified detections
+    - contextPath: Vectra.Rule.Description
+      description: Name of Triage filter
+    - contextPath: Vectra.Rule.Type
+      description: Original detection type
+    - contextPath: Vectra.Rule.Category
+      description: Original detection category
+    - contextPath: Vectra.Rule.Created
+      description: The timestamp when this Triage filter was created
+    - contextPath: Vectra.Rule.LastUpdate
+      description: The timestamp when this Triage filter was triggered
+    - contextPath: Vectra.Rule.Host.ID
+      description: Host(s) that this Triage filter applies to
+    - contextPath: Vectra.Rule.IP
+      description: Host IP
+    - contextPath: Vectra.Rule.Priority
+      description: Used in ordering execution of Triage filters
+    - contextPath: Vectra.Rule.Remote.IP
+      description: Destination IP where this Triage filter will be applied to
+    - contextPath: Vectra.Rule.Remote.Protocol
+      description: Destination protocol where this Triage filter will be applied to
+    - contextPath: Vectra.Rule.Remote.Port
+      description: Destination port where this Triage filter will be applied to
+    - contextPath: Vectra.Rule.Remote.DNS
+      description: Destination FQDN where this Triage filter will apply to
+    - contextPath: Vectra.Rule.Remote.Kerberos.Account
+      description: Kerberos Account
+    - contextPath: Vectra.Rule.Remote.Kerberos.Service
+      description: Kerberos Service
+  - arguments: []
+    deprecated: true
+    description: The sensors branch can retrieve a listing of sensors that collect
+      and feed data to the X-series
+    name: vec-sensors
+    outputs:
+    - contextPath: Vectra.Sensor.ID
+      description: Object ID
+    - contextPath: Vectra.Sensor.Alias
+      description: User configured alias assigned tothe sensor
+    - contextPath: Vectra.Sensor.Location
+      description: User configured location assigned to the sensor
+    - contextPath: Vectra.Sensor.SerialNumber
+      description: Serial number of the sensor
+    - contextPath: Vectra.Sensor.LUID
+      description: Local Unique Identifier assigned to the sensor
+    - contextPath: Vectra.Sensor.Status
+      description: Pairing status of the sensor
+    - contextPath: Vectra.Sensor.CurrentVersion
+      description: OS version currently running on the sensor
+    - contextPath: Vectra.Sensor.OriginalVersion
+      description: OS version originally installed on the sensor
+    - contextPath: Vectra.Sensor.IP
+      description: IP address of the sensor
+    - contextPath: Vectra.Sensor.URI
+      description: The URI of the brain the sensor is paired
+    - contextPath: Vectra.Sensor.LastSeen
+      description: Timestamp of the last connection by the sensor to the brain
+  - arguments: []
+    description: The sensors branch can retrieve a listing of sensors that collect
+      and feed data to the X-series
+    name: vectra-sensors
+    outputs:
+    - contextPath: Vectra.Sensor.ID
+      description: Object ID
+    - contextPath: Vectra.Sensor.Alias
+      description: User configured alias assigned tothe sensor
+    - contextPath: Vectra.Sensor.Location
+      description: User configured location assigned to the sensor
+    - contextPath: Vectra.Sensor.SerialNumber
+      description: Serial number of the sensor
+    - contextPath: Vectra.Sensor.LUID
+      description: Local Unique Identifier assigned to the sensor
+    - contextPath: Vectra.Sensor.Status
+      description: Pairing status of the sensor
+    - contextPath: Vectra.Sensor.CurrentVersion
+      description: OS version currently running on the sensor
+    - contextPath: Vectra.Sensor.OriginalVersion
+      description: OS version originally installed on the sensor
+    - contextPath: Vectra.Sensor.IP
+      description: IP address of the sensor
+    - contextPath: Vectra.Sensor.URI
+      description: The URI of the brain the sensor is paired
+    - contextPath: VectraSensor.LastSeen
+      description: Timestamp of the last connection by the sensor to the brain
+  - arguments:
+    - default: true
+      description: The id of the required host
+      name: host_id
+      required: true
+    deprecated: true
+    description: Get host by id
+    name: vec-get-host-by-id
+    outputs:
+    - contextPath: Endpoint.Hostname
+      description: The learned hostname
+    - contextPath: Endpoint.VectraID
+      description: Vectra object id
+    - contextPath: Endpoint.State
+      description: The state of this record
+    - contextPath: Endpoint.IP
+      description: Last source IP associated with this host
+    - contextPath: Endpoint.Vectra.LastDetection
+      description: Last detection activity from this host
+    - contextPath: Endpoint.Vectra.DetectionID
+      description: List of Detections for Host
+    - contextPath: Endpoint.Vectra.TScore
+      description: The current threat score correlated to this host
+    - contextPath: Endpoint.Vectra.CScore
+      description: The current certainty score correlated to this host
+  - arguments:
+    - description: The id of the required detection
+      name: detection_id
+    deprecated: true
+    description: Get detections by host id
+    name: vec-get-detetctions-by-id
+  isfetch: true
+  runonce: false
+  script: |-
+    var username = params.credentials.identifier;
+    var password = params.credentials.password;
+    var server = params.server.replace(/[\/]+$/, '');
+    var insecure = params.insecure;
+    var sendRequest = function(method, url, queryName) {
+        var res = http(
+                url,
+                {
+                    Method: method,
+                    Username: username,
+                    Password: password,
+                    Headers: {'content-type': ['application/json']},
+                },
+                insecure
+            );
+        if (res.StatusCode < 200 || res.StatusCode >= 300) {
+            throw 'Failed to ' + queryName + ', request status code: ' + res.StatusCode + ' and Body: ' + res.Body + '.';
+        }
+        return res;
+    };
+
+    var urlDict = {
+        'vectra-detections': '/api/detections/',
+        'vectra-hosts':'/api/hosts/',
+        'vectra-settings':'/api/settings/',
+        'vectra-triage':'/api/rules/',
+        'vectra-sensors':'/api/sensors/',
+        'vectra-health':'/api/health/',
+        'vec-get-detetctions-by-id':'/api/detections/', //deprecated
+        'vec-detections': '/api/detections/',   //deprecated
+        'vec-hosts':'/api/hosts',               //deprecated
+        'vec-settings':'/api/settings',         //deprecated
+        'vec-triage':'/api/rules',              //deprecated
+        'vec-sensors':'/api/sensors',           //deprecated
+        'vec-health':'/api/health/',            //deprecated
+        'vec-get-host-by-id':'/api/hosts/',     //deprecate
+    };
+
+    var createIncidentFromDetection = function(incident) {
+        var keys = Object.keys(incident);
+        var labels = [];
+        for (var i = 0; i<keys.length; i++) {
+            labels.push({'type': keys[i], 'value': typeof(incident[keys[i]]) === 'object' ? JSON.stringify(incident[keys[i]]) : incident[keys[i]].toString()});
+        }
+        return {
+            "name": incident.id + ' ' + incident.type_vname,
+            "labels": labels,
+            "rawJSON": JSON.stringify(incident)
+        };
+    };
+
+    var fetchIncidents = function(){
+        var lastRun = getLastRun();
+        var id = lastRun && lastRun.id ? lastRun.id : 0;
+        // var result = sendRequest('GET', server + urlDict['vectra-detections'] + encodeToURLQuery({min_id: id, 'page':'last'}), 'vectra-detections');
+        // var res = JSON.parse(result.Body).results;
+        var res = getSamples();
+        var length = 10 // res.length; // 10
+        var incidents = [];
+        for (var i = 0; i < length; i++) {
+            var detection = res[i];
+            id = Math.max(id, detection.id);
+            incidents.push(createIncidentFromDetection(res[i]));
+        }
+        if (incidents.length > 0) {
+          setLastRun({'id': id !== 0 ? id + 1 : 0});
+        }
+        return JSON.stringify(incidents);
+    };
+
+    var isEmpty = function(object) {
+        if(Array.isArray(object)){
+            return object.length === 0;
+        }
+        for(var i in object) {
+            if(object[i]){
+                return false;
+            }
+        }
+        return true;
+    };
+
+    var splitToID = function(str){
+        var temp = str.split('/');
+        return temp[temp.length -1];
+    };
+
+    var removeFromArray = function(keys, array){
+        for(var i=0; i<keys.length; i++){
+            array.splice(array.indexOf(keys[i]), 1);
+        }
+        return array;
+    };
+
+    var vectraDetections = function(result){
+        var res = JSON.parse(result.Body);
+
+        var md;
+        if(args.detection_id){
+            res = [res];
+        }
+        else{
+            res = res.results;
+        }
+        var keys = Object.keys(res[0]);
+        keys.splice(keys.indexOf('url'), 1);
+
+        var temp;
+        for(var i=0; i<res.length; i++){
+            if(res[i].host){
+                res[i].host = splitToID(res[i].host);
+            }
+        }
+
+        var relayed_comm_set = null;
+        var summary = null;
+
+        if(res.length === 1){
+            if (res[0].summary)
+            {
+                summary = res[0].summary;
+            }
+            if (res[0].relayed_comm_set)
+            {
+                relayed_comm_set = res[0].relayed_comm_set;
+            }
+        }
+
+        md = tblToMd('Detection table', res, ['id','type_vname','category','src_ip','t_score','c_score','first_timestamp','tags', 'targets_key_asset']);
+
+        if (relayed_comm_set){
+            if (!(relayed_comm_set instanceof Array)){
+                relayed_comm_set = [relayed_comm_set];
+            }
+            if (relayed_comm_set.length > 0 && relayed_comm_set[0]) {
+                var relayed_keys = Object.keys(relayed_comm_set[0]);
+                relayed_keys.splice(relayed_keys.indexOf('url'), 1);
+
+                md += '\n';
+                md += tblToMd('Relayed Comm Set',relayed_comm_set,relayed_keys);
+            }
+        }
+        if (summary){
+            if (!(summary instanceof Array)){
+                summary = [summary];
+            }
+            if (summary.length > 0 && summary[0]) {
+                var summary_keys = Object.keys(summary[0]);
+
+                md += '\n';
+                md += tblToMd('Summary',summary,summary_keys);
+            }
+        }
+
+        var context = [];
+        for(i=0; i<res.length; i++){
+            var val = res[i];
+            res[i] = {
+                        DetectionId: val.id,
+                        TypeVName: val.type_vname,
+                        Category: val.category,
+                        SrcIP: val.src_ip,
+                        State: val.state,
+                        TScore: val.t_score,
+                        CScore: val.c_score,
+                        TargetsKeyAsset: val.targets_key_asset,
+                        FirstTimestamp: val.first_timestamp,
+                        LastTimestamp: val.last_timestamp,
+                        Tags: val.tags,
+                        HostID: splitToID(val.host)
+                    };
+            context.push(res[i]);
+        }
+
+        return {
+            Type: entryTypes.note,
+            Contents: result.Body,
+            ContentsFormat: formats.json,
+            HumanReadable: md,
+            EntryContext: {'Vectra.Detections(val.DetectionId==obj.DetectionId)': context }
+        };
+    };
+
+    var vectraHosts = function(result){
+        var res;
+
+        if(args.host_id){
+            res = [JSON.parse(result.Body)];
+        }
+        else{
+            res = JSON.parse(result.Body).results;
+        }
+
+        var temp;
+        for(var i=0; i<res.length; i++){
+            res[i].detection_ids = res[i].detection_set;
+            if(res[i].detection_ids){
+                for(j=0; j<res[i].detection_ids.length; j++){
+                    res[i].detection_ids[j] = splitToID(res[i].detection_ids[j]);
+                }
+            }
+        }
+
+        var md = tblToMd(
+                'Hosts table',
+                res,
+                ['id','name','state','t_score','c_score','last_source','last_detection_timestamp','detection_ids','tags','key_asset','new_host_pointer','sensor_luid','targets_key_asset']
+        );
+
+        var val;
+        for(i=0; i<res.length; i++){
+            val = res[i];
+            res[i] = {
+                        Hostname: val.name,
+                        Vectra: {
+                            ID: val.id,
+                            LastDetection: val.last_detection_timestamp,
+                            DetectionID: val.detection_ids,
+                            TScore: val.t_score,
+                            CScore: val.c_score,
+                            KeyAsset: val.key_asset,
+                            TargetsKeyAsset: val.targets_key_asset,
+                        },
+                        State: val.state,
+                        IP: val.last_source,
+                    };
+        }
+        var context = {Endpoint : res};
+
+        return {
+            Type: entryTypes.note,
+            Contents: result.Body,
+            ContentsFormat: formats.json,
+            HumanReadable: md,
+            EntryContext: context
+        };
+    };
+
+    var vectraSettings = function(result){
+        var res = JSON.parse(result.Body);
+        var keys = removeFromArray(['url'],Object.keys(res.results[0]));
+        var md = tblToMd('Setting table', res.results, keys);
+
+        return {
+            Type: entryTypes.note,
+            Contents: result.Body,
+            ContentsFormat: formats.json,
+            HumanReadable: md
+        };
+    };
+
+    var vectraTriage = function(result){
+        var res = (JSON.parse(result.Body)).results;
+        var temp;
+
+        for(var i=0; i<res.length; i++){
+            if(res[i].host){
+                for(var j=0; j<res[i].host.length; j++){
+                    res[i].host[j] = splitToID(res[i].host[j]);
+                }
+            }
+        }
+
+        var keys = removeFromArray(['url'], Object.keys(res[0]));
+        var md = tblToMd('Rules table', res, keys);
+        var context = {};
+        var val;
+
+        for(i=0; i<res.length; i++){
+            val = res[i];
+            res[i] = {          ID:             val.name,
+                                SmartCategory:  val.smart_category,
+                                Description:    (val.description? val.description:undefined),
+                                Type:           val.type_vname,
+                                Category:       val.category,
+                                Created :       val.created_timestamp,
+                                LastUpdate:     val.last_timestamp,
+                                Host:           (val.host.length === 0 ? undefined :  val.host),
+                                IP:             (val.ip? val.ip : undefined),
+                                Priority:       (val.priority? val.priority : undefined),
+                                Remote:         [{  IP: (val.remote1_ip? val.remote1_ip : undefined),
+                                                    Protocol: (val.remote1_proto? val.remote1_proto : undefined),
+                                                    Port:(val.remote1_port? val.remote1_port : undefined),
+                                                    DNS: (val.remote1_dns? val.remote1_dns : undefined),
+                                                    Kerberos: {Account: (val.remote1_kerb_account? val.remote1_kerb_account : undefined),
+                                                                Service:(val.remote1_kerb_service? val.remote1_kerb_service : undefined)
+                                                    }},
+                                                 {  IP: (val.remote2_ip? val.remote2_ip : undefined),
+                                                    Protocol: (val.remote2_proto? val.remote2_proto : undefined),
+                                                    Port: (val.remote2_port? val.remote2_port : undefined),
+                                                    DNS:(val.remote2_dns? val.remote2_dns : undefined)
+                                                 }]
+                                };
+
+        }
+        var notEmpty = function(obj){
+            return !isEmpty(obj);
+        }
+
+        for(i=0; i<res.length; i++){
+            temp = res[i].Remote;
+            if(isEmpty(temp[0].Kerberos)){
+                delete temp[0].Kerberos;
+            }
+            temp = temp.filter(notEmpty);
+            if(isEmpty(temp)){
+                temp = undefined;
+            }
+            res[i].Remote = temp;
+        }
+        context.Vectra = {Rule: res};
+
+        return {
+            Type: entryTypes.note,
+            Contents: result.Body,
+            ContentsFormat: formats.json,
+            HumanReadable: md,
+            EntryContext : context
+        };
+
+    };
+
+    var vectraSensors = function(result){
+        var res = JSON.parse(result.Body);
+        var keys = removeFromArray(['url','health_stats'], Object.keys(res.results[0]));
+        var md = tblToMd('Sensors table', res.results, keys);
+        var val;
+        for(i=0; i<res.results.length; i++){
+            val = res.results[i];
+            res.results[i] = {
+                                ID : val.id,
+                                Alias : val.alias,
+                                Location : (val.location? val.location:undefined),
+                                SerialNumber : val.serial_number,
+                                LUID : val.luid,
+                                Status : val.status,
+                                CurrentVersion : val.current_version,
+                                OriginalVersion : val.original_version,
+                                IP : val.ip_address,
+                                URI : val.headend_uri,
+                                LastSeen : val.last_seen
+                            };
+        }
+
+        var context = {Vectra: { Sensor: res.results } };
+
+        return {
+            Type: entryTypes.note,
+            Contents: result.Body,
+            ContentsFormat: formats.json,
+            HumanReadable: md,
+            EntryContext : context
+        };
+    };
+
+    var funcDict = {
+        'vectra-detections':  vectraDetections,
+        'vectra-hosts':       vectraHosts,
+        'vectra-settings':    vectraSettings,
+        'vectra-triage':      vectraTriage,
+        'vectra-sensors':     vectraSensors,
+        'vec-detections':     vectraDetections, //deprecated
+        'vec-hosts':          vectraHosts,      //deprecated
+        'vec-settings':       vectraSettings,   //deprecated
+        'vec-triage':         vectraTriage,     //deprecated
+        'vec-sensors':        vectraSensors,    //deprecated
+        'vec-get-host-by-id': vectraHosts,      //deprecated
+        'vec-get-detetctions-by-id': vectraDetections  //deprecated
+    };
+
+    var result;
+
+    switch (command) {
+        case 'fetch-incidents':
+            return fetchIncidents();
+        case 'test-module':
+            if (sendRequest('GET', server + urlDict['vec-detections'], 'Test')) {
+                return 'ok';
+            }
+            return 'not cool';
+        case 'vectra-health':
+        case 'vec-health': //deprecated
+            return sendRequest('GET', server + urlDict[command] + '/' + args.path, urlDict[command]);
+        case 'vec-get-detetctions-by-id':   //deprecated
+        case 'vec-detections':              //deprecated
+        case 'vectra-detections':
+            result = sendRequest('GET', server + urlDict[command] + (args.detection_id? args.detection_id : encodeToURLQuery(args)), urlDict[command]);
+            break;
+        case 'vec-get-host-by-id':  //deprecated
+        case 'vec-hosts':           //deprecatd
+        case 'vectra-hosts':
+            result = sendRequest('GET', server + urlDict[command] + (args.host_id? args.host_id : encodeToURLQuery(args)), urlDict[command]);
+            break;
+        default:
+            result = sendRequest('GET', server + urlDict[command] + encodeToURLQuery(args), urlDict[command]);
+    }
+
+    return funcDict[command](result);
+
+    function getSamples() {
+        return [
+        {
+        "c_score": 40,
+        "category": "LATERAL MOVEMENT",
+        "description": null,
+        "detection_detail_set": [
+          {
+            "count": 100,
+            "count_pos": null,
+            "description": "ssh",
+            "dst_dns": "2017-05-18T02:17:18.821398Z",
+            "dst_geo": "US",
+            "dst_host_id": 19,
+            "dst_ip": "192.168.255.254",
+            "dst_port": null,
+            "first_timestamp": "2017-04-18T02:16:30Z",
+            "id": 103,
+            "last_timestamp": "2017-05-18T02:16:32Z",
+            "proto": null,
+            "total_bytes_rcvd": null,
+            "total_bytes_sent": null,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/103"
+          },
+          {
+            "count": 82,
+            "count_pos": null,
+            "description": "tcp",
+            "dst_dns": "2017-05-18T02:17:18.821398Z",
+            "dst_geo": "US",
+            "dst_host_id": 19,
+            "dst_ip": "192.169.255.234",
+            "dst_port": null,
+            "first_timestamp": "2017-05-18T02:16:30Z",
+            "id": 104,
+            "last_timestamp": "2017-05-18T02:16:32Z",
+            "proto": null,
+            "total_bytes_rcvd": null,
+            "total_bytes_sent": null,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/104"
+          }
+        ],
+        "dns_set": [],
+        "first_timestamp": 1545518913,
+        "reported_time": "2017-05-18T02:16:30Z",
+        "host": "https://partners.demo.vectranetworks.com/api/hosts/32",
+        "id": 50,
+        "last_timestamp": "2017-05-18T02:16:32Z",
+        "relayed_comm_set": [],
+        "sensor_luid": "IgG8l0P3",
+        "src_ip": "192.168.173.101",
+        "state": "inactive",
+        "summary": {
+          "internal_targets": [
+            "192.168.255.254 via ssh"
+          ],
+          "login_attempts": 100,
+          "probable_owner": "bthomas"
+        },
+        "t_score": 30,
+        "tags": [],
+        "targets_key_asset": true,
+        "triage_rule_id": null,
+        "type_vname": "Brute-Force Attack",
+        "url": "https://partners.demo.vectranetworks.com/api/detections/50"
+      },
+      {
+        "c_score": 73,
+        "category": "LATERAL MOVEMENT",
+        "description": null,
+        "detection_detail_set": [
+          {
+            "count": null,
+            "count_pos": null,
+            "description": "no description available",
+            "dst_dns": null,
+            "dst_geo": null,
+            "dst_host_id": 19,
+            "dst_ip": "192.168.255.254",
+            "dst_port": 22,
+            "first_timestamp": "2017-05-18T02:16:23Z",
+            "id": 104,
+            "last_timestamp": "2017-05-18T02:16:23Z",
+            "proto": "ssh",
+            "total_bytes_rcvd": 19276,
+            "total_bytes_sent": 12401,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/104"
+          }
+        ],
+        "dns_set": [],
+        "first_timestamp": 1553294913,
+        "reported_time": "2017-05-18T02:16:23Z",
+        "host": "https://partners.demo.vectranetworks.com/api/hosts/32",
+        "id": 51,
+        "last_timestamp": "2017-05-18T02:16:23Z",
+        "relayed_comm_set": [],
+        "sensor_luid": "IgG8l0P3",
+        "src_ip": "192.168.173.101",
+        "state": "inactive",
+        "summary": {
+          "bytes_received": 19276,
+          "bytes_sent": 12401,
+          "internal_targets": 1,
+          "probable_owner": "bthomas",
+          "protocols": [
+            "ssh"
+          ]
+        },
+        "t_score": 70,
+        "tags": [],
+        "targets_key_asset": true,
+        "triage_rule_id": null,
+        "type_vname": "Suspicious Admin",
+        "url": "https://partners.demo.vectranetworks.com/api/detections/51"
+      },
+      {
+        "c_score": 16,
+        "category": "COMMAND & CONTROL",
+        "description": null,
+        "detection_detail_set": [],
+        "dns_set": [
+          {
+            "dns_ip": "8.8.8.8",
+            "dns_request": "157m6z01y2dk6z3mbqvt1t1rdws.biz",
+            "first_timestamp": null,
+            "id": 19,
+            "last_timestamp": "2017-05-17T22:26:14Z",
+            "resp": null,
+            "resp_code": "NXDomain",
+            "url": "https://partners.demo.vectranetworks.com/api/dns/19"
+          },
+          {
+            "dns_ip": "8.8.8.8",
+            "dns_request": "iqingjiangmiyu.com",
+            "first_timestamp": null,
+            "id": 20,
+            "last_timestamp": "2017-05-17T22:26:08Z",
+            "resp": null,
+            "resp_code": "NXDomain",
+            "url": "https://partners.demo.vectranetworks.com/api/dns/20"
+          },
+          {
+            "dns_ip": "8.8.8.8",
+            "dns_request": "mail.baffcaaccaacac.ru",
+            "first_timestamp": null,
+            "id": 21,
+            "last_timestamp": "2017-05-17T22:26:18Z",
+            "resp": "46.137.248.72,37.230.114.67,206.72.200.117",
+            "resp_code": "NoError",
+            "url": "https://partners.demo.vectranetworks.com/api/dns/21"
+          }
+        ],
+        "first_timestamp": 1566769713,
+        "reported_time":"2017-05-17T22:26:14Z",
+        "host": "https://partners.demo.vectranetworks.com/api/hosts/92",
+        "id": 49,
+        "last_timestamp": "2017-05-17T22:26:18Z",
+        "relayed_comm_set": [],
+        "sensor_luid": "IgG8l0P3",
+        "src_ip": "192.168.173.204",
+        "state": "inactive",
+        "summary": {
+          "bytes_received": 0,
+          "bytes_sent": 0,
+          "failed_lookups": 2,
+          "probable_owner": null,
+          "sessions": 0,
+          "successful_lookups": 1
+        },
+        "t_score": 16,
+        "tags": [],
+        "targets_key_asset": false,
+        "triage_rule_id": null,
+        "type_vname": "Suspect Domain Activity",
+        "url": "https://partners.demo.vectranetworks.com/api/detections/49"
+      },
+      {
+        "c_score": 10,
+        "category": "RECONNAISSANCE",
+        "description": null,
+        "detection_detail_set": [
+          {
+            "count": 41,
+            "count_pos": null,
+            "description": "File Share Enumeration",
+            "dst_dns": null,
+            "dst_geo": null,
+            "dst_host_id": 24,
+            "dst_ip": "192.168.12.5",
+            "dst_port": 139,
+            "first_timestamp": null,
+            "id": 102,
+            "last_timestamp": "2017-05-17T21:33:45Z",
+            "proto": null,
+            "total_bytes_rcvd": null,
+            "total_bytes_sent": null,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/102"
+          }
+        ],
+        "dns_set": [],
+        "first_timestamp":1253656113,
+        "reported_time": "2017-05-17T21:33:45Z",
+        "host": "https://partners.demo.vectranetworks.com/api/hosts/87",
+        "id": 48,
+        "last_timestamp": "2017-05-17T21:33:45Z",
+        "relayed_comm_set": [],
+        "sensor_luid": "IgG8l0P3",
+        "src_ip": "192.168.152.194",
+        "state": "inactive",
+        "summary": {
+          "accounts": 1,
+          "common_shares": [],
+          "internal_targets": 1,
+          "probable_owner": "dwilson",
+          "shares": 41
+        },
+        "t_score": 70,
+        "tags": [],
+        "targets_key_asset": true,
+        "triage_rule_id": null,
+        "type_vname": "File Share Enumeration",
+        "url": "https://partners.demo.vectranetworks.com/api/detections/48"
+      },
+      {
+        "c_score": 56,
+        "category": "BOTNET ACTIVITY",
+        "description": null,
+        "detection_detail_set": [
+          {
+            "count": 682,
+            "count_pos": null,
+            "description": null,
+            "dst_dns": null,
+            "dst_geo": "US",
+            "dst_host_id": null,
+            "dst_ip": "11.1.1.2",
+            "dst_port": 80,
+            "first_timestamp": "2017-05-17T15:00:06Z",
+            "id": 101,
+            "last_timestamp": "2017-05-17T15:00:24Z",
+            "proto": "tcp",
+            "total_bytes_rcvd": 181696,
+            "total_bytes_sent": 83204,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/101"
+          }
+        ],
+        "dns_set": [],
+        "first_timestamp": 1474120913,
+        "reported_time": "2017-05-17T15:00:06Z",
+        "host": "https://partners.demo.vectranetworks.com/api/hosts/71",
+        "id": 47,
+        "last_timestamp": "2017-05-17T15:00:24Z",
+        "relayed_comm_set": [],
+        "sensor_luid": "IgG8l0P3",
+        "src_ip": "192.168.196.9",
+        "state": "inactive",
+        "summary": {
+          "bytes_received": 181696,
+          "bytes_sent": 83204,
+          "dos_type": [
+            "slowloris"
+          ],
+          "external_targets": [
+            "11.1.1.2"
+          ],
+          "probable_owner": null,
+          "sessions": 682
+        },
+        "t_score": 10,
+        "tags": [],
+        "targets_key_asset": false,
+        "triage_rule_id": null,
+        "type_vname": "Outbound DoS",
+        "url": "https://partners.demo.vectranetworks.com/api/detections/47"
+      },
+      {
+        "c_score": 10,
+        "category": "COMMAND & CONTROL",
+        "description": null,
+        "detection_detail_set": [
+          {
+            "count": 1,
+            "count_pos": null,
+            "description": null,
+            "dst_dns": null,
+            "dst_geo": "US",
+            "dst_host_id": null,
+            "dst_ip": "35.161.92.208",
+            "dst_port": 32754,
+            "first_timestamp": "2017-05-17T04:01:24Z",
+            "id": 100,
+            "last_timestamp": "2017-05-17T04:01:57Z",
+            "proto": "tcp",
+            "total_bytes_rcvd": 1766,
+            "total_bytes_sent": 64282,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/100"
+          }
+        ],
+        "dns_set": [],
+        "first_timestamp": 1474680213,
+        "reported_time": "2017-05-17T04:01:24Z",
+        "host": "https://partners.demo.vectranetworks.com/api/hosts/32",
+        "id": 46,
+        "last_timestamp": "2017-05-17T04:01:57Z",
+        "relayed_comm_set": [],
+        "sensor_luid": "IgG8l0P3",
+        "src_ip": "192.168.173.101",
+        "state": "inactive",
+        "summary": {
+          "active_time": "0:00:33",
+          "bytes_received": 1766,
+          "bytes_sent": 64282,
+          "destination_ports": [
+            32754
+          ],
+          "external_hosts": [
+            "35.161.92.208"
+          ],
+          "probable_owner": "bthomas",
+          "sessions": 1,
+          "unique_ports": 1
+        },
+        "t_score": 25,
+        "tags": [],
+        "targets_key_asset": false,
+        "triage_rule_id": null,
+        "type_vname": "External Remote Access",
+        "url": "https://partners.demo.vectranetworks.com/api/detections/46"
+      },
+      {
+        "c_score": 52,
+        "category": "RECONNAISSANCE",
+        "description": null,
+        "detection_detail_set": [
+          {
+            "count": null,
+            "count_pos": null,
+            "description": null,
+            "dst_dns": "2017-05-16T19:40:10.798102Z",
+            "dst_geo": "US",
+            "dst_host_id": null,
+            "dst_ip": "192.168.12.227",
+            "dst_port": 445,
+            "first_timestamp": null,
+            "id": 86,
+            "last_timestamp": "2017-05-16T19:39:26Z",
+            "proto": "tcp",
+            "total_bytes_rcvd": null,
+            "total_bytes_sent": null,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/86"
+          },
+          {
+            "count": null,
+            "count_pos": null,
+            "description": null,
+            "dst_dns": "2017-05-16T19:40:11.130525Z",
+            "dst_geo": "US",
+            "dst_host_id": null,
+            "dst_ip": "192.168.12.228",
+            "dst_port": 445,
+            "first_timestamp": null,
+            "id": 87,
+            "last_timestamp": "2017-05-16T19:39:11Z",
+            "proto": "tcp",
+            "total_bytes_rcvd": null,
+            "total_bytes_sent": null,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/87"
+          },
+          {
+            "count": null,
+            "count_pos": null,
+            "description": null,
+            "dst_dns": "2017-05-16T19:40:11.461126Z",
+            "dst_geo": "US",
+            "dst_host_id": null,
+            "dst_ip": "192.168.12.230",
+            "dst_port": 445,
+            "first_timestamp": null,
+            "id": 88,
+            "last_timestamp": "2017-05-16T19:39:28Z",
+            "proto": "tcp",
+            "total_bytes_rcvd": null,
+            "total_bytes_sent": null,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/88"
+          },
+          {
+            "count": null,
+            "count_pos": null,
+            "description": null,
+            "dst_dns": "2017-05-16T19:40:11.790575Z",
+            "dst_geo": "US",
+            "dst_host_id": null,
+            "dst_ip": "192.168.12.231",
+            "dst_port": 445,
+            "first_timestamp": null,
+            "id": 89,
+            "last_timestamp": "2017-05-16T19:39:34Z",
+            "proto": "tcp",
+            "total_bytes_rcvd": null,
+            "total_bytes_sent": null,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/89"
+          },
+          {
+            "count": null,
+            "count_pos": null,
+            "description": null,
+            "dst_dns": "2017-05-16T19:40:12.121197Z",
+            "dst_geo": "US",
+            "dst_host_id": null,
+            "dst_ip": "192.168.12.232",
+            "dst_port": 445,
+            "first_timestamp": null,
+            "id": 90,
+            "last_timestamp": "2017-05-16T19:39:22Z",
+            "proto": "tcp",
+            "total_bytes_rcvd": null,
+            "total_bytes_sent": null,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/90"
+          },
+          {
+            "count": null,
+            "count_pos": null,
+            "description": null,
+            "dst_dns": "2017-05-16T19:40:12.451229Z",
+            "dst_geo": "US",
+            "dst_host_id": null,
+            "dst_ip": "192.168.13.48",
+            "dst_port": 445,
+            "first_timestamp": null,
+            "id": 91,
+            "last_timestamp": "2017-05-16T19:39:46Z",
+            "proto": "tcp",
+            "total_bytes_rcvd": null,
+            "total_bytes_sent": null,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/91"
+          },
+          {
+            "count": null,
+            "count_pos": null,
+            "description": null,
+            "dst_dns": "2017-05-16T19:40:12.783271Z",
+            "dst_geo": "US",
+            "dst_host_id": null,
+            "dst_ip": "192.168.13.149",
+            "dst_port": 445,
+            "first_timestamp": null,
+            "id": 92,
+            "last_timestamp": "2017-05-16T19:39:03Z",
+            "proto": "tcp",
+            "total_bytes_rcvd": null,
+            "total_bytes_sent": null,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/92"
+          },
+          {
+            "count": null,
+            "count_pos": null,
+            "description": null,
+            "dst_dns": "2017-05-16T19:40:13.115180Z",
+            "dst_geo": "US",
+            "dst_host_id": null,
+            "dst_ip": "192.168.13.150",
+            "dst_port": 445,
+            "first_timestamp": null,
+            "id": 93,
+            "last_timestamp": "2017-05-16T19:39:19Z",
+            "proto": "tcp",
+            "total_bytes_rcvd": null,
+            "total_bytes_sent": null,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/93"
+          },
+          {
+            "count": null,
+            "count_pos": null,
+            "description": null,
+            "dst_dns": "2017-05-16T19:40:13.446356Z",
+            "dst_geo": "US",
+            "dst_host_id": null,
+            "dst_ip": "192.168.13.151",
+            "dst_port": 445,
+            "first_timestamp": null,
+            "id": 94,
+            "last_timestamp": "2017-05-16T19:39:02Z",
+            "proto": "tcp",
+            "total_bytes_rcvd": null,
+            "total_bytes_sent": null,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/94"
+          },
+          {
+            "count": null,
+            "count_pos": null,
+            "description": null,
+            "dst_dns": "2017-05-16T19:40:13.776930Z",
+            "dst_geo": "US",
+            "dst_host_id": null,
+            "dst_ip": "192.168.13.152",
+            "dst_port": 445,
+            "first_timestamp": null,
+            "id": 95,
+            "last_timestamp": "2017-05-16T19:39:07Z",
+            "proto": "tcp",
+            "total_bytes_rcvd": null,
+            "total_bytes_sent": null,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/95"
+          },
+          {
+            "count": null,
+            "count_pos": null,
+            "description": null,
+            "dst_dns": "2017-05-16T19:40:14.107460Z",
+            "dst_geo": "US",
+            "dst_host_id": null,
+            "dst_ip": "192.168.13.153",
+            "dst_port": 445,
+            "first_timestamp": null,
+            "id": 96,
+            "last_timestamp": "2017-05-16T19:39:10Z",
+            "proto": "tcp",
+            "total_bytes_rcvd": null,
+            "total_bytes_sent": null,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/96"
+          },
+          {
+            "count": null,
+            "count_pos": null,
+            "description": null,
+            "dst_dns": "2017-05-16T19:40:14.438761Z",
+            "dst_geo": "US",
+            "dst_host_id": null,
+            "dst_ip": "192.168.13.154",
+            "dst_port": 445,
+            "first_timestamp": null,
+            "id": 97,
+            "last_timestamp": "2017-05-16T19:39:24Z",
+            "proto": "tcp",
+            "total_bytes_rcvd": null,
+            "total_bytes_sent": null,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/97"
+          },
+          {
+            "count": null,
+            "count_pos": null,
+            "description": null,
+            "dst_dns": "2017-05-16T19:40:14.770839Z",
+            "dst_geo": "US",
+            "dst_host_id": null,
+            "dst_ip": "192.168.13.155",
+            "dst_port": 445,
+            "first_timestamp": null,
+            "id": 98,
+            "last_timestamp": "2017-05-16T19:39:19Z",
+            "proto": "tcp",
+            "total_bytes_rcvd": null,
+            "total_bytes_sent": null,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/98"
+          },
+          {
+            "count": null,
+            "count_pos": null,
+            "description": null,
+            "dst_dns": "2017-05-16T19:40:15.104269Z",
+            "dst_geo": "US",
+            "dst_host_id": null,
+            "dst_ip": "192.168.13.156",
+            "dst_port": 445,
+            "first_timestamp": null,
+            "id": 99,
+            "last_timestamp": "2017-05-16T19:39:29Z",
+            "proto": "tcp",
+            "total_bytes_rcvd": null,
+            "total_bytes_sent": null,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/99"
+          }
+        ],
+        "dns_set": [],
+        "first_timestamp": 1474589238,
+        "reported_time": "2017-05-16T19:39:26Z",
+        "host": "https://partners.demo.vectranetworks.com/api/hosts/87",
+        "id": 45,
+        "last_timestamp": "2017-05-16T19:39:46Z",
+        "relayed_comm_set": [],
+        "sensor_luid": "IgG8l0P3",
+        "src_ip": "192.168.152.194",
+        "state": "inactive",
+        "summary": {
+          "dark_ips_contacted": 14,
+          "ports": [
+            "tcp:445"
+          ],
+          "probable_owner": "dwilson"
+        },
+        "t_score": 50,
+        "tags": [],
+        "targets_key_asset": false,
+        "triage_rule_id": null,
+        "type_vname": "Internal Darknet Scan",
+        "url": "https://partners.demo.vectranetworks.com/api/detections/45"
+      },
+      {
+        "c_score": 77,
+        "category": "LATERAL MOVEMENT",
+        "description": null,
+        "detection_detail_set": [
+          {
+            "count": null,
+            "count_pos": null,
+            "description": "no description available",
+            "dst_dns": "",
+            "dst_geo": null,
+            "dst_host_id": 26,
+            "dst_ip": "192.168.14.73",
+            "dst_port": 80,
+            "first_timestamp": "2017-05-16T16:23:25Z",
+            "id": 85,
+            "last_timestamp": "2017-05-16T16:23:57Z",
+            "proto": null,
+            "total_bytes_rcvd": 568,
+            "total_bytes_sent": 868,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/85"
+          }
+        ],
+        "dns_set": [],
+        "first_timestamp": "2017-05-16T16:23:25Z",
+        "reported_time": "2017-05-16T16:23:25Z",
+        "host": "https://partners.demo.vectranetworks.com/api/hosts/89",
+        "id": 44,
+        "last_timestamp": "2017-05-16T16:23:57Z",
+        "relayed_comm_set": [],
+        "sensor_luid": "IgG8l0P3",
+        "src_ip": "192.168.174.114",
+        "state": "inactive",
+        "summary": {
+          "bytes_received": 568,
+          "bytes_sent": 868,
+          "internal_servers": [
+            "192.168.14.73"
+          ],
+          "probable_owner": null,
+          "requests_sent": 1
+        },
+        "t_score": 50,
+        "tags": [],
+        "targets_key_asset": true,
+        "triage_rule_id": null,
+        "type_vname": "SQL Injection Activity",
+        "url": "https://partners.demo.vectranetworks.com/api/detections/44"
+      },
+      {
+        "c_score": 20,
+        "category": "COMMAND & CONTROL",
+        "description": null,
+        "detection_detail_set": [],
+        "dns_set": [
+          {
+            "dns_ip": "8.8.8.8",
+            "dns_request": "comhluadar.ie",
+            "first_timestamp": null,
+            "id": 13,
+            "last_timestamp": "2017-05-16T16:09:36Z",
+            "resp": null,
+            "resp_code": "NXDomain",
+            "url": "https://partners.demo.vectranetworks.com/api/dns/13"
+          },
+          {
+            "dns_ip": "8.8.8.8",
+            "dns_request": "joaopaulomachado.com.br",
+            "first_timestamp": null,
+            "id": 14,
+            "last_timestamp": "2017-05-16T16:09:06Z",
+            "resp": null,
+            "resp_code": "NXDomain",
+            "url": "https://partners.demo.vectranetworks.com/api/dns/14"
+          },
+          {
+            "dns_ip": "8.8.8.8",
+            "dns_request": "velkekosihy.sk",
+            "first_timestamp": null,
+            "id": 15,
+            "last_timestamp": "2017-05-16T16:09:57Z",
+            "resp": null,
+            "resp_code": "NXDomain",
+            "url": "https://partners.demo.vectranetworks.com/api/dns/15"
+          },
+          {
+            "dns_ip": "8.8.8.8",
+            "dns_request": "iyilmazteknikbahce.com",
+            "first_timestamp": null,
+            "id": 16,
+            "last_timestamp": "2017-05-16T16:09:34Z",
+            "resp": null,
+            "resp_code": "NXDomain",
+            "url": "https://partners.demo.vectranetworks.com/api/dns/16"
+          },
+          {
+            "dns_ip": "8.8.8.8",
+            "dns_request": "bradkrauskopf.com.au",
+            "first_timestamp": null,
+            "id": 17,
+            "last_timestamp": "2017-05-16T16:09:15Z",
+            "resp": null,
+            "resp_code": "NXDomain",
+            "url": "https://partners.demo.vectranetworks.com/api/dns/17"
+          },
+          {
+            "dns_ip": "8.8.8.8",
+            "dns_request": "skolaetikety.sk",
+            "first_timestamp": null,
+            "id": 18,
+            "last_timestamp": "2017-05-16T16:09:33Z",
+            "resp": "37.9.170.5",
+            "resp_code": "NoError",
+            "url": "https://partners.demo.vectranetworks.com/api/dns/18"
+          }
+        ],
+        "first_timestamp": "2017-05-16T16:09:36Z",
+        "reported_time": "2017-05-16T16:09:36Z",
+        // "host": "https://partners.demo.vectranetworks.com/api/hosts/87",
+        "id": 43,
+        "last_timestamp": "2017-05-16T16:09:57Z",
+        "relayed_comm_set": [],
+        "sensor_luid": "IgG8l0P3",
+        "src_ip": "192.168.152.194",
+        "state": "inactive",
+        "summary": {
+          "bytes_received": 0,
+          "bytes_sent": 0,
+          "failed_lookups": 5,
+          "probable_owner": "dwilson",
+          "sessions": 0,
+          "successful_lookups": 1
+        },
+        "t_score": 18,
+        "tags": [],
+        "targets_key_asset": false,
+        "triage_rule_id": null,
+        "type_vname": "Suspect Domain Activity",
+        "url": "https://partners.demo.vectranetworks.com/api/detections/43"
+      },
+      {
+        "c_score": 78,
+        "category": "COMMAND & CONTROL",
+        "description": null,
+        "detection_detail_set": [
+          {
+            "count": null,
+            "count_pos": null,
+            "description": "/SMS_DP_SMSPKG$/PS100002/ccmsetup.cab ccmsetup.cab",
+            "dst_dns": "mail.baffcaaccaacac.ru",
+            "dst_geo": "RU",
+            "dst_host_id": null,
+            "dst_ip": "37.230.114.67",
+            "dst_port": 80,
+            "first_timestamp": null,
+            "id": 82,
+            "last_timestamp": "2017-05-16T15:22:28Z",
+            "proto": "tcp",
+            "total_bytes_rcvd": 10102,
+            "total_bytes_sent": null,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/82"
+          },
+          {
+            "count": null,
+            "count_pos": null,
+            "description": "/SMS_DP_SMSPKG$/PS100002/x64/client.msi client.msi",
+            "dst_dns": "mail.baffcaaccaacac.ru",
+            "dst_geo": "RU",
+            "dst_host_id": null,
+            "dst_ip": "37.230.114.67",
+            "dst_port": 80,
+            "first_timestamp": null,
+            "id": 83,
+            "last_timestamp": "2017-05-16T15:22:28Z",
+            "proto": "tcp",
+            "total_bytes_rcvd": 287674,
+            "total_bytes_sent": null,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/83"
+          },
+          {
+            "count": null,
+            "count_pos": null,
+            "description": "/SMS_DP_SMSPKG$/PS100002/x64/client.msi client.msi",
+            "dst_dns": "mail.baffcaaccaacac.ru",
+            "dst_geo": "RU",
+            "dst_host_id": null,
+            "dst_ip": "37.230.114.67",
+            "dst_port": 80,
+            "first_timestamp": null,
+            "id": 84,
+            "last_timestamp": "2017-05-16T15:22:28Z",
+            "proto": "tcp",
+            "total_bytes_rcvd": 737813,
+            "total_bytes_sent": null,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/84"
+          }
+        ],
+        "dns_set": [],
+        "first_timestamp": "2017-05-16T15:22:28Z",
+        "reported_time": "2017-05-16T15:22:28Z",
+        "host": "https://partners.demo.vectranetworks.com/api/hosts/32",
+        "id": 42,
+        "last_timestamp": "2017-05-16T15:22:28Z",
+        "relayed_comm_set": [],
+        "sensor_luid": "IgG8l0P3",
+        "src_ip": "192.168.173.101",
+        "state": "inactive",
+        "summary": {
+          "external_cnc_servers": [
+            "37.230.114.67"
+          ],
+          "files": [
+            "client.msi",
+            "ccmsetup.cab"
+          ],
+          "number_of_downloads": 3,
+          "probable_owner": "bthomas"
+        },
+        "t_score": 70,
+        "tags": [],
+        "targets_key_asset": false,
+        "triage_rule_id": null,
+        "type_vname": "Malware Update",
+        "url": "https://partners.demo.vectranetworks.com/api/detections/42"
+      },
+      {
+        "c_score": 25,
+        "category": "BOTNET ACTIVITY",
+        "description": null,
+        "detection_detail_set": [
+          {
+            "count": 24131,
+            "count_pos": null,
+            "description": null,
+            "dst_dns": null,
+            "dst_geo": null,
+            "dst_host_id": null,
+            "dst_ip": null,
+            "dst_port": null,
+            "first_timestamp": "2017-05-15T22:11:42Z",
+            "id": 79,
+            "last_timestamp": "2017-05-15T22:11:58Z",
+            "proto": null,
+            "total_bytes_rcvd": 1937355,
+            "total_bytes_sent": 0,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/79"
+          },
+          {
+            "count": 52137,
+            "count_pos": null,
+            "description": null,
+            "dst_dns": null,
+            "dst_geo": null,
+            "dst_host_id": null,
+            "dst_ip": null,
+            "dst_port": null,
+            "first_timestamp": "2017-05-15T22:11:18Z",
+            "id": 80,
+            "last_timestamp": "2017-05-15T22:11:57Z",
+            "proto": null,
+            "total_bytes_rcvd": 2624193,
+            "total_bytes_sent": 0,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/80"
+          },
+          {
+            "count": 12237,
+            "count_pos": null,
+            "description": null,
+            "dst_dns": null,
+            "dst_geo": null,
+            "dst_host_id": null,
+            "dst_ip": null,
+            "dst_port": null,
+            "first_timestamp": "2017-05-15T22:11:21Z",
+            "id": 81,
+            "last_timestamp": "2017-05-15T22:11:36Z",
+            "proto": null,
+            "total_bytes_rcvd": 3627193,
+            "total_bytes_sent": 0,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/81"
+          }
+        ],
+        "dns_set": [],
+        "first_timestamp": "2017-05-15T22:11:42Z",
+        "reported_time": "2017-05-15T22:11:42Z",
+        "host": "https://partners.demo.vectranetworks.com/api/hosts/32",
+        "id": 41,
+        "last_timestamp": "2017-05-15T22:11:58Z",
+        "relayed_comm_set": [],
+        "sensor_luid": "IgG8l0P3",
+        "src_ip": "192.168.173.101",
+        "state": "inactive",
+        "summary": {
+          "abnormal_html_data_rate": 221317,
+          "abnormal_http_sessions": 88505,
+          "probable_owner": "bthomas",
+          "total_active_time": "0:00:37"
+        },
+        "t_score": 10,
+        "tags": [],
+        "targets_key_asset": false,
+        "triage_rule_id": null,
+        "type_vname": "Abnormal Web Activity",
+        "url": "https://partners.demo.vectranetworks.com/api/detections/41"
+      },
+      {
+        "c_score": 16,
+        "category": "BOTNET ACTIVITY",
+        "description": null,
+        "detection_detail_set": [
+          {
+            "count": 2076,
+            "count_pos": 184,
+            "description": null,
+            "dst_dns": null,
+            "dst_geo": null,
+            "dst_host_id": null,
+            "dst_ip": null,
+            "dst_port": null,
+            "first_timestamp": "2017-05-15T16:13:21Z",
+            "id": 76,
+            "last_timestamp": "2017-05-15T16:13:24Z",
+            "proto": null,
+            "total_bytes_rcvd": null,
+            "total_bytes_sent": null,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/76"
+          },
+          {
+            "count": 1924,
+            "count_pos": 114,
+            "description": null,
+            "dst_dns": null,
+            "dst_geo": null,
+            "dst_host_id": null,
+            "dst_ip": null,
+            "dst_port": null,
+            "first_timestamp": "2017-05-15T16:13:24Z",
+            "id": 77,
+            "last_timestamp": "2017-05-15T16:13:33Z",
+            "proto": null,
+            "total_bytes_rcvd": null,
+            "total_bytes_sent": null,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/77"
+          }
+        ],
+        "dns_set": [],
+        "first_timestamp": "2017-05-15T16:13:21Z",
+        "reported_time": "2017-05-15T16:13:21Z",
+        "host": "https://partners.demo.vectranetworks.com/api/hosts/32",
+        "id": 39,
+        "last_timestamp": "2017-05-15T16:13:33Z",
+        "relayed_comm_set": [],
+        "sensor_luid": "IgG8l0P3",
+        "src_ip": "192.168.173.101",
+        "state": "inactive",
+        "summary": {
+          "http_sessions": 6088,
+          "probable_owner": "bthomas",
+          "reason": "Abnormal frequency of redirects",
+          "sessions_with_ad_activity": 594,
+          "total_active_time": "0:00:12"
+        },
+        "t_score": 30,
+        "tags": [],
+        "targets_key_asset": false,
+        "triage_rule_id": null,
+        "type_vname": "Abnormal Ad Activity",
+        "url": "https://partners.demo.vectranetworks.com/api/detections/39"
+      },
+      {
+        "c_score": 16,
+        "category": "COMMAND & CONTROL",
+        "description": null,
+        "detection_detail_set": [],
+        "dns_set": [
+          {
+            "dns_ip": "8.8.8.8",
+            "dns_request": "157m6z01y2dk6z3mbqvt1t1rdws.biz",
+            "first_timestamp": null,
+            "id": 10,
+            "last_timestamp": "2017-05-15T13:17:02Z",
+            "resp": null,
+            "resp_code": "NXDomain",
+            "url": "https://partners.demo.vectranetworks.com/api/dns/10"
+          },
+          {
+            "dns_ip": "8.8.8.8",
+            "dns_request": "iqingjiangmiyu.com",
+            "first_timestamp": null,
+            "id": 11,
+            "last_timestamp": "2017-05-15T13:17:25Z",
+            "resp": null,
+            "resp_code": "NXDomain",
+            "url": "https://partners.demo.vectranetworks.com/api/dns/11"
+          },
+          {
+            "dns_ip": "8.8.8.8",
+            "dns_request": "mail.baffcaaccaacac.ru",
+            "first_timestamp": null,
+            "id": 12,
+            "last_timestamp": "2017-05-15T13:17:14Z",
+            "resp": "46.137.248.72,37.230.114.67,206.72.200.117",
+            "resp_code": "NoError",
+            "url": "https://partners.demo.vectranetworks.com/api/dns/12"
+          }
+        ],
+        "first_timestamp": "2017-05-15T13:17:02Z",
+        "reported_time": "2017-05-15T13:17:02Z",
+        "host": "https://partners.demo.vectranetworks.com/api/hosts/32",
+        "id": 38,
+        "last_timestamp": "2017-05-15T13:17:25Z",
+        "relayed_comm_set": [],
+        "sensor_luid": "IgG8l0P3",
+        "src_ip": "192.168.173.101",
+        "state": "inactive",
+        "summary": {
+          "bytes_received": 0,
+          "bytes_sent": 0,
+          "failed_lookups": 2,
+          "probable_owner": "bthomas",
+          "sessions": 0,
+          "successful_lookups": 1
+        },
+        "t_score": 16,
+        "tags": [],
+        "targets_key_asset": false,
+        "triage_rule_id": null,
+        "type_vname": "Suspect Domain Activity",
+        "url": "https://partners.demo.vectranetworks.com/api/detections/38"
+      },
+      {
+        "c_score": 15,
+        "category": "COMMAND & CONTROL",
+        "description": null,
+        "detection_detail_set": [],
+        "dns_set": [
+          {
+            "dns_ip": "8.8.8.8",
+            "dns_request": "157m6z01y2dk6z3mbqvt1t1rdws.biz",
+            "first_timestamp": null,
+            "id": 9,
+            "last_timestamp": "2017-05-12T23:39:18Z",
+            "resp": null,
+            "resp_code": "NXDomain",
+            "url": "https://partners.demo.vectranetworks.com/api/dns/9"
+          }
+        ],
+        "first_timestamp": "2017-05-12T23:39:18Z",
+        "host": "https://partners.demo.vectranetworks.com/api/hosts/8",
+        "id": 37,
+        "last_timestamp": "2017-05-12T23:39:18Z",
+        "relayed_comm_set": [],
+        "sensor_luid": "IgG8l0P3",
+        "src_ip": "192.168.173.203",
+        "state": "inactive",
+        "summary": {
+          "bytes_received": 0,
+          "bytes_sent": 0,
+          "failed_lookups": 1,
+          "probable_owner": null,
+          "sessions": 0,
+          "successful_lookups": 0
+        },
+        "t_score": 10,
+        "tags": [],
+        "targets_key_asset": false,
+        "triage_rule_id": null,
+        "type_vname": "Suspect Domain Activity",
+        "url": "https://partners.demo.vectranetworks.com/api/detections/37"
+      },
+      {
+        "c_score": 12,
+        "category": "EXFILTRATION",
+        "description": null,
+        "detection_detail_set": [
+          {
+            "count": null,
+            "count_pos": null,
+            "description": "no description available",
+            "dst_dns": "",
+            "dst_geo": "AU",
+            "dst_host_id": null,
+            "dst_ip": "1.1.1.1",
+            "dst_port": 443,
+            "first_timestamp": "2017-05-12T22:41:11Z",
+            "id": 75,
+            "last_timestamp": "2017-05-12T22:41:54Z",
+            "proto": "tcp",
+            "total_bytes_rcvd": null,
+            "total_bytes_sent": 73616289,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/75"
+          }
+        ],
+        "dns_set": [],
+        "first_timestamp": "2017-05-12T22:41:11Z",
+        "host": "https://partners.demo.vectranetworks.com/api/hosts/50",
+        "id": 36,
+        "last_timestamp": "2017-05-12T22:41:54Z",
+        "relayed_comm_set": [],
+        "sensor_luid": "IgG8l0P3",
+        "src_ip": "192.168.153.17",
+        "state": "inactive",
+        "summary": {
+          "data_sent_out": 73616289,
+          "destination_ports": [
+            443
+          ],
+          "external_destinations": 1,
+          "normal_domains": [
+            "sf-box.com",
+            "google.com",
+            "icloud.com",
+            "box.com",
+            "crashplan.com",
+            "dropbox.com",
+            "microsoft.com"
+          ],
+          "probable_owner": null
+        },
+        "t_score": 69,
+        "tags": [],
+        "targets_key_asset": false,
+        "triage_rule_id": null,
+        "type_vname": "Smash and Grab",
+        "url": "https://partners.demo.vectranetworks.com/api/detections/36"
+      },
+      {
+        "c_score": 12,
+        "category": "COMMAND & CONTROL",
+        "description": null,
+        "detection_detail_set": [
+          {
+            "count": null,
+            "count_pos": null,
+            "description": "Download",
+            "dst_dns": "www.7tcqy6kttln6.com",
+            "dst_geo": "FR",
+            "dst_host_id": null,
+            "dst_ip": "95.130.11.214",
+            "dst_port": 443,
+            "first_timestamp": "2017-05-12T21:07:14Z",
+            "id": 72,
+            "last_timestamp": "2017-05-12T21:08:00Z",
+            "proto": "tcp",
+            "total_bytes_rcvd": 492040,
+            "total_bytes_sent": 18644,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/72"
+          },
+          {
+            "count": null,
+            "count_pos": null,
+            "description": "Two way communication",
+            "dst_dns": "www.jma2d3g665z.com",
+            "dst_geo": "US",
+            "dst_host_id": null,
+            "dst_ip": "108.20.78.135",
+            "dst_port": 9001,
+            "first_timestamp": "2017-05-12T21:07:14Z",
+            "id": 73,
+            "last_timestamp": "2017-05-12T21:08:00Z",
+            "proto": "tcp",
+            "total_bytes_rcvd": 25299,
+            "total_bytes_sent": 6991,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/73"
+          },
+          {
+            "count": null,
+            "count_pos": null,
+            "description": "Two way communication",
+            "dst_dns": "www.utfk4lxhn.com",
+            "dst_geo": "SE",
+            "dst_host_id": null,
+            "dst_ip": "194.132.32.42",
+            "dst_port": 8080,
+            "first_timestamp": "2017-05-12T21:07:14Z",
+            "id": 74,
+            "last_timestamp": "2017-05-12T21:08:00Z",
+            "proto": "tcp",
+            "total_bytes_rcvd": 18495,
+            "total_bytes_sent": 5379,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/74"
+          }
+        ],
+        "dns_set": [],
+        "first_timestamp": "2017-05-12T21:07:14Z",
+        "host": "https://partners.demo.vectranetworks.com/api/hosts/2",
+        "id": 35,
+        "last_timestamp": "2017-05-12T21:08:00Z",
+        "relayed_comm_set": [],
+        "sensor_luid": "IgG8l0P3",
+        "src_ip": "192.168.173.202",
+        "state": "inactive",
+        "summary": {
+          "bytes_received": 535834,
+          "bytes_sent": 31014,
+          "external_tor_nodes": [
+            "108.20.78.135",
+            "194.132.32.42",
+            "95.130.11.214"
+          ],
+          "probable_owner": null,
+          "sessions": 3
+        },
+        "t_score": 10,
+        "tags": [],
+        "targets_key_asset": false,
+        "triage_rule_id": null,
+        "type_vname": "TOR Activity",
+        "url": "https://partners.demo.vectranetworks.com/api/detections/35"
+      },
+      {
+        "c_score": 52,
+        "category": "RECONNAISSANCE",
+        "description": null,
+        "detection_detail_set": [
+          {
+            "count": null,
+            "count_pos": null,
+            "description": null,
+            "dst_dns": "",
+            "dst_geo": "US",
+            "dst_host_id": null,
+            "dst_ip": "192.168.13.48",
+            "dst_port": 389,
+            "first_timestamp": null,
+            "id": 63,
+            "last_timestamp": "2017-05-12T16:03:37Z",
+            "proto": "tcp",
+            "total_bytes_rcvd": null,
+            "total_bytes_sent": null,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/63"
+          },
+          {
+            "count": null,
+            "count_pos": null,
+            "description": null,
+            "dst_dns": "",
+            "dst_geo": "US",
+            "dst_host_id": null,
+            "dst_ip": "192.168.13.149",
+            "dst_port": 389,
+            "first_timestamp": null,
+            "id": 64,
+            "last_timestamp": "2017-05-12T16:03:34Z",
+            "proto": "tcp",
+            "total_bytes_rcvd": null,
+            "total_bytes_sent": null,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/64"
+          },
+          {
+            "count": null,
+            "count_pos": null,
+            "description": null,
+            "dst_dns": "",
+            "dst_geo": "US",
+            "dst_host_id": null,
+            "dst_ip": "192.168.13.150",
+            "dst_port": 389,
+            "first_timestamp": null,
+            "id": 65,
+            "last_timestamp": "2017-05-12T16:03:40Z",
+            "proto": "tcp",
+            "total_bytes_rcvd": null,
+            "total_bytes_sent": null,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/65"
+          },
+          {
+            "count": null,
+            "count_pos": null,
+            "description": null,
+            "dst_dns": "",
+            "dst_geo": "US",
+            "dst_host_id": null,
+            "dst_ip": "192.168.13.151",
+            "dst_port": 389,
+            "first_timestamp": null,
+            "id": 66,
+            "last_timestamp": "2017-05-12T16:03:17Z",
+            "proto": "tcp",
+            "total_bytes_rcvd": null,
+            "total_bytes_sent": null,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/66"
+          },
+          {
+            "count": null,
+            "count_pos": null,
+            "description": null,
+            "dst_dns": "",
+            "dst_geo": "US",
+            "dst_host_id": null,
+            "dst_ip": "192.168.13.152",
+            "dst_port": 389,
+            "first_timestamp": null,
+            "id": 67,
+            "last_timestamp": "2017-05-12T16:03:19Z",
+            "proto": "tcp",
+            "total_bytes_rcvd": null,
+            "total_bytes_sent": null,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/67"
+          },
+          {
+            "count": null,
+            "count_pos": null,
+            "description": null,
+            "dst_dns": "",
+            "dst_geo": "US",
+            "dst_host_id": null,
+            "dst_ip": "192.168.13.153",
+            "dst_port": 389,
+            "first_timestamp": null,
+            "id": 68,
+            "last_timestamp": "2017-05-12T16:04:01Z",
+            "proto": "tcp",
+            "total_bytes_rcvd": null,
+            "total_bytes_sent": null,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/68"
+          },
+          {
+            "count": null,
+            "count_pos": null,
+            "description": null,
+            "dst_dns": "",
+            "dst_geo": "US",
+            "dst_host_id": null,
+            "dst_ip": "192.168.13.154",
+            "dst_port": 389,
+            "first_timestamp": null,
+            "id": 69,
+            "last_timestamp": "2017-05-12T16:03:23Z",
+            "proto": "tcp",
+            "total_bytes_rcvd": null,
+            "total_bytes_sent": null,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/69"
+          },
+          {
+            "count": null,
+            "count_pos": null,
+            "description": null,
+            "dst_dns": "",
+            "dst_geo": "US",
+            "dst_host_id": null,
+            "dst_ip": "192.168.13.155",
+            "dst_port": 389,
+            "first_timestamp": null,
+            "id": 70,
+            "last_timestamp": "2017-05-12T16:03:09Z",
+            "proto": "tcp",
+            "total_bytes_rcvd": null,
+            "total_bytes_sent": null,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/70"
+          },
+          {
+            "count": null,
+            "count_pos": null,
+            "description": null,
+            "dst_dns": "",
+            "dst_geo": "US",
+            "dst_host_id": null,
+            "dst_ip": "192.168.13.156",
+            "dst_port": 389,
+            "first_timestamp": null,
+            "id": 71,
+            "last_timestamp": "2017-05-12T16:03:02Z",
+            "proto": "tcp",
+            "total_bytes_rcvd": null,
+            "total_bytes_sent": null,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/71"
+          }
+        ],
+        "dns_set": [],
+        "first_timestamp": "2017-05-12T16:03:37Z",
+        "host": "https://partners.demo.vectranetworks.com/api/hosts/50",
+        "id": 34,
+        "last_timestamp": "2017-05-12T16:04:01Z",
+        "relayed_comm_set": [],
+        "sensor_luid": "IgG8l0P3",
+        "src_ip": "192.168.153.17",
+        "state": "inactive",
+        "summary": {
+          "dark_ips_contacted": 9,
+          "ports": [
+            "tcp:389"
+          ],
+          "probable_owner": null
+        },
+        "t_score": 50,
+        "tags": [],
+        "targets_key_asset": false,
+        "triage_rule_id": null,
+        "type_vname": "Internal Darknet Scan",
+        "url": "https://partners.demo.vectranetworks.com/api/detections/34"
+      },
+      {
+        "c_score": 58,
+        "category": "RECONNAISSANCE",
+        "description": null,
+        "detection_detail_set": [
+          {
+            "count": 489,
+            "count_pos": 61,
+            "description": "192.168.6.0/23",
+            "dst_dns": null,
+            "dst_geo": null,
+            "dst_host_id": null,
+            "dst_ip": null,
+            "dst_port": 389,
+            "first_timestamp": "2017-05-12T16:03:39Z",
+            "id": 62,
+            "last_timestamp": "2017-05-12T16:03:58Z",
+            "proto": "udp",
+            "total_bytes_rcvd": null,
+            "total_bytes_sent": null,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/62"
+          }
+        ],
+        "dns_set": [],
+        "first_timestamp": "2017-05-12T16:03:39Z",
+        "host": "https://partners.demo.vectranetworks.com/api/hosts/50",
+        "id": 33,
+        "last_timestamp": "2017-05-12T16:03:58Z",
+        "relayed_comm_set": [],
+        "sensor_luid": "IgG8l0P3",
+        "src_ip": "192.168.153.17",
+        "state": "inactive",
+        "summary": {
+          "probable_owner": null,
+          "scan_attempts": 489,
+          "scan_successes": 61,
+          "targets": [
+            "udp:389"
+          ]
+        },
+        "t_score": 42,
+        "tags": [],
+        "targets_key_asset": false,
+        "triage_rule_id": null,
+        "type_vname": "Port Sweep",
+        "url": "https://partners.demo.vectranetworks.com/api/detections/33"
+      },
+      {
+        "c_score": 40,
+        "category": "BOTNET ACTIVITY",
+        "description": null,
+        "detection_detail_set": [
+          {
+            "count": 100,
+            "count_pos": null,
+            "description": "ssh",
+            "dst_dns": "foo.com",
+            "dst_geo": null,
+            "dst_host_id": null,
+            "dst_ip": "2017-05-12T15:58:10.880780Z",
+            "dst_port": null,
+            "first_timestamp": "2017-05-12T15:57:07Z",
+            "id": 61,
+            "last_timestamp": "2017-05-12T15:57:56Z",
+            "proto": null,
+            "total_bytes_rcvd": null,
+            "total_bytes_sent": null,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/61"
+          }
+        ],
+        "dns_set": [],
+        "first_timestamp": "2017-05-12T15:57:07Z",
+        "host": "https://partners.demo.vectranetworks.com/api/hosts/83",
+        "id": 32,
+        "last_timestamp": "2017-05-12T15:57:56Z",
+        "relayed_comm_set": [],
+        "sensor_luid": "IgG8l0P3",
+        "src_ip": "172.16.199.72",
+        "state": "inactive",
+        "summary": {
+          "external_targets": [
+            "2017-05-12T15:58:10.880780Z via ssh"
+          ],
+          "login_attempts": 100,
+          "probable_owner": null
+        },
+        "t_score": 10,
+        "tags": [],
+        "targets_key_asset": false,
+        "triage_rule_id": null,
+        "type_vname": "Brute-Force Attack",
+        "url": "https://partners.demo.vectranetworks.com/api/detections/32"
+      },
+      {
+        "c_score": 10,
+        "category": "COMMAND & CONTROL",
+        "description": null,
+        "detection_detail_set": [
+          {
+            "count": 1,
+            "count_pos": null,
+            "description": null,
+            "dst_dns": null,
+            "dst_geo": "AU",
+            "dst_host_id": null,
+            "dst_ip": "1.1.1.1",
+            "dst_port": 32754,
+            "first_timestamp": "2017-05-12T04:21:35Z",
+            "id": 59,
+            "last_timestamp": "2017-05-12T04:22:09Z",
+            "proto": "tcp",
+            "total_bytes_rcvd": 1766,
+            "total_bytes_sent": 64282,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/59"
+          }
+        ],
+        "dns_set": [],
+        "first_timestamp": "2017-05-12T04:21:35Z",
+        "host": "https://partners.demo.vectranetworks.com/api/hosts/50",
+        "id": 30,
+        "last_timestamp": "2017-05-12T04:22:09Z",
+        "relayed_comm_set": [],
+        "sensor_luid": "IgG8l0P3",
+        "src_ip": "192.168.153.17",
+        "state": "inactive",
+        "summary": {
+          "active_time": "0:00:34",
+          "bytes_received": 1766,
+          "bytes_sent": 64282,
+          "destination_ports": [
+            32754
+          ],
+          "external_hosts": [
+            "1.1.1.1"
+          ],
+          "probable_owner": null,
+          "sessions": 1,
+          "unique_ports": 1
+        },
+        "t_score": 25,
+        "tags": [],
+        "targets_key_asset": false,
+        "triage_rule_id": null,
+        "type_vname": "External Remote Access",
+        "url": "https://partners.demo.vectranetworks.com/api/detections/30"
+      },
+      {
+        "c_score": 12,
+        "category": "EXFILTRATION",
+        "description": null,
+        "detection_detail_set": [
+          {
+            "count": 1159,
+            "count_pos": null,
+            "description": null,
+            "dst_dns": "",
+            "dst_geo": "AU",
+            "dst_host_id": null,
+            "dst_ip": "1.1.1.1",
+            "dst_port": 443,
+            "first_timestamp": "2017-05-11T21:33:31Z",
+            "id": 58,
+            "last_timestamp": "2017-05-11T21:34:04Z",
+            "proto": "tcp",
+            "total_bytes_rcvd": 701391,
+            "total_bytes_sent": 224440790,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/58"
+          }
+        ],
+        "dns_set": [],
+        "first_timestamp": "2017-05-11T21:33:31Z",
+        "host": "https://partners.demo.vectranetworks.com/api/hosts/80",
+        "id": 29,
+        "last_timestamp": "2017-05-11T21:34:04Z",
+        "relayed_comm_set": [],
+        "sensor_luid": "IgG8l0P3",
+        "src_ip": "172.16.199.9",
+        "state": "inactive",
+        "summary": {
+          "bytes_received": 701391,
+          "bytes_sent": 224440790,
+          "external_destination": [
+            "1.1.1.1"
+          ],
+          "probable_owner": null,
+          "sessions": 1159
+        },
+        "t_score": 95,
+        "tags": [],
+        "targets_key_asset": false,
+        "triage_rule_id": null,
+        "type_vname": "Hidden HTTPS Tunnel",
+        "url": "https://partners.demo.vectranetworks.com/api/detections/29"
+      },
+      {
+        "c_score": 78,
+        "category": "COMMAND & CONTROL",
+        "description": null,
+        "detection_detail_set": [
+          {
+            "count": null,
+            "count_pos": null,
+            "description": "/SMS_DP_SMSPKG$/PS100002/ccmsetup.cab ccmsetup.cab",
+            "dst_dns": "mail.baffcaaccaacac.ru",
+            "dst_geo": "RU",
+            "dst_host_id": null,
+            "dst_ip": "37.230.114.67",
+            "dst_port": 80,
+            "first_timestamp": null,
+            "id": 55,
+            "last_timestamp": "2017-05-11T19:57:36Z",
+            "proto": "tcp",
+            "total_bytes_rcvd": 10102,
+            "total_bytes_sent": null,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/55"
+          },
+          {
+            "count": null,
+            "count_pos": null,
+            "description": "/SMS_DP_SMSPKG$/PS100002/x64/client.msi client.msi",
+            "dst_dns": "mail.baffcaaccaacac.ru",
+            "dst_geo": "RU",
+            "dst_host_id": null,
+            "dst_ip": "37.230.114.67",
+            "dst_port": 80,
+            "first_timestamp": null,
+            "id": 56,
+            "last_timestamp": "2017-05-11T19:57:36Z",
+            "proto": "tcp",
+            "total_bytes_rcvd": 287674,
+            "total_bytes_sent": null,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/56"
+          },
+          {
+            "count": null,
+            "count_pos": null,
+            "description": "/SMS_DP_SMSPKG$/PS100002/x64/client.msi client.msi",
+            "dst_dns": "mail.baffcaaccaacac.ru",
+            "dst_geo": "RU",
+            "dst_host_id": null,
+            "dst_ip": "37.230.114.67",
+            "dst_port": 80,
+            "first_timestamp": null,
+            "id": 57,
+            "last_timestamp": "2017-05-11T19:57:36Z",
+            "proto": "tcp",
+            "total_bytes_rcvd": 737813,
+            "total_bytes_sent": null,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/57"
+          }
+        ],
+        "dns_set": [],
+        "first_timestamp": "2017-05-11T19:57:36Z",
+        "host": "https://partners.demo.vectranetworks.com/api/hosts/50",
+        "id": 28,
+        "last_timestamp": "2017-05-11T19:57:36Z",
+        "relayed_comm_set": [],
+        "sensor_luid": "IgG8l0P3",
+        "src_ip": "192.168.153.17",
+        "state": "inactive",
+        "summary": {
+          "external_cnc_servers": [
+            "37.230.114.67"
+          ],
+          "files": [
+            "client.msi",
+            "ccmsetup.cab"
+          ],
+          "number_of_downloads": 3,
+          "probable_owner": null
+        },
+        "t_score": 70,
+        "tags": [],
+        "targets_key_asset": false,
+        "triage_rule_id": null,
+        "type_vname": "Malware Update",
+        "url": "https://partners.demo.vectranetworks.com/api/detections/28"
+      },
+      {
+        "c_score": 10,
+        "category": "BOTNET ACTIVITY",
+        "description": null,
+        "detection_detail_set": [
+          {
+            "count": 2076,
+            "count_pos": 184,
+            "description": null,
+            "dst_dns": null,
+            "dst_geo": null,
+            "dst_host_id": null,
+            "dst_ip": null,
+            "dst_port": null,
+            "first_timestamp": "2017-05-11T16:12:27Z",
+            "id": 54,
+            "last_timestamp": "2017-05-11T16:12:47Z",
+            "proto": null,
+            "total_bytes_rcvd": null,
+            "total_bytes_sent": null,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/54"
+          }
+        ],
+        "dns_set": [],
+        "first_timestamp": "2017-05-11T16:12:27Z",
+        "host": "https://partners.demo.vectranetworks.com/api/hosts/77",
+        "id": 27,
+        "last_timestamp": "2017-05-11T16:12:47Z",
+        "relayed_comm_set": [],
+        "sensor_luid": "IgG8l0P3",
+        "src_ip": "192.168.173.205",
+        "state": "inactive",
+        "summary": {
+          "http_sessions": 3370,
+          "probable_owner": null,
+          "reason": "Abnormal frequency of redirects",
+          "sessions_with_ad_activity": 402,
+          "total_active_time": "0:00:20"
+        },
+        "t_score": 30,
+        "tags": [],
+        "targets_key_asset": false,
+        "triage_rule_id": null,
+        "type_vname": "Abnormal Ad Activity",
+        "url": "https://partners.demo.vectranetworks.com/api/detections/27"
+      },
+      {
+        "c_score": 60,
+        "category": "COMMAND & CONTROL",
+        "description": null,
+        "detection_detail_set": [
+          {
+            "count": 1,
+            "count_pos": null,
+            "description": null,
+            "dst_dns": "data.torntv.net",
+            "dst_geo": "RU",
+            "dst_host_id": null,
+            "dst_ip": "95.108.142.138",
+            "dst_port": null,
+            "first_timestamp": "2017-05-11T16:09:05Z",
+            "id": 52,
+            "last_timestamp": "2017-05-11T16:09:37Z",
+            "proto": null,
+            "total_bytes_rcvd": 267,
+            "total_bytes_sent": 177,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/52"
+          },
+          {
+            "count": 1,
+            "count_pos": null,
+            "description": null,
+            "dst_dns": "data.torntv.net",
+            "dst_geo": "RU",
+            "dst_host_id": null,
+            "dst_ip": "95.108.142.138",
+            "dst_port": null,
+            "first_timestamp": "2017-05-11T16:09:05Z",
+            "id": 53,
+            "last_timestamp": "2017-05-11T16:09:37Z",
+            "proto": null,
+            "total_bytes_rcvd": 267,
+            "total_bytes_sent": 177,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/53"
+          }
+        ],
+        "dns_set": [],
+        "first_timestamp": "2017-05-11T16:09:05Z",
+        "host": "https://partners.demo.vectranetworks.com/api/hosts/75",
+        "id": 26,
+        "last_timestamp": "2017-05-11T16:09:37Z",
+        "relayed_comm_set": [],
+        "sensor_luid": "IgG8l0P3",
+        "src_ip": "192.168.197.211",
+        "state": "inactive",
+        "summary": {
+          "bad_user_agent": 0,
+          "beaconing": 0,
+          "bytes_received": 534,
+          "bytes_sent": 354,
+          "higher_risk_geo": [
+            "Russian Federation"
+          ],
+          "probable_owner": null,
+          "suspicious_header_construction": 1
+        },
+        "t_score": 40,
+        "tags": [],
+        "targets_key_asset": false,
+        "triage_rule_id": null,
+        "type_vname": "Suspicious HTTP",
+        "url": "https://partners.demo.vectranetworks.com/api/detections/26"
+      },
+      {
+        "c_score": 59,
+        "category": "EXFILTRATION",
+        "description": null,
+        "detection_detail_set": [],
+        "dns_set": [],
+        "first_timestamp": "2017-05-11T13:00:57Z",
+        "host": "https://partners.demo.vectranetworks.com/api/hosts/59",
+        "id": 24,
+        "last_timestamp": "2017-05-11T13:00:59Z",
+        "relayed_comm_set": [
+          {
+            "dst_host_id": null,
+            "first_timestamp": "2017-05-11T13:00:57Z",
+            "id": 1,
+            "inbound_dns": null,
+            "inbound_ip": null,
+            "inbound_port": null,
+            "inbound_proto": null,
+            "last_timestamp": "2017-05-11T13:00:59Z",
+            "outbound_dns": "s3-1-w.amazonaws.com",
+            "outbound_ip": "54.231.120.211",
+            "outbound_port": 443,
+            "outbound_proto": "tcp",
+            "total_bytes_rcvd": 7039,
+            "total_bytes_sent": 251817582,
+            "url": "https://partners.demo.vectranetworks.com/api/relayed_comm/1"
+          },
+          {
+            "dst_host_id": null,
+            "first_timestamp": "2017-05-11T13:00:57Z",
+            "id": 2,
+            "inbound_dns": "",
+            "inbound_ip": "192.168.13.219",
+            "inbound_port": 445,
+            "inbound_proto": "tcp",
+            "last_timestamp": "2017-05-11T13:00:59Z",
+            "outbound_dns": null,
+            "outbound_ip": null,
+            "outbound_port": null,
+            "outbound_proto": null,
+            "total_bytes_rcvd": 175908791,
+            "total_bytes_sent": 2736,
+            "url": "https://partners.demo.vectranetworks.com/api/relayed_comm/2"
+          },
+          {
+            "dst_host_id": null,
+            "first_timestamp": "2017-05-11T13:00:57Z",
+            "id": 3,
+            "inbound_dns": "",
+            "inbound_ip": "192.168.13.219",
+            "inbound_port": 445,
+            "inbound_proto": "tcp",
+            "last_timestamp": "2017-05-11T13:00:59Z",
+            "outbound_dns": null,
+            "outbound_ip": null,
+            "outbound_port": null,
+            "outbound_proto": null,
+            "total_bytes_rcvd": 95908791,
+            "total_bytes_sent": 1372,
+            "url": "https://partners.demo.vectranetworks.com/api/relayed_comm/3"
+          }
+        ],
+        "sensor_luid": "IgG8l0P3",
+        "src_ip": "192.168.173.102",
+        "state": "inactive",
+        "summary": {
+          "data_collected": 271824621,
+          "data_sent_out": 251821690,
+          "external_destinations": [
+            "54.231.120.211"
+          ],
+          "inbound_ports": [
+            445
+          ],
+          "internal_sources": [
+            "192.168.13.219"
+          ],
+          "outbound_ports": [
+            443
+          ],
+          "probable_owner": "cthompson"
+        },
+        "t_score": 74,
+        "tags": [],
+        "targets_key_asset": false,
+        "triage_rule_id": null,
+        "type_vname": "Data Smuggler",
+        "url": "https://partners.demo.vectranetworks.com/api/detections/24"
+      },
+      {
+        "c_score": 56,
+        "category": "BOTNET ACTIVITY",
+        "description": null,
+        "detection_detail_set": [
+          {
+            "count": 682,
+            "count_pos": null,
+            "description": null,
+            "dst_dns": null,
+            "dst_geo": "US",
+            "dst_host_id": null,
+            "dst_ip": "11.1.1.2",
+            "dst_port": 80,
+            "first_timestamp": "2017-05-11T08:11:49Z",
+            "id": 50,
+            "last_timestamp": "2017-05-11T08:11:50Z",
+            "proto": "tcp",
+            "total_bytes_rcvd": 181696,
+            "total_bytes_sent": 83204,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/50"
+          }
+        ],
+        "dns_set": [],
+        "first_timestamp": "2017-05-11T08:11:49Z",
+        "host": "https://partners.demo.vectranetworks.com/api/hosts/71",
+        "id": 23,
+        "last_timestamp": "2017-05-11T08:11:50Z",
+        "relayed_comm_set": [],
+        "sensor_luid": "IgG8l0P3",
+        "src_ip": "192.168.196.9",
+        "state": "inactive",
+        "summary": {
+          "bytes_received": 181696,
+          "bytes_sent": 83204,
+          "dos_type": [
+            "slowloris"
+          ],
+          "external_targets": [
+            "11.1.1.2"
+          ],
+          "probable_owner": null,
+          "sessions": 682
+        },
+        "t_score": 10,
+        "tags": [],
+        "targets_key_asset": false,
+        "triage_rule_id": null,
+        "type_vname": "Outbound DoS",
+        "url": "https://partners.demo.vectranetworks.com/api/detections/23"
+      },
+      {
+        "c_score": 95,
+        "category": "LATERAL MOVEMENT",
+        "description": null,
+        "detection_detail_set": [
+          {
+            "count": 1276,
+            "count_pos": null,
+            "description": "ssh",
+            "dst_dns": "",
+            "dst_geo": "US",
+            "dst_host_id": 68,
+            "dst_ip": "192.168.53.129",
+            "dst_port": null,
+            "first_timestamp": "2017-05-11T02:54:13Z",
+            "id": 49,
+            "last_timestamp": "2017-05-11T02:54:32Z",
+            "proto": null,
+            "total_bytes_rcvd": null,
+            "total_bytes_sent": null,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/49"
+          }
+        ],
+        "dns_set": [],
+        "first_timestamp": "2017-05-11T02:54:13Z",
+        "host": "https://partners.demo.vectranetworks.com/api/hosts/66",
+        "id": 22,
+        "last_timestamp": "2017-05-11T02:54:32Z",
+        "relayed_comm_set": [],
+        "sensor_luid": "IgG8l0P3",
+        "src_ip": "172.16.200.101",
+        "state": "inactive",
+        "summary": {
+          "internal_targets": [
+            "192.168.53.129 via ssh"
+          ],
+          "login_attempts": 1276,
+          "probable_owner": null
+        },
+        "t_score": 54,
+        "tags": [],
+        "targets_key_asset": false,
+        "triage_rule_id": null,
+        "type_vname": "Brute-Force Attack",
+        "url": "https://partners.demo.vectranetworks.com/api/detections/22"
+      },
+      {
+        "c_score": 25,
+        "category": "BOTNET ACTIVITY",
+        "description": null,
+        "detection_detail_set": [
+          {
+            "count": 24131,
+            "count_pos": null,
+            "description": null,
+            "dst_dns": null,
+            "dst_geo": null,
+            "dst_host_id": null,
+            "dst_ip": null,
+            "dst_port": null,
+            "first_timestamp": "2017-05-11T00:13:43Z",
+            "id": 46,
+            "last_timestamp": "2017-05-11T00:14:00Z",
+            "proto": null,
+            "total_bytes_rcvd": 1937355,
+            "total_bytes_sent": 0,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/46"
+          },
+          {
+            "count": 52137,
+            "count_pos": null,
+            "description": null,
+            "dst_dns": null,
+            "dst_geo": null,
+            "dst_host_id": null,
+            "dst_ip": null,
+            "dst_port": null,
+            "first_timestamp": "2017-05-11T00:13:04Z",
+            "id": 47,
+            "last_timestamp": "2017-05-11T00:13:07Z",
+            "proto": null,
+            "total_bytes_rcvd": 2624193,
+            "total_bytes_sent": 0,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/47"
+          },
+          {
+            "count": 12237,
+            "count_pos": null,
+            "description": null,
+            "dst_dns": null,
+            "dst_geo": null,
+            "dst_host_id": null,
+            "dst_ip": null,
+            "dst_port": null,
+            "first_timestamp": "2017-05-11T00:13:16Z",
+            "id": 48,
+            "last_timestamp": "2017-05-11T00:13:43Z",
+            "proto": null,
+            "total_bytes_rcvd": 3627193,
+            "total_bytes_sent": 0,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/48"
+          }
+        ],
+        "dns_set": [],
+        "first_timestamp": "2017-05-11T00:13:43Z",
+        "host": "https://partners.demo.vectranetworks.com/api/hosts/50",
+        "id": 21,
+        "last_timestamp": "2017-05-11T00:14:00Z",
+        "relayed_comm_set": [],
+        "sensor_luid": "IgG8l0P3",
+        "src_ip": "192.168.153.17",
+        "state": "inactive",
+        "summary": {
+          "abnormal_html_data_rate": 146228,
+          "abnormal_http_sessions": 88505,
+          "probable_owner": null,
+          "total_active_time": "0:00:56"
+        },
+        "t_score": 10,
+        "tags": [],
+        "targets_key_asset": false,
+        "triage_rule_id": null,
+        "type_vname": "Abnormal Web Activity",
+        "url": "https://partners.demo.vectranetworks.com/api/detections/21"
+      },
+      {
+        "c_score": 76,
+        "category": "BOTNET ACTIVITY",
+        "description": null,
+        "detection_detail_set": [
+          {
+            "count": 25001,
+            "count_pos": null,
+            "description": null,
+            "dst_dns": "",
+            "dst_geo": "US",
+            "dst_host_id": null,
+            "dst_ip": "128.128.128.204",
+            "dst_port": 0,
+            "first_timestamp": "2017-05-10T21:27:32Z",
+            "id": 45,
+            "last_timestamp": "2017-05-10T21:27:35Z",
+            "proto": "tcp",
+            "total_bytes_rcvd": 1000040,
+            "total_bytes_sent": 1000040,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/45"
+          }
+        ],
+        "dns_set": [],
+        "first_timestamp": "2017-05-10T21:27:32Z",
+        "host": "https://partners.demo.vectranetworks.com/api/hosts/62",
+        "id": 20,
+        "last_timestamp": "2017-05-10T21:27:35Z",
+        "relayed_comm_set": [],
+        "sensor_luid": "IgG8l0P3",
+        "src_ip": "192.168.173.206",
+        "state": "inactive",
+        "summary": {
+          "bytes_received": 1000040,
+          "bytes_sent": 1000040,
+          "dos_type": [
+            "syn_flood"
+          ],
+          "external_targets": [
+            "128.128.128.204"
+          ],
+          "probable_owner": null,
+          "sessions": 25001
+        },
+        "t_score": 19,
+        "tags": [],
+        "targets_key_asset": false,
+        "triage_rule_id": null,
+        "type_vname": "Outbound DoS",
+        "url": "https://partners.demo.vectranetworks.com/api/detections/20"
+      },
+      {
+        "c_score": 12,
+        "category": "COMMAND & CONTROL",
+        "description": null,
+        "detection_detail_set": [
+          {
+            "count": null,
+            "count_pos": null,
+            "description": "Download",
+            "dst_dns": "www.7tcqy6kttln6.com",
+            "dst_geo": "FR",
+            "dst_host_id": null,
+            "dst_ip": "95.130.11.214",
+            "dst_port": 443,
+            "first_timestamp": "2017-05-10T20:13:21Z",
+            "id": 42,
+            "last_timestamp": "2017-05-10T20:13:38Z",
+            "proto": "tcp",
+            "total_bytes_rcvd": 492040,
+            "total_bytes_sent": 18644,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/42"
+          },
+          {
+            "count": null,
+            "count_pos": null,
+            "description": "Two way communication",
+            "dst_dns": "www.jma2d3g665z.com",
+            "dst_geo": "US",
+            "dst_host_id": null,
+            "dst_ip": "108.20.78.135",
+            "dst_port": 9001,
+            "first_timestamp": "2017-05-10T20:13:21Z",
+            "id": 43,
+            "last_timestamp": "2017-05-10T20:13:38Z",
+            "proto": "tcp",
+            "total_bytes_rcvd": 25299,
+            "total_bytes_sent": 6991,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/43"
+          },
+          {
+            "count": null,
+            "count_pos": null,
+            "description": "Two way communication",
+            "dst_dns": "www.utfk4lxhn.com",
+            "dst_geo": "SE",
+            "dst_host_id": null,
+            "dst_ip": "194.132.32.42",
+            "dst_port": 8080,
+            "first_timestamp": "2017-05-10T20:13:21Z",
+            "id": 44,
+            "last_timestamp": "2017-05-10T20:13:38Z",
+            "proto": "tcp",
+            "total_bytes_rcvd": 18495,
+            "total_bytes_sent": 5379,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/44"
+          }
+        ],
+        "dns_set": [],
+        "first_timestamp": "2017-05-10T20:13:21Z",
+        "host": "https://partners.demo.vectranetworks.com/api/hosts/2",
+        "id": 19,
+        "last_timestamp": "2017-05-10T20:13:38Z",
+        "relayed_comm_set": [],
+        "sensor_luid": "IgG8l0P3",
+        "src_ip": "192.168.173.202",
+        "state": "inactive",
+        "summary": {
+          "bytes_received": 535834,
+          "bytes_sent": 31014,
+          "external_tor_nodes": [
+            "108.20.78.135",
+            "194.132.32.42",
+            "95.130.11.214"
+          ],
+          "probable_owner": null,
+          "sessions": 3
+        },
+        "t_score": 10,
+        "tags": [],
+        "targets_key_asset": false,
+        "triage_rule_id": null,
+        "type_vname": "TOR Activity",
+        "url": "https://partners.demo.vectranetworks.com/api/detections/19"
+      },
+      {
+        "c_score": 10,
+        "category": "RECONNAISSANCE",
+        "description": null,
+        "detection_detail_set": [
+          {
+            "count": 41,
+            "count_pos": null,
+            "description": "File Share Enumeration",
+            "dst_dns": null,
+            "dst_geo": null,
+            "dst_host_id": null,
+            "dst_ip": "192.168.13.219",
+            "dst_port": 139,
+            "first_timestamp": null,
+            "id": 41,
+            "last_timestamp": "2017-05-10T16:52:36Z",
+            "proto": null,
+            "total_bytes_rcvd": null,
+            "total_bytes_sent": null,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/41"
+          }
+        ],
+        "dns_set": [],
+        "first_timestamp": "2017-05-10T16:52:36Z",
+        "host": "https://partners.demo.vectranetworks.com/api/hosts/59",
+        "id": 18,
+        "last_timestamp": "2017-05-10T16:52:36Z",
+        "relayed_comm_set": [],
+        "sensor_luid": "IgG8l0P3",
+        "src_ip": "192.168.173.102",
+        "state": "inactive",
+        "summary": {
+          "accounts": 1,
+          "common_shares": [],
+          "internal_targets": 1,
+          "probable_owner": "cthompson",
+          "shares": 41
+        },
+        "t_score": 70,
+        "tags": [],
+        "targets_key_asset": false,
+        "triage_rule_id": null,
+        "type_vname": "File Share Enumeration",
+        "url": "https://partners.demo.vectranetworks.com/api/detections/18"
+      },
+      {
+        "c_score": 11,
+        "category": "BOTNET ACTIVITY",
+        "description": null,
+        "detection_detail_set": [
+          {
+            "count": 2076,
+            "count_pos": 184,
+            "description": null,
+            "dst_dns": null,
+            "dst_geo": null,
+            "dst_host_id": null,
+            "dst_ip": null,
+            "dst_port": null,
+            "first_timestamp": "2017-05-10T14:07:01Z",
+            "id": 38,
+            "last_timestamp": "2017-05-10T14:07:26Z",
+            "proto": null,
+            "total_bytes_rcvd": null,
+            "total_bytes_sent": null,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/38"
+          },
+          {
+            "count": 1924,
+            "count_pos": 114,
+            "description": null,
+            "dst_dns": null,
+            "dst_geo": null,
+            "dst_host_id": null,
+            "dst_ip": null,
+            "dst_port": null,
+            "first_timestamp": "2017-05-10T14:07:44Z",
+            "id": 39,
+            "last_timestamp": "2017-05-10T14:08:07Z",
+            "proto": null,
+            "total_bytes_rcvd": null,
+            "total_bytes_sent": null,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/39"
+          }
+        ],
+        "dns_set": [],
+        "first_timestamp": "2017-05-10T14:07:01Z",
+        "host": "https://partners.demo.vectranetworks.com/api/hosts/50",
+        "id": 16,
+        "last_timestamp": "2017-05-10T14:08:07Z",
+        "relayed_comm_set": [],
+        "sensor_luid": "IgG8l0P3",
+        "src_ip": "192.168.153.17",
+        "state": "inactive",
+        "summary": {
+          "http_sessions": 6088,
+          "probable_owner": null,
+          "reason": "Abnormal frequency of redirects",
+          "sessions_with_ad_activity": 594,
+          "total_active_time": "0:01:06"
+        },
+        "t_score": 30,
+        "tags": [],
+        "targets_key_asset": false,
+        "triage_rule_id": null,
+        "type_vname": "Abnormal Ad Activity",
+        "url": "https://partners.demo.vectranetworks.com/api/detections/16"
+      },
+      {
+        "c_score": 94,
+        "category": "COMMAND & CONTROL",
+        "description": null,
+        "detection_detail_set": [
+          {
+            "count": null,
+            "count_pos": null,
+            "description": "/updateserver",
+            "dst_dns": "iqingjiangmiyu.com",
+            "dst_geo": "CN",
+            "dst_host_id": null,
+            "dst_ip": "122.114.143.248",
+            "dst_port": null,
+            "first_timestamp": null,
+            "id": 37,
+            "last_timestamp": "2017-05-09T23:39:05Z",
+            "proto": null,
+            "total_bytes_rcvd": 2860,
+            "total_bytes_sent": 4229,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/37"
+          }
+        ],
+        "dns_set": [],
+        "first_timestamp": "2017-05-09T23:39:05Z",
+        "host": "https://partners.demo.vectranetworks.com/api/hosts/56",
+        "id": 15,
+        "last_timestamp": "2017-05-09T23:39:05Z",
+        "relayed_comm_set": [],
+        "sensor_luid": "IgG8l0P3",
+        "src_ip": "192.168.101.101",
+        "state": "inactive",
+        "summary": {
+          "abnormal_requests": 177,
+          "bytes_received": 15343445,
+          "bytes_sent": 1167986,
+          "external_cnc_servers": [
+            "122.114.143.248"
+          ],
+          "probable_owner": null
+        },
+        "t_score": 50,
+        "tags": [],
+        "targets_key_asset": false,
+        "triage_rule_id": null,
+        "type_vname": "Stealth HTTP Post",
+        "url": "https://partners.demo.vectranetworks.com/api/detections/15"
+      },
+      {
+        "c_score": 95,
+        "category": "BOTNET ACTIVITY",
+        "description": null,
+        "detection_detail_set": [
+          {
+            "count": 1,
+            "count_pos": null,
+            "description": "smtp",
+            "dst_dns": "",
+            "dst_geo": "US",
+            "dst_host_id": null,
+            "dst_ip": "11.1.2.7",
+            "dst_port": null,
+            "first_timestamp": "2017-05-09T22:15:13Z",
+            "id": 36,
+            "last_timestamp": "2017-05-09T22:15:56Z",
+            "proto": null,
+            "total_bytes_rcvd": 24212,
+            "total_bytes_sent": 14791,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/36"
+          }
+        ],
+        "dns_set": [],
+        "first_timestamp": "2017-05-09T22:15:13Z",
+        "host": "https://partners.demo.vectranetworks.com/api/hosts/53",
+        "id": 14,
+        "last_timestamp": "2017-05-09T22:15:56Z",
+        "relayed_comm_set": [],
+        "sensor_luid": "IgG8l0P3",
+        "src_ip": "192.168.12.33",
+        "state": "inactive",
+        "summary": {
+          "bytes_sent": 633961,
+          "mail_servers_contacted": 1,
+          "mail_sessions": 1751,
+          "probable_owner": null
+        },
+        "t_score": 50,
+        "tags": [],
+        "targets_key_asset": false,
+        "triage_rule_id": null,
+        "type_vname": "Outbound Spam",
+        "url": "https://partners.demo.vectranetworks.com/api/detections/14"
+      },
+      {
+        "c_score": 11,
+        "category": "BOTNET ACTIVITY",
+        "description": null,
+        "detection_detail_set": [
+          {
+            "count": 2076,
+            "count_pos": 184,
+            "description": null,
+            "dst_dns": null,
+            "dst_geo": null,
+            "dst_host_id": null,
+            "dst_ip": null,
+            "dst_port": null,
+            "first_timestamp": "2017-05-09T21:43:28Z",
+            "id": 34,
+            "last_timestamp": "2017-05-09T21:44:00Z",
+            "proto": null,
+            "total_bytes_rcvd": null,
+            "total_bytes_sent": null,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/34"
+          },
+          {
+            "count": 1924,
+            "count_pos": 114,
+            "description": null,
+            "dst_dns": null,
+            "dst_geo": null,
+            "dst_host_id": null,
+            "dst_ip": null,
+            "dst_port": null,
+            "first_timestamp": "2017-05-09T21:43:06Z",
+            "id": 35,
+            "last_timestamp": "2017-05-09T21:43:16Z",
+            "proto": null,
+            "total_bytes_rcvd": null,
+            "total_bytes_sent": null,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/35"
+          }
+        ],
+        "dns_set": [],
+        "first_timestamp": "2017-05-09T21:43:28Z",
+        "host": "https://partners.demo.vectranetworks.com/api/hosts/50",
+        "id": 13,
+        "last_timestamp": "2017-05-09T21:44:00Z",
+        "relayed_comm_set": [],
+        "sensor_luid": "IgG8l0P3",
+        "src_ip": "192.168.153.17",
+        "state": "inactive",
+        "summary": {
+          "http_sessions": 6088,
+          "probable_owner": null,
+          "reason": "Abnormal frequency of redirects",
+          "sessions_with_ad_activity": 594,
+          "total_active_time": "0:00:54"
+        },
+        "t_score": 30,
+        "tags": [],
+        "targets_key_asset": false,
+        "triage_rule_id": null,
+        "type_vname": "Abnormal Ad Activity",
+        "url": "https://partners.demo.vectranetworks.com/api/detections/13"
+      },
+      {
+        "c_score": 95,
+        "category": "COMMAND & CONTROL",
+        "description": null,
+        "detection_detail_set": [
+          {
+            "count": null,
+            "count_pos": null,
+            "description": null,
+            "dst_dns": "",
+            "dst_geo": "US",
+            "dst_host_id": null,
+            "dst_ip": "11.1.1.7",
+            "dst_port": 4004,
+            "first_timestamp": "2017-05-09T17:09:13Z",
+            "id": 24,
+            "last_timestamp": "2017-05-09T17:09:52Z",
+            "proto": "tcp",
+            "total_bytes_rcvd": 0,
+            "total_bytes_sent": 0,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/24"
+          },
+          {
+            "count": null,
+            "count_pos": null,
+            "description": null,
+            "dst_dns": "",
+            "dst_geo": "US",
+            "dst_host_id": null,
+            "dst_ip": "11.1.1.234",
+            "dst_port": 3143,
+            "first_timestamp": "2017-05-09T17:09:13Z",
+            "id": 25,
+            "last_timestamp": "2017-05-09T17:09:52Z",
+            "proto": "tcp",
+            "total_bytes_rcvd": 0,
+            "total_bytes_sent": 0,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/25"
+          },
+          {
+            "count": null,
+            "count_pos": null,
+            "description": null,
+            "dst_dns": "",
+            "dst_geo": "US",
+            "dst_host_id": null,
+            "dst_ip": "11.1.1.7",
+            "dst_port": 4004,
+            "first_timestamp": "2017-05-09T17:09:13Z",
+            "id": 26,
+            "last_timestamp": "2017-05-09T17:09:52Z",
+            "proto": "tcp",
+            "total_bytes_rcvd": 0,
+            "total_bytes_sent": 0,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/26"
+          },
+          {
+            "count": null,
+            "count_pos": null,
+            "description": null,
+            "dst_dns": "",
+            "dst_geo": null,
+            "dst_host_id": null,
+            "dst_ip": "2017-05-09T17:10:10.347886Z",
+            "dst_port": 1473,
+            "first_timestamp": "2017-05-09T17:09:13Z",
+            "id": 27,
+            "last_timestamp": "2017-05-09T17:09:52Z",
+            "proto": "udp",
+            "total_bytes_rcvd": 18,
+            "total_bytes_sent": 29,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/27"
+          },
+          {
+            "count": null,
+            "count_pos": null,
+            "description": null,
+            "dst_dns": "",
+            "dst_geo": "US",
+            "dst_host_id": null,
+            "dst_ip": "11.1.1.32",
+            "dst_port": 4392,
+            "first_timestamp": "2017-05-09T17:09:13Z",
+            "id": 28,
+            "last_timestamp": "2017-05-09T17:09:52Z",
+            "proto": "udp",
+            "total_bytes_rcvd": 0,
+            "total_bytes_sent": 38,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/28"
+          },
+          {
+            "count": null,
+            "count_pos": null,
+            "description": null,
+            "dst_dns": "",
+            "dst_geo": "US",
+            "dst_host_id": null,
+            "dst_ip": "11.1.1.234",
+            "dst_port": 3143,
+            "first_timestamp": "2017-05-09T17:09:13Z",
+            "id": 29,
+            "last_timestamp": "2017-05-09T17:09:52Z",
+            "proto": "tcp",
+            "total_bytes_rcvd": 0,
+            "total_bytes_sent": 0,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/29"
+          },
+          {
+            "count": null,
+            "count_pos": null,
+            "description": null,
+            "dst_dns": "",
+            "dst_geo": "US",
+            "dst_host_id": null,
+            "dst_ip": "11.1.1.71",
+            "dst_port": 8032,
+            "first_timestamp": "2017-05-09T17:09:13Z",
+            "id": 30,
+            "last_timestamp": "2017-05-09T17:09:52Z",
+            "proto": "udp",
+            "total_bytes_rcvd": 0,
+            "total_bytes_sent": 31,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/30"
+          },
+          {
+            "count": null,
+            "count_pos": null,
+            "description": null,
+            "dst_dns": "",
+            "dst_geo": "US",
+            "dst_host_id": null,
+            "dst_ip": "11.1.1.99",
+            "dst_port": 5395,
+            "first_timestamp": "2017-05-09T17:09:13Z",
+            "id": 31,
+            "last_timestamp": "2017-05-09T17:09:52Z",
+            "proto": "udp",
+            "total_bytes_rcvd": 0,
+            "total_bytes_sent": 40,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/31"
+          },
+          {
+            "count": null,
+            "count_pos": null,
+            "description": null,
+            "dst_dns": "",
+            "dst_geo": "US",
+            "dst_host_id": null,
+            "dst_ip": "11.1.1.234",
+            "dst_port": 3143,
+            "first_timestamp": "2017-05-09T17:09:13Z",
+            "id": 32,
+            "last_timestamp": "2017-05-09T17:09:52Z",
+            "proto": "tcp",
+            "total_bytes_rcvd": 0,
+            "total_bytes_sent": 0,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/32"
+          },
+          {
+            "count": null,
+            "count_pos": null,
+            "description": null,
+            "dst_dns": "",
+            "dst_geo": "US",
+            "dst_host_id": null,
+            "dst_ip": "11.1.1.7",
+            "dst_port": 4004,
+            "first_timestamp": "2017-05-09T17:09:13Z",
+            "id": 33,
+            "last_timestamp": "2017-05-09T17:09:52Z",
+            "proto": "tcp",
+            "total_bytes_rcvd": 0,
+            "total_bytes_sent": 0,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/33"
+          }
+        ],
+        "dns_set": [],
+        "first_timestamp": "2017-05-09T17:09:13Z",
+        "host": "https://partners.demo.vectranetworks.com/api/hosts/5",
+        "id": 12,
+        "last_timestamp": "2017-05-09T17:09:52Z",
+        "relayed_comm_set": [],
+        "sensor_luid": "IgG8l0P3",
+        "src_ip": "192.168.196.95",
+        "state": "inactive",
+        "summary": {
+          "bytes_received": 11995,
+          "bytes_sent": 15409,
+          "external_peers": [
+            "11.1.1.234",
+            "11.1.1.32",
+            "11.1.1.71"
+          ],
+          "probable_owner": null,
+          "sessions": 342,
+          "unique_ports": 6
+        },
+        "t_score": 20,
+        "tags": [],
+        "targets_key_asset": false,
+        "triage_rule_id": null,
+        "type_vname": "Peer-To-Peer",
+        "url": "https://partners.demo.vectranetworks.com/api/detections/12"
+      },
+      {
+        "c_score": 90,
+        "category": "BOTNET ACTIVITY",
+        "description": null,
+        "detection_detail_set": [
+          {
+            "count": 1,
+            "count_pos": null,
+            "description": null,
+            "dst_dns": "api.groupfabric.com",
+            "dst_geo": "US",
+            "dst_host_id": null,
+            "dst_ip": "216.243.44.230",
+            "dst_port": 80,
+            "first_timestamp": null,
+            "id": 23,
+            "last_timestamp": "2017-05-09T15:33:17Z",
+            "proto": "tcp",
+            "total_bytes_rcvd": 4323,
+            "total_bytes_sent": 512,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/23"
+          }
+        ],
+        "dns_set": [],
+        "first_timestamp": "2017-05-09T15:33:17Z",
+        "host": "https://partners.demo.vectranetworks.com/api/hosts/29",
+        "id": 11,
+        "last_timestamp": "2017-05-09T15:33:17Z",
+        "relayed_comm_set": [],
+        "sensor_luid": "IgG8l0P3",
+        "src_ip": "192.168.173.201",
+        "state": "inactive",
+        "summary": {
+          "bytes_received": 4323,
+          "bytes_sent": 512,
+          "external_servers": [
+            "216.243.44.230"
+          ],
+          "mining_requests": 1,
+          "probable_owner": null
+        },
+        "t_score": 10,
+        "tags": [],
+        "targets_key_asset": false,
+        "triage_rule_id": null,
+        "type_vname": "Bitcoin Mining",
+        "url": "https://partners.demo.vectranetworks.com/api/detections/11"
+      },
+      {
+        "c_score": 16,
+        "category": "COMMAND & CONTROL",
+        "description": null,
+        "detection_detail_set": [],
+        "dns_set": [
+          {
+            "dns_ip": "8.8.8.8",
+            "dns_request": "157m6z01y2dk6z3mbqvt1t1rdws.biz",
+            "first_timestamp": null,
+            "id": 6,
+            "last_timestamp": "2017-05-09T15:27:52Z",
+            "resp": null,
+            "resp_code": "NXDomain",
+            "url": "https://partners.demo.vectranetworks.com/api/dns/6"
+          },
+          {
+            "dns_ip": "8.8.8.8",
+            "dns_request": "iqingjiangmiyu.com",
+            "first_timestamp": null,
+            "id": 7,
+            "last_timestamp": "2017-05-09T15:27:21Z",
+            "resp": null,
+            "resp_code": "NXDomain",
+            "url": "https://partners.demo.vectranetworks.com/api/dns/7"
+          },
+          {
+            "dns_ip": "8.8.8.8",
+            "dns_request": "mail.baffcaaccaacac.ru",
+            "first_timestamp": null,
+            "id": 8,
+            "last_timestamp": "2017-05-09T15:27:50Z",
+            "resp": "46.137.248.72,37.230.114.67,206.72.200.117",
+            "resp_code": "NoError",
+            "url": "https://partners.demo.vectranetworks.com/api/dns/8"
+          }
+        ],
+        "first_timestamp": "2017-05-09T15:27:52Z",
+        "host": "https://partners.demo.vectranetworks.com/api/hosts/50",
+        "id": 10,
+        "last_timestamp": "2017-05-09T15:27:52Z",
+        "relayed_comm_set": [],
+        "sensor_luid": "IgG8l0P3",
+        "src_ip": "192.168.153.17",
+        "state": "inactive",
+        "summary": {
+          "bytes_received": 0,
+          "bytes_sent": 0,
+          "failed_lookups": 2,
+          "probable_owner": null,
+          "sessions": 0,
+          "successful_lookups": 1
+        },
+        "t_score": 16,
+        "tags": [],
+        "targets_key_asset": false,
+        "triage_rule_id": null,
+        "type_vname": "Suspect Domain Activity",
+        "url": "https://partners.demo.vectranetworks.com/api/detections/10"
+      },
+      {
+        "c_score": 73,
+        "category": "LATERAL MOVEMENT",
+        "description": null,
+        "detection_detail_set": [
+          {
+            "count": null,
+            "count_pos": null,
+            "description": "no description available",
+            "dst_dns": null,
+            "dst_geo": null,
+            "dst_host_id": 17,
+            "dst_ip": "1.1.1.1",
+            "dst_port": 623,
+            "first_timestamp": "2017-05-08T23:27:13Z",
+            "id": 22,
+            "last_timestamp": "2017-05-08T23:27:13Z",
+            "proto": "ipmi",
+            "total_bytes_rcvd": 19276,
+            "total_bytes_sent": 12401,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/22"
+          }
+        ],
+        "dns_set": [],
+        "first_timestamp": "2017-05-08T23:27:13Z",
+        "host": "https://partners.demo.vectranetworks.com/api/hosts/38",
+        "id": 9,
+        "last_timestamp": "2017-05-08T23:27:13Z",
+        "relayed_comm_set": [],
+        "sensor_luid": "IgG8l0P3",
+        "src_ip": "192.168.173.194",
+        "state": "inactive",
+        "summary": {
+          "bytes_received": 19276,
+          "bytes_sent": 12401,
+          "internal_targets": 1,
+          "probable_owner": "rwilliams",
+          "protocols": [
+            "ipmi"
+          ]
+        },
+        "t_score": 70,
+        "tags": [],
+        "targets_key_asset": true,
+        "triage_rule_id": null,
+        "type_vname": "Suspicious Admin",
+        "url": "https://partners.demo.vectranetworks.com/api/detections/9"
+      },
+      {
+        "c_score": 95,
+        "category": "BOTNET ACTIVITY",
+        "description": null,
+        "detection_detail_set": [
+          {
+            "count": 149934,
+            "count_pos": 13,
+            "description": "182.168.0.0/14",
+            "dst_dns": null,
+            "dst_geo": null,
+            "dst_host_id": null,
+            "dst_ip": null,
+            "dst_port": 5900,
+            "first_timestamp": "2017-05-08T21:47:18Z",
+            "id": 21,
+            "last_timestamp": "2017-05-08T21:47:24Z",
+            "proto": "tcp",
+            "total_bytes_rcvd": null,
+            "total_bytes_sent": null,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/21"
+          }
+        ],
+        "dns_set": [],
+        "first_timestamp": "2017-05-08T21:47:18Z",
+        "host": "https://partners.demo.vectranetworks.com/api/hosts/8",
+        "id": 8,
+        "last_timestamp": "2017-05-08T21:47:24Z",
+        "relayed_comm_set": [],
+        "sensor_luid": "IgG8l0P3",
+        "src_ip": "192.168.173.203",
+        "state": "inactive",
+        "summary": {
+          "probable_owner": null,
+          "scan_attempts": 149934,
+          "scan_successes": 13,
+          "targets": [
+            "tcp:5900"
+          ]
+        },
+        "t_score": 50,
+        "tags": [],
+        "targets_key_asset": false,
+        "triage_rule_id": null,
+        "type_vname": "Outbound Port Sweep",
+        "url": "https://partners.demo.vectranetworks.com/api/detections/8"
+      },
+      {
+        "c_score": 80,
+        "category": "RECONNAISSANCE",
+        "description": null,
+        "detection_detail_set": [
+          {
+            "count": 489,
+            "count_pos": 0,
+            "description": "192.168.0.0/23",
+            "dst_dns": null,
+            "dst_geo": null,
+            "dst_host_id": null,
+            "dst_ip": null,
+            "dst_port": 623,
+            "first_timestamp": "2017-05-08T20:23:31Z",
+            "id": 18,
+            "last_timestamp": "2017-05-08T20:23:46Z",
+            "proto": "udp",
+            "total_bytes_rcvd": null,
+            "total_bytes_sent": null,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/18"
+          },
+          {
+            "count": 489,
+            "count_pos": 61,
+            "description": "192.168.6.0/23",
+            "dst_dns": null,
+            "dst_geo": null,
+            "dst_host_id": null,
+            "dst_ip": null,
+            "dst_port": 623,
+            "first_timestamp": "2017-05-08T20:23:11Z",
+            "id": 19,
+            "last_timestamp": "2017-05-08T20:23:28Z",
+            "proto": "udp",
+            "total_bytes_rcvd": null,
+            "total_bytes_sent": null,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/19"
+          },
+          {
+            "count": 489,
+            "count_pos": 217,
+            "description": "192.168.12.0/23",
+            "dst_dns": null,
+            "dst_geo": null,
+            "dst_host_id": null,
+            "dst_ip": null,
+            "dst_port": 623,
+            "first_timestamp": "2017-05-08T20:23:10Z",
+            "id": 20,
+            "last_timestamp": "2017-05-08T20:24:07Z",
+            "proto": "udp",
+            "total_bytes_rcvd": null,
+            "total_bytes_sent": null,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/20"
+          }
+        ],
+        "dns_set": [],
+        "first_timestamp": "2017-05-08T20:23:31Z",
+        "host": "https://partners.demo.vectranetworks.com/api/hosts/38",
+        "id": 7,
+        "last_timestamp": "2017-05-08T20:24:07Z",
+        "relayed_comm_set": [],
+        "sensor_luid": "IgG8l0P3",
+        "src_ip": "192.168.173.194",
+        "state": "inactive",
+        "summary": {
+          "probable_owner": "rwilliams",
+          "scan_attempts": 1467,
+          "scan_successes": 278,
+          "targets": [
+            "udp:623"
+          ]
+        },
+        "t_score": 60,
+        "tags": [],
+        "targets_key_asset": false,
+        "triage_rule_id": null,
+        "type_vname": "Port Sweep",
+        "url": "https://partners.demo.vectranetworks.com/api/detections/7"
+      },
+      {
+        "c_score": 22,
+        "category": "LATERAL MOVEMENT",
+        "description": null,
+        "detection_detail_set": [
+          {
+            "count": null,
+            "count_pos": null,
+            "description": "Ma7WMa7WMa7WMa7WMa7WMaFYN4FYN4FYN4FYN4FYN4E",
+            "dst_dns": "",
+            "dst_geo": "US",
+            "dst_host_id": 32,
+            "dst_ip": "192.168.173.201",
+            "dst_port": 1234,
+            "first_timestamp": "2017-05-08T18:37:17Z",
+            "id": 13,
+            "last_timestamp": "2017-05-08T18:37:17Z",
+            "proto": "tcp",
+            "total_bytes_rcvd": 101,
+            "total_bytes_sent": 513,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/13"
+          },
+          {
+            "count": null,
+            "count_pos": null,
+            "description": "Ma7WMa7WMa7WMa7WMa7WMaFYN4FYN4FYN4FYN4FYN4E",
+            "dst_dns": "",
+            "dst_geo": "US",
+            "dst_host_id": 32,
+            "dst_ip": "192.168.173.206",
+            "dst_port": 1234,
+            "first_timestamp": "2017-05-08T18:37:17Z",
+            "id": 14,
+            "last_timestamp": "2017-05-08T18:37:17Z",
+            "proto": "tcp",
+            "total_bytes_rcvd": 101,
+            "total_bytes_sent": 513,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/14"
+          },
+          {
+            "count": null,
+            "count_pos": null,
+            "description": "Ma7WMa7WMa7WMa7WMa7WMaFYN4FYN4FYN4FYN4FYN4E",
+            "dst_dns": "",
+            "dst_geo": "US",
+            "dst_host_id": 32,
+            "dst_ip": "192.168.173.203",
+            "dst_port": 1234,
+            "first_timestamp": "2017-05-08T18:37:17Z",
+            "id": 15,
+            "last_timestamp": "2017-05-08T18:37:17Z",
+            "proto": "tcp",
+            "total_bytes_rcvd": 101,
+            "total_bytes_sent": 513,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/15"
+          },
+          {
+            "count": null,
+            "count_pos": null,
+            "description": "Ma7WMa7WMa7WMa7WMa7WMaFYN4FYN4FYN4FYN4FYN4E",
+            "dst_dns": "",
+            "dst_geo": "US",
+            "dst_host_id": 32,
+            "dst_ip": "192.168.173.204",
+            "dst_port": 1234,
+            "first_timestamp": "2017-05-08T18:37:17Z",
+            "id": 16,
+            "last_timestamp": "2017-05-08T18:37:17Z",
+            "proto": "tcp",
+            "total_bytes_rcvd": 101,
+            "total_bytes_sent": 513,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/16"
+          },
+          {
+            "count": null,
+            "count_pos": null,
+            "description": "Ma7WMa7WMa7WMa7WMa7WMaFYN4FYN4FYN4FYN4FYN4E",
+            "dst_dns": "",
+            "dst_geo": "US",
+            "dst_host_id": 32,
+            "dst_ip": "192.168.173.207",
+            "dst_port": 1234,
+            "first_timestamp": "2017-05-08T18:37:17Z",
+            "id": 17,
+            "last_timestamp": "2017-05-08T18:37:17Z",
+            "proto": "tcp",
+            "total_bytes_rcvd": 101,
+            "total_bytes_sent": 513,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/17"
+          }
+        ],
+        "dns_set": [],
+        "first_timestamp": "2017-05-08T18:37:17Z",
+        "host": "https://partners.demo.vectranetworks.com/api/hosts/35",
+        "id": 6,
+        "last_timestamp": "2017-05-08T18:37:17Z",
+        "relayed_comm_set": [],
+        "sensor_luid": "IgG8l0P3",
+        "src_ip": "192.168.122.49",
+        "state": "inactive",
+        "summary": {
+          "bytes_received": 505,
+          "bytes_sent": 2565,
+          "destination_ports": [
+            1234
+          ],
+          "internal_targets": 5,
+          "probable_owner": null,
+          "unique_exploits": 1,
+          "upstream_propagators": [
+            "192.168.122.49"
+          ]
+        },
+        "t_score": 22,
+        "tags": [],
+        "targets_key_asset": false,
+        "triage_rule_id": null,
+        "type_vname": "Automated Replication",
+        "url": "https://partners.demo.vectranetworks.com/api/detections/6"
+      },
+      {
+        "c_score": 16,
+        "category": "COMMAND & CONTROL",
+        "description": null,
+        "detection_detail_set": [],
+        "dns_set": [
+          {
+            "dns_ip": "8.8.8.8",
+            "dns_request": "157m6z01y2dk6z3mbqvt1t1rdws.biz",
+            "first_timestamp": null,
+            "id": 3,
+            "last_timestamp": "2017-05-08T17:17:36Z",
+            "resp": null,
+            "resp_code": "NXDomain",
+            "url": "https://partners.demo.vectranetworks.com/api/dns/3"
+          },
+          {
+            "dns_ip": "8.8.8.8",
+            "dns_request": "iqingjiangmiyu.com",
+            "first_timestamp": null,
+            "id": 4,
+            "last_timestamp": "2017-05-08T17:17:31Z",
+            "resp": null,
+            "resp_code": "NXDomain",
+            "url": "https://partners.demo.vectranetworks.com/api/dns/4"
+          },
+          {
+            "dns_ip": "8.8.8.8",
+            "dns_request": "mail.baffcaaccaacac.ru",
+            "first_timestamp": null,
+            "id": 5,
+            "last_timestamp": "2017-05-08T17:17:29Z",
+            "resp": "46.137.248.72,37.230.114.67,206.72.200.117",
+            "resp_code": "NoError",
+            "url": "https://partners.demo.vectranetworks.com/api/dns/5"
+          }
+        ],
+        "first_timestamp": "2017-05-08T17:17:36Z",
+        "host": "https://partners.demo.vectranetworks.com/api/hosts/32",
+        "id": 5,
+        "last_timestamp": "2017-05-08T17:17:36Z",
+        "relayed_comm_set": [],
+        "sensor_luid": "IgG8l0P3",
+        "src_ip": "192.168.173.101",
+        "state": "inactive",
+        "summary": {
+          "bytes_received": 0,
+          "bytes_sent": 0,
+          "failed_lookups": 2,
+          "probable_owner": "bthomas",
+          "sessions": 0,
+          "successful_lookups": 1
+        },
+        "t_score": 16,
+        "tags": [],
+        "targets_key_asset": false,
+        "triage_rule_id": null,
+        "type_vname": "Suspect Domain Activity",
+        "url": "https://partners.demo.vectranetworks.com/api/detections/5"
+      },
+      {
+        "c_score": 90,
+        "category": "BOTNET ACTIVITY",
+        "description": null,
+        "detection_detail_set": [
+          {
+            "count": 1,
+            "count_pos": null,
+            "description": null,
+            "dst_dns": "api.groupfabric.com",
+            "dst_geo": "US",
+            "dst_host_id": null,
+            "dst_ip": "216.243.44.230",
+            "dst_port": 80,
+            "first_timestamp": null,
+            "id": 12,
+            "last_timestamp": "2017-05-08T15:33:04Z",
+            "proto": "tcp",
+            "total_bytes_rcvd": 4323,
+            "total_bytes_sent": 512,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/12"
+          }
+        ],
+        "dns_set": [],
+        "first_timestamp": "2017-05-08T15:33:04Z",
+        "host": "https://partners.demo.vectranetworks.com/api/hosts/29",
+        "id": 4,
+        "last_timestamp": "2017-05-08T15:33:04Z",
+        "relayed_comm_set": [],
+        "sensor_luid": "IgG8l0P3",
+        "src_ip": "192.168.173.201",
+        "state": "inactive",
+        "summary": {
+          "bytes_received": 4323,
+          "bytes_sent": 512,
+          "external_servers": [
+            "216.243.44.230"
+          ],
+          "mining_requests": 1,
+          "probable_owner": null
+        },
+        "t_score": 10,
+        "tags": [],
+        "targets_key_asset": false,
+        "triage_rule_id": null,
+        "type_vname": "Bitcoin Mining",
+        "url": "https://partners.demo.vectranetworks.com/api/detections/4"
+      },
+      {
+        "c_score": 95,
+        "category": "BOTNET ACTIVITY",
+        "description": null,
+        "detection_detail_set": [
+          {
+            "count": 149934,
+            "count_pos": 13,
+            "description": "182.168.0.0/14",
+            "dst_dns": null,
+            "dst_geo": null,
+            "dst_host_id": null,
+            "dst_ip": null,
+            "dst_port": 5900,
+            "first_timestamp": "2017-05-05T21:47:09Z",
+            "id": 11,
+            "last_timestamp": "2017-05-05T21:47:14Z",
+            "proto": "tcp",
+            "total_bytes_rcvd": null,
+            "total_bytes_sent": null,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/11"
+          }
+        ],
+        "dns_set": [],
+        "first_timestamp": "2017-05-05T21:47:09Z",
+        "host": "https://partners.demo.vectranetworks.com/api/hosts/8",
+        "id": 3,
+        "last_timestamp": "2017-05-05T21:47:14Z",
+        "relayed_comm_set": [],
+        "sensor_luid": "IgG8l0P3",
+        "src_ip": "192.168.173.203",
+        "state": "inactive",
+        "summary": {
+          "probable_owner": null,
+          "scan_attempts": 149934,
+          "scan_successes": 13,
+          "targets": [
+            "tcp:5900"
+          ]
+        },
+        "t_score": 50,
+        "tags": [],
+        "targets_key_asset": false,
+        "triage_rule_id": null,
+        "type_vname": "Outbound Port Sweep",
+        "url": "https://partners.demo.vectranetworks.com/api/detections/3"
+      },
+      {
+        "c_score": 95,
+        "category": "COMMAND & CONTROL",
+        "description": null,
+        "detection_detail_set": [
+          {
+            "count": null,
+            "count_pos": null,
+            "description": null,
+            "dst_dns": "",
+            "dst_geo": "US",
+            "dst_host_id": null,
+            "dst_ip": "11.1.1.7",
+            "dst_port": 4004,
+            "first_timestamp": "2017-05-05T16:33:22Z",
+            "id": 1,
+            "last_timestamp": "2017-05-05T16:33:45Z",
+            "proto": "tcp",
+            "total_bytes_rcvd": 0,
+            "total_bytes_sent": 0,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/1"
+          },
+          {
+            "count": null,
+            "count_pos": null,
+            "description": null,
+            "dst_dns": "",
+            "dst_geo": "US",
+            "dst_host_id": null,
+            "dst_ip": "11.1.1.234",
+            "dst_port": 3143,
+            "first_timestamp": "2017-05-05T16:33:22Z",
+            "id": 2,
+            "last_timestamp": "2017-05-05T16:33:45Z",
+            "proto": "tcp",
+            "total_bytes_rcvd": 0,
+            "total_bytes_sent": 0,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/2"
+          },
+          {
+            "count": null,
+            "count_pos": null,
+            "description": null,
+            "dst_dns": "",
+            "dst_geo": "US",
+            "dst_host_id": null,
+            "dst_ip": "11.1.1.7",
+            "dst_port": 4004,
+            "first_timestamp": "2017-05-05T16:33:22Z",
+            "id": 3,
+            "last_timestamp": "2017-05-05T16:33:45Z",
+            "proto": "tcp",
+            "total_bytes_rcvd": 0,
+            "total_bytes_sent": 0,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/3"
+          },
+          {
+            "count": null,
+            "count_pos": null,
+            "description": null,
+            "dst_dns": "",
+            "dst_geo": null,
+            "dst_host_id": null,
+            "dst_ip": "2017-05-05T16:34:10.475006Z",
+            "dst_port": 1473,
+            "first_timestamp": "2017-05-05T16:33:22Z",
+            "id": 4,
+            "last_timestamp": "2017-05-05T16:33:45Z",
+            "proto": "udp",
+            "total_bytes_rcvd": 18,
+            "total_bytes_sent": 29,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/4"
+          },
+          {
+            "count": null,
+            "count_pos": null,
+            "description": null,
+            "dst_dns": "",
+            "dst_geo": "US",
+            "dst_host_id": null,
+            "dst_ip": "11.1.1.32",
+            "dst_port": 4392,
+            "first_timestamp": "2017-05-05T16:33:22Z",
+            "id": 5,
+            "last_timestamp": "2017-05-05T16:33:45Z",
+            "proto": "udp",
+            "total_bytes_rcvd": 0,
+            "total_bytes_sent": 38,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/5"
+          },
+          {
+            "count": null,
+            "count_pos": null,
+            "description": null,
+            "dst_dns": "",
+            "dst_geo": "US",
+            "dst_host_id": null,
+            "dst_ip": "11.1.1.234",
+            "dst_port": 3143,
+            "first_timestamp": "2017-05-05T16:33:22Z",
+            "id": 6,
+            "last_timestamp": "2017-05-05T16:33:45Z",
+            "proto": "tcp",
+            "total_bytes_rcvd": 0,
+            "total_bytes_sent": 0,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/6"
+          },
+          {
+            "count": null,
+            "count_pos": null,
+            "description": null,
+            "dst_dns": "",
+            "dst_geo": "US",
+            "dst_host_id": null,
+            "dst_ip": "11.1.1.71",
+            "dst_port": 8032,
+            "first_timestamp": "2017-05-05T16:33:22Z",
+            "id": 7,
+            "last_timestamp": "2017-05-05T16:33:45Z",
+            "proto": "udp",
+            "total_bytes_rcvd": 0,
+            "total_bytes_sent": 31,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/7"
+          },
+          {
+            "count": null,
+            "count_pos": null,
+            "description": null,
+            "dst_dns": "",
+            "dst_geo": "US",
+            "dst_host_id": null,
+            "dst_ip": "11.1.1.99",
+            "dst_port": 5395,
+            "first_timestamp": "2017-05-05T16:33:22Z",
+            "id": 8,
+            "last_timestamp": "2017-05-05T16:33:45Z",
+            "proto": "udp",
+            "total_bytes_rcvd": 0,
+            "total_bytes_sent": 40,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/8"
+          },
+          {
+            "count": null,
+            "count_pos": null,
+            "description": null,
+            "dst_dns": "",
+            "dst_geo": "US",
+            "dst_host_id": null,
+            "dst_ip": "11.1.1.234",
+            "dst_port": 3143,
+            "first_timestamp": "2017-05-05T16:33:22Z",
+            "id": 9,
+            "last_timestamp": "2017-05-05T16:33:45Z",
+            "proto": "tcp",
+            "total_bytes_rcvd": 0,
+            "total_bytes_sent": 0,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/9"
+          },
+          {
+            "count": null,
+            "count_pos": null,
+            "description": null,
+            "dst_dns": "",
+            "dst_geo": "US",
+            "dst_host_id": null,
+            "dst_ip": "11.1.1.7",
+            "dst_port": 4004,
+            "first_timestamp": "2017-05-05T16:33:22Z",
+            "id": 10,
+            "last_timestamp": "2017-05-05T16:33:45Z",
+            "proto": "tcp",
+            "total_bytes_rcvd": 0,
+            "total_bytes_sent": 0,
+            "url": "https://partners.demo.vectranetworks.com/api/detection_details/10"
+          }
+        ],
+        "dns_set": [],
+        "first_timestamp": "2017-05-05T16:33:22Z",
+        "host": "https://partners.demo.vectranetworks.com/api/hosts/5",
+        "id": 2,
+        "last_timestamp": "2017-05-05T16:33:45Z",
+        "relayed_comm_set": [],
+        "sensor_luid": "IgG8l0P3",
+        "src_ip": "192.168.196.95",
+        "state": "inactive",
+        "summary": {
+          "bytes_received": 11995,
+          "bytes_sent": 15409,
+          "external_peers": [
+            "11.1.1.234",
+            "11.1.1.32",
+            "11.1.1.71"
+          ],
+          "probable_owner": null,
+          "sessions": 342,
+          "unique_ports": 6
+        },
+        "t_score": 20,
+        "tags": [],
+        "targets_key_asset": false,
+        "triage_rule_id": null,
+        "type_vname": "Peer-To-Peer",
+        "url": "https://partners.demo.vectranetworks.com/api/detections/2"
+      },
+      {
+        "c_score": 15,
+        "category": "COMMAND & CONTROL",
+        "description": null,
+        "detection_detail_set": [],
+        "dns_set": [
+          {
+            "dns_ip": "8.8.8.8",
+            "dns_request": "157m6z01y2dk6z3mbqvt1t1rdws.biz",
+            "first_timestamp": null,
+            "id": 1,
+            "last_timestamp": "2017-05-04T20:42:13Z",
+            "resp": null,
+            "resp_code": "NXDomain",
+            "url": "https://partners.demo.vectranetworks.com/api/dns/1"
+          },
+          {
+            "dns_ip": "8.8.8.8",
+            "dns_request": "mail.baffcaaccaacac.ru",
+            "first_timestamp": null,
+            "id": 2,
+            "last_timestamp": "2017-05-04T20:42:03Z",
+            "resp": "46.137.248.72,37.230.114.67,206.72.200.117",
+            "resp_code": "NoError",
+            "url": "https://partners.demo.vectranetworks.com/api/dns/2"
+          }
+        ],
+        "first_timestamp": "2017-05-04T20:42:13Z",
+        "id": 1,
+        "last_timestamp": "2017-05-04T20:42:13Z",
+        "relayed_comm_set": [],
+        "sensor_luid": "IgG8l0P3",
+        "src_ip": "192.168.173.202",
+        "state": "inactive",
+        "summary": {
+          "bytes_received": 0,
+          "bytes_sent": 0,
+          "failed_lookups": 1,
+          "probable_owner": null,
+          "sessions": 0,
+          "successful_lookups": 1
+        },
+        "t_score": 15,
+        "tags": [],
+        "targets_key_asset": false,
+        "triage_rule_id": null,
+        "type_vname": "Suspect Domain Activity",
+        "url": "https://partners.demo.vectranetworks.com/api/detections/1"
+      }
+    ];
+    }
+  type: javascript

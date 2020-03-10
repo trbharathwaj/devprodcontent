@@ -1,0 +1,84 @@
+{
+	"associatedToAll": false,
+	"associatedTypes": [
+		"Accel"
+	],
+	"breachScript": "",
+	"caseInsensitive": true,
+	"cliName": "recipients",
+	"closeForm": false,
+	"columns": [
+		{
+			"displayName": "Name",
+			"fieldCalcScript": "",
+			"isDefault": true,
+			"isReadOnly": false,
+			"key": "name",
+			"required": true,
+			"script": "",
+			"selectValues": null,
+			"type": "shortText",
+			"width": 150
+		},
+		{
+			"displayName": "EMail",
+			"fieldCalcScript": "",
+			"isDefault": true,
+			"isReadOnly": false,
+			"key": "email",
+			"required": false,
+			"script": "",
+			"selectValues": null,
+			"type": "shortText",
+			"width": 463
+		},
+		{
+			"displayName": "Send Slack?",
+			"fieldCalcScript": "",
+			"isDefault": true,
+			"isReadOnly": false,
+			"key": "sendslack",
+			"required": false,
+			"script": "",
+			"selectValues": [
+				"Yes",
+				"No"
+			],
+			"type": "boolean",
+			"width": 132
+		}
+	],
+	"content": false,
+	"defaultRows": [
+		{},
+		{},
+		{}
+	],
+	"description": "",
+	"editForm": true,
+	"fieldCalcScript": "",
+	"group": 0,
+	"hidden": false,
+	"id": "incident_recipients",
+	"isReadOnly": false,
+	"locked": false,
+	"name": "Recipients",
+	"neverSetAsRequired": false,
+	"ownerOnly": false,
+	"placeholder": "",
+	"required": false,
+	"script": "",
+	"selectValues": [],
+	"sla": 0,
+	"sortValues": null,
+	"system": false,
+	"systemAssociatedTypes": null,
+	"threshold": 72,
+	"type": "grid",
+	"unmapped": false,
+	"unsearchable": false,
+	"useAsKpi": false,
+	"validatedError": "",
+	"validationRegex": "",
+	"version": -1
+}

@@ -1,0 +1,652 @@
+id: fd1036cc-b4d3-4b70-8425-dbe9c181d344
+inputs: []
+name: Failed_Integration
+outputs: []
+starttaskid: "0"
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "1"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: bcb21928-6c91-451d-8f20-af0365d4b91e
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: bcb21928-6c91-451d-8f20-af0365d4b91e
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 690,
+          "y": -550
+        }
+      }
+  "1":
+    id: "1"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "4"
+    note: false
+    scriptarguments:
+      details: {}
+      fromclosedate: {}
+      fromdate: {}
+      fromduedate: {}
+      id: {}
+      level: {}
+      name: {}
+      notstatus: {}
+      owner: {}
+      page: {}
+      query:
+        simple: type:Failed_Integrations and -status:Closed
+      reason: {}
+      size: {}
+      sort: {}
+      status: {}
+      toclosedate: {}
+      todate: {}
+      toduedate: {}
+      type: {}
+    separatecontext: false
+    task:
+      brand: ""
+      id: 7de7c8fc-019d-48a6-81ce-72a82f9b4b11
+      iscommand: false
+      name: Search Incidents for Failed Integrations Reported before
+      script: SearchIncidents
+      type: regular
+      version: -1
+    taskid: 7de7c8fc-019d-48a6-81ce-72a82f9b4b11
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 690,
+          "y": -410
+        }
+      }
+  "3":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: oldincidents
+          operator: isExists
+      label: "yes"
+    id: "3"
+    ignoreworker: false
+    nexttasks:
+      '#default#':
+      - "8"
+      "yes":
+      - "16"
+    note: false
+    separatecontext: false
+    task:
+      brand: Builtin
+      id: b5029862-0784-4a81-897d-1d2aea4592f3
+      iscommand: false
+      name: Are there integrations that have become healthy?
+      type: condition
+      version: -1
+    taskid: b5029862-0784-4a81-897d-1d2aea4592f3
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 690,
+          "y": 1380
+        }
+      }
+  "4":
+    id: "4"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "17"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: ebf1c81d-013b-4f94-86a9-78984a96efa9
+      iscommand: false
+      name: Search for currently Failing Integrations
+      script: FailedInstances
+      type: regular
+      version: -1
+    taskid: ebf1c81d-013b-4f94-86a9-78984a96efa9
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 690,
+          "y": -230
+        }
+      }
+  "5":
+    id: "5"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "6"
+    note: false
+    scriptarguments:
+      LeftList:
+        simple: ${LeftList}
+      RightList:
+        simple: ${RightList}
+    separatecontext: false
+    task:
+      brand: ""
+      id: 9f6e7448-bc0f-4984-83e3-6baa22d90623
+      iscommand: false
+      name: Compare Lists of Incidents
+      script: 59455f66-f31d-45ea-841d-6f43cb7bb93a
+      type: regular
+      version: -1
+    taskid: 9f6e7448-bc0f-4984-83e3-6baa22d90623
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 690,
+          "y": 800
+        }
+      }
+  "6":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: newincidents
+          operator: isExists
+      label: "yes"
+    id: "6"
+    ignoreworker: false
+    nexttasks:
+      '#default#':
+      - "3"
+      "yes":
+      - "7"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 7291e41d-666e-42dc-8da8-b52478c67386
+      iscommand: false
+      name: Get Integrations that have failed but incidents not created
+      type: condition
+      version: -1
+    taskid: 7291e41d-666e-42dc-8da8-b52478c67386
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 690,
+          "y": 960
+        }
+      }
+  "7":
+    id: "7"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "3"
+    note: false
+    scriptarguments:
+      accelfield: {}
+      app: {}
+      assetid: {}
+      attachmentcount: {}
+      attachmentextension: {}
+      attachmenthash: {}
+      attachmentid: {}
+      attachmentname: {}
+      attachmentsize: {}
+      attachmenttype: {}
+      bugtraq: {}
+      customFields: {}
+      cve: {}
+      cvss: {}
+      dest: {}
+      destntdomain: {}
+      details: {}
+      duration: {}
+      emailbcc: {}
+      emailbody: {}
+      emailbodyformat: {}
+      emailbodyhtml: {}
+      emailcc: {}
+      emailclientname: {}
+      emailfrom: {}
+      emailinreplyto: {}
+      emailkeywords: {}
+      emailmessageid: {}
+      emailreceived: {}
+      emailreplyto: {}
+      emailreturnpath: {}
+      emailsenderip: {}
+      emailsize: {}
+      emailsource: {}
+      emailsubject: {}
+      emailto: {}
+      emailtocount: {}
+      emailurlclicked: {}
+      entryIDs: {}
+      filehash: {}
+      filename: {}
+      filepath: {}
+      labels: {}
+      malwarefamily: {}
+      name:
+        simple: ${newincidents}
+      occurred: {}
+      owner: {}
+      phase: {}
+      recipients: {}
+      roles: {}
+      severity: {}
+      signature: {}
+      sla: {}
+      slaField: {}
+      src: {}
+      srcntdomain: {}
+      srcuser: {}
+      systems: {}
+      type:
+        simple: Failed_Integrations
+      user: {}
+      vendorid: {}
+      vendorproduct: {}
+      vulnerabilitycategory: {}
+    separatecontext: false
+    task:
+      brand: Builtin
+      id: dcae8c6b-2291-4084-8baa-edffbb529036
+      iscommand: true
+      name: Create Incidents for them
+      script: Builtin|||createNewIncident
+      type: regular
+      version: -1
+    taskid: dcae8c6b-2291-4084-8baa-edffbb529036
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 270,
+          "y": 1190
+        }
+      }
+  "8":
+    id: "8"
+    ignoreworker: false
+    note: false
+    scriptarguments:
+      assetid: {}
+      closeNotes: {}
+      closeReason: {}
+      id: {}
+    separatecontext: false
+    task:
+      brand: Builtin
+      id: f7241ea9-10bf-48eb-8bc2-771f3225c4a3
+      iscommand: true
+      name: Close this Investigation
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: f7241ea9-10bf-48eb-8bc2-771f3225c4a3
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 690,
+          "y": 2110
+        }
+      }
+  "9":
+    id: "9"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "10"
+    note: false
+    scriptarguments:
+      details: {}
+      fromclosedate: {}
+      fromdate: {}
+      fromduedate: {}
+      id: {}
+      level: {}
+      name:
+        simple: ${oldincidents}
+      notstatus: {}
+      owner: {}
+      page: {}
+      query: {}
+      reason: {}
+      size: {}
+      sort: {}
+      status:
+        simple: -Closed
+      toclosedate: {}
+      todate: {}
+      toduedate: {}
+      type: {}
+    separatecontext: false
+    task:
+      brand: Builtin
+      id: d2ab7ccb-0299-483e-8b55-35ca3da28701
+      iscommand: false
+      name: Search for the IDs of currently healthy integration incidents
+      script: SearchIncidents
+      type: regular
+      version: -1
+    taskid: d2ab7ccb-0299-483e-8b55-35ca3da28701
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 270,
+          "y": 1740
+        }
+      }
+  "10":
+    id: "10"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "8"
+    note: false
+    scriptarguments:
+      assetid: {}
+      closeNotes: {}
+      closeReason: {}
+      id:
+        simple: ${foundIncidents.id}
+    separatecontext: false
+    task:
+      brand: Builtin
+      id: 497680ae-07db-42ad-8056-80b825835b7b
+      iscommand: true
+      name: Close those incidents
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: 497680ae-07db-42ad-8056-80b825835b7b
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 270,
+          "y": 1910
+        }
+      }
+  "11":
+    id: "11"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "14"
+    note: false
+    scriptarguments:
+      append:
+        simple: "true"
+      key:
+        simple: RightList
+      value:
+        simple: ${FailedInstances.instance}
+    separatecontext: false
+    task:
+      brand: ""
+      id: 67edd51b-1bbb-4e31-886b-c455f0e10fa3
+      iscommand: false
+      name: Set Context with Instances that have failed
+      script: Set
+      type: regular
+      version: -1
+    taskid: 67edd51b-1bbb-4e31-886b-c455f0e10fa3
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 690,
+          "y": 80
+        }
+      }
+  "13":
+    id: "13"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "5"
+    note: false
+    scriptarguments:
+      append:
+        simple: "true"
+      key:
+        simple: LeftList
+      value:
+        simple: ${foundIncidents.name}
+    separatecontext: false
+    task:
+      brand: ""
+      id: 360af083-db4f-4029-85f6-35e4dbdbb7e4
+      iscommand: false
+      name: Set Context with Previously Failed Instances
+      script: Set
+      type: regular
+      version: -1
+    taskid: 360af083-db4f-4029-85f6-35e4dbdbb7e4
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 690,
+          "y": 530
+        }
+      }
+  "14":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: foundIncidents
+          operator: isExists
+      label: "yes"
+    id: "14"
+    ignoreworker: false
+    nexttasks:
+      '#default#':
+      - "15"
+      "yes":
+      - "13"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: d25a1c3b-e4f5-4e29-8ffd-8fac3400bf08
+      iscommand: false
+      name: Check if the FoundIncidents key is set
+      type: condition
+      version: -1
+    taskid: d25a1c3b-e4f5-4e29-8ffd-8fac3400bf08
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 690,
+          "y": 240
+        }
+      }
+  "15":
+    id: "15"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "5"
+    note: false
+    scriptarguments:
+      append:
+        simple: "true"
+      key:
+        simple: LeftList
+      value:
+        simple: '["No_Previous_Incidents"]'
+    separatecontext: false
+    task:
+      brand: ""
+      id: 382c0739-65e9-43c0-88ba-4fc8ba69e988
+      iscommand: false
+      name: No Previous Incidents
+      script: Set
+      type: regular
+      version: -1
+    taskid: 382c0739-65e9-43c0-88ba-4fc8ba69e988
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1230,
+          "y": 530
+        }
+      }
+  "16":
+    id: "16"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "9"
+    note: false
+    scriptarguments:
+      all: {}
+      index: {}
+      key:
+        simple: foundIncidents
+      keysToKeep: {}
+      subplaybook: {}
+    separatecontext: false
+    task:
+      brand: ""
+      id: c84dc931-38b6-47d2-8036-c8714c7c8570
+      iscommand: false
+      name: Deleting Found Incidents
+      script: DeleteContext
+      type: regular
+      version: -1
+    taskid: c84dc931-38b6-47d2-8036-c8714c7c8570
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 270,
+          "y": 1570
+        }
+      }
+  "17":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: FailedInstances
+          operator: isExists
+      label: "yes"
+    id: "17"
+    ignoreworker: false
+    nexttasks:
+      '#default#':
+      - "18"
+      "yes":
+      - "11"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 51a133a6-6e20-4db1-843e-69cdfc077120
+      iscommand: false
+      name: Check if the context is set with the Failed Instances key
+      type: condition
+      version: -1
+    taskid: 51a133a6-6e20-4db1-843e-69cdfc077120
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 690,
+          "y": -80
+        }
+      }
+  "18":
+    id: "18"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "14"
+    note: false
+    scriptarguments:
+      append:
+        simple: "true"
+      key:
+        simple: RightList
+      value:
+        simple: '{}'
+    separatecontext: false
+    task:
+      brand: ""
+      id: 4cb22c6e-0689-4ad1-8d45-6c083cc8b565
+      iscommand: false
+      name: There are no Integrations Failing Now
+      script: Set
+      type: regular
+      version: -1
+    taskid: 4cb22c6e-0689-4ad1-8d45-6c083cc8b565
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1220,
+          "y": 110
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 2755,
+        "width": 1340,
+        "x": 270,
+        "y": -550
+      }
+    }
+  }

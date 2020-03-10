@@ -1,0 +1,2343 @@
+description: This playbook revokes user permissions as part of the IT - Employee Offboarding
+  playbook.
+id: Employee Offboarding - Revoke Permissions
+inputs:
+- description: The email of the manager of the user you are offboarding.
+  key: UserManagerEmail
+  required: false
+  value:
+    complex:
+      accessor: employeemanageremail
+      root: incident
+- description: The email address of the user that you are offboarding.
+  key: OffboardingUserEmail
+  required: true
+  value:
+    complex:
+      accessor: employeeemail
+      root: incident
+- description: Whether the Google account of the user should be removed from the mobile
+    device of the user.
+  key: WipeAccountFromMobile
+  required: false
+  value:
+    simple: "False"
+- description: The email address of the logistics department who has the data about
+    which company property the user has.
+  key: LogisticsEmail
+  required: false
+  value: {}
+- description: The username, in Duo, of the user you are offboarding.
+  key: DuoUsername
+  required: false
+  value: {}
+- description: The email of the department responsible for receiving returned company
+    property from the user you are offboarding. In some organizations, this may be
+    the same as the LogisticsEmail playbook input.
+  key: CompanyPropertyReceiverEmail
+  required: false
+  value: {}
+- description: The name of the group in Active Directory that contains old employee
+    user accounts. If a group name is specified, the user will be added to that group
+    instead of getting deleted at the end of the offboarding process.
+  key: OldEmployeeGroupName
+  required: false
+  value:
+    simple: Old Employees
+- description: The name of the "Assets" table in ServiceNow. This will be used to
+    get the assets that belong to the user you are offboarding.
+  key: ServiceNowAssetsTableName
+  required: false
+  value:
+    simple: alm_asset
+- description: Whether to perform potentially harmful actions, such as revoking user
+    permissions and deleting the user. Taking the actions is necessary for a more
+    complete offboarding process, and if set to False - the actions will have to be
+    taken manually.
+  key: PerformPotentiallyHarmfulActions
+  required: true
+  value:
+    simple: "False"
+name: Employee Offboarding - Revoke Permissions
+outputs: []
+sourceplaybookid: IT - Employee Offboarding
+starttaskid: "0"
+system: true
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "9"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: a99d2982-2041-46a5-876a-d2eab2ebb4ac
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: a99d2982-2041-46a5-876a-d2eab2ebb4ac
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 705,
+          "y": 140
+        }
+      }
+  "2":
+    continueonerror: true
+    fieldMapping:
+    - incidentfield: Google Admin Roles Status
+      output:
+        simple: Revoked
+    id: "2"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "126"
+    note: false
+    reputationcalc: 1
+    scriptarguments:
+      role-assignment-id:
+        complex:
+          filters:
+          - - left:
+                iscontext: true
+                value:
+                  simple: AssignedTo
+              operator: isEqualString
+              right:
+                iscontext: true
+                value:
+                  simple: OffboardingUserID
+          root: GmailRoles
+          transformers:
+          - args:
+              field:
+                value:
+                  simple: RoleAssignmentId
+            operator: getField
+          - operator: uniq
+      user-id:
+        complex:
+          root: inputs.OffboardingUserEmail
+          transformers:
+          - operator: uniq
+    separatecontext: false
+    task:
+      brand: ""
+      description: Revokes a role for the specified Google user.
+      id: b7f64f3a-bf65-4b35-8755-24aa0d8f4ac6
+      iscommand: true
+      name: Revoke user roles
+      script: '|||gmail-revoke-user-role'
+      type: regular
+      version: -1
+    taskid: b7f64f3a-bf65-4b35-8755-24aa0d8f4ac6
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 460,
+          "y": 1130
+        }
+      }
+  "3":
+    fieldMapping:
+    - incidentfield: Global Directory Visibility
+      output:
+        simple: Hidden
+    id: "3"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "126"
+    note: false
+    reputationcalc: 1
+    scriptarguments:
+      user-id:
+        complex:
+          root: inputs.OffboardingUserEmail
+      visible-globally:
+        simple: "False"
+    separatecontext: false
+    task:
+      brand: ""
+      description: Hide a user's contact information, such as email address and profile
+        information in the Global Directory.
+      id: ed90fb5a-b68c-4aa8-8944-d90088a73729
+      iscommand: true
+      name: Hide user in Google Global Directory
+      script: '|||gmail-hide-user-in-directory'
+      type: regular
+      version: -1
+    taskid: ed90fb5a-b68c-4aa8-8944-d90088a73729
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 950,
+          "y": 960
+        }
+      }
+  "4":
+    continueonerror: true
+    fieldMapping:
+    - incidentfield: Device G-Suite Account Status
+      output:
+        simple: Wiped
+    id: "4"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "125"
+    note: false
+    reputationcalc: 1
+    scriptarguments:
+      action:
+        simple: admin_account_wipe
+      customerId:
+        complex:
+          root: OffboardingUserID
+          transformers:
+          - operator: uniq
+      resource-id: {}
+      token: {}
+      user-key: {}
+    separatecontext: false
+    task:
+      brand: google
+      description: Remotely wipes the G-Suite data of the account from the user's
+        mobile device.
+      id: b54447db-e1bb-481c-80cc-e990b4c03562
+      iscommand: true
+      name: Wipe the G-Suite data from the mobile device
+      script: google|||googleapps-device-action
+      type: regular
+      version: -1
+    taskid: b54447db-e1bb-481c-80cc-e990b4c03562
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 10,
+          "y": 1130
+        }
+      }
+  "5":
+    fieldMapping:
+    - incidentfield: Google Password Status
+      output:
+        simple: Reset
+    id: "5"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "126"
+    note: false
+    scriptarguments:
+      password:
+        complex:
+          root: NEW_PASSWORD
+          transformers:
+          - operator: uniq
+      user-id:
+        complex:
+          root: inputs.OffboardingUserEmail
+          transformers:
+          - operator: uniq
+    separatecontext: false
+    task:
+      brand: ""
+      description: Sets the password for the user.
+      id: d5d4bef0-73be-4907-8f09-51cb55493421
+      iscommand: true
+      name: Set random password for the user account
+      script: '|||gmail-set-password'
+      type: regular
+      version: -1
+    taskid: d5d4bef0-73be-4907-8f09-51cb55493421
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1370,
+          "y": 960
+        }
+      }
+  "9":
+    id: "9"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "115"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 40e405f2-143c-4493-85f0-7be3f6cc27ec
+      iscommand: false
+      name: Security - Revoke Permissions
+      type: title
+      version: -1
+    taskid: 40e405f2-143c-4493-85f0-7be3f6cc27ec
+    timertriggers: []
+    type: title
+    view: |-
+      {
+        "position": {
+          "x": 705,
+          "y": 290
+        }
+      }
+  "30":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              complex:
+                filters:
+                - - left:
+                      iscontext: true
+                      value:
+                        simple: AssignedTo
+                    operator: isEqualString
+                    right:
+                      iscontext: true
+                      value:
+                        simple: OffboardingUserID
+                root: GmailRoles
+                transformers:
+                - args:
+                    field:
+                      value:
+                        simple: RoleAssignmentId
+                  operator: getField
+          operator: isNotEmpty
+      - - left:
+            iscontext: true
+            value:
+              complex:
+                accessor: AssignedTo
+                root: GmailRoles
+          operator: isExists
+      - - ignorecase: true
+          left:
+            iscontext: true
+            value:
+              complex:
+                root: inputs.PerformPotentiallyHarmfulActions
+          operator: isEqualString
+          right:
+            value:
+              simple: "True"
+      label: "yes"
+    id: "30"
+    ignoreworker: false
+    nexttasks:
+      '#default#':
+      - "130"
+      "yes":
+      - "2"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      description: Checks if the user has Google roles that can be revoked, and whether
+        the PerformPotentiallyHarmfulActions playbook input is set to True.
+      id: 22a35509-201e-45d0-8da4-1607fa7d6405
+      iscommand: false
+      name: Can user roles be revoked automatically?
+      type: condition
+      version: -1
+    taskid: 22a35509-201e-45d0-8da4-1607fa7d6405
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 460,
+          "y": 960
+        }
+      }
+  "33":
+    id: "33"
+    ignoreworker: false
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: cef0214b-433e-4b8a-8090-d969055ba1c3
+      iscommand: false
+      name: Proceed to Next Stage
+      type: title
+      version: -1
+    taskid: cef0214b-433e-4b8a-8090-d969055ba1c3
+    timertriggers: []
+    type: title
+    view: |-
+      {
+        "position": {
+          "x": 705,
+          "y": 2240
+        }
+      }
+  "36":
+    conditions:
+    - condition:
+      - - ignorecase: true
+          left:
+            iscontext: true
+            value:
+              complex:
+                root: inputs.WipeAccountFromMobile
+          operator: isEqualString
+          right:
+            value:
+              simple: "True"
+      label: "yes"
+    id: "36"
+    ignoreworker: false
+    nexttasks:
+      '#default#':
+      - "125"
+      "yes":
+      - "4"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      description: Checks whether the WipeAccountFromMobile input is set to True.
+      id: b0af0c93-7bc6-468e-8909-2b88f835c473
+      iscommand: false
+      name: Can the account be deleted from the user's mobile device?
+      type: condition
+      version: -1
+    taskid: b0af0c93-7bc6-468e-8909-2b88f835c473
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 10,
+          "y": 960
+        }
+      }
+  "46":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              complex:
+                filters:
+                - - left:
+                      iscontext: true
+                      value:
+                        simple: Email.Address
+                    operator: isEqualString
+                    right:
+                      iscontext: true
+                      value:
+                        simple: inputs.OffboardingUserEmail
+                - - ignorecase: true
+                    left:
+                      iscontext: true
+                      value:
+                        simple: Type
+                    operator: isEqualString
+                    right:
+                      value:
+                        simple: Okta
+                root: Account
+          operator: isExists
+      label: "yes"
+    id: "46"
+    ignoreworker: false
+    nexttasks:
+      '#default#':
+      - "125"
+      "yes":
+      - "47"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      description: Determines whether the user was found in Okta.
+      id: 36aa21dd-df4f-455a-8ca7-c53844041d9d
+      iscommand: false
+      name: Was an Okta user found?
+      type: condition
+      version: -1
+    taskid: 36aa21dd-df4f-455a-8ca7-c53844041d9d
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": -575,
+          "y": 785
+        }
+      }
+  "47":
+    fieldMapping:
+    - incidentfield: Okta Account Status
+      output:
+        simple: Deactivated
+    id: "47"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "125"
+    note: false
+    reputationcalc: 1
+    scriptarguments:
+      username:
+        complex:
+          accessor: ID
+          filters:
+          - - left:
+                iscontext: true
+                value:
+                  simple: Account.Email
+              operator: isEqualString
+              right:
+                iscontext: true
+                value:
+                  simple: inputs.OffboardingUserEmail
+          - - ignorecase: true
+              left:
+                iscontext: true
+                value:
+                  simple: Account.Type
+              operator: isEqualString
+              right:
+                value:
+                  simple: Okta
+          root: Account
+    separatecontext: false
+    task:
+      brand: ""
+      description: Deactivates the user in Okta.
+      id: 6e8928ac-4ff2-49bb-82af-f06fa1702b4c
+      iscommand: true
+      name: Deactivate user in Okta
+      script: '|||okta-deactivate-user'
+      type: regular
+      version: -1
+    taskid: 6e8928ac-4ff2-49bb-82af-f06fa1702b4c
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": -575,
+          "y": 960
+        }
+      }
+  "53":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              complex:
+                filters:
+                - - left:
+                      iscontext: true
+                      value:
+                        simple: brand
+                    operator: isEqualString
+                    right:
+                      value:
+                        simple: EWS v2
+                  - left:
+                      iscontext: true
+                      value:
+                        simple: brand
+                    operator: isEqualString
+                    right:
+                      value:
+                        simple: Gmail
+                - - left:
+                      iscontext: true
+                      value:
+                        simple: state
+                    operator: isEqualString
+                    right:
+                      value:
+                        simple: active
+                root: modules
+          operator: isExists
+      - - left:
+            iscontext: true
+            value:
+              complex:
+                filters:
+                - - left:
+                      iscontext: true
+                      value:
+                        simple: brand
+                    operator: isEqualString
+                    right:
+                      value:
+                        simple: EWS Mail Sender
+                  - left:
+                      iscontext: true
+                      value:
+                        simple: brand
+                    operator: isEqualString
+                    right:
+                      value:
+                        simple: Gmail
+                - - left:
+                      iscontext: true
+                      value:
+                        simple: state
+                    operator: isEqualString
+                    right:
+                      value:
+                        simple: active
+                root: modules
+          operator: isExists
+      - - left:
+            iscontext: true
+            value:
+              complex:
+                root: inputs.CompanyPropertyReceiverEmail
+          operator: isNotEmpty
+      label: "yes"
+    id: "53"
+    ignoreworker: false
+    nexttasks:
+      "yes":
+      - "108"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      description: Checks whether an email listener and sender integrations are enabled,
+        so emails can be both sent and received. Also checks whether a CompanyPropertyReceiverEmail
+        input was configured in the playbook inputs.
+      id: 1c9c5c93-71c5-4c7c-8d48-b5a3e29914cb
+      iscommand: false
+      name: Can we verify property was returned via email?
+      type: condition
+      version: -1
+    taskid: 1c9c5c93-71c5-4c7c-8d48-b5a3e29914cb
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 2690,
+          "y": 835
+        }
+      }
+  "54":
+    id: "54"
+    ignoreworker: false
+    message:
+      bcc: null
+      body:
+        simple: |-
+          Please confirm whether the user ${inputs.OffboardingUserEmail} returned all company property. The property that needs to be returned is as follows:
+          ${ServiceNow.Record.display_name}
+      cc: null
+      format: ""
+      methods:
+      - email
+      replyOptions:
+      - Property returned
+      - Property missing
+      subject:
+        simple: 'Return of company property: ${inputs.OffboardingUserEmail}'
+      timings:
+        completeafterreplies: 1
+        retriescount: 2
+        retriesinterval: 360
+      to:
+        complex:
+          root: inputs.CompanyPropertyReceiverEmail
+          transformers:
+          - operator: uniq
+    nexttasks:
+      Property Missing:
+      - "112"
+      Property Returned:
+      - "113"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      description: Sends an email to the relevant stakeholder asking if the property
+        was returned. The reply determines the next steps in the flow.
+      id: 1b55fb67-06d0-4501-85c4-0c36aa5ecdbf
+      iscommand: false
+      name: Ask relevant stakeholder to confirm returned items
+      type: condition
+      version: -1
+    taskid: 1b55fb67-06d0-4501-85c4-0c36aa5ecdbf
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 2690,
+          "y": 1365
+        }
+      }
+  "55":
+    id: "55"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "113"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      description: Continue the flow only after missing items have been returned by
+        the user you are offboarding.
+      id: 51299749-f3b3-4181-8d7a-f077fb8e742d
+      iscommand: false
+      name: Pause offboarding process until property is returned
+      type: regular
+      version: -1
+    taskid: 51299749-f3b3-4181-8d7a-f077fb8e742d
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 3220,
+          "y": 1990
+        }
+      }
+  "58":
+    fieldMapping:
+    - incidentfield: Duo Account Status
+      output:
+        simple: Dissociated
+    id: "58"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "125"
+    note: false
+    reputationcalc: 1
+    scriptarguments:
+      device_id:
+        complex:
+          accessor: UserDetails.phones.phone_id
+          root: DuoAdmin
+          transformers:
+          - operator: uniq
+      username:
+        complex:
+          root: inputs.DuoUsername
+    separatecontext: false
+    task:
+      brand: ""
+      description: Dissociates a device from a user
+      id: 442043ea-6c8f-4ef8-8120-cef33de1046a
+      iscommand: true
+      name: Dissociate devices from user
+      script: '|||duoadmin-dissociate-device-from-user'
+      type: regular
+      version: -1
+    taskid: 442043ea-6c8f-4ef8-8120-cef33de1046a
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": -1090,
+          "y": 960
+        }
+      }
+  "72":
+    id: "72"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "73"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 8af896bf-5244-48cc-8def-fa12698a1e61
+      iscommand: false
+      name: Gmail
+      type: title
+      version: -1
+    taskid: 8af896bf-5244-48cc-8def-fa12698a1e61
+    timertriggers: []
+    type: title
+    view: |-
+      {
+        "position": {
+          "x": 705,
+          "y": 660
+        }
+      }
+  "73":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              complex:
+                filters:
+                - - left:
+                      iscontext: true
+                      value:
+                        simple: brand
+                    operator: isEqualString
+                    right:
+                      value:
+                        simple: Gmail
+                - - left:
+                      iscontext: true
+                      value:
+                        simple: state
+                    operator: isEqualString
+                    right:
+                      value:
+                        simple: active
+                root: modules
+          operator: isExists
+      label: "yes"
+    id: "73"
+    ignoreworker: false
+    nexttasks:
+      '#default#':
+      - "126"
+      "yes":
+      - "30"
+      - "3"
+      - "5"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      description: Checks whether the Gmail integration is enabled.
+      id: bb726d24-bcbd-46db-8ba5-3804ce00f7a1
+      iscommand: false
+      name: Is Gmail enabled?
+      type: condition
+      version: -1
+    taskid: bb726d24-bcbd-46db-8ba5-3804ce00f7a1
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 705,
+          "y": 785
+        }
+      }
+  "85":
+    id: "85"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "86"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: d7eb8817-3e0f-4fec-8bde-936851e93e78
+      iscommand: false
+      name: Active Directory
+      type: title
+      version: -1
+    taskid: d7eb8817-3e0f-4fec-8bde-936851e93e78
+    timertriggers: []
+    type: title
+    view: |-
+      {
+        "position": {
+          "x": 1960,
+          "y": 675
+        }
+      }
+  "86":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              complex:
+                filters:
+                - - left:
+                      iscontext: true
+                      value:
+                        simple: brand
+                    operator: isEqualString
+                    right:
+                      value:
+                        simple: Active Directory Query v2
+                - - left:
+                      iscontext: true
+                      value:
+                        simple: state
+                    operator: isEqualString
+                    right:
+                      value:
+                        simple: active
+                root: modules
+          operator: isExists
+      label: "yes"
+    id: "86"
+    ignoreworker: false
+    nexttasks:
+      '#default#':
+      - "126"
+      "yes":
+      - "89"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      description: Checks whether the Active Directory integration is enabled.
+      id: 15199891-4414-4844-8765-a63b8eea0862
+      iscommand: false
+      name: Is Active Directory enabled?
+      type: condition
+      version: -1
+    taskid: 15199891-4414-4844-8765-a63b8eea0862
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 1960,
+          "y": 785
+        }
+      }
+  "88":
+    fieldMapping:
+    - incidentfield: Active Directory Password Status
+      output:
+        simple: Reset
+    id: "88"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "126"
+    note: false
+    scriptarguments:
+      base-dn: {}
+      password:
+        complex:
+          root: NEW_PASSWORD
+      username:
+        complex:
+          filters:
+          - - left:
+                iscontext: true
+                value:
+                  simple: Type
+              operator: isEqualString
+              right:
+                value:
+                  simple: AD
+          - - left:
+                iscontext: true
+                value:
+                  simple: Email
+              operator: isEqualString
+              right:
+                iscontext: true
+                value:
+                  simple: inputs.OffboardingUserEmail
+          root: Account
+          transformers:
+          - args:
+              field:
+                value:
+                  simple: Username
+            operator: getField
+          - operator: uniq
+    separatecontext: false
+    task:
+      brand: ""
+      description: Sets a new password for an Active Directory user. This command
+        requires a secure connection (SSL, TLS).
+      id: a1911e2e-e532-41a3-82a9-48ba1c72b2a3
+      iscommand: true
+      name: Set new user password
+      script: '|||ad-set-new-password'
+      type: regular
+      version: -1
+    taskid: a1911e2e-e532-41a3-82a9-48ba1c72b2a3
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1960,
+          "y": 1175
+        }
+      }
+  "89":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              complex:
+                filters:
+                - - ignorecase: true
+                    left:
+                      iscontext: true
+                      value:
+                        simple: Type
+                    operator: isEqualString
+                    right:
+                      value:
+                        simple: AD
+                - - left:
+                      iscontext: true
+                      value:
+                        simple: Email
+                    operator: isEqualString
+                    right:
+                      iscontext: true
+                      value:
+                        simple: inputs.OffboardingUserEmail
+                root: Account
+                transformers:
+                - args:
+                    field:
+                      value:
+                        simple: Username
+                  operator: getField
+                - operator: uniq
+          operator: isNotEmpty
+      label: "yes"
+    id: "89"
+    ignoreworker: false
+    nexttasks:
+      '#default#':
+      - "126"
+      "yes":
+      - "88"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      description: Determines if the username was found in Active Directory.
+      id: 06189b13-7769-4d59-8cf9-e88ccb54c056
+      iscommand: false
+      name: Was a username found for the account in Active Directory?
+      type: condition
+      version: -1
+    taskid: 06189b13-7769-4d59-8cf9-e88ccb54c056
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 1960,
+          "y": 960
+        }
+      }
+  "90":
+    id: "90"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "53"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: dce04725-f70d-44e7-865a-316c41272f22
+      iscommand: false
+      name: Logistics
+      type: title
+      version: -1
+    taskid: dce04725-f70d-44e7-865a-316c41272f22
+    timertriggers: []
+    type: title
+    view: |-
+      {
+        "position": {
+          "x": 2690,
+          "y": 675
+        }
+      }
+  "96":
+    id: "96"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "97"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 2bb89fb7-7313-4994-83f9-9a37dcb95418
+      iscommand: false
+      name: GoogleApps API
+      type: title
+      version: -1
+    taskid: 2bb89fb7-7313-4994-83f9-9a37dcb95418
+    timertriggers: []
+    type: title
+    view: |-
+      {
+        "position": {
+          "x": 10,
+          "y": 665
+        }
+      }
+  "97":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              complex:
+                filters:
+                - - left:
+                      iscontext: true
+                      value:
+                        simple: brand
+                    operator: isEqualString
+                    right:
+                      value:
+                        simple: google
+                - - left:
+                      iscontext: true
+                      value:
+                        simple: state
+                    operator: isEqualString
+                    right:
+                      value:
+                        simple: active
+                root: modules
+          operator: isExists
+      label: "yes"
+    id: "97"
+    ignoreworker: false
+    nexttasks:
+      '#default#':
+      - "125"
+      "yes":
+      - "36"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      description: Checks whether the GoogleApps API integration is enabled.
+      id: e0cc69a8-bac4-4c2d-8312-bc7e9da46bc2
+      iscommand: false
+      name: Is GoogleApps API enabled?
+      type: condition
+      version: -1
+    taskid: e0cc69a8-bac4-4c2d-8312-bc7e9da46bc2
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 10,
+          "y": 785
+        }
+      }
+  "108":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              complex:
+                accessor: Record.display_name
+                root: ServiceNow
+          operator: isNotEmpty
+      label: "yes"
+    id: "108"
+    ignoreworker: false
+    nexttasks:
+      '#default#':
+      - "109"
+      "yes":
+      - "54"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      description: Checks whether a list of company property was previously retrieved
+        using the ServiceNow integration.
+      id: b6618215-fc59-4a84-85cb-78d91bdcb749
+      iscommand: false
+      name: Was a list of company property retrieved from ServiceNow?
+      type: condition
+      version: -1
+    taskid: b6618215-fc59-4a84-85cb-78d91bdcb749
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 2690,
+          "y": 1020
+        }
+      }
+  "109":
+    form:
+      description: The user ${inputs.OffboardingUserEmail} is going through an offboarding
+        process. We need you to provide the list of items that are in possession of
+        the user.
+      expired: false
+      questions:
+      - defaultrows: []
+        fieldassociated: ""
+        gridcolumns: []
+        id: "0"
+        label: ""
+        labelarg:
+          simple: Does the user have any company property that needs to be returned?
+        options:
+        - "Yes"
+        - "No"
+        placeholder: Yes / No
+        readonly: false
+        required: false
+        tooltip: Please reply with either Yes or No.
+        type: singleSelect
+      - defaultrows: []
+        fieldassociated: ""
+        gridcolumns: []
+        id: "1"
+        label: ""
+        labelarg:
+          simple: If you previously answered yes, which company property is currently
+            in possession of the user?
+        options: []
+        placeholder: '- Cell phone model, sim cards, access cards, car, laptops.'
+        readonly: false
+        required: false
+        tooltip: Please include company cell phones, access cards, computers and any
+          relevant items that should be returned.
+        type: shortText
+      sender: Your SOC team
+      title: Company property return
+      totalanswers: 0
+    id: "109"
+    ignoreworker: false
+    message:
+      bcc: null
+      body:
+        simple: We were unable to automatically retrieve the list of items that the
+          user has. Please tell us which items should be returned by the user before
+          leaving the company.
+      cc: null
+      format: ""
+      methods:
+      - email
+      subject:
+        simple: Company property belonging to ${inputs.OffboardingUserEmail}
+      timings:
+        completeafterreplies: 1
+        retriescount: 2
+        retriesinterval: 360
+      to:
+        complex:
+          root: inputs.LogisticsEmail
+    nexttasks:
+      '#none#':
+      - "111"
+    note: false
+    reputationcalc: 1
+    separatecontext: false
+    task:
+      brand: ""
+      description: Retrieves the list of company property that the employee needs
+        to return before leaving. The task sends out a data-collection email to the
+        logistics department email configured in the playbook inputs.
+      id: 1541a3b6-4b00-4d1d-80b0-0f7cc90a930f
+      iscommand: false
+      name: Retrieve company property list
+      type: collection
+      version: -1
+    taskid: 1541a3b6-4b00-4d1d-80b0-0f7cc90a930f
+    timertriggers: []
+    type: collection
+    view: |-
+      {
+        "position": {
+          "x": 3390,
+          "y": 1190
+        }
+      }
+  "110":
+    id: "110"
+    ignoreworker: false
+    message:
+      bcc: null
+      body:
+        simple: |-
+          Please confirm whether the user ${inputs.OffboardingUserEmail} returned all company property. The property that needs to be returned is as follows:
+          ${Company property return.Answers.1}
+      cc: null
+      format: ""
+      methods:
+      - email
+      replyOptions:
+      - Property returned
+      - Property missing
+      subject:
+        simple: 'Return of company property: ${inputs.OffboardingUserEmail}'
+      timings:
+        completeafterreplies: 1
+        retriescount: 2
+        retriesinterval: 360
+      to:
+        complex:
+          root: inputs.CompanyPropertyReceiverEmail
+          transformers:
+          - operator: uniq
+    nexttasks:
+      Property missing:
+      - "112"
+      Property returned:
+      - "113"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      description: Sends an email to the relevant stakeholder asking if the property
+        was returned. The reply determines the next steps in the flow.
+      id: 1117cba8-2538-4aeb-8876-209df427c0ae
+      iscommand: false
+      name: Ask relevant stakeholder to confirm returned items
+      type: condition
+      version: -1
+    taskid: 1117cba8-2538-4aeb-8876-209df427c0ae
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 3390,
+          "y": 1510
+        }
+      }
+  "111":
+    conditions:
+    - condition:
+      - - ignorecase: true
+          left:
+            iscontext: true
+            value:
+              complex:
+                accessor: Answers.0
+                root: Company property return
+          operator: isEqualString
+          right:
+            value:
+              simple: "Yes"
+      label: "yes"
+    id: "111"
+    ignoreworker: false
+    nexttasks:
+      '#default#':
+      - "113"
+      "yes":
+      - "110"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      description: Checks whether the relevant stakeholders responded that there is
+        property that needs to be returned.
+      id: 74e16aae-c8ed-4f40-86c6-81c78b55f333
+      iscommand: false
+      name: Is there any property that needs to be returned?
+      type: condition
+      version: -1
+    taskid: 74e16aae-c8ed-4f40-86c6-81c78b55f333
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 3390,
+          "y": 1340
+        }
+      }
+  "112":
+    id: "112"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "55"
+    note: false
+    reputationcalc: 1
+    scriptarguments:
+      account: {}
+      accountid: {}
+      activedirectoryaccountstatus: {}
+      activedirectorypasswordstatus: {}
+      addLabels: {}
+      affecteddata: {}
+      affecteddatatype: {}
+      affectedindividualscontactinformation: {}
+      agentid: {}
+      app: {}
+      approximatenumberofaffecteddatasubjects: {}
+      assetid: {}
+      attachmentcount: {}
+      attachmentextension: {}
+      attachmenthash: {}
+      attachmentid: {}
+      attachmentname: {}
+      attachmentsize: {}
+      attachmenttype: {}
+      blockedaction: {}
+      bugtraq: {}
+      city: {}
+      closeNotes: {}
+      closeReason: {}
+      commandline: {}
+      companyaddress: {}
+      companycity: {}
+      companycountry: {}
+      companyhasinsuranceforthebreach: {}
+      companyname: {}
+      companypostalcode: {}
+      companypropertystatus:
+        simple: Missing
+      contactaddress: {}
+      contactname: {}
+      coordinates: {}
+      country: {}
+      countrywherebusinesshasitsmainestablishment: {}
+      countrywherethebreachtookplace: {}
+      criticalassets: {}
+      customFields: {}
+      cve: {}
+      cvss: {}
+      dataencryptionstatus: {}
+      datetimeofthebreach: {}
+      dbotprediction: {}
+      dbotpredictionprobability: {}
+      deleteEmptyField: {}
+      dest: {}
+      destinationip: {}
+      destntdomain: {}
+      details: {}
+      detectionendtime: {}
+      detectionid: {}
+      detectionticketed: {}
+      detectionupdatetime: {}
+      detectionurl: {}
+      devicegsuiteaccountstatus: {}
+      devicename: {}
+      dpoemailaddress: {}
+      duoaccountstatus: {}
+      duration: {}
+      emailaddress: {}
+      emailauthenticitycheck: {}
+      emailautoreply: {}
+      emailbcc: {}
+      emailbody: {}
+      emailbodyformat: {}
+      emailbodyhtml: {}
+      emailcc: {}
+      emailclassification: {}
+      emailclientname: {}
+      emailfrom: {}
+      emailheaders: {}
+      emailhtml: {}
+      emailinreplyto: {}
+      emailkeywords: {}
+      emailmessageid: {}
+      emailreceived: {}
+      emailreplyto: {}
+      emailreturnpath: {}
+      emailsenderip: {}
+      emailsize: {}
+      emailsource: {}
+      emailsubject: {}
+      emailto: {}
+      emailtocount: {}
+      emailurlclicked: {}
+      employeedisplayname: {}
+      employeeemail: {}
+      employeemanageremail: {}
+      extrahopapplianceid: {}
+      extrahophostname: {}
+      filehash: {}
+      filename: {}
+      filepath: {}
+      filesize: {}
+      firstseen: {}
+      globaldirectoryvisibility: {}
+      googleaccountstatus: {}
+      googleadminrolesstatus: {}
+      googledrivestatus: {}
+      googlemailstatus: {}
+      googlepasswordstatus: {}
+      hostname: {}
+      id: {}
+      infectedhosts: {}
+      isolated: {}
+      isthedatasubjecttodpia: {}
+      labels: {}
+      lastmodifiedby: {}
+      lastmodifiedon: {}
+      lastseen: {}
+      likelyimpact: {}
+      mailboxdelegation: {}
+      maliciousbehavior: {}
+      maliciouscauseifthecauseisamaliciousattack: {}
+      malwarefamily: {}
+      measurestomitigate: {}
+      name: {}
+      niststage: {}
+      occurred: {}
+      offboardingstage: {}
+      oktaaccountstatus: {}
+      owner: {}
+      parentprocessid: {}
+      participants: {}
+      phase: {}
+      phishingsubtype: {}
+      pid: {}
+      policydeleted: {}
+      policydescription: {}
+      policydetails: {}
+      policyid: {}
+      policyrecommendation: {}
+      policyremediable: {}
+      policyseverity: {}
+      policytype: {}
+      possiblecauseofthebreach: {}
+      postalcode: {}
+      previouscoordinates: {}
+      previouscountry: {}
+      previoussignindatetime: {}
+      previoussourceip: {}
+      prismacloudid: {}
+      prismacloudreason: {}
+      prismacloudrules: {}
+      prismacloudstatus: {}
+      prismacloudtime: {}
+      rating: {}
+      rawparticipants: {}
+      region: {}
+      regionid: {}
+      replacePlaybook: {}
+      reporteremailaddress: {}
+      resourceapiname: {}
+      resourcecloudtype: {}
+      resourceid: {}
+      resourcename: {}
+      resourcetype: {}
+      riskrating: {}
+      riskscore: {}
+      roles: {}
+      rrn: {}
+      sectorofaffectedparty: {}
+      severity: {}
+      signature: {}
+      signindatetime: {}
+      sizenumberofemployees: {}
+      sizeturnover: {}
+      skuname: {}
+      skutier: {}
+      sla: {}
+      slaField: {}
+      sourceip: {}
+      src: {}
+      srcntdomain: {}
+      srcos: {}
+      srcuser: {}
+      subscriptionassignedby: {}
+      subscriptioncreatedby: {}
+      subscriptioncreatedon: {}
+      subscriptiondescription: {}
+      subscriptionid: {}
+      subscriptionname: {}
+      subscriptiontype: {}
+      subscriptionupdatedby: {}
+      subscriptionupdatedon: {}
+      subtype: {}
+      systemdefault: {}
+      systems: {}
+      telephoneno: {}
+      terminatedaction: {}
+      threatactor: {}
+      trapsid: {}
+      travelmaplink: {}
+      triggeredsecurityprofile: {}
+      type: {}
+      urlsslverification: {}
+      user: {}
+      username: {}
+      vendorid: {}
+      vendorproduct: {}
+      vpcid: {}
+      vulnerabilitycategory: {}
+      whereisdatahosted: {}
+      xdralertcount: {}
+      xdralerts: {}
+      xdrassigneduseremail: {}
+      xdrassigneduserprettyname: {}
+      xdrdescription: {}
+      xdrdetectiontime: {}
+      xdrfileartifacts: {}
+      xdrhighseverityalertcount: {}
+      xdrincidentid: {}
+      xdrlowseverityalertcount: {}
+      xdrmediumseverityalertcount: {}
+      xdrnetworkartifacts: {}
+      xdrnotes: {}
+      xdrresolvecomment: {}
+      xdrstatus: {}
+      xdrurl: {}
+      xdrusercount: {}
+    separatecontext: false
+    task:
+      brand: Builtin
+      description: Change the properties of the incident.
+      id: 7751e8f4-6d62-49d7-81e3-03014e24a98f
+      iscommand: true
+      name: Update company property status in incident
+      script: Builtin|||setIncident
+      type: regular
+      version: -1
+    taskid: 7751e8f4-6d62-49d7-81e3-03014e24a98f
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 3580,
+          "y": 1820
+        }
+      }
+  "113":
+    id: "113"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "33"
+    note: false
+    reputationcalc: 1
+    scriptarguments:
+      account: {}
+      accountid: {}
+      activedirectoryaccountstatus: {}
+      activedirectorypasswordstatus: {}
+      addLabels: {}
+      affecteddata: {}
+      affecteddatatype: {}
+      affectedindividualscontactinformation: {}
+      agentid: {}
+      app: {}
+      approximatenumberofaffecteddatasubjects: {}
+      assetid: {}
+      attachmentcount: {}
+      attachmentextension: {}
+      attachmenthash: {}
+      attachmentid: {}
+      attachmentname: {}
+      attachmentsize: {}
+      attachmenttype: {}
+      blockedaction: {}
+      bugtraq: {}
+      city: {}
+      closeNotes: {}
+      closeReason: {}
+      commandline: {}
+      companyaddress: {}
+      companycity: {}
+      companycountry: {}
+      companyhasinsuranceforthebreach: {}
+      companyname: {}
+      companypostalcode: {}
+      companypropertystatus:
+        simple: Returned
+      contactaddress: {}
+      contactname: {}
+      coordinates: {}
+      country: {}
+      countrywherebusinesshasitsmainestablishment: {}
+      countrywherethebreachtookplace: {}
+      criticalassets: {}
+      customFields: {}
+      cve: {}
+      cvss: {}
+      dataencryptionstatus: {}
+      datetimeofthebreach: {}
+      dbotprediction: {}
+      dbotpredictionprobability: {}
+      deleteEmptyField: {}
+      dest: {}
+      destinationip: {}
+      destntdomain: {}
+      details: {}
+      detectionendtime: {}
+      detectionid: {}
+      detectionticketed: {}
+      detectionupdatetime: {}
+      detectionurl: {}
+      devicegsuiteaccountstatus: {}
+      devicename: {}
+      dpoemailaddress: {}
+      duoaccountstatus: {}
+      duration: {}
+      emailaddress: {}
+      emailauthenticitycheck: {}
+      emailautoreply: {}
+      emailbcc: {}
+      emailbody: {}
+      emailbodyformat: {}
+      emailbodyhtml: {}
+      emailcc: {}
+      emailclassification: {}
+      emailclientname: {}
+      emailfrom: {}
+      emailheaders: {}
+      emailhtml: {}
+      emailinreplyto: {}
+      emailkeywords: {}
+      emailmessageid: {}
+      emailreceived: {}
+      emailreplyto: {}
+      emailreturnpath: {}
+      emailsenderip: {}
+      emailsize: {}
+      emailsource: {}
+      emailsubject: {}
+      emailto: {}
+      emailtocount: {}
+      emailurlclicked: {}
+      employeedisplayname: {}
+      employeeemail: {}
+      employeemanageremail: {}
+      extrahopapplianceid: {}
+      extrahophostname: {}
+      filehash: {}
+      filename: {}
+      filepath: {}
+      filesize: {}
+      firstseen: {}
+      globaldirectoryvisibility: {}
+      googleaccountstatus: {}
+      googleadminrolesstatus: {}
+      googledrivestatus: {}
+      googlemailstatus: {}
+      googlepasswordstatus: {}
+      hostname: {}
+      id: {}
+      infectedhosts: {}
+      isolated: {}
+      isthedatasubjecttodpia: {}
+      labels: {}
+      lastmodifiedby: {}
+      lastmodifiedon: {}
+      lastseen: {}
+      likelyimpact: {}
+      mailboxdelegation: {}
+      maliciousbehavior: {}
+      maliciouscauseifthecauseisamaliciousattack: {}
+      malwarefamily: {}
+      measurestomitigate: {}
+      name: {}
+      niststage: {}
+      occurred: {}
+      offboardingstage: {}
+      oktaaccountstatus: {}
+      owner: {}
+      parentprocessid: {}
+      participants: {}
+      phase: {}
+      phishingsubtype: {}
+      pid: {}
+      policydeleted: {}
+      policydescription: {}
+      policydetails: {}
+      policyid: {}
+      policyrecommendation: {}
+      policyremediable: {}
+      policyseverity: {}
+      policytype: {}
+      possiblecauseofthebreach: {}
+      postalcode: {}
+      previouscoordinates: {}
+      previouscountry: {}
+      previoussignindatetime: {}
+      previoussourceip: {}
+      prismacloudid: {}
+      prismacloudreason: {}
+      prismacloudrules: {}
+      prismacloudstatus: {}
+      prismacloudtime: {}
+      rating: {}
+      rawparticipants: {}
+      region: {}
+      regionid: {}
+      replacePlaybook: {}
+      reporteremailaddress: {}
+      resourceapiname: {}
+      resourcecloudtype: {}
+      resourceid: {}
+      resourcename: {}
+      resourcetype: {}
+      riskrating: {}
+      riskscore: {}
+      roles: {}
+      rrn: {}
+      sectorofaffectedparty: {}
+      severity: {}
+      signature: {}
+      signindatetime: {}
+      sizenumberofemployees: {}
+      sizeturnover: {}
+      skuname: {}
+      skutier: {}
+      sla: {}
+      slaField: {}
+      sourceip: {}
+      src: {}
+      srcntdomain: {}
+      srcos: {}
+      srcuser: {}
+      subscriptionassignedby: {}
+      subscriptioncreatedby: {}
+      subscriptioncreatedon: {}
+      subscriptiondescription: {}
+      subscriptionid: {}
+      subscriptionname: {}
+      subscriptiontype: {}
+      subscriptionupdatedby: {}
+      subscriptionupdatedon: {}
+      subtype: {}
+      systemdefault: {}
+      systems: {}
+      telephoneno: {}
+      terminatedaction: {}
+      threatactor: {}
+      trapsid: {}
+      travelmaplink: {}
+      triggeredsecurityprofile: {}
+      type: {}
+      urlsslverification: {}
+      user: {}
+      username: {}
+      vendorid: {}
+      vendorproduct: {}
+      vpcid: {}
+      vulnerabilitycategory: {}
+      whereisdatahosted: {}
+      xdralertcount: {}
+      xdralerts: {}
+      xdrassigneduseremail: {}
+      xdrassigneduserprettyname: {}
+      xdrdescription: {}
+      xdrdetectiontime: {}
+      xdrfileartifacts: {}
+      xdrhighseverityalertcount: {}
+      xdrincidentid: {}
+      xdrlowseverityalertcount: {}
+      xdrmediumseverityalertcount: {}
+      xdrnetworkartifacts: {}
+      xdrnotes: {}
+      xdrresolvecomment: {}
+      xdrstatus: {}
+      xdrurl: {}
+      xdrusercount: {}
+    separatecontext: false
+    task:
+      brand: Builtin
+      description: Changes the properties of the incident.
+      id: d6295406-4663-4309-887e-109f051e2327
+      iscommand: true
+      name: Update company property status in incident
+      script: Builtin|||setIncident
+      type: regular
+      version: -1
+    taskid: d6295406-4663-4309-887e-109f051e2327
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 2690,
+          "y": 2065
+        }
+      }
+  "115":
+    id: "115"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "96"
+      - "72"
+      - "85"
+      - "90"
+      - "122"
+      - "123"
+    note: false
+    reputationcalc: 1
+    scriptarguments:
+      account: {}
+      accountid: {}
+      activedirectoryaccountstatus: {}
+      activedirectorypasswordstatus: {}
+      addLabels: {}
+      affecteddata: {}
+      affecteddatatype: {}
+      affectedindividualscontactinformation: {}
+      agentid: {}
+      app: {}
+      approximatenumberofaffecteddatasubjects: {}
+      assetid: {}
+      attachmentcount: {}
+      attachmentextension: {}
+      attachmenthash: {}
+      attachmentid: {}
+      attachmentname: {}
+      attachmentsize: {}
+      attachmenttype: {}
+      blockedaction: {}
+      bugtraq: {}
+      city: {}
+      closeNotes: {}
+      closeReason: {}
+      commandline: {}
+      companyaddress: {}
+      companycity: {}
+      companycountry: {}
+      companyhasinsuranceforthebreach: {}
+      companyname: {}
+      companypostalcode: {}
+      companypropertystatus: {}
+      contactaddress: {}
+      contactname: {}
+      coordinates: {}
+      country: {}
+      countrywherebusinesshasitsmainestablishment: {}
+      countrywherethebreachtookplace: {}
+      criticalassets: {}
+      customFields: {}
+      cve: {}
+      cvss: {}
+      dataencryptionstatus: {}
+      datetimeofthebreach: {}
+      dbotprediction: {}
+      dbotpredictionprobability: {}
+      deleteEmptyField: {}
+      dest: {}
+      destinationip: {}
+      destntdomain: {}
+      details: {}
+      detectionendtime: {}
+      detectionid: {}
+      detectionticketed: {}
+      detectionupdatetime: {}
+      detectionurl: {}
+      devicegsuiteaccountstatus: {}
+      devicename: {}
+      dpoemailaddress: {}
+      duoaccountstatus: {}
+      duration: {}
+      emailaddress: {}
+      emailauthenticitycheck: {}
+      emailautoreply: {}
+      emailbcc: {}
+      emailbody: {}
+      emailbodyformat: {}
+      emailbodyhtml: {}
+      emailcc: {}
+      emailclassification: {}
+      emailclientname: {}
+      emailfrom: {}
+      emailheaders: {}
+      emailhtml: {}
+      emailinreplyto: {}
+      emailkeywords: {}
+      emailmessageid: {}
+      emailreceived: {}
+      emailreplyto: {}
+      emailreturnpath: {}
+      emailsenderip: {}
+      emailsize: {}
+      emailsource: {}
+      emailsubject: {}
+      emailto: {}
+      emailtocount: {}
+      emailurlclicked: {}
+      employeedisplayname: {}
+      employeeemail: {}
+      employeemanageremail: {}
+      extrahopapplianceid: {}
+      extrahophostname: {}
+      filehash: {}
+      filename: {}
+      filepath: {}
+      filesize: {}
+      firstseen: {}
+      globaldirectoryvisibility: {}
+      googleaccountstatus: {}
+      googleadminrolesstatus: {}
+      googledrivestatus: {}
+      googlemailstatus: {}
+      googlepasswordstatus: {}
+      hostname: {}
+      id: {}
+      infectedhosts: {}
+      isolated: {}
+      isthedatasubjecttodpia: {}
+      labels: {}
+      lastmodifiedby: {}
+      lastmodifiedon: {}
+      lastseen: {}
+      likelyimpact: {}
+      mailboxdelegation: {}
+      maliciousbehavior: {}
+      maliciouscauseifthecauseisamaliciousattack: {}
+      malwarefamily: {}
+      measurestomitigate: {}
+      name: {}
+      niststage: {}
+      occurred: {}
+      offboardingstage:
+        simple: Security & Permission Revoking
+      oktaaccountstatus: {}
+      owner: {}
+      parentprocessid: {}
+      participants: {}
+      phase: {}
+      phishingsubtype: {}
+      pid: {}
+      policydeleted: {}
+      policydescription: {}
+      policydetails: {}
+      policyid: {}
+      policyrecommendation: {}
+      policyremediable: {}
+      policyseverity: {}
+      policytype: {}
+      possiblecauseofthebreach: {}
+      postalcode: {}
+      previouscoordinates: {}
+      previouscountry: {}
+      previoussignindatetime: {}
+      previoussourceip: {}
+      prismacloudid: {}
+      prismacloudreason: {}
+      prismacloudrules: {}
+      prismacloudstatus: {}
+      prismacloudtime: {}
+      rating: {}
+      rawparticipants: {}
+      region: {}
+      regionid: {}
+      replacePlaybook: {}
+      reporteremailaddress: {}
+      resourceapiname: {}
+      resourcecloudtype: {}
+      resourceid: {}
+      resourcename: {}
+      resourcetype: {}
+      riskrating: {}
+      riskscore: {}
+      roles: {}
+      rrn: {}
+      sectorofaffectedparty: {}
+      severity: {}
+      signature: {}
+      signindatetime: {}
+      sizenumberofemployees: {}
+      sizeturnover: {}
+      skuname: {}
+      skutier: {}
+      sla: {}
+      slaField: {}
+      sourceip: {}
+      src: {}
+      srcntdomain: {}
+      srcos: {}
+      srcuser: {}
+      subscriptionassignedby: {}
+      subscriptioncreatedby: {}
+      subscriptioncreatedon: {}
+      subscriptiondescription: {}
+      subscriptionid: {}
+      subscriptionname: {}
+      subscriptiontype: {}
+      subscriptionupdatedby: {}
+      subscriptionupdatedon: {}
+      subtype: {}
+      systemdefault: {}
+      systems: {}
+      telephoneno: {}
+      terminatedaction: {}
+      threatactor: {}
+      trapsid: {}
+      travelmaplink: {}
+      triggeredsecurityprofile: {}
+      type: {}
+      urlsslverification: {}
+      user: {}
+      username: {}
+      vendorid: {}
+      vendorproduct: {}
+      vpcid: {}
+      vulnerabilitycategory: {}
+      whereisdatahosted: {}
+      xdralertcount: {}
+      xdralerts: {}
+      xdrassigneduseremail: {}
+      xdrassigneduserprettyname: {}
+      xdrdescription: {}
+      xdrdetectiontime: {}
+      xdrfileartifacts: {}
+      xdrhighseverityalertcount: {}
+      xdrincidentid: {}
+      xdrlowseverityalertcount: {}
+      xdrmediumseverityalertcount: {}
+      xdrnetworkartifacts: {}
+      xdrnotes: {}
+      xdrresolvecomment: {}
+      xdrstatus: {}
+      xdrurl: {}
+      xdrusercount: {}
+    separatecontext: false
+    task:
+      brand: Builtin
+      description: Updates the stage of the offboarding process in the incident details.
+      id: 1f6690c7-32e5-4d48-88c0-7831daa78da2
+      iscommand: true
+      name: Update offboarding stage
+      script: Builtin|||setIncident
+      type: regular
+      version: -1
+    taskid: 1f6690c7-32e5-4d48-88c0-7831daa78da2
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 705,
+          "y": 420
+        }
+      }
+  "121":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              complex:
+                accessor: UserDetails.phones.phone_id
+                root: DuoAdmin
+          operator: isExists
+      label: "yes"
+    id: "121"
+    ignoreworker: false
+    nexttasks:
+      '#default#':
+      - "125"
+      "yes":
+      - "58"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      description: Checks if any devices were found under the user's name in Duo.
+      id: 431eedca-83d4-4dd2-8490-89b3891d2b26
+      iscommand: false
+      name: Was a user device found in Duo?
+      type: condition
+      version: -1
+    taskid: 431eedca-83d4-4dd2-8490-89b3891d2b26
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": -1090,
+          "y": 785
+        }
+      }
+  "122":
+    id: "122"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "46"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: abe5a6eb-cfad-469b-8160-b5a4c1a10f8a
+      iscommand: false
+      name: Okta
+      type: title
+      version: -1
+    taskid: abe5a6eb-cfad-469b-8160-b5a4c1a10f8a
+    timertriggers: []
+    type: title
+    view: |-
+      {
+        "position": {
+          "x": -570,
+          "y": 660
+        }
+      }
+  "123":
+    id: "123"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "121"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: ff58d77c-261a-4fc8-8bc4-ac0efe759c7e
+      iscommand: false
+      name: Duo
+      type: title
+      version: -1
+    taskid: ff58d77c-261a-4fc8-8bc4-ac0efe759c7e
+    timertriggers: []
+    type: title
+    view: |-
+      {
+        "position": {
+          "x": -1090,
+          "y": 660
+        }
+      }
+  "125":
+    id: "125"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "33"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 84d27bff-6f27-4071-8281-5ea93ffda8b9
+      iscommand: false
+      name: Mobile, 2FA Security - Done
+      type: title
+      version: -1
+    taskid: 84d27bff-6f27-4071-8281-5ea93ffda8b9
+    timertriggers: []
+    type: title
+    view: |-
+      {
+        "position": {
+          "x": -575,
+          "y": 1330
+        }
+      }
+  "126":
+    id: "126"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "33"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 2d831176-42c3-42e4-85a2-70e8b47ffbee
+      iscommand: false
+      name: AD & Gmail Security - Done
+      type: title
+      version: -1
+    taskid: 2d831176-42c3-42e4-85a2-70e8b47ffbee
+    timertriggers: []
+    type: title
+    view: |-
+      {
+        "position": {
+          "x": 1190,
+          "y": 1435
+        }
+      }
+  "130":
+    id: "130"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "126"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      description: Please revoke any roles that are assigned to the user in Google,
+        manually.
+      id: 062320eb-82ec-4731-8bf3-b2b46ded085a
+      iscommand: false
+      name: Revoke user roles manually
+      type: regular
+      version: -1
+    taskid: 062320eb-82ec-4731-8bf3-b2b46ded085a
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 740,
+          "y": 1245
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {
+      "108_109_#default#": 0.34,
+      "108_54_yes": 0.41,
+      "110_112_Property missing": 0.52,
+      "110_113_Property returned": 0.16,
+      "111_113_#default#": 0.16,
+      "121_125_#default#": 0.29,
+      "121_58_yes": 0.56,
+      "30_2_yes": 0.54,
+      "36_125_#default#": 0.42,
+      "36_4_yes": 0.5,
+      "46_125_#default#": 0.37,
+      "46_47_yes": 0.56,
+      "54_112_Property Missing": 0.38,
+      "54_113_Property Returned": 0.15,
+      "73_126_#default#": 0.13,
+      "73_30_yes": 0.48,
+      "73_3_yes": 0.51,
+      "73_5_yes": 0.84,
+      "86_126_#default#": 0.28,
+      "86_89_yes": 0.47,
+      "89_126_#default#": 0.33,
+      "97_125_#default#": 0.38
+    },
+    "paper": {
+      "dimensions": {
+        "height": 2165,
+        "width": 5050,
+        "x": -1090,
+        "y": 140
+      }
+    }
+  }

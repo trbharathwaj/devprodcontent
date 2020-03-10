@@ -1,0 +1,162 @@
+{
+	"fromDate": "0001-01-01T00:00:00Z",
+	"fromDateLicense": "0001-01-01T00:00:00Z",
+	"id": "d765d336-97a2-4365-8e34-962fcccf7c33",
+	"isCommon": true,
+	"layout": [
+		{
+			"forceRange": false,
+			"h": 3,
+			"i": "53e80850-54e9-11ea-9cf9-178f9201c162",
+			"id": "53e80850-54e9-11ea-9cf9-178f9201c162",
+			"w": 4,
+			"widget": {
+				"category": "",
+				"commitMessage": "",
+				"dataType": "incidents",
+				"dateRange": {
+					"fromDate": "0001-01-01T00:00:00Z",
+					"fromDateLicense": "0001-01-01T00:00:00Z",
+					"period": {
+						"by": "",
+						"byFrom": "days",
+						"byTo": "",
+						"field": "",
+						"fromValue": 7,
+						"toValue": null
+					},
+					"toDate": "0001-01-01T00:00:00Z"
+				},
+				"id": "active-incidents-by-type",
+				"isPredefined": true,
+				"modified": "2020-02-18T17:58:18.411574266Z",
+				"name": "Active Incidents - Line chart",
+				"params": {
+					"groupBy": [
+						"occurred(d)",
+						"type"
+					]
+				},
+				"prevName": "Active Incidents - Line chart",
+				"query": "-category:job and -status:archived and -status:closed",
+				"shouldCommit": false,
+				"size": 0,
+				"sort": null,
+				"sortValues": null,
+				"vcShouldIgnore": false,
+				"version": 26,
+				"widgetType": "line"
+			},
+			"x": 0,
+			"y": 0
+		},
+		{
+			"forceRange": false,
+			"h": 2,
+			"i": "54440b00-54e9-11ea-9cf9-178f9201c162",
+			"id": "54440b00-54e9-11ea-9cf9-178f9201c162",
+			"w": 2,
+			"widget": {
+				"category": "",
+				"commitMessage": "",
+				"dataType": "incidents",
+				"dateRange": {
+					"fromDate": "0001-01-01T00:00:00Z",
+					"fromDateLicense": "0001-01-01T00:00:00Z",
+					"period": {
+						"by": "",
+						"byFrom": "days",
+						"byTo": "",
+						"field": "",
+						"fromValue": 7,
+						"toValue": null
+					},
+					"toDate": "0001-01-01T00:00:00Z"
+				},
+				"id": "active-incidents-by-severity",
+				"isPredefined": true,
+				"modified": "2020-02-18T17:58:18.379743646Z",
+				"name": "Active Incidents - Pie chart",
+				"params": {
+					"groupBy": [
+						"severity"
+					]
+				},
+				"prevName": "Active Incidents - Pie chart",
+				"query": "-category:job and -status:archived and -status:closed",
+				"shouldCommit": false,
+				"size": 0,
+				"sort": null,
+				"sortValues": null,
+				"vcShouldIgnore": false,
+				"version": 26,
+				"widgetType": "pie"
+			},
+			"x": 2,
+			"y": 3
+		},
+		{
+			"forceRange": false,
+			"h": 2,
+			"i": "550eae00-54e9-11ea-9cf9-178f9201c162",
+			"id": "550eae00-54e9-11ea-9cf9-178f9201c162",
+			"w": 2,
+			"widget": {
+				"category": "",
+				"commitMessage": "",
+				"dataType": "incidents",
+				"dateRange": {
+					"fromDate": "0001-01-01T00:00:00Z",
+					"fromDateLicense": "0001-01-01T00:00:00Z",
+					"period": {
+						"by": "",
+						"byFrom": "days",
+						"byTo": "",
+						"field": "",
+						"fromValue": 7,
+						"toValue": null
+					},
+					"toDate": "0001-01-01T00:00:00Z"
+				},
+				"id": "average-incident-duration-by-role",
+				"isPredefined": true,
+				"modified": "2020-02-18T17:58:18.341436832Z",
+				"name": "Average Incident Duration by Role (Avg)",
+				"params": {
+					"groupBy": [
+						"roles"
+					],
+					"keys": [
+						"avg|openDuration / (3600*24)"
+					]
+				},
+				"prevName": "Average Incident Duration by Role (Avg)",
+				"query": "status:closed",
+				"shouldCommit": false,
+				"size": 5,
+				"sort": null,
+				"sortValues": null,
+				"vcShouldIgnore": false,
+				"version": 26,
+				"widgetType": "column"
+			},
+			"x": 4,
+			"y": 0
+		}
+	],
+	"name": "Dash-1",
+	"owner": "bharath",
+	"period": {
+		"by": "",
+		"byFrom": "days",
+		"byTo": "",
+		"field": "",
+		"fromValue": 7,
+		"toValue": null
+	},
+	"shared": false,
+	"sortValues": null,
+	"system": false,
+	"toDate": "0001-01-01T00:00:00Z",
+	"version": -1
+}

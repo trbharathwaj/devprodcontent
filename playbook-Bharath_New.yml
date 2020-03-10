@@ -1,0 +1,408 @@
+description: This is a description
+id: 58d2e56d-2162-476d-8dbc-0ea124d1c336
+inputs: []
+name: Bharath_New
+outputs: []
+starttaskid: "0"
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "11"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: d1ca7885-8f3b-4ed5-8e61-42df57908860
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: d1ca7885-8f3b-4ed5-8e61-42df57908860
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": -130
+        }
+      }
+  "1":
+    id: "1"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "4"
+    note: false
+    scriptarguments:
+      value:
+        complex:
+          accessor: name
+          root: incident
+          transformers:
+          - operator: toUpperCase
+    separatecontext: false
+    task:
+      brand: ""
+      id: bc8d1623-a8ba-45cd-88c7-4ea877d314f7
+      iscommand: false
+      name: Print
+      script: Print
+      type: regular
+      version: -1
+    taskid: bc8d1623-a8ba-45cd-88c7-4ea877d314f7
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 162.5,
+          "y": 370
+        }
+      }
+  "2":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: incident.name
+          operator: isEqualString
+          right:
+            value:
+              simple: BHARATH
+      label: "yes"
+    id: "2"
+    ignoreworker: false
+    nexttasks:
+      '#default#':
+      - "3"
+      "yes":
+      - "1"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 5b0758f9-f950-47b4-8dc5-fe6a3ab47ad1
+      iscommand: false
+      name: Check to see if Name is Bharath
+      type: condition
+      version: -1
+    taskid: 5b0758f9-f950-47b4-8dc5-fe6a3ab47ad1
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 195
+        }
+      }
+  "3":
+    id: "3"
+    ignoreworker: false
+    note: false
+    scriptarguments:
+      assetid: {}
+      assetowner: {}
+      assignedteam: {}
+      awsinstancename: {}
+      closeNotes: {}
+      closeReason: {}
+      disposition: {}
+      falsepositive: {}
+      id: {}
+      internalemail: {}
+      killchain: {}
+      lessonlearned: {}
+      lob: {}
+      qradarid: {}
+      recategorisefasttext: {}
+      remedyid: {}
+      shiftnotes: {}
+      status3: {}
+      wbransomwarecosts: {}
+      wbransomwarehostcount: {}
+      wbransomwarestages: {}
+    separatecontext: false
+    task:
+      brand: Builtin
+      id: be49c958-edd9-4765-8698-a218d13fb3c8
+      iscommand: true
+      name: Close incident
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: be49c958-edd9-4765-8698-a218d13fb3c8
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 1770
+        }
+      }
+  "4":
+    id: "4"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "5"
+    note: false
+    scriptarguments:
+      value:
+        simple: ${incident.details}
+    separatecontext: false
+    task:
+      brand: ""
+      id: d6814214-66aa-43ad-8022-2575047a68f1
+      iscommand: false
+      name: Print details if name matches
+      script: Print
+      type: regular
+      version: -1
+    taskid: d6814214-66aa-43ad-8022-2575047a68f1
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 162.5,
+          "y": 545
+        }
+      }
+  "5":
+    id: "5"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "6"
+    note: false
+    scriptarguments:
+      ip:
+        simple: ${incident.details}
+      long: {}
+      threshold: {}
+    separatecontext: false
+    task:
+      brand: ipinfo
+      id: 5739659c-4345-40c9-8354-8e65cd9ae887
+      iscommand: true
+      name: Run IP command on the Details
+      script: ipinfo|||ip
+      type: regular
+      version: -1
+    taskid: 5739659c-4345-40c9-8354-8e65cd9ae887
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 162.5,
+          "y": 720
+        }
+      }
+  "6":
+    id: "6"
+    ignoreworker: false
+    nexttasks:
+      '#default#':
+      - "3"
+      "Yes":
+      - "7"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 5313cc0c-c7c5-4eed-890d-7d84988abbe0
+      iscommand: false
+      name: 'Do you want a URL check? '
+      type: condition
+      version: -1
+    taskid: 5313cc0c-c7c5-4eed-890d-7d84988abbe0
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 162.5,
+          "y": 895
+        }
+      }
+  "7":
+    id: "7"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "8"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 637e3884-cf75-4dbf-806c-2d97a9b2ca35
+      iscommand: false
+      name: Enter a URL
+      type: regular
+      version: -1
+    taskid: 637e3884-cf75-4dbf-806c-2d97a9b2ca35
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 275,
+          "y": 1070
+        }
+      }
+  "8":
+    id: "8"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "9"
+    note: false
+    scriptarguments:
+      contextKey:
+        simple: MyResults
+      entryId:
+        simple: ${lastCompletedTaskEntries}
+      listSeperator: {}
+    separatecontext: false
+    task:
+      brand: ""
+      id: b0d9cde9-cd8f-44ad-898e-99ffcf460f35
+      iscommand: false
+      name: 'Comments to Context '
+      script: commentsToContext
+      type: regular
+      version: -1
+    taskid: b0d9cde9-cd8f-44ad-898e-99ffcf460f35
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 275,
+          "y": 1245
+        }
+      }
+  "9":
+    id: "9"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "10"
+    note: false
+    scriptarguments:
+      confidenceThreshold: {}
+      limit: {}
+      long: {}
+      owners: {}
+      public: {}
+      ratingThreshold: {}
+      retries: {}
+      sampleSize: {}
+      submitWait: {}
+      threshold: {}
+      timeout: {}
+      url:
+        simple: ${MyResults}
+      using:
+        simple: AlienVault OTX_instance_1
+      wait: {}
+    separatecontext: false
+    task:
+      brand: AlienVault OTX
+      id: 6503ec2c-8321-4b4e-827c-1cb6e6602adc
+      iscommand: true
+      name: URL Reputation check
+      script: AlienVault OTX|||url
+      type: regular
+      version: -1
+    taskid: 6503ec2c-8321-4b4e-827c-1cb6e6602adc
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 275,
+          "y": 1420
+        }
+      }
+  "10":
+    evidencedata:
+      customfields: {}
+      description:
+        simple: 'Rasterize Evidence '
+    id: "10"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "3"
+    note: true
+    scriptarguments:
+      height: {}
+      type: {}
+      url:
+        simple: ${MyResults}
+      width: {}
+    separatecontext: false
+    task:
+      brand: ""
+      id: 3d2471bf-49e1-47d0-8ab5-8a6e90754aa6
+      iscommand: true
+      name: Rasterize URL
+      script: '|||rasterize'
+      type: regular
+      version: -1
+    taskid: 3d2471bf-49e1-47d0-8ab5-8a6e90754aa6
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 275,
+          "y": 1595
+        }
+      }
+  "11":
+    id: "11"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "2"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: f0dc97a4-f95a-419f-8d59-99523780ffea
+      iscommand: false
+      name: Get Input
+      type: regular
+      version: -1
+    taskid: f0dc97a4-f95a-419f-8d59-99523780ffea
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 0
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 1995,
+        "width": 605,
+        "x": 50,
+        "y": -130
+      }
+    }
+  }

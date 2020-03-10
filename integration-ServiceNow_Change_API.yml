@@ -1,0 +1,763 @@
+category: Case Management
+commonfields:
+  id: ServiceNow Change API
+  version: -1
+configuration:
+- defaultvalue: ""
+  display: Server URL (https://nikedev.service-now.com/)
+  name: URL
+  required: true
+  type: 0
+- defaultvalue: ""
+  display: ""
+  name: credentials
+  required: true
+  type: 9
+- defaultvalue: ""
+  display: Access Key
+  name: AccessKey
+  required: true
+  type: 4
+description: This is custom integration to ServiceNow's new API.
+display: ServiceNow Change API
+image: data:image/png;base64,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
+name: ServiceNow Change API
+script:
+  commands:
+  - arguments:
+    - description: AD ID of the requesting user
+      name: requestor
+      required: true
+    - description: Description to be added to the change request
+      name: description
+      required: true
+    description: Create routine change request
+    name: sn-change-create
+  - arguments:
+    - description: ID of change request to close
+      name: changeID
+      required: true
+    - auto: PREDEFINED
+      description: Status to set while closing the change request
+      name: status_code
+      predefined:
+      - Success
+      - Failure
+      required: true
+    - description: Work notes to be added to the change request
+      name: notes
+      required: true
+    description: Close routine change request
+    name: sn-change-close
+  - arguments:
+    - description: Incident Number
+      name: IncidentID
+      required: true
+    description: Fetch details of incident by incident number
+    name: sn-get-incident
+  - arguments:
+    - description: Any active NT ID
+      name: requested_for
+      required: true
+    - description: Short description of the incident
+      name: short_description
+      required: true
+    - description: Detailed description of the incident
+      name: detailed_description
+      required: true
+    - auto: PREDEFINED
+      defaultValue: Low
+      description: Impact of the incident
+      name: impact
+      predefined:
+      - Critical
+      - High
+      - Medium
+      - Low
+      required: true
+    - auto: PREDEFINED
+      defaultValue: Low
+      description: Urgency of the incident
+      name: urgency
+      predefined:
+      - Critical
+      - High
+      - Medium
+      - Low
+      required: true
+    - auto: PREDEFINED
+      description: Impacted Geo Names
+      name: impacted_geo
+      predefined:
+      - APLA
+      - EMEA
+      - Greater China
+      - North America
+      required: true
+    - auto: PREDEFINED
+      description: Service name
+      name: service
+      predefined:
+      - AAP Reports
+      - Account Payable Reporting
+      - Accounts Receivable Reporting
+      - Active P-Code Report
+      - AEM-Platform
+      - Air Freight Dashboard
+      - AirMI-Production
+      - Americas Reporting
+      - Analytical Ledger  - Greece
+      - AnalyticService Data & Analytics (GC)
+      - Asia Labeling Data Extract for Avery Dennison & JC
+      - ASSORT TO THE PLAN
+      - Assortment Planning
+      - Audio Video Equipment (EMEA)
+      - Audio Visual
+      - Baozun BI
+      - Baozun Digital Order Fulfillment
+      - BCL Business Consumption Layer Reporting
+      - Benefits
+      - Bill of Materials
+      - Booking and Tracking Reporting
+      - Brand Protection Converse
+      - Brand Category & Geo Business Plans
+      - Brand Category & Geo Business Plans Converse
+      - Brand Category & Geo Performance Management
+      - Brand-Production Support
+      - BRING THE ASSORTMENT TO LIFE
+      - CAO - Legal Services
+      - CAO - Security Monitoring
+      - Capital Asset Accounting
+      - Capture Orders Converse
+      - CCA - Ad-hoc report generation
+      - CCA - Customs Compliance Application
+      - CCA - Customs Entry Validation
+      - CCA - Post-entry Operations
+      - Cellular Service and Support - Mexico
+      - CLC Warehouse Management Reporting
+      - Client Software
+      - Closed Loop Planning
+      - CLRR - Central Lab Requirements Repository
+      - CLRR - Report Generation
+      - CLRR - Requirements Gathering
+      - Cognos Europe Reporting
+      - Cognos GC Reporting
+      - Cognos HR Reporting
+      - Cognos Mexico Reporting
+      - Collect & Apply Cash Update Credit Limits
+      - Collect & Apply Cash Update Credit Limits Converse
+      - Commerce Finance
+      - Commerce Order Fulfillment
+      - Commerce Order Services
+      - Comp Download Report
+      - Compensation and Benefits Administration Technology
+      - Consumer Data & Analytics
+      - Contract Consumption Dashboard
+      - Controlling & Profitability Analysis Report
+      - Converse Analytics-Digital
+      - Converse Analytics-GPM Datahub
+      - Converse Analytics-Marketplace Datahub
+      - Converse Analytics-Planning Datahub
+      - Converse Analytics-Retail
+      - Converse B2B
+      - Converse Creative Services
+      - Converse Datafoundation (APAC)
+      - Converse EDI - Retired
+      - Converse EEM
+      - Converse Factory Metrics (GC)
+      - Converse NuORDER
+      - Converse Retail Connectivity
+      - Converse Retail Digital Enablement
+      - Converse Retail IT Support
+      - Converse Retail Printing
+      - Converse Retail Receiving/Inventory
+      - Converse Sample Sales (APAC)
+      - Corporate Consolidation
+      - Corporate Consolidation Converse
+      - Corporate Governance & Board of Directors
+      - Corporate Strategic Initiatives
+      - Corporate Strategic Planning Process
+      - Corporate Strategic Planning Process Converse
+      - Cost Center Analysis Report
+      - Costings - Europe
+      - CostToServe Reporting
+      - Coverage Reporting
+      - Credit Risk Management Converse
+      - CSI NFL Quick Reponse
+      - Customer Operations COI Dashboard
+      - Customs Export (ELC)
+      - Customs Import (ELC)
+      - Daily Operational Solution Reporting
+      - DC3 Reprofile Cognos Report
+      - Deliver
+      - Deliver Technology
+      - Delivery Instructions Application (DIA)
+      - Delivery Tracking Reporting
+      - Demand Planning (DP)
+      - Develop Inventory Strategy Converse
+      - DIFOT Reporting
+      - Digital Product Creation
+      - Digital Signage (EMEA)
+      - Direct Payables - Factory Payments
+      - Dispose of Inventory Converse
+      - Distributors - Europe
+      - DL - Brazil NOTA
+      - DL - Deliver Inbound
+      required: true
+    - description: Service area name
+      name: service_area
+    - description: Assignment group name
+      name: assignment_group
+      required: true
+    - description: Assigned user's sys_id
+      name: assigned_to
+    - description: Work notes
+      name: work_notes
+    - description: Customer Comments
+      name: customer_comments
+    - description: Device Name
+      name: device_name
+    - description: CI
+      name: ci
+    - description: Symptom
+      name: Symptom
+    - description: Contact Type
+      name: contact_type
+    - description: Impacted Users
+      name: impacted_users
+    - description: Location Name
+      name: requested_for_location
+    - description: Location Name
+      name: impacted_locations
+    - description: NTID
+      name: watch_list
+    description: Create a ticket in ServiceNow
+    name: sn-create-incident
+  - arguments:
+    - description: Incident ID to modify
+      name: IncidentID
+      required: true
+    - description: Any active NT ID
+      name: requested_for
+    - description: Short description of the incident
+      name: short_description
+    - description: Detailed description of the incident
+      name: detailed_description
+    - auto: PREDEFINED
+      defaultValue: Low
+      description: Impact of the incident
+      name: impact
+      predefined:
+      - Critical
+      - High
+      - Medium
+      - Low
+    - auto: PREDEFINED
+      defaultValue: Low
+      description: Urgency of the incident
+      name: urgency
+      predefined:
+      - Critical
+      - High
+      - Medium
+      - Low
+    - auto: PREDEFINED
+      description: Impacted Geo Names
+      name: impacted_geo
+      predefined:
+      - APLA
+      - EMEA
+      - Greater China
+      - North America
+    - auto: PREDEFINED
+      description: Service name
+      name: service
+      predefined:
+      - AAP Reports
+      - Account Payable Reporting
+      - Accounts Receivable Reporting
+      - Active P-Code Report
+      - AEM-Platform
+      - Air Freight Dashboard
+      - AirMI-Production
+      - Americas Reporting
+      - Analytical Ledger  - Greece
+      - AnalyticService Data & Analytics (GC)
+      - Asia Labeling Data Extract for Avery Dennison & JC
+      - ASSORT TO THE PLAN
+      - Assortment Planning
+      - Audio Video Equipment (EMEA)
+      - Audio Visual
+      - Baozun BI
+      - Baozun Digital Order Fulfillment
+      - BCL Business Consumption Layer Reporting
+      - Benefits
+      - Bill of Materials
+      - Booking and Tracking Reporting
+      - Brand Protection Converse
+      - Brand Category & Geo Business Plans
+      - Brand Category & Geo Business Plans Converse
+      - Brand Category & Geo Performance Management
+      - Brand-Production Support
+      - BRING THE ASSORTMENT TO LIFE
+      - CAO - Legal Services
+      - CAO - Security Monitoring
+      - Capital Asset Accounting
+      - Capture Orders Converse
+      - CCA - Ad-hoc report generation
+      - CCA - Customs Compliance Application
+      - CCA - Customs Entry Validation
+      - CCA - Post-entry Operations
+      - Cellular Service and Support - Mexico
+      - CLC Warehouse Management Reporting
+      - Client Software
+      - Closed Loop Planning
+      - CLRR - Central Lab Requirements Repository
+      - CLRR - Report Generation
+      - CLRR - Requirements Gathering
+      - Cognos Europe Reporting
+      - Cognos GC Reporting
+      - Cognos HR Reporting
+      - Cognos Mexico Reporting
+      - Collect & Apply Cash Update Credit Limits
+      - Collect & Apply Cash Update Credit Limits Converse
+      - Commerce Finance
+      - Commerce Order Fulfillment
+      - Commerce Order Services
+      - Comp Download Report
+      - Compensation and Benefits Administration Technology
+      - Consumer Data & Analytics
+      - Contract Consumption Dashboard
+      - Controlling & Profitability Analysis Report
+      - Converse Analytics-Digital
+      - Converse Analytics-GPM Datahub
+      - Converse Analytics-Marketplace Datahub
+      - Converse Analytics-Planning Datahub
+      - Converse Analytics-Retail
+      - Converse B2B
+      - Converse Creative Services
+      - Converse Datafoundation (APAC)
+      - Converse EDI - Retired
+      - Converse EEM
+      - Converse Factory Metrics (GC)
+      - Converse NuORDER
+      - Converse Retail Connectivity
+      - Converse Retail Digital Enablement
+      - Converse Retail IT Support
+      - Converse Retail Printing
+      - Converse Retail Receiving/Inventory
+      - Converse Sample Sales (APAC)
+      - Corporate Consolidation
+      - Corporate Consolidation Converse
+      - Corporate Governance & Board of Directors
+      - Corporate Strategic Initiatives
+      - Corporate Strategic Planning Process
+      - Corporate Strategic Planning Process Converse
+      - Cost Center Analysis Report
+      - Costings - Europe
+      - CostToServe Reporting
+      - Coverage Reporting
+      - Credit Risk Management Converse
+      - CSI NFL Quick Reponse
+      - Customer Operations COI Dashboard
+      - Customs Export (ELC)
+      - Customs Import (ELC)
+      - Daily Operational Solution Reporting
+      - DC3 Reprofile Cognos Report
+      - Deliver
+      - Deliver Technology
+      - Delivery Instructions Application (DIA)
+      - Delivery Tracking Reporting
+      - Demand Planning (DP)
+      - Develop Inventory Strategy Converse
+      - DIFOT Reporting
+      - Digital Product Creation
+      - Digital Signage (EMEA)
+      - Direct Payables - Factory Payments
+      - Dispose of Inventory Converse
+      - Distributors - Europe
+      - DL - Brazil NOTA
+      - DL - Deliver Inbound
+    - description: Service area name
+      name: service_area
+    - description: Assignment group name
+      name: assignment_group
+    - description: Assigned user's sys_id
+      name: assigned_to
+    - description: Work notes
+      name: work_notes
+    - description: Customer Comments
+      name: customer_comments
+    - description: Device Name
+      name: device_name
+    - description: CI
+      name: ci
+    - description: Symptom
+      name: Symptom
+    - description: Contact Type
+      name: contact_type
+    - description: Impacted Users
+      name: impacted_users
+    - description: Location Name
+      name: requested_for_location
+    - description: Location Name
+      name: impacted_locations
+    - description: NTID
+      name: watch_list
+    description: Update a ticket in ServiceNow
+    name: sn-update-incident
+  - arguments: []
+    description: Get list of services
+    name: sn-get-services
+  - arguments:
+    - auto: PREDEFINED
+      description: Class of the location
+      name: class
+      predefined:
+      - data center
+      - logistics center
+      - office
+      - store
+      required: true
+    description: Get the list of possible values for the location field
+    name: sn-get-locations
+  - arguments:
+    - auto: PREDEFINED
+      description: Returns active or inactive groups
+      name: status
+      predefined:
+      - "true"
+      - "false"
+      required: true
+    description: Get the possible values for the assignment group field
+    name: sn-get-assignmentgroup
+  - arguments:
+    - description: Impacted location. Full location name as given by location table
+        OR Sys ID
+      name: location
+    - description: Incident opened before.. YYYY-MM-DD HH:MM:SS
+      name: before
+    - description: Incident opened after.. YYYY-MM-DD HH:MM:SS
+      name: after
+    - description: Full group name as given by the user group table
+      name: assignment_group
+    - auto: PREDEFINED
+      description: Full state name as given by drop down
+      name: state
+      predefined:
+      - closed
+      - new
+    description: Search for incidents based on pre-defined filters
+    name: sn-search-incident
+  runonce: false
+  script: |
+    import requests
+    import urllib
+    base_url = demisto.params()['URL']
+    username = demisto.params()['credentials']['identifier']
+    password = demisto.params()['credentials']['password']
+    access_key = demisto.params()['AccessKey']
+
+    map_impact = { "Critical" : 1, "High" : 2, "Medium" : 3, "Low" : 4}
+    map_urgency = { "Critical" : 1, "High" : 2, "Medium" : 3, "Low" : 4}
+
+    HEADERS = {
+        "Content-Type" : "application/json",
+        "Accept" : "application/json"
+    }
+    def changeCreate(requestor,description):
+        endpoint = "/api/nike2/change_api_service/create_change"
+        DATA = {
+            "access_key" : access_key,
+            "app" : "Demisto",
+            "requestor": requestor,
+            "description": description
+        }
+        try:
+            content = requests.post(base_url + endpoint,auth=(username, password),headers=HEADERS,json=DATA)
+            changeNumber = json.loads(content.text)['result']['changeNumber']
+            if content.status_code == 200:
+                demisto.results({
+                'EntryContext' : { 'ChangeRequest_No' : changeNumber } ,
+                'Contents' : { 'ChangeRequest_No' : changeNumber },
+                'ContentsFormat' : formats['text'],
+                'Type' : entryTypes['note'],
+                'HumanReadable' : 'Change request %s created!'%(changeNumber)
+            })
+            else:
+                demisto.results({ 'Type' : entryTypes['error'], 'ContentsFormat' : formats['text'], 'Contents' : "Unexpetcted output: %s"%(str(content.text))})
+        except:
+            demisto.results({ 'Type' : entryTypes['error'], 'ContentsFormat' : formats['text'], 'Contents' : "Please check credentials and proxy settings" })
+
+    def changeClose(changeID,status_code,notes):
+        endpoint = "/api/nike2/change_api_service/close_change"
+        if status_code == "Failure":
+            code = "2"
+        else:
+            code = "1"
+        DATA = {
+            "access_key" : access_key,
+            "change_number" : changeID,
+            "status_code": code,
+            "work_notes": notes
+        }
+        try:
+            content = requests.post(base_url + endpoint,auth=(username, password),headers=HEADERS,json=DATA)
+            response = json.loads(content.text)['result']['responseText']
+            if response == "Change successfully updated":
+                demisto.results("Change request %s closed!"%(changeID))
+            else:
+                demisto.results({ 'Type' : entryTypes['error'], 'ContentsFormat' : formats['text'], 'Contents' : "Unexpetcted output: %s"%(response)})
+        except:
+            demisto.results({ 'Type' : entryTypes['error'], 'ContentsFormat' : formats['text'], 'Contents' : "Please check credentials and proxy settings" + str(content)})
+
+
+    def getIncident(incidentID):
+        columns = ["state","number","severity","opened_at","closed_at","short_description","description","opened_by","u_affected_user","assignment_group","assigned_to"]
+        endpoint = "/api/nike2/incident_service_api/get_incident/%s/%s"%(incidentID,access_key)
+        try:
+            content = requests.get(base_url + endpoint,auth=(username,password),headers=HEADERS)
+            if content.status_code == 200:
+                data = content.json()
+                ec = {}
+                ec['ServiceNow'] = {}
+                ec['ServiceNow']['items'] = {}
+                if (data['result']['status'] == 1):
+                    #demisto.results(data['result']['incident'])
+                    temp = data['result']['incident']
+                    for item in temp:
+                        #if not(str(item).startswith('u_')):
+                        ec['ServiceNow']['items'][item] = temp[item]['display']
+                    demisto.results({
+                        'Type' : entryTypes['note'],
+                        'Contents' : tableToMarkdown('Incident', ec['ServiceNow']['items'], columns, headerTransform=service_now_table_format),
+                        'ContentsFormat' : formats['markdown'],
+                        'EntryContext' : ec})
+                else:
+                    demisto.results({ 'Type' : entryTypes['error'], 'ContentsFormat' : formats['text'], 'Contents' : data['result']['responseText']})
+            else:
+                demisto.results({ 'Type' : entryTypes['error'], 'ContentsFormat' : formats['text'], 'Contents' : "Error - Invalid response - " + str(content.status_code)})
+                sys.exit(0)
+        except Exception as ex:
+            demisto.results({ 'Type' : entryTypes['error'], 'ContentsFormat' : formats['text'], 'Contents' : "Error - " + str(ex)})
+
+    def searchIncident(query):
+        #Table columns for the warroom output
+        columns = ["state","number","severity","opened_at","closed_at","short_description","description","opened_by","u_affected_user","assignment_group","assigned_to"]
+        endpoint = "/api/nike2/incident_service_api/get_incidents/" + access_key + "?" + query
+        try:
+            content = requests.get(base_url + endpoint,auth=(username,password),headers=HEADERS)
+            if content.status_code == 200:
+                data = content.json()
+                ec = {}
+                ec['ServiceNow'] = {}
+                ec['ServiceNow']['items'] = []
+                if (data['result']['status'] == 1):
+                    incidentList = data['result']['incidents']
+                    for incident in incidentList:
+                        ecData = {}
+                        for item in incident:
+                            #if not(str(item).startswith('u_')):
+                            ecData[item] = incident[item]['display']
+                        ec['ServiceNow']['items'].append(ecData)
+                    demisto.results({
+                        'Type' : entryTypes['note'],
+                        'Contents' : tableToMarkdown(str(len(ec['ServiceNow']['items'])) + ' Incident(s) Found', ec['ServiceNow']['items'], columns, headerTransform=service_now_table_format),
+                        'ContentsFormat' : formats['markdown'],
+                        'EntryContext' : ec})
+                else:
+                    demisto.results({ 'Type' : entryTypes['error'], 'ContentsFormat' : formats['text'], 'Contents' : data['result']['responseText']})
+            else:
+                demisto.results({ 'Type' : entryTypes['error'], 'ContentsFormat' : formats['text'], 'Contents' : "Error - Invalid response - " + str(content.status_code)})
+                sys.exit(0)
+        except Exception as ex:
+            demisto.results({ 'Type' : entryTypes['error'], 'ContentsFormat' : formats['text'], 'Contents' : "Error - " + str(ex)})
+
+    def createIncident(arguments):
+        endpoint = "/api/nike2/incident_service_api/create_incident"
+        arguments['access_key'] = access_key
+        arguments['impact'] = map_impact[arguments['impact']]
+        arguments['urgency'] = map_impact[arguments['urgency']]
+        #Hardcoded, s.demisto is the only users that has permission. Also removed requested_by parameter
+        arguments['requested_by'] = 's.demisto'
+        DATA = json.dumps(arguments)
+        try:
+            content = requests.post(base_url + endpoint,auth=(username, password),headers=HEADERS,data=DATA)
+            if content.status_code == 200:
+                temp = content.json()
+                if temp['result']['status'] == 1:
+                    ec = {}
+                    ec['ServiceNow'] = {
+                        'created' : {
+                            'incidentNumber' : temp['result']['incidentNumber'],
+                            'incidentUrl' : temp['result']['incidentUrl'],
+                            'assignmentGroupFound' : temp['result']['assignmentGroupFound'],
+                            'serviceFound' : temp['result']['serviceFound']
+                        }
+                    }
+                    demisto.results({
+                        'Type' : entryTypes['note'],
+                        'Contents' : "Incident " + temp['result']['incidentNumber'] + " created successfully!\n<a href=\"" + temp['result']['incidentUrl'] + "\">Go to incident in SNOW</a>",
+                        'ContentsFormat' : formats['html'],
+                        'EntryContext' : ec
+                    })
+                else:
+                    demisto.results({ 'Type' : entryTypes['error'], 'ContentsFormat' : formats['text'], 'Contents' : "Status Code: " + str(temp['result']['status']) + "\n" + temp['result']['responseText']})
+                sys.exit(0)
+            else:
+                demisto.results({ 'Type' : entryTypes['error'], 'ContentsFormat' : formats['text'], 'Contents' : "Error - Invalid response - " + str(content.status_code)})
+                sys.exit(0)
+        except Exception as ex:
+            demisto.results({ 'Type' : entryTypes['error'], 'ContentsFormat' : formats['text'], 'Contents' : "Error - " +  str(ex)})
+
+    def updateIncident(arguments):
+        endpoint = "/api/nike2/incident_service_api/update_incident"
+        arguments['access_key'] = access_key
+        if demisto.get(arguments,'impact'):
+            arguments['impact'] = map_impact[arguments['impact']]
+        if demisto.get(arguments,'urgency'):
+            arguments['urgency'] = map_impact[arguments['urgency']]
+        DATA = json.dumps(arguments)
+        print(DATA)
+        try:
+            content = requests.post(base_url + endpoint,auth=(username, password),headers=HEADERS,data=DATA)
+            if content.status_code == 200:
+                temp = content.json()
+                if temp['result']['status'] == 1:
+                    demisto.results({
+                        'Type' : entryTypes['note'],
+                        'Contents' : "Incident " + temp['result']['incidentNumber'] + " updated successfully!",
+                        'ContentsFormat' : formats['html']
+                    })
+                else:
+                    demisto.results({ 'Type' : entryTypes['error'], 'ContentsFormat' : formats['text'], 'Contents' : "Status Code: " + str(temp['result']['status']) + "\n" + temp['result']['responseText']})
+            else:
+                demisto.results({ 'Type' : entryTypes['error'], 'ContentsFormat' : formats['text'], 'Contents' : "Error - Invalid response - " + str(content.status_code)})
+                sys.exit(0)
+        except Exception as ex:
+            demisto.results({ 'Type' : entryTypes['error'], 'ContentsFormat' : formats['text'], 'Contents' : "Error - " +  str(ex)})
+
+    def getServices():
+        endpoint = "/api/nike2/foundation_api_service/services/" + str(access_key)
+        try:
+            content = requests.get(base_url + endpoint,auth=(username, password),headers=HEADERS)
+            if content.status_code == 200:
+                data = content.json()
+                if data['result']['status'] == 1:
+                    demisto.results({
+                        'Type' : entryTypes['note'],
+                        'ReadableContentsFormat' : formats['markdown'],
+                        'HumanReadable' : tableToMarkdown("Services", data['result']['services'],['name']),
+                        'Contents' : "List of the services",
+                        'ContentsFormat' : formats['text']
+                    })
+                else:
+                    demisto.results({ 'Type' : entryTypes['error'], 'ContentsFormat' : formats['text'], 'Contents' : "Status Code: " + str(data['result']['status']) + "\n" + data['result']['responseText']})
+                sys.exit(0)
+            else:
+                demisto.results({ 'Type' : entryTypes['error'], 'ContentsFormat' : formats['text'], 'Contents' : "Error - Invalid response - " + str(content.status_code)})
+                sys.exit(0)
+        except Exception as ex:
+            demisto.results({ 'Type' : entryTypes['error'], 'ContentsFormat' : formats['text'], 'Contents' : "Unable to send request - " + str(ex)})
+
+    def getLocations(locClass):
+        endpoint = "/api/nike2/foundation_api_service/locations/" + str(access_key)+ "?class=" + str(locClass)
+        try:
+            content = requests.get(base_url + endpoint,auth=(username, password),headers=HEADERS)
+            if content.status_code == 200:
+                data = content.json()
+                if data['result']['status'] == 1:
+                    demisto.results({
+                        'Type' : entryTypes['note'],
+                        'ReadableContentsFormat' : formats['markdown'],
+                        'HumanReadable' : tableToMarkdown("Locations", data['result']['locations'],['name']),
+                        'Contents' : "List of the locations",
+                        'ContentsFormat' : formats['text']
+                    })
+                else:
+                    demisto.results({ 'Type' : entryTypes['error'], 'ContentsFormat' : formats['text'], 'Contents' : "Status Code: " + str(data['result']['status']) + "\n" + data['result']['responseText']})
+                sys.exit(0)
+            else:
+                demisto.results({ 'Type' : entryTypes['error'], 'ContentsFormat' : formats['text'], 'Contents' : "Error - Invalid response - " + str(content.status_code)})
+                sys.exit(0)
+        except Exception as ex:
+            demisto.results({ 'Type' : entryTypes['error'], 'ContentsFormat' : formats['text'], 'Contents' : "Unable to send request - " + str(ex)})
+
+    def getAssignmentGroup(status):
+        if status:
+            endpoint = "/api/nike2/foundation_api_service/assignment_groups/" + str(access_key)+ "?active=true"
+        else:
+            endpoint = "/api/nike2/foundation_api_service/assignment_groups/" + str(access_key)+ "?active=false"
+        try:
+            content = requests.get(base_url + endpoint,auth=(username, password),headers=HEADERS)
+            if content.status_code == 200:
+                data = content.json()
+                if data['result']['status'] == 1:
+                    demisto.results({
+                        'Type' : entryTypes['note'],
+                        'ReadableContentsFormat' : formats['markdown'],
+                        'HumanReadable' : tableToMarkdown("Assignment Groups", data['result']['assignmentGroups'],['name','description']),
+                        'Contents' : "List of the Assignment Groups",
+                        'ContentsFormat' : formats['text']
+                    })
+                else:
+                    demisto.results({ 'Type' : entryTypes['error'], 'ContentsFormat' : formats['text'], 'Contents' : "Status Code: " + str(data['result']['status']) + "\n" + data['result']['responseText']})
+            else:
+                demisto.results({ 'Type' : entryTypes['error'], 'ContentsFormat' : formats['text'], 'Contents' : "Error - Invalid response - " + str(content.status_code)})
+        except Exception as ex:
+            demisto.results({ 'Type' : entryTypes['error'], 'ContentsFormat' : formats['text'], 'Contents' : "Unable to send request - " + str(ex)})
+
+    def testConnectivity():
+        endpoint = "/api/nike2/foundation_api_service/services/" + str(access_key)
+        try:
+            content = requests.get(base_url + endpoint,auth=(username, password),headers=HEADERS)
+            if content.status_code == 200:
+                data = content.json()
+                if data['result']['status'] == 1:
+                    demisto.results('ok')
+                else:
+                    demisto.results('Failed: ' + str(data['result']['responseText']))
+            else:
+                demisto.results('API call failed: Status Code ' + str(content.status_code))
+        except Exception as ex:
+            demisto.results('Unable to connect - ' + str(ex))
+
+    if demisto.command() == 'test-module':
+        testConnectivity()
+        sys.exit(0)
+    if demisto.command() == 'sn-change-create':
+        changeCreate(demisto.args()['requestor'],demisto.args()['description'])
+        sys.exit(0)
+    if demisto.command() == "sn-change-close":
+        changeClose(demisto.args()['changeID'],demisto.args()['status_code'],demisto.args()['notes'])
+        sys.exit(0)
+    if demisto.command() == 'sn-get-incident':
+        getIncident(demisto.args()['IncidentID'])
+        sys.exit(0)
+    if demisto.command() == 'sn-create-incident':
+        createIncident(demisto.args())
+        sys.exit(0)
+    if demisto.command() == 'sn-update-incident':
+        updateIncident(demisto.args())
+    if demisto.command() == 'sn-get-services':
+        getServices()
+        sys.exit(0)
+    if demisto.command() == 'sn-get-locations':
+        getLocations(demisto.args()['class'])
+        sys.exit(0)
+    if demisto.command() == 'sn-get-assignmentgroup':
+        getAssignmentGroup(demisto.args()['status'])
+        sys.exit(0)
+    if demisto.command() == 'sn-search-incident':
+        #Build the filter
+        query = ""
+        arguments = demisto.args()
+        for items in arguments:
+            if query != '':
+                query = query + '&'
+            query = query + str(items) + "=" +  arguments[items]
+        query = query.replace(' ','%20')
+        searchIncident(query)
+        sys.exit(0)
+  subtype: python2
+  type: python

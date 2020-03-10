@@ -1,0 +1,1696 @@
+description: |-
+  Discover Custom Phishing Playbook. Use this playbook to investigate and remediate a potential phishing incident. The playbook simultaneously engages with the user that triggered the incident, while investigating the incident itself.
+
+  The final remediation tasks are always decided by a human analyst.
+id: dca8ac0f-8710-4e60-8b40-1aeb210f67e5
+inputs:
+- description: The default role to assign the incident to.
+  key: Role
+  required: true
+  value:
+    simple: Administrator
+- description: |-
+    Enable the "Search and Delete" capability (can be either "True" or "False").
+    In case of a malicious email, the "Search and Delete" sub-playbook will look for other instances of the email and delete them pending analyst approval.
+  key: SearchAndDelete
+  required: false
+  value:
+    simple: "False"
+- description: |-
+    Enable the "Block Indicators" capability (can be either "True" or "False").
+    In case of a malicious email, the "Block Indicators" sub-playbook will block all malicious indicators in the relevant integrations.
+  key: BlockIndicators
+  required: false
+  value:
+    simple: "False"
+name: Synchrony - Playbook Phishing v1.0_copy
+outputs: []
+starttaskid: "0"
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "39"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: a309c013-d866-41c9-87cf-59769942b6a0
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: a309c013-d866-41c9-87cf-59769942b6a0
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 1022.5,
+          "y": 50
+        }
+      }
+  "2":
+    id: "2"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "65"
+    note: false
+    reputationcalc: 1
+    scriptarguments:
+      assignBy: {}
+      email: {}
+      roles:
+        complex:
+          root: inputs.Role
+      username: {}
+    separatecontext: false
+    task:
+      brand: ""
+      description: Assign the incident to an analyst based on the analyst's organizational
+        role.
+      id: 9367928a-d756-421d-8a5f-df4987794973
+      iscommand: false
+      name: Assign to analyst
+      script: AssignAnalystToIncident
+      type: regular
+      version: -1
+    taskid: 9367928a-d756-421d-8a5f-df4987794973
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 807.5,
+          "y": 1710
+        }
+      }
+  "6":
+    id: "6"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "2"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 5f0eb72a-9754-4f9d-8977-5f159b40bf76
+      iscommand: false
+      name: ""
+      playbookId: Calculate Severity - Generic
+      type: playbook
+      version: -1
+    taskid: 5f0eb72a-9754-4f9d-8977-5f159b40bf76
+    timertriggers: []
+    type: playbook
+    view: |-
+      {
+        "position": {
+          "x": 377.5,
+          "y": 1185
+        }
+      }
+  "8":
+    id: "8"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "29"
+    note: false
+    reputationcalc: 1
+    scriptarguments:
+      assetid: {}
+      closeNotes: {}
+      closeReason: {}
+      id: {}
+      importantfield: {}
+      test2: {}
+      timefield1: {}
+    separatecontext: false
+    task:
+      brand: Builtin
+      description: Close the investigation.
+      id: 52cdcb44-e667-46cf-8ea2-5df2b95c7981
+      iscommand: true
+      name: Close investigation
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: 52cdcb44-e667-46cf-8ea2-5df2b95c7981
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 830,
+          "y": 5570
+        }
+      }
+  "11":
+    id: "11"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "26"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 7888aa32-4698-4bed-86d4-fb9770a78508
+      iscommand: false
+      name: Triage
+      type: title
+      version: -1
+    taskid: 7888aa32-4698-4bed-86d4-fb9770a78508
+    timertriggers: []
+    type: title
+    view: |-
+      {
+        "position": {
+          "x": 592.5,
+          "y": 340
+        }
+      }
+  "12":
+    id: "12"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "14"
+    note: false
+    reputationcalc: 1
+    scriptarguments:
+      append:
+        simple: "true"
+      key:
+        simple: Account.Email.Address
+      value:
+        complex:
+          accessor: labels.Email/from
+          root: incident
+    separatecontext: false
+    task:
+      brand: ""
+      description: Store the email address of the user that reported the incident.
+      id: 23bdd2a5-7b85-4e08-8b4e-d1c1f7837458
+      iscommand: false
+      name: Store the email address of the reporting user
+      script: Set
+      type: regular
+      version: -1
+    taskid: 23bdd2a5-7b85-4e08-8b4e-d1c1f7837458
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1452.5,
+          "y": 1185
+        }
+      }
+  "13":
+    id: "13"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "2"
+    note: false
+    reputationcalc: 1
+    scriptarguments:
+      attachIDs: {}
+      attachNames: {}
+      bcc: {}
+      body:
+        simple: "Hi ${.=val.Account.DisplayName && val.Email.Address === val.incident.labels['Email/from']
+          ? val.Account.DisplayName : val.incident.labels['Email/from']},\nWe've received
+          your email and are investigating.\nPlease do not touch the email until further
+          notice.\n\nCordially, \n  Your friendly neighborhood security team"
+      cc: {}
+      htmlBody: {}
+      replyTo: {}
+      subject:
+        simple: 'Re: Phishing Investigation - ${incident.name}'
+      to:
+        complex:
+          accessor: labels.Email/from
+          root: incident
+    separatecontext: false
+    task:
+      brand: ""
+      description: |
+        Send an auto-response to user that reported the incident, informing them the incident was received and being handled.
+      id: 05e931a0-a661-46de-8c8c-be5c5226c1a9
+      iscommand: true
+      name: Acknowledge incident was received
+      script: '|||send-mail'
+      type: regular
+      version: -1
+    taskid: 05e931a0-a661-46de-8c8c-be5c5226c1a9
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1452.5,
+          "y": 1535
+        }
+      }
+  "14":
+    id: "14"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "13"
+    note: false
+    separatecontext: true
+    task:
+      brand: ""
+      id: 3adbc930-fb2d-46df-841b-b22dadfabdae
+      iscommand: false
+      name: Email Address Enrichment - Generic
+      playbookId: email_address_enrichment_-_generic
+      type: playbook
+      version: -1
+    taskid: 3adbc930-fb2d-46df-841b-b22dadfabdae
+    timertriggers: []
+    type: playbook
+    view: |-
+      {
+        "position": {
+          "x": 1452.5,
+          "y": 1360
+        }
+      }
+  "18":
+    id: "18"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "12"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 31016abe-6ffb-4186-81f8-40ca12dec49b
+      iscommand: false
+      name: Engage with User
+      type: title
+      version: -1
+    taskid: 31016abe-6ffb-4186-81f8-40ca12dec49b
+    timertriggers: []
+    type: title
+    view: |-
+      {
+        "position": {
+          "x": 1452.5,
+          "y": 1025
+        }
+      }
+  "22":
+    id: "22"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "6"
+    note: false
+    separatecontext: true
+    task:
+      brand: ""
+      id: fcc10be4-d186-46f1-8b94-53f6c09b09cd
+      iscommand: false
+      name: Detonate File - Generic
+      playbookId: Detonate File - Generic
+      type: playbook
+      version: -1
+    taskid: fcc10be4-d186-46f1-8b94-53f6c09b09cd
+    timertriggers: []
+    type: playbook
+    view: |-
+      {
+        "position": {
+          "x": 592.5,
+          "y": 1010
+        }
+      }
+  "25":
+    id: "25"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "45"
+    note: false
+    separatecontext: true
+    task:
+      brand: ""
+      id: 08aa4332-b539-4313-85d8-8f255fbda002
+      iscommand: false
+      name: Entity Enrichment - Generic
+      playbookId: entity_enrichment_generic
+      type: playbook
+      version: -1
+    taskid: 08aa4332-b539-4313-85d8-8f255fbda002
+    timertriggers: []
+    type: playbook
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 835
+        }
+      }
+  "26":
+    id: "26"
+    ignoreworker: false
+    loop:
+      exitCondition: ""
+      iscommand: false
+      wait: 1
+    nexttasks:
+      '#none#':
+      - "35"
+      - "22"
+    note: false
+    scriptarguments:
+      Email:
+        complex:
+          accessor: labels.Email
+          root: incident
+      Email/cc:
+        complex:
+          accessor: labels.CC
+          root: incident
+      Email/format:
+        complex:
+          accessor: labels.Email/format
+          root: incident
+      Email/from:
+        complex:
+          accessor: labels.Email/from
+          root: incident
+      Email/headers:
+        complex:
+          accessor: labels.Email/headers
+          root: incident
+      Email/html:
+        complex:
+          accessor: labels.Email/html
+          root: incident
+      Email/subject:
+        complex:
+          accessor: labels.Email/subject
+          root: incident
+      Email/text:
+        complex:
+          accessor: labels.Email/text
+          root: incident
+      File:
+        complex:
+          root: File
+      GetOriginalEmail:
+        simple: "False"
+    separatecontext: true
+    task:
+      brand: ""
+      description: Add email details to the relevant context entities and handle the
+        case where original emails are attached.
+      id: b8ca8ca1-754b-4cd7-887e-9f0480cf9103
+      iscommand: false
+      name: Process Email - Generic
+      playbookId: process_email_-_generic
+      type: playbook
+      version: -1
+    taskid: b8ca8ca1-754b-4cd7-887e-9f0480cf9103
+    timertriggers: []
+    type: playbook
+    view: |-
+      {
+        "position": {
+          "x": 592.5,
+          "y": 485
+        }
+      }
+  "29":
+    id: "29"
+    ignoreworker: false
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: d24602e7-8d1f-4ff7-8f20-b96173c58caa
+      iscommand: false
+      name: Done
+      type: title
+      version: -1
+    taskid: d24602e7-8d1f-4ff7-8f20-b96173c58caa
+    timertriggers: []
+    type: title
+    view: |-
+      {
+        "position": {
+          "x": 830,
+          "y": 5830
+        }
+      }
+  "35":
+    id: "35"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "25"
+    note: false
+    separatecontext: true
+    task:
+      brand: ""
+      id: e7c37214-e94d-407d-8f3d-e5ee31968f11
+      iscommand: false
+      name: Extract Indicators From File - Generic
+      playbookId: extract_indicators_from_file_-_generic
+      type: playbook
+      version: -1
+    taskid: e7c37214-e94d-407d-8f3d-e5ee31968f11
+    timertriggers: []
+    type: playbook
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 660
+        }
+      }
+  "39":
+    id: "39"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "11"
+      - "18"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 798d0ab0-7874-43cd-8bd0-18797ef41f04
+      iscommand: false
+      name: Start Detection Timer
+      type: title
+      version: -1
+    taskid: 798d0ab0-7874-43cd-8bd0-18797ef41f04
+    timertriggers:
+    - action: start
+      fieldname: detectionsla
+    type: title
+    view: |-
+      {
+        "position": {
+          "x": 1022.5,
+          "y": 195
+        }
+      }
+  "45":
+    id: "45"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "6"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 59875c45-06d7-4767-803c-a2a762da6a43
+      iscommand: false
+      name: Enrichment of Recipients from Anomali and Modulus
+      type: regular
+      version: -1
+    taskid: 59875c45-06d7-4767-803c-a2a762da6a43
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 162.5,
+          "y": 1025
+        }
+      }
+  "65":
+    id: "65"
+    ignoreworker: false
+    nexttasks:
+      "No":
+      - "67"
+      "Yes":
+      - "66"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 79970953-c499-44a9-8c60-8bb367adb502
+      iscommand: false
+      name: Does the Email contain Physical Threatening Information?
+      type: condition
+      version: -1
+    taskid: 79970953-c499-44a9-8c60-8bb367adb502
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 807.5,
+          "y": 1870
+        }
+      }
+  "66":
+    id: "66"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "101"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: b3e7f93d-116b-4e1f-8d95-3966ab611dda
+      iscommand: false
+      name: RFI on sender and domain
+      type: regular
+      version: -1
+    taskid: b3e7f93d-116b-4e1f-8d95-3966ab611dda
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": -3110,
+          "y": 2170
+        }
+      }
+  "67":
+    id: "67"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "68"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 6033a183-eb67-4255-82ee-c2bb94ad6b3a
+      iscommand: false
+      name: Sender Domain Homograph analysis
+      type: regular
+      version: -1
+    taskid: 6033a183-eb67-4255-82ee-c2bb94ad6b3a
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1452.5,
+          "y": 2035
+        }
+      }
+  "68":
+    id: "68"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "69"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 05350942-64c2-4614-8a3f-74c5085c8e74
+      iscommand: false
+      name: Intel RFI (Completion of Intel Phish)
+      type: regular
+      version: -1
+    taskid: 05350942-64c2-4614-8a3f-74c5085c8e74
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1452.5,
+          "y": 2210
+        }
+      }
+  "69":
+    id: "69"
+    ignoreworker: false
+    nexttasks:
+      Attachment Phishing:
+      - "71"
+      URL Phishing:
+      - "70"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 9cd01531-7992-41ef-8a5d-254964f0ae88
+      iscommand: false
+      name: Determine the type of Phishing
+      type: condition
+      version: -1
+    taskid: 9cd01531-7992-41ef-8a5d-254964f0ae88
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 807.5,
+          "y": 2380
+        }
+      }
+  "70":
+    id: "70"
+    ignoreworker: false
+    nexttasks:
+      "No":
+      - "72"
+      "Yes":
+      - "75"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: bafd87af-e71a-4d90-89eb-0d6f533b23f1
+      iscommand: false
+      name: Did the user click the URL
+      type: condition
+      version: -1
+    taskid: bafd87af-e71a-4d90-89eb-0d6f533b23f1
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 1350,
+          "y": 2550
+        }
+      }
+  "71":
+    id: "71"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "96"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: aed096a0-7892-440c-8ce3-3a6d40a7b52e
+      iscommand: false
+      name: Detonate in Sandbox
+      type: regular
+      version: -1
+    taskid: aed096a0-7892-440c-8ce3-3a6d40a7b52e
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": -1540,
+          "y": 2550
+        }
+      }
+  "72":
+    id: "72"
+    ignoreworker: false
+    nexttasks:
+      "No":
+      - "73"
+      "Yes":
+      - "80"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: fd509a52-a6e3-4b9d-870c-d5f970070627
+      iscommand: false
+      name: Is the link Malicious?
+      type: condition
+      version: -1
+    taskid: fd509a52-a6e3-4b9d-870c-d5f970070627
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 1780,
+          "y": 3260
+        }
+      }
+  "73":
+    id: "73"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "74"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: d37dd8fe-7350-439a-8663-5832810dbdf0
+      iscommand: false
+      name: Notify User that there is no threat
+      type: regular
+      version: -1
+    taskid: d37dd8fe-7350-439a-8663-5832810dbdf0
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1087.5,
+          "y": 4465
+        }
+      }
+  "74":
+    id: "74"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "8"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: b44c3873-11dc-46b4-8314-b53d4fecb095
+      iscommand: false
+      name: Send to Content team for Review
+      type: regular
+      version: -1
+    taskid: b44c3873-11dc-46b4-8314-b53d4fecb095
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1087.5,
+          "y": 4690
+        }
+      }
+  "75":
+    id: "75"
+    ignoreworker: false
+    nexttasks:
+      "No":
+      - "72"
+      "Yes":
+      - "76"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: f8ba237c-fbf2-421a-898b-b5479930cb0f
+      iscommand: false
+      name: Was the Navigation successful?
+      type: condition
+      version: -1
+    taskid: f8ba237c-fbf2-421a-898b-b5479930cb0f
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 807.5,
+          "y": 2790
+        }
+      }
+  "76":
+    id: "76"
+    ignoreworker: false
+    nexttasks:
+      "No":
+      - "80"
+      "Yes":
+      - "77"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: b5de40f0-d3bd-4810-8c06-1fe9809b64a9
+      iscommand: false
+      name: Does the link host Malware?
+      type: condition
+      version: -1
+    taskid: b5de40f0-d3bd-4810-8c06-1fe9809b64a9
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": -50,
+          "y": 2990
+        }
+      }
+  "77":
+    id: "77"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "78"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 04e24c41-133d-468b-8c45-7158059e43c0
+      iscommand: false
+      name: Manual Review of the Malware
+      type: regular
+      version: -1
+    taskid: 04e24c41-133d-468b-8c45-7158059e43c0
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": -480,
+          "y": 3165
+        }
+      }
+  "78":
+    id: "78"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "79"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 4061a1b4-a80d-4012-8f6b-1d51c7c83fac
+      iscommand: false
+      name: Clean system process
+      type: regular
+      version: -1
+    taskid: 4061a1b4-a80d-4012-8f6b-1d51c7c83fac
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": -480,
+          "y": 3335
+        }
+      }
+  "79":
+    id: "79"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "85"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 23ab03bd-9370-4db2-8332-be806895958b
+      iscommand: false
+      name: Perform MalwareByte Remote scan
+      type: regular
+      version: -1
+    taskid: 23ab03bd-9370-4db2-8332-be806895958b
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": -480,
+          "y": 3490
+        }
+      }
+  "80":
+    id: "80"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "81"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 295be9f0-02a6-441f-82cf-a2987538e1b7
+      iscommand: false
+      name: Perform MalwareByte Remote Scan
+      type: regular
+      version: -1
+    taskid: 295be9f0-02a6-441f-82cf-a2987538e1b7
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 300,
+          "y": 3280
+        }
+      }
+  "81":
+    id: "81"
+    ignoreworker: false
+    nexttasks:
+      "No":
+      - "82"
+      "Yes":
+      - "85"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 7d7f0541-f41b-4a07-8cfc-3876bf701a87
+      iscommand: false
+      name: Was Malware Found?
+      type: condition
+      version: -1
+    taskid: 7d7f0541-f41b-4a07-8cfc-3876bf701a87
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 300,
+          "y": 3450
+        }
+      }
+  "82":
+    id: "82"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "83"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 236d15c0-d757-48ed-8ad0-cf5f107bb9ec
+      iscommand: false
+      name: Remove the mail from Exchange
+      type: regular
+      version: -1
+    taskid: 236d15c0-d757-48ed-8ad0-cf5f107bb9ec
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 300,
+          "y": 3610
+        }
+      }
+  "83":
+    id: "83"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "84"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 09806b81-8371-41ac-8eb4-d4b24fa7cbf2
+      iscommand: false
+      name: Reset User Password
+      type: regular
+      version: -1
+    taskid: 09806b81-8371-41ac-8eb4-d4b24fa7cbf2
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 300,
+          "y": 3790
+        }
+      }
+  "84":
+    id: "84"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "73"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: a45739f3-02fc-430d-825f-a4dcb1b0583f
+      iscommand: false
+      name: Block Sender
+      type: regular
+      version: -1
+    taskid: a45739f3-02fc-430d-825f-a4dcb1b0583f
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 300,
+          "y": 3960
+        }
+      }
+  "85":
+    id: "85"
+    ignoreworker: false
+    nexttasks:
+      "No":
+      - "86"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 91940665-8e63-4a95-828f-e612408be95f
+      iscommand: false
+      name: VIP or ELT Exception
+      type: condition
+      version: -1
+    taskid: 91940665-8e63-4a95-828f-e612408be95f
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": -217.5,
+          "y": 3720
+        }
+      }
+  "86":
+    id: "86"
+    ignoreworker: false
+    nexttasks:
+      Commodity:
+      - "89"
+      Targeted:
+      - "87"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 596a7d92-1e4e-417a-8dd5-4d5128bd3cdd
+      iscommand: false
+      name: Malware Type Detected/Analyst
+      type: condition
+      version: -1
+    taskid: 596a7d92-1e4e-417a-8dd5-4d5128bd3cdd
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": -150,
+          "y": 3950
+        }
+      }
+  "87":
+    id: "87"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "88"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: d00a1716-6d85-497f-8fb7-41484390ad93
+      iscommand: false
+      name: Forescout vFW
+      type: regular
+      version: -1
+    taskid: d00a1716-6d85-497f-8fb7-41484390ad93
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": -460,
+          "y": 4090
+        }
+      }
+  "88":
+    id: "88"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "89"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: b16130e5-c371-44d9-86b3-af1970f0e82d
+      iscommand: false
+      name: Submit SN Compucom Reimage
+      type: regular
+      version: -1
+    taskid: b16130e5-c371-44d9-86b3-af1970f0e82d
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": -460,
+          "y": 4240
+        }
+      }
+  "89":
+    id: "89"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "90"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: a9caed6b-937b-45e2-8c17-ff830983b96e
+      iscommand: false
+      name: Search for other Recipients/Visitors to Domain
+      type: regular
+      version: -1
+    taskid: a9caed6b-937b-45e2-8c17-ff830983b96e
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": -150,
+          "y": 4440
+        }
+      }
+  "90":
+    id: "90"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "91"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 2f61882f-732c-48e0-8ef5-054a47fd37d1
+      iscommand: false
+      name: Reset User Password
+      type: regular
+      version: -1
+    taskid: 2f61882f-732c-48e0-8ef5-054a47fd37d1
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": -150,
+          "y": 4630
+        }
+      }
+  "91":
+    id: "91"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "92"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 2146927e-4142-4e14-8ff4-f002ef214623
+      iscommand: false
+      name: Submit URL/Domain Proxy Block
+      type: regular
+      version: -1
+    taskid: 2146927e-4142-4e14-8ff4-f002ef214623
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": -150,
+          "y": 4830
+        }
+      }
+  "92":
+    id: "92"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "93"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: a204bed9-adb0-425b-8ce2-e540817dad4c
+      iscommand: false
+      name: Submit Sender Address block
+      type: regular
+      version: -1
+    taskid: a204bed9-adb0-425b-8ce2-e540817dad4c
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": -150,
+          "y": 5040
+        }
+      }
+  "93":
+    id: "93"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "94"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: cc24dc34-7fd1-4673-8541-251c94141a92
+      iscommand: false
+      name: Remove Email from Inbox
+      type: regular
+      version: -1
+    taskid: cc24dc34-7fd1-4673-8541-251c94141a92
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": -150,
+          "y": 5230
+        }
+      }
+  "94":
+    id: "94"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "95"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 73fb5739-a9e7-4af9-8b07-6e32a60a7540
+      iscommand: false
+      name: Document incident record
+      type: regular
+      version: -1
+    taskid: 73fb5739-a9e7-4af9-8b07-6e32a60a7540
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": -150,
+          "y": 5400
+        }
+      }
+  "95":
+    id: "95"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "8"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 2c6dd69c-0d76-4ab7-8c5d-99f8b7c4c3c8
+      iscommand: false
+      name: Notify Submitter and Affected Recipients/Managers
+      type: regular
+      version: -1
+    taskid: 2c6dd69c-0d76-4ab7-8c5d-99f8b7c4c3c8
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": -150,
+          "y": 5580
+        }
+      }
+  "96":
+    id: "96"
+    ignoreworker: false
+    nexttasks:
+      "No":
+      - "99"
+      "Yes":
+      - "97"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 1e1caf98-afae-4d4e-8b11-955ef53f7be3
+      iscommand: false
+      name: Attachment Malicious/High score
+      type: condition
+      version: -1
+    taskid: 1e1caf98-afae-4d4e-8b11-955ef53f7be3
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": -1540,
+          "y": 2720
+        }
+      }
+  "97":
+    id: "97"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "98"
+      - "105"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 54862708-4ac0-490c-8fbb-30e2d381ec8f
+      iscommand: false
+      name: Analyze/Confirm Host for artifacts
+      type: regular
+      version: -1
+    taskid: 54862708-4ac0-490c-8fbb-30e2d381ec8f
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": -1120,
+          "y": 2920
+        }
+      }
+  "98":
+    id: "98"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "100"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 0b59d845-063e-405b-8eda-852a80041e4e
+      iscommand: false
+      name: Reimage System Process
+      type: regular
+      version: -1
+    taskid: 0b59d845-063e-405b-8eda-852a80041e4e
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": -1120,
+          "y": 3135
+        }
+      }
+  "99":
+    id: "99"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "89"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: d2d3ed78-f72c-40d5-8b17-0757634149f2
+      iscommand: false
+      name: Remote Malware Scan
+      type: regular
+      version: -1
+    taskid: d2d3ed78-f72c-40d5-8b17-0757634149f2
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": -1910,
+          "y": 3135
+        }
+      }
+  "100":
+    id: "100"
+    ignoreworker: false
+    nexttasks:
+      "No":
+      - "87"
+      "Yes":
+      - "107"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 07c50650-34bd-4908-8530-9de36d2d3895
+      iscommand: false
+      name: VIP or ELT exception
+      type: condition
+      version: -1
+    taskid: 07c50650-34bd-4908-8530-9de36d2d3895
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": -1120,
+          "y": 3350
+        }
+      }
+  "101":
+    id: "101"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "102"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: d86fbe05-84c9-4310-82cc-3819654db6fe
+      iscommand: false
+      name: Lexis Nexis search sender
+      type: regular
+      version: -1
+    taskid: d86fbe05-84c9-4310-82cc-3819654db6fe
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": -3110,
+          "y": 2470
+        }
+      }
+  "102":
+    id: "102"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "103"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: f1a57d1a-8a74-424c-8c63-74364e427baf
+      iscommand: false
+      name: OSINT Search on Sender and Domain
+      type: regular
+      version: -1
+    taskid: f1a57d1a-8a74-424c-8c63-74364e427baf
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": -3110,
+          "y": 2670
+        }
+      }
+  "103":
+    id: "103"
+    ignoreworker: false
+    nexttasks:
+      "No":
+      - "94"
+      "Yes":
+      - "104"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 3b5019aa-a4e2-482d-8ffc-80592c3cc8cd
+      iscommand: false
+      name: Is the person a Threat
+      type: condition
+      version: -1
+    taskid: 3b5019aa-a4e2-482d-8ffc-80592c3cc8cd
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": -3110,
+          "y": 2980
+        }
+      }
+  "104":
+    id: "104"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "91"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 362aef4c-d145-452e-8b81-dadfd92e4007
+      iscommand: false
+      name: Place Sender on Unwelcome List
+      type: regular
+      version: -1
+    taskid: 362aef4c-d145-452e-8b81-dadfd92e4007
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": -3110,
+          "y": 3355
+        }
+      }
+  "105":
+    id: "105"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "106"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 12d6a049-fcfc-48fe-87a9-91f3cba008df
+      iscommand: false
+      name: CIRT Analysis
+      type: regular
+      version: -1
+    taskid: 12d6a049-fcfc-48fe-87a9-91f3cba008df
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": -3770,
+          "y": 3710
+        }
+      }
+  "106":
+    id: "106"
+    ignoreworker: false
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: be9d26f7-2ee3-4be1-8a3e-e249d4116217
+      iscommand: false
+      name: Require IR Plan activation?
+      type: condition
+      version: -1
+    taskid: be9d26f7-2ee3-4be1-8a3e-e249d4116217
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": -3770,
+          "y": 3885
+        }
+      }
+  "107":
+    id: "107"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "108"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 3df7eb38-04c9-4af3-8c58-c2fbba2b3a3f
+      iscommand: false
+      name: CIRT White Glove process
+      type: regular
+      version: -1
+    taskid: 3df7eb38-04c9-4af3-8c58-c2fbba2b3a3f
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": -1180,
+          "y": 3680
+        }
+      }
+  "108":
+    id: "108"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "66"
+      - "109"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 0356b94a-c8a8-48b4-8927-160788050390
+      iscommand: false
+      name: Manual Remediation / Identity Admin
+      type: regular
+      version: -1
+    taskid: 0356b94a-c8a8-48b4-8927-160788050390
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": -1180,
+          "y": 3890
+        }
+      }
+  "109":
+    id: "109"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "91"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: b45cf3bf-9621-4e2d-84de-cc744165cee5
+      iscommand: false
+      name: Phone Call for Password Reset
+      type: regular
+      version: -1
+    taskid: b45cf3bf-9621-4e2d-84de-cc744165cee5
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": -1180,
+          "y": 4060
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {
+      "103_94_No": 0.39
+    },
+    "paper": {
+      "dimensions": {
+        "height": 5845,
+        "width": 5930,
+        "x": -3770,
+        "y": 50
+      }
+    }
+  }

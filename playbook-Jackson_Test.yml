@@ -1,0 +1,165 @@
+id: 93761019-3557-458b-81c0-31ff7afb0c71
+inputs: []
+name: Jackson_Test
+outputs: []
+starttaskid: "0"
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "1"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: e1573a0b-313e-4f71-834c-a3fb0dfcc6fc
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: e1573a0b-313e-4f71-834c-a3fb0dfcc6fc
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 265,
+          "y": 50
+        }
+      }
+  "1":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: ${customer.0.ip=>val.length}
+          operator: greaterThan
+          right:
+            value:
+              simple: "1"
+      label: "yes"
+    id: "1"
+    ignoreworker: false
+    nexttasks:
+      '#default#':
+      - "3"
+      "yes":
+      - "2"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 2c0c07e4-37ee-4380-8dbf-f302df8e80c1
+      iscommand: false
+      name: Check if context value exists
+      type: condition
+      version: -1
+    taskid: 2c0c07e4-37ee-4380-8dbf-f302df8e80c1
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 265,
+          "y": 195
+        }
+      }
+  "2":
+    id: "2"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "4"
+    note: false
+    scriptarguments:
+      value:
+        simple: ${customer.0.ip}
+    separatecontext: false
+    task:
+      brand: ""
+      description: Return the single element in case the array has only 1 element
+        in it, otherwise return the whole array
+      id: 8f366113-4580-4944-8f60-9c88209b25d1
+      iscommand: false
+      name: Yes Path
+      script: JoinIfSingleElementOnly
+      type: regular
+      version: -1
+    taskid: 8f366113-4580-4944-8f60-9c88209b25d1
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 370
+        }
+      }
+  "3":
+    id: "3"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "4"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: e74e559d-f993-4b02-8ec2-2ec5c820c96a
+      iscommand: false
+      name: No Path
+      type: regular
+      version: -1
+    taskid: e74e559d-f993-4b02-8ec2-2ec5c820c96a
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 480,
+          "y": 370
+        }
+      }
+  "4":
+    id: "4"
+    ignoreworker: false
+    note: false
+    scriptarguments:
+      assetid: {}
+      closeNotes: {}
+      closeReason: {}
+      id: {}
+    separatecontext: false
+    task:
+      brand: Builtin
+      id: 85179972-ef3d-4595-8252-d2cfee7e2984
+      iscommand: true
+      name: Close
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: 85179972-ef3d-4595-8252-d2cfee7e2984
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 265,
+          "y": 545
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 590,
+        "width": 810,
+        "x": 50,
+        "y": 50
+      }
+    }
+  }

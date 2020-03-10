@@ -1,0 +1,839 @@
+category: Network Security
+commonfields:
+  id: Akamai WAF
+  version: -1
+configuration:
+- defaultvalue: https://example.net
+  display: Server URL (e.g., https://example.net)
+  name: host
+  required: true
+  type: 0
+- defaultvalue: ""
+  display: Client token
+  name: clientToken
+  required: true
+  type: 4
+- defaultvalue: ""
+  display: Access token
+  name: accessToken
+  required: true
+  type: 4
+- defaultvalue: ""
+  display: Client secret
+  name: clientSecret
+  required: true
+  type: 4
+- defaultvalue: ""
+  display: Trust any certificate (not secure)
+  name: insecure
+  required: false
+  type: 8
+- defaultvalue: ""
+  display: Use system proxy settings
+  name: proxy
+  required: false
+  type: 8
+description: Use the Akamai WAF integration to manage common sets of lists used by
+  various Akamai security products and features.
+detaileddescription: "The Network Lists API enables you to manage a common set of
+  lists for use in various Akamai security products such as \nKona Site Defender,
+  Web App Protector, and Bot Manager.\nNetwork lists are shared sets of IP addresses,
+  CIDR blocks, or broad geographic areas. In addition to managing your \nown lists,
+  you can also access read-only lists that Akamai dynamically updates for you.\n \nTo
+  generate API keys go to the [Akamai Control Panel](https://control.akamai.com/).
+  For detailed instructions, see the integration documention.\n"
+display: Akamai WAF
+image: data:image/png;base64,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
+name: Akamai WAF
+script:
+  commands:
+  - arguments:
+    - auto: PREDEFINED
+      description: The network list type by which to filter the results. Can be "IP"
+        or "GEO".
+      name: list_type
+      predefined:
+      - IP
+      - GEO
+    - description: The query by which to search for list names and list items.
+      name: search
+    description: Returns a list of all network lists available for an authenticated
+      user who belongs to a group.
+    name: akamai-get-network-lists
+    outputs:
+    - contextPath: Akamai.NetworkLists.Lists.Name
+      description: The network list name.
+      type: String
+    - contextPath: Akamai.NetworkLists.Lists.Type
+      description: The network list type.
+      type: String
+    - contextPath: Akamai.NetworkLists.Lists.UniqueID
+      description: The network list unique ID.
+      type: String
+    - contextPath: Akamai.NetworkLists.Lists.ElementCount
+      description: The number of network list elements.
+      type: String
+    - contextPath: Akamai.NetworkLists.Lists.CreateDate
+      description: The network list creation date.
+      type: Date
+    - contextPath: Akamai.NetworkLists.Lists.CreatedBy
+      description: The network list creator.
+      type: String
+    - contextPath: Akamai.NetworkLists.Lists.ExpeditedProductionActivationStatus
+      description: The expedited production activation status.
+      type: String
+    - contextPath: Akamai.NetworkLists.Lists.ExpeditedStagingActivationStatus
+      description: The expedited staging activation status.
+      type: String
+    - contextPath: Akamai.NetworkLists.Lists.ProductionActivationStatus
+      description: The production activation status.
+      type: String
+    - contextPath: Akamai.NetworkLists.Lists.StagingActivationStatus
+      description: The staging activation status.
+      type: String
+    - contextPath: Akamai.NetworkLists.Lists.UpdateDate
+      description: The date that the network list was updated.
+      type: String
+    - contextPath: Akamai.NetworkLists.Lists.UpdatedBy
+      description: The last user that updated the network list.
+      type: String
+    - contextPath: Akamai.NetworkLists.Lists.Elements
+      description: The elements in the network list.
+      type: String
+  - arguments:
+    - description: The network list ID.
+      name: network_list_id
+      required: true
+    description: Gets a network list by the network list ID.
+    name: akamai-get-network-list-by-id
+    outputs:
+    - contextPath: Akamai.NetworkLists.Lists.Name
+      description: The network list name.
+      type: String
+    - contextPath: Akamai.NetworkLists.Lists.Type
+      description: The network list type.
+      type: String
+    - contextPath: Akamai.NetworkLists.Lists.UniqueID
+      description: The network list unique ID.
+      type: String
+    - contextPath: Akamai.NetworkLists.Lists.ElementCount
+      description: The number of network list elements.
+      type: String
+    - contextPath: Akamai.NetworkLists.Lists.CreateDate
+      description: The network list creation date.
+      type: Date
+    - contextPath: Akamai.NetworkLists.Lists.CreatedBy
+      description: The network list creator.
+      type: String
+    - contextPath: Akamai.NetworkLists.Lists.ExpeditedProductionActivationStatus
+      description: The expedited production activation status.
+      type: String
+    - contextPath: Akamai.NetworkLists.Lists.ExpeditedStagingActivationStatus
+      description: The expedited staging activation status.
+      type: String
+    - contextPath: Akamai.NetworkLists.Lists.ProductionActivationStatus
+      description: The production activation status.
+      type: String
+    - contextPath: Akamai.NetworkLists.Lists.StagingActivationStatus
+      description: The staging activation status.
+      type: String
+    - contextPath: Akamai.NetworkLists.Lists.UpdateDate
+      description: The network list update date.
+      type: String
+    - contextPath: Akamai.NetworkLists.Lists.UpdatedBy
+      description: The last user that updated the network list.
+      type: String
+    - contextPath: Akamai.NetworkLists.Lists.Elements
+      description: The elements in the network list.
+      type: String
+  - arguments:
+    - description: The network list name.
+      name: list_name
+      required: true
+    - auto: PREDEFINED
+      description: The network list type. Can be "IP" or "GEO".
+      name: list_type
+      predefined:
+      - IP
+      - GEO
+      required: true
+    - description: The network list elements.
+      isArray: true
+      name: elements
+    - description: The War Room entry ID of the sample file.
+      name: entry_id
+    - description: The network list description.
+      name: description
+    description: Creates a new network list. Supports TXT file upload for elements.
+    name: akamai-create-network-list
+    outputs:
+    - contextPath: Akamai.NetworkLists.Lists.Name
+      description: The network list name.
+      type: String
+    - contextPath: Akamai.NetworkLists.Lists.UniqueID
+      description: The network list ID.
+      type: String
+    - contextPath: Akamai.NetworkLists.Lists.Type
+      description: The network list type.
+      type: String
+    - contextPath: Akamai.NetworkLists.Lists.ElementCount
+      description: The number of elements in the list.
+      type: Number
+    - contextPath: Akamai.NetworkLists.Lists.Elements
+      description: The elements in the list.
+      type: String
+  - arguments:
+    - description: The ID of the network list to delete.
+      name: network_list_id
+      required: true
+    description: Deletes the specified network list.
+    name: akamai-delete-network-list
+  - arguments:
+    - description: ' A comma-seprated list of network list IDs to activate. For example:
+        list (list1,list2). '
+      isArray: true
+      name: network_list_ids
+      required: true
+    - auto: PREDEFINED
+      description: The environment type to activate the network list. Can be "STAGING"
+        OR 'PRODUCTION".
+      name: env
+      predefined:
+      - STAGING
+      - PRODUCTION
+      required: true
+    - description: A comment to be logged.
+      name: comment
+    - description: A comma-separated list of email addresses.
+      isArray: true
+      name: notify
+    description: Activates a network list on the specified environment.
+    name: akamai-activate-network-list
+  - arguments:
+    - description: The ID of the network in which to add elements.
+      name: network_list_id
+      required: true
+    - description: The War Room entry ID of the sample file.
+      name: entry_id
+    - description: A comma-separated list of elements to add to the network list.
+      isArray: true
+      name: elements
+    description: Adds elements to the specified network list.
+    name: akamai-add-elements-to-network-list
+  - arguments:
+    - description: The ID of the network list from which to remove elements.
+      name: network_list_id
+      required: true
+    - description: The element to remove from the network list.
+      name: element
+      required: true
+    description: Removes elements from the specified network list.
+    name: akamai-remove-element-from-network-list
+  - arguments:
+    - description: ' A comma-separated list of network list IDs for which to get the
+        activation status. For example: (support list - list1,list2).'
+      isArray: true
+      name: network_list_ids
+      required: true
+    - auto: PREDEFINED
+      description: The environment type. Can be "PRODUCTION" or "STAGING".
+      name: env
+      predefined:
+      - PRODUCTION
+      - STAGING
+      required: true
+    description: Gets the activation status of the specified network list.
+    name: akamai-get-network-list-activation-status
+    outputs:
+    - contextPath: Akamai.NetworkLists.ActivationStatus.UniqueID
+      description: The network list ID.
+      type: String
+    - contextPath: Akamai.NetworkLists.ActivationStatus.StagingStatus
+      description: The network list environment.
+      type: String
+    - contextPath: Akamai.NetworkLists.ActivationStatus.ProductionStatus
+      description: The network list environment activation status.
+      type: String
+  dockerimage: demisto/akamai:1.0.0.5063
+  runonce: false
+  script: |
+    """ IMPORTS """
+    # Std imports
+
+    # 3-rd party imports
+    from typing import Dict, Tuple, Union, Optional, List
+    import requests
+    import urllib3
+    # Local imports
+
+
+
+    from akamai.edgegrid import EdgeGridAuth
+
+    """GLOBALS/PARAMS
+
+    Attributes:
+        INTEGRATION_NAME:
+            Name of the integration as shown in the integration UI, for example: Microsoft Graph User.
+
+        INTEGRATION_COMMAND_NAME:
+            Command names should be written in all lower-case letters,
+            and each word separated with a hyphen, for example: msgraph-user.
+
+        INTEGRATION_CONTEXT_NAME:
+            Context output names should be written in camel case, for example: MSGraphUser.
+    """
+    INTEGRATION_NAME = 'Akamai WAF'
+    INTEGRATION_COMMAND_NAME = 'akamai'
+    INTEGRATION_CONTEXT_NAME = 'Akamai'
+
+    # Disable insecure warnings
+    urllib3.disable_warnings()
+
+
+    class Client(BaseClient):
+        def test_module(self) -> Dict:
+            """
+                Performs basic GET request to check if the API is reachable and authentication is successful.
+            Returns:
+                Response dictionary
+            """
+            return self.get_network_lists()
+
+        def get_network_lists(self, search: str = None, list_type: str = None) -> dict:
+            """
+                Get network lists
+            Args:
+                search: Only list items that match the specified substring in any network list’s name or list of items.
+                list_type: Filters the output to lists of only the given type of network lists if provided, either IP or GEO.
+
+            Returns:
+                Json response as dictionary
+            """
+            params = {
+                "search": search,
+                "listType": list_type,
+                "extended": True,
+                "includeElements": True
+            }
+            return self._http_request(method='GET',
+                                      url_suffix='/network-list/v2/network-lists',
+                                      params=params)
+
+        def get_network_list_by_id(self, network_list_id: str) -> dict:
+            """
+                Get network list by ID
+            Args:
+                network_list_id: network list ID
+
+            Returns:
+                Json response as dictionary
+            """
+            params = {
+                "extended": True,
+                "includeElements": True
+            }
+            return self._http_request(method='GET',
+                                      url_suffix=f'/network-list/v2/network-lists/{network_list_id}',
+                                      params=params)
+
+        def create_network_list(self, list_name: str, list_type: str, elements: Optional[Union[list, str]],
+                                description: Optional[str] = None) -> dict:
+            """
+                Create network list
+            Args:
+                list_name: List name
+                list_type: List type, e.g. IP
+                description: Description of the list
+                elements: list values
+
+            Returns:
+                Json response as dictionary
+            """
+            body = {
+                "name": list_name,
+                "type": list_type,
+                "description": description,
+                "list": elements if elements else []
+            }
+            return self._http_request(method='POST',
+                                      url_suffix=f'/network-list/v2/network-lists',
+                                      json_data=body)
+
+        def delete_network_list(self, network_list_id: str) -> dict:
+            """
+                Delete network list by ID
+            Args:
+                network_list_id: network list ID
+
+            Returns:
+                Json response as dictionary
+            """
+            return self._http_request(method='DELETE',
+                                      url_suffix=f'/network-list/v2/network-lists/{network_list_id}',
+                                      resp_type='response')
+
+        def activate_network_list(self, network_list_id: str, env: str, comment: Optional[str],
+                                  notify: Optional[list]) -> dict:
+            """
+                Activating network list in STAGING or PRODUCTION
+            Args:
+                network_list_id: Network list ID
+                env: Staging/Production
+                comment: Comment to be logged
+                notify: List of email to be notified on activation
+
+            Returns:
+                Json response as dictionary
+            """
+            body = {
+                "comments": comment,
+                "notificationRecipients": notify
+            }
+            return self._http_request(method='POST',
+                                      url_suffix=f'/network-list/v2/network-lists/{network_list_id}/environments/{env}'
+                                                 f'/activate',
+                                      json_data=body,
+                                      resp_type='response')
+
+        def add_elements_to_network_list(self, network_list_id: str, elements: Optional[Union[list, str]]) -> dict:
+            """
+                Add elements to network list
+            Args:
+                network_list_id: Network list ID
+                elements: List of value to append
+
+            Returns:
+                Json response as dictionary
+            """
+            body = {
+                "list": elements
+            }
+            return self._http_request(method='POST',
+                                      url_suffix=f'/network-list/v2/network-lists/{network_list_id}/append',
+                                      json_data=body)
+
+        def remove_element_from_network_list(self, network_list_id: str, element: str) -> dict:
+            """
+                Remove element from network list
+            Args:
+                network_list_id: Network list ID
+                element: Element to remove
+
+            Returns:
+                Json response as dictionary
+            """
+            params = {
+                'element': element
+            }
+            return self._http_request(method='DELETE',
+                                      url_suffix=f'/network-list/v2/network-lists/{network_list_id}/elements',
+                                      params=params,
+                                      resp_type='response')
+
+        def get_activation_status(self, network_list_id: str, env: str) -> dict:
+            """
+                Get activation status of network list in enviorment - Staging/Production
+            Args:
+                network_list_id: Network list ID
+                env: Staging/Production
+
+            Returns:
+                Json response as dictionary
+            """
+            return self._http_request(method='GET',
+                                      url_suffix=f'/network-list/v2/network-lists/{network_list_id}/environments/{env}/status')
+
+
+    ''' HELPER FUNCTIONS '''
+
+
+    def get_network_lists_ec(raw_response: Optional[list]) -> Tuple[list, list]:
+        """
+            Get raw response list of networks from Akamai and parse to ec
+        Args:
+            raw_response: network list fro raw response
+
+        Returns:
+            List of network lists by entry context, entry context for human readable
+        """
+        entry_context = []
+        human_readable = []
+        if raw_response:
+            for network in raw_response:
+                entry_context.append(assign_params(**{
+                    "Name": network.get('name'),
+                    "Type": network.get('type'),
+                    "UniqueID": network.get('uniqueId'),
+                    "CreateDate": network.get('CreateDate'),
+                    "CreatedBy": network.get('createdBy'),
+                    "ExpeditedProductionActivationStatus": network.get('expeditedProductionActivationStatus'),
+                    "ExpeditedStagingActivationStatus": network.get('expeditedStagingActivationStatus'),
+                    "ProductionActivationStatus": network.get('productionActivationStatus'),
+                    "StagingActivationStatus": network.get('stagingActivationStatus'),
+                    "UpdateDate": network.get('updateDate'),
+                    "UpdatedBy": network.get('updatedBy'),
+                    "ElementCount": network.get('elementCount'),
+                    "Elements": network.get('list')
+                }))
+                human_readable.append(assign_params(**{
+                    "Name": network.get('name'),
+                    "Type": network.get('type'),
+                    "Unique ID": network.get('uniqueId'),
+                    "Updated by": network.get('updatedBy'),
+                    "Production Activation Status": network.get('productionActivationStatus'),
+                    "Staging Activation Status": network.get('stagingActivationStatus'),
+                    "Element count": network.get('elementCount'),
+                }))
+        return entry_context, human_readable
+
+
+    def get_list_from_file(entry_id: Optional[str]) -> list:
+        """
+            Get list of IPs and Geo from txt file
+        Args:
+            entry_id: Entry ID of uploaded file
+
+        Returns:
+            list of IP and Geo
+        """
+        elements: list = []
+        try:
+            list_path = demisto.getFilePath(entry_id)['path']
+            with open(list_path) as list_file:
+                elements += list_file.read().split('\n')
+        except Exception as ex:
+            return_error('Failed to open txt file: {}'.format(ex))
+        return elements
+
+
+    ''' COMMANDS '''
+
+
+    @logger
+    def test_module_command(client: Client, *_) -> Tuple[None, None, str]:
+        """Performs a basic GET request to check if the API is reachable and authentication is successful.
+
+        Args:
+            client: Client object with request
+            *_: Usually demisto.args()
+
+        Returns:
+            'ok' if test successful.
+
+        Raises:
+            DemistoException: If test failed.
+        """
+        results = client.test_module()
+        if 'links' in results:
+            return None, None, 'ok'
+        raise DemistoException(f'Test module failed, {results}')
+
+
+    @logger
+    def get_network_lists_command(client: Client, search: str = None, list_type: str = None) \
+            -> Tuple[object, dict, Union[List, Dict]]:
+        """Get network lists
+
+        Args:
+            client: Client object with request
+            search: Only list items that match the specified substring in any network list’s name or list of items.
+            list_type: Filters the output to lists of only the given type of network lists if provided, either IP or GEO.
+
+        Returns:
+            human readable (markdown format), entry context and raw response
+        """
+        raw_response: Dict = client.get_network_lists(search=search,
+                                                      list_type=list_type)
+        if raw_response:
+            title = f'{INTEGRATION_NAME} - network lists'
+            entry_context, human_readable_ec = get_network_lists_ec(raw_response.get('networkLists'))
+            context_entry: Dict = {
+                f"{INTEGRATION_CONTEXT_NAME}.NetworkLists.Lists(val.UniqueID && val.UniqueID == obj.UniqueID && val.UpdateDate &&"
+                f" val.UpdateDate == obj.UpdateDate)": entry_context
+            }
+            human_readable = tableToMarkdown(name=title,
+                                             t=human_readable_ec,
+                                             removeNull=True)
+
+            return human_readable, context_entry, raw_response
+        else:
+            return f'{INTEGRATION_NAME} - Could not find any results for given query', {}, {}
+
+
+    @logger
+    def get_network_list_by_id_command(client: Client, network_list_id: str) -> Tuple[object, dict, Union[List, Dict]]:
+        """Get network list by ID
+
+        Args:
+            client: Client object with request
+            network_list_id: Unique ID of network list
+
+        Returns:
+            human readable (markdown format), entry context and raw response
+        """
+        raw_response: Dict = client.get_network_list_by_id(network_list_id=network_list_id)
+        if raw_response:
+            title = f'{INTEGRATION_NAME} - network list {network_list_id}'
+            entry_context, human_readable_ec = get_network_lists_ec([raw_response])
+            context_entry: Dict = {
+                f"{INTEGRATION_CONTEXT_NAME}.NetworkLists.Lists(val.UniqueID && val.UniqueID == obj.UniqueID &&"
+                f" val.UpdateDate && val.UpdateDate == obj.UpdateDate)": entry_context
+            }
+            human_readable = tableToMarkdown(name=title,
+                                             t=human_readable_ec,
+                                             removeNull=True)
+
+            return human_readable, context_entry, raw_response
+        else:
+            return f'{INTEGRATION_NAME} - Could not find any results for given query', {}, {}
+
+
+    @logger
+    def create_network_list_command(client: Client, list_name: str, list_type: str, description: Optional[str] = None,
+                                    entry_id: Optional[str] = None, elements: Optional[Union[str, list]] = None) \
+            -> Tuple[object, dict, Union[List, Dict]]:
+        """
+            Create network list
+
+        Args:
+            client: Client object with request
+            list_name: Network list name
+            list_type: Network list type IP/GEO
+            description: Network list description
+            entry_id: Entry ID of list file (Each line should have one IP or GEO)
+            elements: Elements separated by commas
+
+        Returns:
+            human readable (markdown format), entry context and raw response
+        """
+        if entry_id:
+            elements = get_list_from_file(entry_id)
+        else:
+            elements = argToList(elements)
+        raw_response: dict = client.create_network_list(list_name=list_name,
+                                                        list_type=list_type,
+                                                        elements=elements,
+                                                        description=description)
+        entry_context, human_readable_ec = get_network_lists_ec([raw_response])
+        if raw_response:
+            title = f'{INTEGRATION_NAME} - network list {list_name} created successfully'
+            context_entry: Dict = {
+                f"{INTEGRATION_CONTEXT_NAME}.NetworkLists.Lists(val.UniqueID && val.UniqueID == obj.UniqueID && val.UpdateDate &&"
+                f" val.UpdateDate == obj.UpdateDate)": entry_context
+            }
+            human_readable = tableToMarkdown(name=title,
+                                             t=human_readable_ec,
+                                             removeNull=True)
+
+            return human_readable, context_entry, raw_response
+        else:
+            return f'{INTEGRATION_NAME} - Could not find any results for given query', {}, {}
+
+
+    @logger
+    def delete_network_list_command(client: Client, network_list_id: str) -> Tuple[object, dict, Union[List, Dict]]:
+        """Delete network list by ID
+
+        Args:
+            client: Client object with request
+            network_list_id: Unique ID of network list
+
+        Returns:
+            human readable (markdown format), entry context and raw response
+        """
+        raw_response = client.delete_network_list(network_list_id=network_list_id)
+        if raw_response:
+            human_readable = f'**{INTEGRATION_NAME} - network list {network_list_id} deleted**'
+            return human_readable, {}, {}
+        else:
+            return f'{INTEGRATION_NAME} - Could not find any results for given query', {}, {}
+
+
+    @logger
+    def activate_network_list_command(client: Client, network_list_ids: str, env: str, comment: Optional[str] = None,
+                                      notify: Optional[str] = None) -> Tuple[object, dict, Union[List, Dict]]:
+        """Activate network list by ID
+
+        Args:
+            client: Client object with request
+            network_list_ids: Unique ID of network list
+            env: STAGING or PRODUCTION
+            comment: Comment to be logged
+            notify: Email to notify on activation
+
+        Returns:
+            human readable (markdown format), entry context and raw response
+        """
+        network_list_ids = argToList(network_list_ids)
+        human_readable = ""
+        for network_list_id in network_list_ids:
+            try:
+                raw_response = client.activate_network_list(network_list_id=network_list_id,
+                                                            env=env,
+                                                            comment=comment,
+                                                            notify=argToList(notify))
+                if raw_response:
+                    human_readable += f'{INTEGRATION_NAME} - network list **{network_list_id}** activated on {env} **successfully**\n'
+            except DemistoException as e:
+                if "This list version is already active" in e.args[0]:
+                    human_readable += f'**{INTEGRATION_NAME} - network list {network_list_id} already active on {env}**\n'
+            except requests.exceptions.RequestException:
+                human_readable += f'{INTEGRATION_NAME} - Could not find any results for given query\n'
+
+        return human_readable, {}, {}
+
+
+    @logger
+    def add_elements_to_network_list_command(client: Client, network_list_id: str, entry_id: Optional[str] = None,
+                                             elements: Optional[Union[str, list]] = None) \
+            -> Tuple[object, dict, Union[List, Dict]]:
+        """Add elements to network list by ID
+
+        Args:
+            client: Client object with request
+            network_list_id: Unique ID of network list
+            entry_id: Entry ID of list file (Each line should have one IP or GEO)
+            elements: Elements separated by commas
+
+        Returns:
+            human readable (markdown format), entry context and raw response
+        """
+        if entry_id:
+            elements = get_list_from_file(entry_id)
+        else:
+            elements = argToList(elements)
+        raw_response: dict = client.add_elements_to_network_list(network_list_id=network_list_id,
+                                                                 elements=elements)
+        if raw_response:
+            title = f'**{INTEGRATION_NAME} - elements added to network list {network_list_id} successfully**'
+            human_readable = tableToMarkdown(name=title,
+                                             t={'elements': elements},
+                                             removeNull=True)
+            return human_readable, {}, {}
+        else:
+            return f'{INTEGRATION_NAME} - Could not find any results for given query', {}, {}
+
+
+    @logger
+    def remove_element_from_network_list_command(client: Client, network_list_id: str, element: str) -> \
+            Tuple[object, dict, Union[List, Dict]]:
+        """Remove element from network list by ID
+
+        Args:
+            client: Client object with request
+            network_list_id: Unique ID of network list
+            element: Element to be removed
+
+        Returns:
+            human readable (markdown format), entry context and raw response
+        """
+        raw_response: dict = client.remove_element_from_network_list(network_list_id=network_list_id,
+                                                                     element=element)
+        if raw_response:
+            human_readable = f'**{INTEGRATION_NAME} - element {element} removed from network list {network_list_id} successfully**'
+            return human_readable, {}, {}
+        else:
+            return f'{INTEGRATION_NAME} - Could not find any results for given query', {}, {}
+
+
+    @logger
+    def get_activation_status_command(client: Client, network_list_ids: Union[str, list], env: str) \
+            -> Tuple[object, dict, Union[List, Dict]]:
+        """Get activation status
+
+        Args:
+            client: Client object with request
+            network_list_ids: Unique ID of network list (can be list as a string)
+            env: STAGING or PRODUCTION
+
+        Returns:
+            human readable (markdown format), entry context and raw response
+        """
+        network_list_ids = argToList(network_list_ids)
+        raws = []
+        ecs = []
+        context_entry: Dict = {}
+        human_readable = ""
+        for network_list_id in network_list_ids:
+            try:
+                raw_response: dict = client.get_activation_status(network_list_id=network_list_id,
+                                                                  env=env)
+                if raw_response:
+                    raws.append(raw_response)
+                    if env == "PRODUCTION":
+                        ecs.append({
+                            "UniqueID": network_list_id,
+                            "ProductionStatus": raw_response.get('activationStatus')
+
+                        })
+                    elif env == "STAGING":
+                        ecs.append({
+                            "UniqueID": network_list_id,
+                            "StagingStatus": raw_response.get('activationStatus')
+
+                        })
+                    human_readable += f"{INTEGRATION_NAME} - network list **{network_list_id}** is " \
+                                      f"**{raw_response.get('activationStatus')}** in **{env}**\n"
+            except DemistoException as e:
+                if "The Network List ID should be of the format" in e.args[0]:
+                    human_readable += f"{INTEGRATION_NAME} - network list **{network_list_id}** canot be found\n"
+            except requests.exceptions.RequestException:
+                human_readable += f'{INTEGRATION_NAME} - Could not find any results for given query\n'
+
+        if env == "PRODUCTION":
+            context_entry = {
+                f"{INTEGRATION_CONTEXT_NAME}.NetworkLists.ActivationStatus(val.UniqueID == obj.UniqueID)": ecs
+            }
+        elif env == "STAGING":
+            context_entry = {
+                f"{INTEGRATION_CONTEXT_NAME}.NetworkLists.ActivationStatus(val.UniqueID == obj.UniqueID)": ecs
+            }
+
+        return human_readable, context_entry, raws
+
+
+    ''' COMMANDS MANAGER / SWITCH PANEL '''
+
+
+    def main():
+        params = demisto.params()
+        verify_ssl = not params.get('insecure', False)
+        proxy = params.get('proxy')
+        client = Client(
+            base_url=params.get('host'),
+            verify=verify_ssl,
+            proxy=proxy,
+            auth=EdgeGridAuth(
+                client_token=params.get('clientToken'),
+                access_token=params.get('accessToken'),
+                client_secret=params.get('clientSecret')
+            )
+        )
+        command = demisto.command()
+        demisto.debug(f'Command being called is {command}')
+        commands = {
+            'test-module': test_module_command,
+            f'{INTEGRATION_COMMAND_NAME}-get-network-lists': get_network_lists_command,
+            f'{INTEGRATION_COMMAND_NAME}-get-network-list-by-id': get_network_list_by_id_command,
+            f'{INTEGRATION_COMMAND_NAME}-create-network-list': create_network_list_command,
+            f'{INTEGRATION_COMMAND_NAME}-delete-network-list': delete_network_list_command,
+            f'{INTEGRATION_COMMAND_NAME}-activate-network-list': activate_network_list_command,
+            f'{INTEGRATION_COMMAND_NAME}-add-elements-to-network-list': add_elements_to_network_list_command,
+            f'{INTEGRATION_COMMAND_NAME}-remove-element-from-network-list': remove_element_from_network_list_command,
+            f'{INTEGRATION_COMMAND_NAME}-get-network-list-activation-status': get_activation_status_command
+        }
+        try:
+            readable_output, outputs, raw_response = commands[command](client=client, **demisto.args())
+            return_outputs(readable_output, outputs, raw_response)
+
+        except Exception as e:
+            err_msg = f'Error in {INTEGRATION_NAME} Integration [{e}]'
+            return_error(err_msg, error=e)
+
+
+    if __name__ == 'builtins':
+        main()
+  subtype: python3
+  type: python
+system: true

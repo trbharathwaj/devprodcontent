@@ -1,0 +1,72 @@
+description: Default playbook for parsing Prisma Cloud Compute compliance alerts
+id: Prisma Cloud Compute - Compliance Alert
+inputs: []
+name: Prisma Cloud Compute - Compliance Alert
+outputs: []
+starttaskid: "0"
+system: true
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "1"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: db3ae054-8893-4760-871f-9e39c7439d6c
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: db3ae054-8893-4760-871f-9e39c7439d6c
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 50
+        }
+      }
+  "1":
+    id: "1"
+    ignoreworker: false
+    note: false
+    scriptarguments:
+      alert_raw_json:
+        simple: ${incident.prismacloudcomputerawalertjson}
+    separatecontext: false
+    task:
+      brand: ""
+      description: Parse raw vulnerabilities JSON data
+      id: f8a795ad-4886-483e-89ac-0b1fa3e5f5c9
+      iscommand: false
+      name: Parse Compliance Alert
+      script: PrismaCloudComputeParseComplianceAlert
+      type: regular
+      version: -1
+    taskid: f8a795ad-4886-483e-89ac-0b1fa3e5f5c9
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 230
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 275,
+        "width": 380,
+        "x": 450,
+        "y": 50
+      }
+    }
+  }

@@ -1,0 +1,77 @@
+id: 7f449e2c-7bdc-44f7-8e01-072ed6ecb7d0
+inputs: []
+name: set_key
+outputs: []
+starttaskid: "0"
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "1"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 31b1ed87-c50e-4eba-8822-1015ee8b7846
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: 31b1ed87-c50e-4eba-8822-1015ee8b7846
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 50
+        }
+      }
+  "1":
+    id: "1"
+    ignoreworker: false
+    note: false
+    scriptarguments:
+      append:
+        simple: "true"
+      key:
+        simple: incident.list_ip
+      stringify: {}
+      value:
+        complex:
+          accessor: First_Names
+          root: lists
+    separatecontext: false
+    task:
+      brand: ""
+      description: Sets a value into the context with the given context key
+      id: c81aefa2-bcfc-4a83-8024-0b44f1eedd25
+      iscommand: false
+      name: Set
+      script: Set
+      type: regular
+      version: -1
+    taskid: c81aefa2-bcfc-4a83-8024-0b44f1eedd25
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 200
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 245,
+        "width": 380,
+        "x": 450,
+        "y": 50
+      }
+    }
+  }

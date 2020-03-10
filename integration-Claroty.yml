@@ -1,0 +1,1059 @@
+category: Network Security
+commonfields:
+  id: Claroty
+  version: -1
+configuration:
+- defaultvalue: ""
+  display: CTD Server URL (e.g. https://<IP>:5000)
+  name: url
+  required: true
+  type: 0
+- defaultvalue: ""
+  display: Username
+  name: credentials
+  required: true
+  type: 9
+- defaultvalue: ""
+  display: Trust any certificate (not secure)
+  name: insecure
+  required: false
+  type: 8
+- defaultvalue: ""
+  display: Use system proxy settings
+  name: proxy
+  required: false
+  type: 8
+- defaultvalue: ""
+  display: Incident type
+  name: incidentType
+  required: false
+  type: 13
+- defaultvalue: ""
+  display: Fetch incidents
+  name: isFetch
+  required: false
+  type: 8
+- defaultvalue: 7 days
+  display: The initial time to fetch from
+  name: fetch_time
+  required: false
+  type: 0
+- defaultvalue: ""
+  display: Minimal severity to fetch by
+  name: severity
+  options:
+  - Low
+  - Medium
+  - High
+  - Critical
+  required: false
+  type: 15
+- defaultvalue: ""
+  display: Site ID to fetch by
+  name: site_id
+  required: false
+  type: 0
+- defaultvalue: ""
+  display: Fetch by alert type
+  name: alert_type
+  required: false
+  type: 0
+description: Use the Claroty CTD integration to manage assets and alerts.
+display: Claroty
+image: data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAABUCAYAAAA4ewptAAAUfklEQVR4Xu1dC9BWRRl+EBUkAYm7JvfBwMwIHIuLlxHUQmXU0NDRkRJHkkQqS2EMygtpFIQy3oZBmgSRUCeJQhGZEHW0TBmxlJBSEsIrIBcRpHnOf/Znv/3P/ez59jv//+7MP+f/vm9333efd/c5e323GYADkOACgWYuhIpMQaDMCLDRCGG5saAQlhvcRWqJERDCcmc8ISx32IvkkiIghOXOcEJY7rAXySVFQAjLneGEsNxhL5JLioAQljvDCWG5w14klxQBISx3hhPCcoe9SC4pAkJY7gwnhOUOe5FcUgSEsNwZTgjLHfYiuaQICGG5M5wQljvsRXJJERDCcmc4ISx32IvkkiIghOXOcEJY7rAXySVFQAjLneGEsNxhL5JLioAQljvDCWG5w14klxQBISx3hhPCcoe9SC4pAkJY7gwnhOUOe5FcUgSEsNwZTgjLHfYiuaQICGG5M5wQljvsRXJJERDCcmc4ISx32IvkkiIghOXOcEJY7rAXySVFoNERVrdu3fDWW28h7lkD9hLCqgEjiArlQqDREdZZZ52F5cuXI+5ZA2YSwqoBI4gK5UKg0RHWddddh1mzZiHuWQNmEsKqASOICuVCoNER1n333YerrroKcc8aMJMQVg0YQVQoFwKNjrBWr16NYcOGIe5ZA2aqBmF1sVTO7QB2Wcqr6GxslVnpuaVohQvIvz2AwwrINyrLIJwOBbDPkh6065ZGR1jvvfceOnTogLinJRDzZFMEYX0LwOI8SkWkPQPASu33RQAu8j8XUZYgVXiH5tEANofoWfQdm1nL2dzXuaMF24wEsCwin6UAGMdF0PFRtngOwOCcyqi89jY6wjpw4ACaNWuGuGdOAG0kz1r5w2QX3VgPMS7d/R+ATlUkLL18YdgVjQGLm8ZunwJgL6OoEKQLv/usKIER+b4PoIP2u24L9o5YX7IE9tBI+AxHCWFlgdBOmjQVP0ritwEsNCK0ArDbjpqhubgkrI0AehVcPj37nQCIqQpxtuOQ7L0q6cfhelsLsv4DoJvlF1CSl0yU6l8A8LaOe9UJ68UXX8SgQYMs4Ft8FpdccgkWLlxY31uzLDGu0icRxyHG1hQNKUmeSeNUk7CCek428EtaVhUvSQP8PoDZWsYfAvh8WkEx8XsCeNOIkxePIgiLKibBLKy4DdJWhbDWrl2LE044wVNq+vTpmDx5smX7lTK7vBUsb2XIC5oLwuL83GhfcQ4Vqj2x3ALAnoheCId/HAYm7YnltYHeoD8B0DJHhkURVtZ6Gkh0hRIWN3CeeeaZWLp0Kc4991wPy4kTJ3r7pGo1vPvuu+jUqZPXq6qvdc1scEuDEufNNM+bywb81SIss5xsmIdHkIaNskXlofThqlhXI6ILm9iSWSRhXQ/gjhQvGr1MfEns1d8AhUxUssF/8sknaNmyJQ4//HDvf4aVK1fijDO44NTkgy3C+jmAqQ7QrDZhTQeguua2GmkW2MJkr9FWw/LaNq1eNvAokrBYHn0B4qcAbg4p5AUAlvi/cR6wYmW1kB6WWqHz+oJ+T4UrdwzccsBeTBmCPodFfVUZLOmep1LPA3CFw14GRVeDsMIa4hMARjgqf5hONkgja9XS57Sy1quiCcujA62ASVZ6G8SxSljsTe3evdtr2F27dsU777yDQw45xCOtKgyxshrbVbqsFSup4YsuVzUJayaAH9TA8EvHfgOAPppOqjHmsWsemyn5XwHwSoaMqkFYcXU3ltCsEpbqWW3YsAG9evXyiOuiiy7CokWLcMEFF+DRRx/1vvvsMxfbRDKY0E+yZs0aDB061PZqYZ6KrQzLrQv6cnv2QqZPWTRhxVVeEtivqtzL+h6AOSEya4WwqAf3zKUN1SKsMNLS7c19V4EkYY2wFFnNnDnTO3isNm+qoVTPnj3x5pt1K7GWh1ZpDVMr8W0Q1g4AbRwVqFqENQMAJ22DQhyp2YSGe50+0jI07VcrhOU1sQwFryZhtQPwgabjTwDc7n/+O4CvhulvhbBIVlz5mzRpUsUO871796JFixYN5rHor+rYY4/NgGl1k5ika1l6lkqlVKhmQw0rdpGElbR8JwN4vgq9LHNhKsh2QljpGsjTAE4LSBLZLqwRln4c5vXXX0ffvn3re1kPPPAAxo4dW09cF198MR5++OF0xWt8sfMQln5cIU8+eVCtBmElWQFNSm62dp/HTRa7sofCgQT+9QyGrWYPK+jFm6hnmJuw1FCQe63oJaFt27YVvSzuu5o9e7b33bXXXos777wzA5aNMkneiu36jV4UYSUlIFUpON+hPAJEYXo8gFdz1KQrAcyNSK/0jhzS5JAflzRvfXBBWCxTKr2tEZZ52PjVV19F//7961cJs8xbcaVx8+bN3orjxx9/jB07dnj/q+/0p7Jm2O/m93HWr8Lvtggr0ZupgPIUTVhjATyQUO+0JBeX7TgA96UcatrWIU5H/Xcbshs/YT3yyCMYMGAABg8ejE2bNqF58+aBXhK6d+/u+VlPGw499FCcfPLJ4CrdkCFDGjxfeOEFHH/88Xj//ffx9tt1ZySD4gWlT6tLAfHzEpZ+6PnXAH5YgI5RWRZBWHkankrbAwAbX96QRZcsafLqOQTAM34mZwNYnjHDxk9YQS5cuDGURLJlyxacd955nl+qLL0rBfqll16Khx56CKeddppHiE8++SS4ofPBBx8Ef9OfTGN+F/Y5o1FtJstLWHp3mv9HrabZ1FvlVSRhjQLwh5RK2yYL/dwgjwLpZwTDVKOLFXXQmfHVEaKURUkcvYE3g8QpG0ZsmoQV5IsqB4he0ilTpuDWW2+NfaaNm1evnOltEJZJWvxsK9+44tkmLBuEo/LgAenfxxUgwe9ZdEqyophAdGwU7lPSbZ3X7kJY+hGdWPgjItx///0YN24c4p7MIi6O+j2PPpbS5q1guhpmI1G/0dujrV26Q41y64SVdjKbQ5jxRn6qDJcCWJAR4ywEEydK5Unvqkm9uQbZ458A+sUJi/n9twAuC4hjoy4JYdkiLA4DR4wY4Q0Ho540ZFwc9XvOimMjuY1KpusxAMBLNhSLyEPXWSesLGL1vGwSjcproCU8supmaxtFFLZ5XcroeTdtwuKG0a1bt+Koo47KUpkr0nBf13HHHYe4JxPFxVG/51Yqfwa2CUvXiO44bPuKqnDz4QsL69klQUcvP0/ls4GfDmBVksQRcdRQySa+qZbeA3TLg1NQUW/QdobnhKsiOfWkd9UjbWYak1cqbHNta4jym84Vvn379uWacFcF5YHqI444wjtYHfVk/Lg46vcqGiRMlM0GVQPFERUEgeIRKIyw9Mn3vMWIu1DCdGfTRC+hyAuzpBcEah6BRklYPGjNrRVdunTB/v37ceqpp+LGG2/EvHnzvN3455xzDhjHcZAelmMDiPjyIVA4YbVr1w4ffaQfck8HUp8+fbB+/frEV3dxrmvdunXgkJQ9L/rjojubIrZbpCtJg9hCWDkBlORNDwFrhEVieO6557yeDc8MmsO4rNDq+XTu3BlPPEFnk/A2j5KYgoaeSYaQNXAAWwgra6WQdE0WgVyERdTiyGH79u1o3bp1psl35s0jN926dYuU06pVK2+yXQVTJw4Lr7/+etBrBI/x2Jxfy1FzhLBygCdJmyYC1gnr008/xYwZM7xd6SQKRQ7btm1LtcWBl1bw8gqdXOixdNSoURUHqoP2et17772ep1MOR4MIdeDAgXjppZdsexBNW4OEsNIiJvGbPAK5CYsE9dRTT+H888/Hrl27Kgjm5ZdfxoknntjA+2gc6vrFFfx/xYoV3oZRk3wee+wxnHTSSTjmmGMaZGnGveuuu3DNNdc06F0x3ty5c3HllfQeUtUghFVVuEVYY0AgN2GZw8Lhw4d7BKYIg5tHO3bs6BGFuqSCadgLuvrqq+sx5AreFVfUXQTDTaf0Vso86Fa5d+/e9RPoF154IRYvXhw7rOPlrf369cNhhx1WQXTPPPOMt1LIvMePH4977rnH6wnSdQ03ldI7RJWCTcKie9kf+3pz4yU3YOqhOwDeSPwji2XjYWub+UWpxgsfeDfcvy3qH5UVPT5s9CPw2FHdLcCVgeWPC1H4qPRBcaJ+i5NZa79brSdWCEt5T9CHb9xSQH9V/E75c3/88cc9Dw4M9MDAiW8VlFdSfmbPiUM/OgPkHBjJhW5kXnvttQryiZs4V6R59913e+So9KOvLt5ErffkKJebUnnWkMT1xhtveH/8nz3HAoINwvpOhFO5/QB4EzHD1wDwXKENmQoK7lA286OfbpvXsus79r/IgwwF2MHMMmxXOr/XL3dIsns9Cm+Vnm/p+YYSqXZ/G2lt2yAv5EH1JHOeVgiL0tn4b7jhBtx+++31pMLJ8J07d0JNirPhkxQYRo4ciWXLltUrTvIhiTEwzZFHHukRFrdEKPc0ioDuuOMObxI9idsalYa9KK5kBvlpZxzOsZGg2PtSl75mRjVZwrzkwXHwJgBk088ZIklUvKySf0URVlAprVZO3xuleZ1WMnSzxQojCoU1cw2zW9qyR51RzENYafXIhlTyVFb1sUZYirTo2ZO+sEgCbdq08YZaZk+GcVevXu1dnaWCukqr/vWtXcCqLl8l2XC+is4Ck5AV8+Km0VWrVnnx9Yn8MWPGYMGCBV6vjb03hh49emDy5MneymQJelhpKnVUD4s+wDkOpveEe4x6+CUALQH81X/SC+flfpxB/vd6kqDKyXi8Lkm/JYVp+P16ANsi6n5UZe8N4F9+2jAS0XWkpwOlexjZRhHSOQAe93tZQb2rtA3TzCPoMHhQudhoVvuXbwT5bg+zAb//m1bwXv7/dVdZ1QXeaciXHe2tB3W92R8BEAczEGcGpusLYJLmjcPUR49r1h1+5rV1B5f8DUlWCYt5k5zo9fPZZ59tQFSKuBiPc1H0WKqCIhD1We9VebWoWTOMHj3au7wiKVmpvObPn4/LL7/cSzdt2jRMnTrV68GxJ8d9XZzQZw9ryZIlmDBhQsUWiQDj2Poqbw8rTQMJIqwOAIKu4Nb14hCMFZCkwmuuPFP4T1N+WAMMIlYe3uXV80mGTPVVQgM+bDhm5sd410TcJWg2mDGcrYgwcNRLIo09vKai4cn/9ctiw+So79mzpvM+3R56niZmQfkl+Y7DezolNMNKf05RfR9kj6h6wmu86PuegXdLmpfk8iC8+YKrL2yY8TM3TBITd5fTQ+j06dO9oSJ7RepqLw7NuPJ3+ukH54aXL1+Os8+mh9e6wKEgh4Q33XQTbrnlloreURbFOJn+/PPPVwwvmQ+HqHv27PGyZI+Pc10lmMPiPW6/SDEnlXQOi3WhNYCPfYwVYZkNQzWOIIIwv+OE9VpD16S9wyASiGrMWwB01epHUjlh5TGrWlGERf/hvPdOb+RhZBTXEwsjzrAXjJkfe9R0W6MwMfWYAIA3yQTpEVdPqAO9afDiEBXS2MgTap2wvJJqQzp+5lm+2267zVOSK4Akp6ef5tVkdeGUU07xfFlx7xUDezpz5szxjthw6wQn8I8++mizAqX+TL3UkR1dT/awuChw2WVB/tFSi0mSIE8Pi07ufmeRsCb6wyW++QgA82ZQhBWkaxiZhMXVfTcl7Y2klRHUyJPinESnogjLJIew3g9fVPoQmj6/eGGGSR5hNuBK8i8BkNg7+zbmuTlebKou3lBpr+JifkgdM/WLw2Wz9iIxdePwjyTJe/8OrsKFtKDCCKuePn3iat++PT74oK6Xx54Xb8HhNgcVOCHPHfHqGnv2xtTFFWmHgHFsQTLkdWM6cTENh7Lc6lCCHpaq4EkbY1gPK+hlVQRhca6Jc056fUuiexrC+iYAzrEkabxBVYSyOJ9DPcNCXMNMUqb6puH/Y+r7XwBqY2FYL8bUL0mZzSEoe3QcWiqM05KQ/nKIw0XXNwgjNY/KeGYPrKKshROWkqYmvNVnHlLeuHGj13viXikecuYEuAo8asPVxSIDzyZygYCBPSxuf2AvkAsFVQhpKndYA9MrTZTKQYQV9hYvgrAUwXJbACskl4dHJsA4jLC41Fw3jj8YwsqTFOe4oQnl0YlhWH5Jemhx+nLSmr0m7v3igodJRLP8Ce0o6ML04FB/u/bSMOeYmK4bgLrrp4BhAP5iqYely3oKwPCQAnA4/47/WyDOVSMsXUESEees9FVCDg85TORw0VWg33heW8bhZwlWCRUJBJEW35x8SyujfxnAKwENgBOqnHxnYCPhcmlewuK4f0qADfXeXBoSMeMGEQu9q7LicBWvbqNfXbBBIsxHkdUaTnWG1E9bssJwCiNULoq8YZSZ+tbtH6oMzGOa/6eTCC+I/W4AOQXJXAegf4o5SR2XFf5kvW5TTmQfnBuKuVjVCWG5IqQak5u00UapzTzCLpkwV7zMyseJdXP/FmXlJSylb9g8ShDBhpUxjASChrL6RtmshKW/BEyduKft5ghj2CIsXYcwsjbV0ONxvqiLHyEsPXu3ahMktzdwr1uYXYKw/gaAPxskGZU+aGirE6ZZHm6toD0bBCEsdyxmg7B07Sf7ftx/FlEkLheby9QLAXDSfatFKILkqIZos9ws6z9itiJkLRZ7aiR9bosIXGLPmrGFdLQ1t6Tcn9LWWUWzF86Vwd/4+7+y5hOVjrbkHKK5678ijRBWEdAny9Nmw00m0W0sbhLtk2Jl0622Ir0mERDCcmeWpkJY+pCCGxE/dAe5SC47AkJY7izYVAiLO7L/FOLxwB36IrmUCAhhuTNbUyEsdwiL5EaHgBCWO5MKYbnDXiSXFAEhLHeGE8Jyh71ILikCQljuDCeE5Q57kVxSBISw3BlOCMsd9iK5pAgIYbkznBCWO+xFckkREMJyZzghLHfYi+SSIiCE5c5wQljusBfJJUVACMud4YSw3GEvkkuKgBCWO8MJYbnDXiSXFAEhLHeGE8Jyh71ILikCQljuDCeE5Q57kVxSBISw3BlOCMsd9iK5pAgIYbkznBCWO+xFckkREMJyZzghLHfYi+SSIvB/5Md61cj052QAAAAASUVORK5CYII=
+name: Claroty
+script:
+  commands:
+  - arguments:
+    - auto: PREDEFINED
+      defaultValue: all
+      description: Asset fields to return. The default value is "all".
+      name: fields
+      predefined:
+      - all
+      - id
+      - name
+      - insight_names
+      - vendor
+      - criticality
+      - asset_type
+      - last_seen
+      - ipv4
+      - mac
+      - virtual_zone_name
+      - class_type
+      - site_name
+      - project_parsed
+      - risk_level
+      - firmware_version
+      - site_id
+    - auto: PREDEFINED
+      description: Returns assets with this criticality. Can be "Low", "Medium", or
+        "High".
+      name: criticality
+      predefined:
+      - Low
+      - Medium
+      - High
+    - description: Get assets with that include the given insight name
+      name: insight_name
+      predefined:
+      - ""
+    - auto: PREDEFINED
+      defaultValue: "False"
+      description: Add aditional value for the asset CVEs.
+      name: should_enrich_assets
+      predefined:
+      - "True"
+      - "False"
+    - defaultValue: "10"
+      description: Maximal value of assets to query at once.
+      name: asset_limit
+    - description: Get all assets seen last from the given date. Format - YYYY-MM-DDThh:mm:ssZ.
+        Example - 2020-02-02T01:02:03Z
+      name: assets_last_seen
+    description: Gets all assets from CTD. You can apply one or more filters.
+    name: claroty-get-assets
+    outputs:
+    - contextPath: Claroty.Asset.AssetID
+      description: The ID of the asset.
+      type: Number
+    - contextPath: Claroty.Asset.AssetType
+      description: The asset type.
+      type: String
+    - contextPath: Claroty.Asset.CVE.CVSS
+      description: CVE Score.
+      type: String
+    - contextPath: Claroty.Asset.CVE.Description
+      description: CVE Description.
+      type: String
+    - contextPath: Claroty.Asset.CVE.ID
+      description: CVE ID.
+      type: String
+    - contextPath: Claroty.Asset.CVE.Modified
+      description: CVE modification date.
+      type: Date
+    - contextPath: Claroty.Asset.CVE.Published
+      description: CVE publish date.
+      type: Date
+    - contextPath: CVE.CVSS
+      description: CVE Score.
+      type: String
+    - contextPath: CVE.Description
+      description: CVE Description.
+      type: String
+    - contextPath: CVE.ID
+      description: CVE ID.
+      type: String
+    - contextPath: CVE.Modified
+      description: CVE modification date.
+      type: Date
+    - contextPath: CVE.Published
+      description: CVE publish date.
+      type: Date
+    - contextPath: Claroty.Asset.ClassType
+      description: The OT/IT class type.
+      type: String
+    - contextPath: Claroty.Asset.Criticality
+      description: The criticality of the asset, according to the Purdue model.
+      type: String
+    - contextPath: Claroty.Asset.FirmwareVersion
+      description: The FM version of the asset.
+      type: String
+    - contextPath: Claroty.Asset.HighestCVEScore
+      description: Highest CVE Score for the Asset.
+      type: Number
+    - contextPath: Claroty.Asset.IP
+      description: The IPv4 address of the asset.
+      type: String
+    - contextPath: Claroty.Asset.InsightName
+      description: The asset insight names generated by CTD.
+      type: String
+    - contextPath: Claroty.Asset.LastSeen
+      description: The date the asset was last seen.
+      type: Date
+    - contextPath: Claroty.Asset.MAC
+      description: The MAC address of the asset.
+      type: String
+    - contextPath: Claroty.Asset.Name
+      description: The asset name.
+      type: String
+    - contextPath: Claroty.Asset.ResourceID
+      description: The asset RID (AssetID-SiteID).
+      type: String
+    - contextPath: Claroty.Asset.RiskLevel
+      description: The risk indicator.
+      type: Number
+    - contextPath: Claroty.Asset.SiteID
+      description: The site ID of the asset.
+      type: Number
+    - contextPath: Claroty.Asset.SiteName
+      description: The site name of the asset.
+      type: String
+    - contextPath: Claroty.Asset.Vendor
+      description: The vendor of the asset.
+      type: String
+    - contextPath: Claroty.Asset.VirtualZone
+      description: The virtual zone of the asset.
+      type: String
+    - contextPath: Claroty.Asset.WasParsed
+      description: Whether the project was parsed.
+      type: String
+  - arguments:
+    - auto: PREDEFINED
+      defaultValue: all
+      description: Alert fields to return.
+      name: fields
+      predefined:
+      - all
+      - resource_id
+      - type
+      - severity
+      - network_id
+      - resolved
+      - description
+      - alert_indicators
+      - actionable_assets
+      - category
+    - auto: PREDEFINED
+      defaultValue: timestamp
+      description: |-
+        The field by which to sort the results. The default value is "timestamp".
+        Default sort order is ascending
+      name: sort_by
+      predefined:
+      - resource_id
+      - type
+      - severity
+      - network_id
+      - resolved
+      - description
+      - alert_indicators
+      - actionable_assets
+      - id
+      - timestamp
+    - description: Returns alerts that match this alert type.
+      name: type
+    - description: The start date from which to get alerts. Format - YYYY-MM-DDThh:mm:ssZ.
+        Example - 2020-02-02T01:02:03Z
+      name: date_from
+    - auto: PREDEFINED
+      defaultValue: asc
+      description: The sorting order of the alerts - descending or ascending
+      name: sort_order
+      predefined:
+      - asc
+      - desc
+    - description: The maximum number of alerts to query.
+      name: alert_limit
+    - auto: PREDEFINED
+      description: Set minimal severity to query by.
+      name: minimal_severity
+      predefined:
+      - Low
+      - Medium
+      - High
+      - Critical
+    description: Gets alerts from CTD.
+    name: claroty-query-alerts
+    outputs:
+    - contextPath: Claroty.Alert.AlertType
+      description: The alert type.
+      type: String
+    - contextPath: Claroty.Alert.AlertTypeID
+      description: The alert type int value
+      type: Number
+    - contextPath: Claroty.Alert.Description
+      description: The alert description.
+      type: String
+    - contextPath: Claroty.Alert.Indicator
+      description: The alert indicators.
+      type: String
+    - contextPath: Claroty.Alert.NetworkID
+      description: The network ID.
+      type: Number
+    - contextPath: Claroty.Alert.RelatedAssets
+      description: Assets related to the alert.
+      type: String
+    - contextPath: Claroty.Alert.RelatedAssets.AssetID
+      description: The ID of the asset.
+      type: Number
+    - contextPath: Claroty.Alert.RelatedAssets.AssetType
+      description: The asset type.
+      type: String
+    - contextPath: Claroty.Alert.RelatedAssets.ClassType
+      description: The OT/IT class type.
+      type: String
+    - contextPath: Claroty.Alert.RelatedAssets.Criticality
+      description: The criticality of the asset, according to the Purdue model.
+      type: String
+    - contextPath: Claroty.Alert.RelatedAssets.FirmwareVersion
+      description: The FM version of the asset.
+      type: String
+    - contextPath: Claroty.Alert.RelatedAssets.IP
+      description: The IPv4 address of the asset.
+      type: String
+    - contextPath: Claroty.Alert.RelatedAssets.InsightName
+      description: The asset insight names generated by CTD.
+      type: String
+    - contextPath: Claroty.Alert.RelatedAssets.LastSeen
+      description: The date the asset was last seen.
+      type: Date
+    - contextPath: Claroty.Alert.RelatedAssets.MAC
+      description: The MAC address of the asset.
+      type: String
+    - contextPath: Claroty.Alert.RelatedAssets.Name
+      description: The asset name.
+      type: String
+    - contextPath: Claroty.Alert.RelatedAssets.ResourceID
+      description: The asset RID (AssetID-SiteID).
+      type: String
+    - contextPath: Claroty.Alert.RelatedAssets.RiskLevel
+      description: The risk indicator.
+      type: Number
+    - contextPath: Claroty.Alert.RelatedAssets.SiteID
+      description: The site ID of the asset.
+      type: Number
+    - contextPath: Claroty.Alert.RelatedAssets.SiteName
+      description: The site name of the asset.
+      type: String
+    - contextPath: Claroty.Alert.RelatedAssets.Vendor
+      description: The vendor of the asset.
+      type: String
+    - contextPath: Claroty.Alert.RelatedAssets.VirtualZone
+      description: The virtual zone of the asset.
+      type: String
+    - contextPath: Claroty.Alert.RelatedAssets.WasParsed
+      description: Whether the project was parsed.
+      type: String
+    - contextPath: Claroty.Alert.Resolved
+      description: The resolve status of the alert.
+      type: Number
+    - contextPath: Claroty.Alert.ResourceID
+      description: The alert resource ID (AlertID-SiteID).
+      type: String
+    - contextPath: Claroty.Alert.Severity
+      description: The alert severity.
+      type: String
+    - contextPath: Claroty.Alert.Category
+      description: The alert category.
+      type: String
+  - arguments:
+    - description: The ResourceId of the Alerts to resolve (in <alert_id>-<site_id>
+        format)
+      name: selected_alerts
+      required: true
+    - auto: PREDEFINED
+      defaultValue: resolve
+      description: How to resolve the alert. Can be "archive" or "resolve". The default
+        value is "resolve".
+      name: resolve_as
+      predefined:
+      - archive
+      - resolve
+    - defaultValue: Resolved by Demisto
+      description: A comment to add when resolving an alert.
+      name: resolve_comment
+    description: Resolves alerts.
+    execution: true
+    name: claroty-resolve-alert
+    outputs:
+    - contextPath: Claroty.Resolve_out.success
+      description: Success output of alert resolving.
+      type: String
+  - arguments:
+    - auto: PREDEFINED
+      defaultValue: all
+      description: Asset fields to return. The default value is "all".
+      name: fields
+      predefined:
+      - all
+      - resource_id
+      - type
+      - severity
+      - network_id
+      - resolved
+      - description
+      - alert_indicators
+      - actionable_assets
+    - description: Resource ID of the desired alert. Expected value - <alert_id>-<site_id>
+      name: alert_rid
+      required: true
+    description: Get a single alert from CTD.
+    name: claroty-get-single-alert
+    outputs:
+    - contextPath: Claroty.Alert.AlertType
+      description: The alert type.
+      type: String
+    - contextPath: Claroty.Alert.AlertTypeID
+      description: The alert type int value
+      type: Number
+    - contextPath: Claroty.Alert.Description
+      description: The alert description.
+      type: String
+    - contextPath: Claroty.Alert.Indicator
+      description: The alert indicators.
+      type: String
+    - contextPath: Claroty.Alert.NetworkID
+      description: The network ID.
+      type: Number
+    - contextPath: Claroty.Alert.RelatedAssets
+      description: Assets related to the alert.
+      type: String
+    - contextPath: Claroty.Alert.Resolved
+      description: The resolve status of the alert.
+      type: Number
+    - contextPath: Claroty.Alert.ResourceID
+      description: The alert resource ID (AlertID-SiteID).
+      type: String
+    - contextPath: Claroty.Alert.Severity
+      description: The alert severity.
+      type: String
+  dockerimage: demisto/python3:3.8.1.5734
+  isfetch: true
+  runonce: false
+  script: |2
+
+
+
+    """ IMPORTS """
+    from distutils.util import strtobool
+    from typing import List, Tuple, Dict, Any, Union
+    import json
+    import requests
+    import dateparser
+
+    # Disable insecure warnings
+    requests.packages.urllib3.disable_warnings()
+
+    ''' CONSTANTS '''
+    DATE_FORMAT = '%Y-%m-%dT%H:%M:%SZ'
+    DEFAULT_HEADERS = {'content-type': 'application/json'}
+    CTD_TO_DEMISTO_SEVERITY = {
+        "Low": 1,
+        "Medium": 2,
+        "High": 3,
+        "Critical": 4
+    }
+    ALERT_CTD_FIELD_TO_DEMISTO_FIELD = {
+        'resource_id': "ResourceID",
+        'type': "AlertTypeID",
+        'type__': "AlertType",
+        'severity__': "Severity",
+        'network_id': "NetworkID",
+        'resolved': "Resolved",
+        'description': "Description",
+        'actionable_assets': "RelatedAssets",
+        'alert_indicators': "Indicator",
+        'category__': "Category",
+        'timestamp': "Timestamp"
+    }
+    ASSET_CTD_FIELD_TO_DEMISTO_FIELD = {
+        'id': "AssetID",
+        'name': "Name",
+        'insight_names': "InsightName",
+        'vendor': "Vendor",
+        "criticality__": "Criticality",
+        'asset_type__': "AssetType",
+        "last_seen": "LastSeen",
+        "ipv4": "IP",
+        "mac": "MAC",
+        'virtual_zone_name': "VirtualZone",
+        "class_type": "ClassType",
+        'site_name': "SiteName",
+        "project_parsed": "WasParsed",
+        "risk_level": "RiskLevel",
+        "firmware": "FirmwareVersion",
+        "resource_id": "ResourceID",
+        "site_id": "SiteID",
+        "insights": "Insights"
+    }
+    RESOLVE_STRING_TO_TYPE = {
+        "resolve": 1,
+        "archive": 2
+    }
+    DEFAULT_ALERT_FIELD_LIST = ["resource_id", "type", "severity", "network_id", "resolved", "description",
+                                "alert_indicators", "actionable_assets", "category"]
+    DEFAULT_ASSET_FIELD_LIST = ["id", "name", "insight_names", "vendor", "criticality", "asset_type", "last_seen", "ipv4",
+                                "mac", "virtual_zone_name", "class_type", "site_name", "site_id", "project_parsed",
+                                "risk_level", "firmware", "resource_id"]
+    WINDOWS_CVE_BASE_URL = "ranger/insight_details/Windows%20CVEs?&format=asset_page&sort=-Score%20(CVSS)" \
+                           "&per_page=1000&page=1&id__exact="
+    FULL_MATCH_BASE_URL = "ranger/insight_details/Full%20Match%20CVEs?&format=asset_page&sort=-Score%20(CVSS)" \
+                          "&per_page=1000&page=1&id__exact="
+    DEFAULT_RESOLVE_ALERT_COMMENT = "Resolved by Demisto"
+    MAX_ASSET_LIMIT = 75
+    MAX_ALERT_LIMIT = 75
+
+
+    class Client(BaseClient):
+        def __init__(self, **kwargs):
+            self._credentials = kwargs.pop("credentials", (None, None))
+            super().__init__(**kwargs)
+            self._headers = DEFAULT_HEADERS
+            self._generate_token()
+            self._list_to_filters: dict = {'alerts': [], 'assets': []}
+
+        def _request_with_token(self, url_suffix: str, method: str = "GET", data=None):
+            try:
+                return self._http_request(method, url_suffix=url_suffix, data=data)
+            except DemistoException:
+                demisto.setIntegrationContext({'jwt_token': None})
+                self._headers.pop('Authorization', None)
+                # assuming it was just the token that expired, retrying to send the request with the new token
+                self._generate_token()
+
+                return self._http_request(method, url_suffix=url_suffix, data=data)
+
+        def _generate_token(self):
+            if not demisto.getIntegrationContext().get("jwt_token"):
+                res = self._http_request(
+                    'POST',
+                    url_suffix="auth/authenticate",
+                    data=json.dumps({"username": self._credentials[0], "password": self._credentials[1]}),
+                )
+
+                if res.get('password_expired', None):
+                    raise DemistoException("Password expired, please update credentials")
+
+                demisto.setIntegrationContext({'jwt_token': res['token']})
+                self._headers['Authorization'] = demisto.getIntegrationContext()['jwt_token']
+                return self._headers['Authorization']
+            else:
+                return demisto.getIntegrationContext()
+
+        def list_incidents(self, fields: list, sort_by: dict, fetch_from_date: str, page_number: int,
+                           **extra_filters) -> dict:
+            extra_filters_list = [add_filter("timestamp", fetch_from_date, "gte")]
+            for extra_filter in extra_filters:
+                if extra_filter == "severity":
+                    extra_filters_list.append(add_filter(extra_filter, extra_filters[extra_filter], "gte"))
+                else:
+                    extra_filters_list.append(add_filter(extra_filter, extra_filters[extra_filter]))
+            return self.get_alerts(fields=fields, sort_by=sort_by, filters=extra_filters_list, page_number=page_number)
+
+        def get_assets(self, fields: list, sort_by: dict, filters: list, limit: int = 10):
+            url_suffix = self._add_extra_params_to_url('ranger/assets', fields, sort_by, filters, limit)
+            return self._request_with_token(url_suffix, 'GET')
+
+        def get_alerts(self, fields: list, sort_by: dict, filters: list, limit: int = 10, page_number: int = 1):
+            url_suffix = self._add_extra_params_to_url('ranger/alerts', fields, sort_by, filters, limit, page_number)
+            return self._request_with_token(url_suffix, 'GET')
+
+        def get_alert(self, rid: str) -> Union[Dict, str, requests.Response]:
+            return self._request_with_token(f'ranger/alerts/{rid}', 'GET')
+
+        def get_ranger_table_filters(self, table: str) -> dict:
+            if not self._list_to_filters[table]:
+                self._list_to_filters[table] = self._request_with_token(f'ranger/{table}/filters', 'GET')['filters']
+            return self._list_to_filters[table]
+
+        def resolve_alert(self, selected_alerts: list, filters: dict, resolve_type: int, resolve_comment: str):
+            return self._request_with_token(
+                'ranger/ranger_api/resolve_alerts',
+                'POST',
+                data=json.dumps({
+                    "selection_params": {
+                        "select_all": False,
+                        "selected": selected_alerts,
+                        "excluded": [],
+                        "filters": filters
+                    },
+                    "resolved_as": resolve_type,
+                    "comment": resolve_comment
+                })
+            )
+
+        @staticmethod
+        def _add_extra_params_to_url(url_suffix: str, fields: list, sort_by: dict, filters: list, limit: int = 10,
+                                     page_number: int = 1) -> str:
+            url_suffix += "?fields=" + ',;$'.join(fields)
+            url_suffix += f"&page={page_number}&per_page={limit}"
+
+            if sort_by:
+                url_suffix += f"&sort={sort_by['order']}{sort_by['field']}"
+
+            for query_filter in filters:
+                url_suffix += f"&{query_filter['field']}__{query_filter['operator']}={query_filter['value']}"
+            return url_suffix
+
+        def enrich_asset_results(self, assets: dict) -> dict:
+            for asset in assets['objects']:
+                full_match_cves = self._request_with_token(f"{FULL_MATCH_BASE_URL}{asset['resource_id']}", 'GET')
+                windows_cves = self._request_with_token(f"{WINDOWS_CVE_BASE_URL}{asset['resource_id']}", 'GET')
+                assets_cves = [*full_match_cves["rows"], *windows_cves["rows"]]
+                asset["insights"] = [{"CVE-ID": cve["cells"][0], "Score": cve["cells"][1], "Description": cve["cells"][2],
+                                     "Published": cve["cells"][3], "Modified": cve["cells"][4]} for cve in assets_cves]
+            return assets
+
+
+    def test_module(client: Client):
+        authentication_result = client._generate_token()
+        if not authentication_result.get("jwt_token", False):
+            return f'Token getter failed, adding result - {authentication_result}'
+
+        query_alerts_result = client.get_alerts(DEFAULT_ALERT_FIELD_LIST, get_sort("timestamp"), [], limit=1)
+        if query_alerts_result.get("count_total", "Failed") == "Failed":
+            return f"Failed getting alerts, json result - {query_alerts_result}"
+
+        return 'ok'
+
+
+    def get_assets_command(client: Client, args: dict) -> Tuple:
+        relevant_fields, sort_by, limit = _init_request_values("asset", "id", "asset_limit", args)
+        filters = []
+
+        criticality_str = args.get("criticality", None)
+        criticality_int = CTD_TO_DEMISTO_SEVERITY.get(criticality_str, None)
+        if criticality_int:
+            filters.append(add_filter("criticality", criticality_int - 1))
+
+        insight_name = args.get("insight_name", None)
+        if insight_name:
+            filters.extend([add_filter("insight_name", insight_name), add_filter("insight_status", 0)])
+
+        assets_last_seen = args.get("assets_last_seen", None)
+        if assets_last_seen:
+            filters.append(add_filter("last_seen", assets_last_seen, "gte"))
+
+        result = client.get_assets(relevant_fields, sort_by, filters, limit)
+
+        should_enrich_assets = strtobool(args.get("should_enrich_assets", "False"))
+        if should_enrich_assets:
+            result = client.enrich_asset_results(result)
+            relevant_fields.append("insights")
+
+        parsed_results_assets, parsed_cves = _parse_assets_result(result, relevant_fields)
+        outputs = {
+            'Claroty.Asset(val.AssetID == obj.AssetID)': parsed_results_assets
+        }
+
+        if parsed_cves and len(parsed_cves) > 0:
+            outputs['CVE(val.ID == obj.ID)'] = parsed_cves
+
+        readable_output = tableToMarkdown('Claroty Asset List', parsed_results_assets)
+        return (
+            readable_output,
+            outputs,
+            result
+        )
+
+
+    def resolve_alert_command(client: Client, args: dict) -> Tuple:
+        bad_input = False
+        selected_alerts_arg = args.get("selected_alerts", [])
+        selected_alert_list = selected_alerts_arg.split(",") \
+            if isinstance(selected_alerts_arg, str) else selected_alerts_arg
+        for alert in selected_alert_list:
+            split_alert = alert.split("-")
+            if len(split_alert) != 2 or not split_alert[0].isnumeric() or not split_alert[1].isnumeric():
+                bad_input = True
+
+        resolve_type = RESOLVE_STRING_TO_TYPE[args.get("resolve_as", "resolve")]
+
+        resolve_comment = args.get("resolve_comment", DEFAULT_RESOLVE_ALERT_COMMENT)
+
+        if not bad_input:
+            result = client.resolve_alert(selected_alert_list, args.get("filters", {}), resolve_type, resolve_comment)
+
+            outputs = {
+                "Claroty.Resolve_out": result
+            }
+            if result['success']:
+                readable_output = f"## Alert was resolved successfully"
+            else:
+                readable_output = f"## Alert was not resolved"
+        else:
+            result = {}
+            outputs = {}
+            readable_output = f"## Bad input"
+
+        return (
+            readable_output,
+            outputs,
+            result
+        )
+
+
+    def get_single_alert_command(client: Client, args: dict) -> Tuple:
+        relevant_fields = get_fields("alert", args.get("fields", "").split(","))
+        alert_rid = args.get("alert_rid", None)
+        result = client.get_alert(alert_rid)
+        parsed_results = _parse_single_alert(result, relevant_fields)
+
+        outputs = {
+            'Claroty.Alert(val.ResourceID == obj.ResourceID)': parsed_results
+        }
+        readable_output = tableToMarkdown('Claroty Alert List', parsed_results)
+        return (
+            readable_output,
+            outputs,
+            result
+        )
+
+
+    def query_alerts_command(client: Client, args: dict) -> Tuple:
+        relevant_fields, sort_by, limit = _init_request_values("alert", "timestamp", "alert_limit", args, True)
+        filters = []
+
+        alert_type = args.get("type", "").lower().replace(" ", "")
+        alert_type_exists = False
+        if alert_type:
+            alert_filters = client.get_ranger_table_filters('alerts')
+            filters_url_suffix = transform_filters_labels_to_values(alert_filters, "type", alert_type)
+            if filters_url_suffix:
+                for filter_type in filters_url_suffix:
+                    filters.append(add_filter(filter_type[0], filter_type[1]))
+                    alert_type_exists = True
+
+        alert_time = args.get("date_from", None)
+        if alert_time:
+            filters.append(add_filter("timestamp", alert_time, "gte"))
+
+        alert_severity = args.get("severity", None)
+        if alert_severity:
+            add_filter("severity", get_severity_filter(alert_severity), "gte")
+
+        if bool(alert_type) == alert_type_exists:
+            result = client.get_alerts(relevant_fields, sort_by, filters, limit)
+            parsed_results = _parse_alerts_result(result, relevant_fields)
+        else:
+            result = {}
+            parsed_results = []
+
+        outputs = {
+            'Claroty.Alert(val.ResourceID == obj.ResourceID)': parsed_results
+        }
+        readable_output = tableToMarkdown('Claroty Alert List', parsed_results)
+        return (
+            readable_output,
+            outputs,
+            result
+        )
+
+
+    def _init_request_values(obj_name: str, sort_by_default_value: str, limit_arg: str, args: dict,
+                             get_sort_order_arg: bool = False) -> Tuple[List, Dict, int]:
+        relevant_fields = get_fields(obj_name, args.get("fields", "").split(","))
+
+        sort_order = False
+        if get_sort_order_arg:
+            sort_order = get_sort_order(args.get("sort_order", "asc"))
+
+        sort_by = get_sort(args.get("sort_by", sort_by_default_value), sort_order)
+
+        limit = args.get(limit_arg, '10')
+        max_limit = 10
+        if obj_name == "asset":
+            max_limit = MAX_ASSET_LIMIT
+        elif obj_name == "alert":
+            max_limit = MAX_ALERT_LIMIT
+
+        if limit.isdigit() and int(limit) <= max_limit:
+            limit = int(limit)
+        else:
+            limit = 10
+
+        return relevant_fields, sort_by, limit
+
+
+    def _parse_alerts_result(alert_result: dict, fields: list) -> List[dict]:
+        if 'objects' not in alert_result:
+            return []
+        obj = alert_result.get('objects', [])
+        alerts = []
+
+        for obj_fields in obj:
+            alert = _parse_single_alert(obj_fields, fields)
+            alerts.append(alert)
+        return alerts
+
+
+    def _parse_single_alert(alert_obj, fields: list):
+        parsed_alert_result = {}
+        for field in fields:
+            if field == "type":
+                parsed_alert_result[ALERT_CTD_FIELD_TO_DEMISTO_FIELD[field]] = alert_obj.get(field)
+                alert_type_value = alert_obj.get("type__", [])
+                parsed_alert_result[ALERT_CTD_FIELD_TO_DEMISTO_FIELD["type__"]] = alert_type_value[1:] \
+                    if alert_type_value else None
+
+            elif field == "alert_indicators":
+                indicator_str_result = ""
+                for indicator in alert_obj.get(field, []):
+                    indicator_str_result += f"Alert ID - {indicator['alert_id']}\r\n"
+                    indicator_str_result += f"Description - {indicator['indicator_info']['description']}\r\n"
+                    indicator_str_result += f"Points - {indicator['indicator_info']['points']}\r\n\n"
+                parsed_alert_result[ALERT_CTD_FIELD_TO_DEMISTO_FIELD[field]] = indicator_str_result
+
+            elif field == "severity":
+                alert_severity_value = alert_obj.get("severity__")
+                parsed_alert_result[ALERT_CTD_FIELD_TO_DEMISTO_FIELD["severity__"]] = alert_severity_value[1:]\
+                    if alert_severity_value else None
+
+            elif field == "category":
+                alert_category_value = alert_obj.get("category__")
+                parsed_alert_result[ALERT_CTD_FIELD_TO_DEMISTO_FIELD["category__"]] = alert_category_value[1:]\
+                    if alert_category_value else None
+
+            elif field == "actionable_assets":
+                assets = alert_obj.get(field, [])
+                parsed_assets = []
+
+                for asset in assets:
+                    parsed_assets.append(_parse_single_asset(asset["asset"], DEFAULT_ASSET_FIELD_LIST))
+                parsed_alert_result[ALERT_CTD_FIELD_TO_DEMISTO_FIELD[field]] = parsed_assets
+            else:
+                parsed_alert_result[ALERT_CTD_FIELD_TO_DEMISTO_FIELD[field]] = alert_obj.get(field)
+
+        return parsed_alert_result
+
+
+    def _parse_assets_result(assets_result: dict, fields: list) -> Tuple:
+        if 'objects' not in assets_result:
+            return [], []
+        obj = assets_result.get('objects', [])
+        assets = []
+        cves = []
+
+        for obj_fields in obj:
+            asset = _parse_single_asset(obj_fields, fields)
+            assets.append(asset)
+            if asset.get("CVE", None):
+                cves.append(asset.get("CVE"))
+        return assets, cves
+
+
+    def _parse_single_asset(asset_obj: dict, fields: list) -> dict:
+        parsed_asset_result = {}
+        for field in fields:
+            if field == "asset_type":
+                asset_type_value = asset_obj.get("asset_type__")
+                parsed_asset_result[ASSET_CTD_FIELD_TO_DEMISTO_FIELD["asset_type__"]] = asset_type_value[1:] \
+                    if asset_type_value else None
+
+            elif field == "criticality":
+                asset_criticality_value = asset_obj.get("criticality__")
+                parsed_asset_result[ASSET_CTD_FIELD_TO_DEMISTO_FIELD["criticality__"]] = asset_criticality_value[1:]\
+                    if asset_criticality_value else None
+
+            elif field == "insights":
+                cves = []
+                highest_cve_score = 0.0
+                for insight in asset_obj.get(field, []):
+                    cve = {
+                        'ID': insight['CVE-ID'],
+                        'CVSS': insight['Score'],
+                        'Published': insight['Published'],
+                        'Modified': insight['Modified'],
+                        'Description': insight['Description'],
+                    }
+                    if float(insight['Score']) > highest_cve_score:
+                        highest_cve_score = float(insight['Score'])
+                    cves.append(cve)
+                parsed_asset_result['CVE'] = cves
+                parsed_asset_result['HighestCVEScore'] = highest_cve_score
+
+            else:
+                parsed_asset_result[ASSET_CTD_FIELD_TO_DEMISTO_FIELD[field]] = asset_obj.get(field)
+
+        return parsed_asset_result
+
+
+    def get_sort(field_to_sort_by: str, order_by_desc: bool = False) -> dict:
+        order_by_direction = "-" if order_by_desc else ""
+        return {"field": field_to_sort_by, "order": order_by_direction}
+
+
+    def get_sort_order(sort_order: str) -> bool:
+        return False if sort_order == "asc" else True
+
+
+    def get_fields(obj_name: str, fields: List[str]) -> list:
+        if obj_name == "alert":
+            fields.append("resource_id")
+            if "all" in fields:
+                fields.pop(fields.index("all"))
+                fields.extend(DEFAULT_ALERT_FIELD_LIST)
+
+        elif obj_name == "asset":
+            fields.extend(["id", "resource_id", "site_id"])
+            if "all" in fields:
+                fields.pop(fields.index("all"))
+                fields.extend(DEFAULT_ASSET_FIELD_LIST)
+
+        fields = set(fields)
+        return list(fields)
+
+
+    def add_filter(filter_name: str, filter_value: Any, filter_operation: str = "exact"):
+        return {
+            "field": filter_name,
+            "value": filter_value,
+            "operator": filter_operation,
+        }
+
+
+    def transform_filters_labels_to_values(table_filters, filter_name: str, filter_val: str):
+        chosen_filters = []
+        for table_filter in table_filters:
+            if table_filter['name'].lower() == filter_name:
+                table_filter_value = next((table_filter_value['value'] for table_filter_value in table_filter['values']
+                                          if filter_val == table_filter_value['label'].lower().replace(" ", "")), None)
+                if table_filter_value:
+                    chosen_filters.append((table_filter['name'], table_filter_value))
+
+        return chosen_filters
+
+
+    def get_severity_filter(severity: str) -> str:
+        severity_filter = ""
+        for severity_key in CTD_TO_DEMISTO_SEVERITY:
+            if CTD_TO_DEMISTO_SEVERITY.get(severity_key, 0) >= CTD_TO_DEMISTO_SEVERITY.get(severity, 0):
+                severity_filter += f"{severity_key},;$"
+        return severity_filter
+
+
+    def get_list_incidents(client: Client, latest_created_time: str, page_number: int):
+        field_list = DEFAULT_ALERT_FIELD_LIST + ["timestamp"]
+        extra_filters = {}
+
+        severity = demisto.params().get("severity", None)
+        if severity:
+            extra_filters["severity"] = get_severity_filter("".join(severity))
+
+        site_id = demisto.params().get("site_id", None)
+        if site_id:
+            extra_filters["site_id"] = site_id
+
+        alert_type = demisto.params().get("alert_type", None)
+        alert_type_exists = False
+        if alert_type:
+            alert_filters = client.get_ranger_table_filters('alerts')
+            filters_url_suffix = transform_filters_labels_to_values(alert_filters, "type",
+                                                                    alert_type.lower().replace(" ", ""))
+            if filters_url_suffix:
+                for filter_type in filters_url_suffix:
+                    extra_filters["type"] = filter_type[1]
+                    alert_type_exists = True
+
+        if bool(alert_type) == alert_type_exists:
+            response = client.list_incidents(field_list, get_sort("timestamp"), latest_created_time, page_number,
+                                             **extra_filters)
+        else:
+            response = {}
+
+        return response, field_list
+
+
+    def fetch_incidents(client: Client, last_run, first_fetch_time):
+        """
+        This function will execute each interval (default is 1 minute).
+        """
+        last_fetch = last_run.get('last_fetch', None)
+        last_run_rids = last_run.get('last_run_rids', {})
+        page_to_query = last_run.get('page_to_query', 1)
+
+        if not last_fetch:
+            last_fetch, _ = parse_date_range(first_fetch_time, date_format=DATE_FORMAT, utc=True)
+
+        current_rids = []
+        incidents = []
+
+        response, field_list = get_list_incidents(client, last_fetch, page_to_query)
+        items = _parse_alerts_result(response, field_list)
+
+        # Check last queried item's timestamp
+        latest_created_time = None
+        if items:
+            latest_created_time = dateparser.parse(items[-1]['Timestamp']).replace(tzinfo=None).strftime(DATE_FORMAT)
+
+        # If timestamp stayed the same than get next 10
+        if last_fetch == latest_created_time:
+            page_to_query += 1
+        else:
+            page_to_query = 1
+
+        for item in items:
+            # Make datetime object unaware of timezone for comparison
+            incident_created_time = dateparser.parse(item['Timestamp']).replace(tzinfo=None)
+
+            # Don't add duplicated incidents
+            if item["ResourceID"] not in last_run_rids:
+                incident = {
+                    'name': item.get('Description', None),
+                    'occurred': incident_created_time.strftime(DATE_FORMAT),
+                    'severity': CTD_TO_DEMISTO_SEVERITY.get(item.get('Severity', None), None),
+                    'rawJSON': json.dumps(item)
+                }
+
+                incidents.append(incident)
+                current_rids.append(item["ResourceID"])
+
+        # If there were no items queried, latest_created_time is the same as last run
+        if latest_created_time is None:
+            latest_created_time = last_fetch
+
+        # If no new items were retrieved, last_run_rids stay the same
+        if not current_rids:
+            current_rids = last_run_rids
+
+        next_run = {'last_fetch': latest_created_time, 'last_run_rids': current_rids, "page_to_query": page_to_query}
+        return next_run, incidents
+
+
+    def main():
+        username = demisto.params().get('credentials').get('identifier')
+        password = demisto.params().get('credentials').get('password')
+
+        base_url = demisto.params()['url'].rstrip('/')
+
+        verify_certificate = not demisto.params().get('insecure', True)
+
+        first_fetch_time = demisto.params().get('fetch_time', '7 days').strip()
+
+        proxy = demisto.params().get('proxy', False)
+
+        LOG(f'Command being called is {demisto.command()}')
+        try:
+            client = Client(
+                base_url=base_url,
+                verify=verify_certificate,
+                credentials=(username, password),
+                proxy=proxy,
+            )
+
+            if demisto.command() == 'test-module':
+                result = test_module(client)
+                demisto.results(result)
+
+            elif demisto.command() == 'claroty-get-assets':
+                return_outputs(*get_assets_command(client, demisto.args()))
+
+            elif demisto.command() == 'claroty-query-alerts':
+                return_outputs(*query_alerts_command(client, demisto.args()))
+
+            elif demisto.command() == 'claroty-get-single-alert':
+                return_outputs(*get_single_alert_command(client, demisto.args()))
+
+            elif demisto.command() == 'claroty-resolve-alert':
+                return_outputs(*resolve_alert_command(client, demisto.args()))
+
+            elif demisto.command() == 'fetch-incidents':
+                next_run, incidents = fetch_incidents(
+                    client=client,
+                    last_run=demisto.getLastRun(),
+                    first_fetch_time=first_fetch_time)
+
+                demisto.setLastRun(next_run)
+                demisto.incidents(incidents)
+
+        except Exception as e:
+            return_error(f'Failed to execute {demisto.command()} command. Error: {str(e)}')
+
+
+    if __name__ in ('__main__', '__builtin__', 'builtins'):
+        main()
+  subtype: python3
+  type: python
+system: true

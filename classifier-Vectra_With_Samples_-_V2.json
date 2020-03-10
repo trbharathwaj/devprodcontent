@@ -1,0 +1,19 @@
+{
+	"brandName": "Vectra With Samples - V2",
+	"custom": false,
+	"defaultIncidentType": "",
+	"id": "Vectra With Samples - V2",
+	"incidentSamples": null,
+	"instanceId": "",
+	"instanceName": "",
+	"isDefault": true,
+	"keyTypeMap": null,
+	"mapping": null,
+	"sortValues": null,
+	"transformer": {
+		"complex": null,
+		"simple": ""
+	},
+	"unclassifiedCases": null,
+	"version": -1
+}

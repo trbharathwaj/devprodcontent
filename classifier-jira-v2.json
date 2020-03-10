@@ -1,0 +1,19 @@
+{
+	"brandName": "jira-v2",
+	"custom": false,
+	"defaultIncidentType": "",
+	"id": "jira-v2",
+	"incidentSamples": null,
+	"instanceId": "",
+	"instanceName": "",
+	"isDefault": true,
+	"keyTypeMap": null,
+	"mapping": null,
+	"sortValues": null,
+	"transformer": {
+		"complex": null,
+		"simple": ""
+	},
+	"unclassifiedCases": null,
+	"version": -1
+}

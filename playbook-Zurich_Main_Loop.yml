@@ -1,0 +1,76 @@
+id: f3d55759-a6fc-4f71-8556-60213a2a1df5
+inputs: []
+name: Zurich Main Loop
+outputs: []
+starttaskid: "0"
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "1"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 04aa809a-e8d4-423f-8adf-48a753dad5ae
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: 04aa809a-e8d4-423f-8adf-48a753dad5ae
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 160
+        }
+      }
+  "1":
+    id: "1"
+    ignoreworker: false
+    loop:
+      exitCondition: ""
+      forEach: true
+      iscommand: false
+      wait: 0
+    note: false
+    scriptarguments:
+      array1:
+        simple: ${array1}
+      array2:
+        simple: ${array2}
+    separatecontext: true
+    task:
+      brand: ""
+      id: f674f699-dfce-4925-8b05-154ebcfd64b7
+      iscommand: false
+      name: Zurich Loop Sub
+      playbookId: a2fe844a-0175-48a3-8d9f-60df3ac6e72d
+      type: playbook
+      version: -1
+    taskid: f674f699-dfce-4925-8b05-154ebcfd64b7
+    timertriggers: []
+    type: playbook
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 380
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 315,
+        "width": 380,
+        "x": 450,
+        "y": 160
+      }
+    }
+  }

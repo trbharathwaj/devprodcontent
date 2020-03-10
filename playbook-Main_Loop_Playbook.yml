@@ -1,0 +1,268 @@
+id: de889fc9-170b-47a7-859b-173a2c27ada2
+inputs:
+- description: ""
+  key: Hosts
+  required: false
+  value:
+    simple: creates,a,list,of,five
+name: Main Loop Playbook
+outputs: []
+starttaskid: "0"
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "10"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 09ba5677-8b86-4d5b-81d5-3404167c0529
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: 09ba5677-8b86-4d5b-81d5-3404167c0529
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 150,
+          "y": -50
+        }
+      }
+  "1":
+    id: "1"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "2"
+    note: false
+    scriptarguments:
+      arrayData:
+        simple: creates,a,list,of,five
+      contextKey:
+        simple: hostname
+      separator:
+        simple: ','
+    separatecontext: false
+    task:
+      brand: ""
+      id: 9cca0626-2fb7-4b7d-88e7-59f44e2439e9
+      iscommand: false
+      name: Create the array from list
+      script: CreateArray
+      type: regular
+      version: -1
+    taskid: 9cca0626-2fb7-4b7d-88e7-59f44e2439e9
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 195
+        }
+      }
+  "2":
+    id: "2"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "9"
+    note: false
+    scriptarguments:
+      array:
+        simple: ${hostname}
+      contextKey:
+        simple: size
+    separatecontext: false
+    task:
+      brand: ""
+      id: 56089e62-a72e-4b0b-87f2-6aad5d607e84
+      iscommand: false
+      name: count the elements in the list
+      script: CountArraySize
+      type: regular
+      version: -1
+    taskid: 56089e62-a72e-4b0b-87f2-6aad5d607e84
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 370
+        }
+      }
+  "5":
+    id: "5"
+    ignoreworker: false
+    loop:
+      builtincondition:
+      - - left:
+            iscontext: true
+            value:
+              complex:
+                root: counterVal
+                transformers:
+                - operator: ReverseList
+                - args:
+                    index:
+                      value:
+                        simple: "0"
+                  operator: atIndex
+          operator: greaterThan
+          right:
+            iscontext: true
+            value:
+              complex:
+                root: hostnameSize
+                transformers:
+                - args:
+                    by:
+                      value:
+                        simple: "1"
+                  operator: subtraction
+      exitCondition: ""
+      iscommand: false
+      wait: 1
+    nexttasks:
+      '#none#':
+      - "7"
+    note: false
+    scriptarguments:
+      counter:
+        complex:
+          root: ${counterVal}
+          transformers:
+          - operator: cf0657a6-f292-4ecf-8b27-3fa000b42738
+          - operator: ReverseList
+          - args:
+              index:
+                value:
+                  simple: "0"
+            operator: atIndex
+      hostname:
+        simple: ${hostname}
+      hostnameSize:
+        simple: ${hostnameSize}
+    separatecontext: true
+    task:
+      brand: ""
+      id: c41e0edc-dfe8-4b56-8c99-b4b752d04c25
+      iscommand: false
+      name: Test:HSaxena-Splunk Query and Install CbR
+      playbookId: d23731f3-0c05-4d7c-895a-248a62316d7d
+      type: playbook
+      version: -1
+    taskid: c41e0edc-dfe8-4b56-8c99-b4b752d04c25
+    timertriggers: []
+    type: playbook
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 720
+        }
+      }
+  "7":
+    id: "7"
+    ignoreworker: false
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 1683d43f-ff64-4883-8013-af66ab1f1f06
+      iscommand: false
+      name: Done
+      type: title
+      version: -1
+    taskid: 1683d43f-ff64-4883-8013-af66ab1f1f06
+    timertriggers: []
+    type: title
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 895
+        }
+      }
+  "9":
+    id: "9"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "5"
+    note: false
+    scriptarguments:
+      append:
+        simple: "false"
+      key:
+        simple: hostnameSize
+      value:
+        simple: ${size}
+    separatecontext: false
+    task:
+      brand: ""
+      id: 2e1eb80b-5f97-4ec0-88ab-315209abc08a
+      iscommand: false
+      name: set hostnameSize
+      script: Set
+      type: regular
+      version: -1
+    taskid: 2e1eb80b-5f97-4ec0-88ab-315209abc08a
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 545
+        }
+      }
+  "10":
+    id: "10"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "1"
+    note: false
+    scriptarguments:
+      value:
+        simple: Hello
+    separatecontext: false
+    task:
+      brand: ""
+      description: Prints text to war room (Markdown supported)
+      id: 59a6c479-18d9-40bd-8ea6-7e0babe5e32c
+      iscommand: false
+      name: SImple Print
+      script: Print
+      type: regular
+      version: -1
+    taskid: 59a6c479-18d9-40bd-8ea6-7e0babe5e32c
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 570,
+          "y": 350
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 1010,
+        "width": 900,
+        "x": 50,
+        "y": -50
+      }
+    }
+  }

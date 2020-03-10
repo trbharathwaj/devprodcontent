@@ -1,0 +1,681 @@
+description: Takes an email address or a username of a user account in Active Directory,
+  and returns the email address of the user's manager.
+id: Active Directory - Get User Manager Details
+inputs:
+- description: Search for user by the sAMAccountName attribute in Active Directory.
+  key: Username
+  required: false
+  value: {}
+- description: Search for user by the email attribute in Active Directory.
+  key: UserEmail
+  required: false
+  value:
+    complex:
+      accessor: Email
+      root: Account
+      transformers:
+      - operator: uniq
+name: Active Directory - Get User Manager Details
+outputs:
+- contextPath: UserManagerEmail
+  description: The email of the user's manager.
+- contextPath: UserManagerDisplayName
+  description: The display name of the user's manager.
+  type: unknown
+starttaskid: "0"
+system: true
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "1"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 65b748f8-8d64-4ff1-8e55-f8050fefa13e
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: 65b748f8-8d64-4ff1-8e55-f8050fefa13e
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 50
+        }
+      }
+  "1":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              complex:
+                filters:
+                - - left:
+                      iscontext: true
+                      value:
+                        simple: brand
+                    operator: isEqualString
+                    right:
+                      value:
+                        simple: Active Directory Query v2
+                - - left:
+                      iscontext: true
+                      value:
+                        simple: state
+                    operator: isEqualString
+                    right:
+                      value:
+                        simple: active
+                root: modules
+          operator: isExists
+      label: "yes"
+    id: "1"
+    ignoreworker: false
+    nexttasks:
+      '#default#':
+      - "13"
+      "yes":
+      - "2"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      description: Checks if the Active Directory Query v2 integration is enabled.
+      id: 1a606311-7b08-4a4b-86b8-748ee9568c6f
+      iscommand: false
+      name: Is Active Directory enabled?
+      type: condition
+      version: -1
+    taskid: 1a606311-7b08-4a4b-86b8-748ee9568c6f
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 180
+        }
+      }
+  "2":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              complex:
+                root: inputs.UserEmail
+                transformers:
+                - operator: uniq
+          operator: isExists
+      label: Email
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              complex:
+                root: inputs.Username
+                transformers:
+                - operator: uniq
+          operator: isExists
+      label: Username
+    id: "2"
+    ignoreworker: false
+    nexttasks:
+      Email:
+      - "5"
+      Username:
+      - "4"
+    note: false
+    separatecontext: false
+    task:
+      brand: Active Directory Query v2
+      description: Retrieves detailed information about a user account. The user can
+        be specified by name, email address, or as an Active Directory Distinguished
+        Name (DN). If no filter is specified, all users are returned.
+      id: c995aa78-63ce-4e24-803a-52b6dae5995f
+      iscommand: false
+      name: By which attribute should the user be searched?
+      type: condition
+      version: -1
+    taskid: c995aa78-63ce-4e24-803a-52b6dae5995f
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 400
+        }
+      }
+  "4":
+    id: "4"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "6"
+    note: false
+    reputationcalc: 1
+    scriptarguments:
+      attributes: {}
+      custom-field-data: {}
+      custom-field-type: {}
+      dn: {}
+      email: {}
+      limit: {}
+      name: {}
+      user-account-control-out: {}
+      username:
+        complex:
+          root: inputs.Username
+          transformers:
+          - operator: uniq
+    separatecontext: false
+    task:
+      brand: Active Directory Query v2
+      description: Retrieves detailed information about a user account based on their
+        username.
+      id: 89d7467d-51c7-4391-8b8d-db68c2612e9f
+      iscommand: true
+      name: Get user details by username
+      script: Active Directory Query v2|||ad-get-user
+      type: regular
+      version: -1
+    taskid: 89d7467d-51c7-4391-8b8d-db68c2612e9f
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 100,
+          "y": 590
+        }
+      }
+  "5":
+    id: "5"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "6"
+    note: false
+    reputationcalc: 1
+    scriptarguments:
+      attributes: {}
+      custom-field-data: {}
+      custom-field-type: {}
+      dn: {}
+      email:
+        complex:
+          root: inputs.UserEmail
+      limit: {}
+      name: {}
+      user-account-control-out: {}
+      username: {}
+    separatecontext: false
+    task:
+      brand: Active Directory Query v2
+      description: Retrieves detailed information about a user account based on their
+        email address.
+      id: 9361739f-d4a8-4be6-8b25-df7549fa65c6
+      iscommand: true
+      name: Get user details by email
+      script: Active Directory Query v2|||ad-get-user
+      type: regular
+      version: -1
+    taskid: 9361739f-d4a8-4be6-8b25-df7549fa65c6
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 790,
+          "y": 600
+        }
+      }
+  "6":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              complex:
+                accessor: Manager
+                root: Account
+                transformers:
+                - operator: uniq
+          operator: isExists
+      label: "yes"
+    id: "6"
+    ignoreworker: false
+    nexttasks:
+      '#default#':
+      - "13"
+      "yes":
+      - "7"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      description: Checks whether a manager name was found for the user account.
+      id: 30809343-6474-43b7-8f4e-2fc30a3ee496
+      iscommand: false
+      name: Was a manager found?
+      type: condition
+      version: -1
+    taskid: 30809343-6474-43b7-8f4e-2fc30a3ee496
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 850
+        }
+      }
+  "7":
+    id: "7"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "9"
+    note: false
+    reputationcalc: 3
+    scriptarguments:
+      attributes: {}
+      custom-field-data: {}
+      custom-field-type: {}
+      dn:
+        complex:
+          accessor: Manager
+          filters:
+          - - left:
+                iscontext: true
+                value:
+                  simple: Account.Email
+              operator: isEqualString
+              right:
+                iscontext: true
+                value:
+                  simple: inputs.UserEmail
+            - left:
+                iscontext: true
+                value:
+                  simple: Account.Username
+              operator: isEqualString
+              right:
+                iscontext: true
+                value:
+                  simple: inputs.Username
+          root: Account
+          transformers:
+          - operator: uniq
+      email: {}
+      limit: {}
+      name: {}
+      user-account-control-out: {}
+      username: {}
+    separatecontext: false
+    task:
+      brand: Active Directory Query v2
+      description: Retrieves detailed information about the user's manager based on
+        their email or username.
+      id: 65cf888f-15a2-4f6a-8b3f-72dff44acae4
+      iscommand: true
+      name: Get manager details by user email or username
+      script: Active Directory Query v2|||ad-get-user
+      tags:
+      - active_directory_manager_details
+      type: regular
+      version: -1
+    taskid: 65cf888f-15a2-4f6a-8b3f-72dff44acae4
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 1060
+        }
+      }
+  "9":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              complex:
+                accessor: Email
+                filters:
+                - - left:
+                      iscontext: true
+                      value:
+                        simple: Account.Email
+                    operator: isNotEqualString
+                    right:
+                      iscontext: true
+                      value:
+                        simple: inputs.UserEmail
+                root: Account
+                transformers:
+                - operator: uniq
+          operator: isExists
+      label: Email
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              complex:
+                accessor: Username
+                filters:
+                - - left:
+                      iscontext: true
+                      value:
+                        simple: Account.Username
+                    operator: isEqualString
+                    right:
+                      iscontext: true
+                      value:
+                        simple: inputs.Username
+                root: Account
+                transformers:
+                - operator: uniq
+          operator: isExists
+      label: Username
+    id: "9"
+    ignoreworker: false
+    nexttasks:
+      '#default#':
+      - "13"
+      Email:
+      - "10"
+      Username:
+      - "14"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      description: Checks whether an email was retrieved for the user's manager.
+      id: 37fd0c79-5294-4e2e-8524-31f09859e8ec
+      iscommand: false
+      name: Was a manager found by email or username?
+      type: condition
+      version: -1
+    taskid: 37fd0c79-5294-4e2e-8524-31f09859e8ec
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 1250
+        }
+      }
+  "10":
+    id: "10"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "15"
+    note: false
+    reputationcalc: 1
+    scriptarguments:
+      append: {}
+      key:
+        simple: UserManagerEmail
+      value:
+        complex:
+          accessor: Email
+          filters:
+          - - left:
+                iscontext: true
+                value:
+                  simple: Account.Email
+              operator: isNotEqualString
+              right:
+                iscontext: true
+                value:
+                  simple: inputs.UserEmail
+          root: Account
+          transformers:
+          - operator: uniq
+    separatecontext: false
+    task:
+      brand: ""
+      description: Sets the email of the manager to the output context key of the
+        playbook. It finds the manager by looking in the context for a user who's
+        email is not the same as the playbook input email.
+      id: 9cc15f6c-83c4-4d92-8612-574c2dcd76ba
+      iscommand: false
+      name: Set manager email to outputs
+      script: Set
+      type: regular
+      version: -1
+    taskid: 9cc15f6c-83c4-4d92-8612-574c2dcd76ba
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 1450
+        }
+      }
+  "12":
+    id: "12"
+    ignoreworker: false
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: cd103324-58ed-4ef2-8de4-ed223a0831c0
+      iscommand: false
+      name: Done
+      type: title
+      version: -1
+    taskid: cd103324-58ed-4ef2-8de4-ed223a0831c0
+    timertriggers: []
+    type: title
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 2090
+        }
+      }
+  "13":
+    id: "13"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "12"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 82beca2e-d6ae-43f2-8dbc-60d72893585c
+      iscommand: false
+      name: Cannot Retrieve Manager Email
+      type: title
+      version: -1
+    taskid: 82beca2e-d6ae-43f2-8dbc-60d72893585c
+    timertriggers: []
+    type: title
+    view: |-
+      {
+        "position": {
+          "x": 1090,
+          "y": 1430
+        }
+      }
+  "14":
+    id: "14"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "12"
+    note: false
+    reputationcalc: 1
+    scriptarguments:
+      append: {}
+      key:
+        simple: UserManagerEmail
+      value:
+        complex:
+          accessor: Email
+          filters:
+          - - left:
+                iscontext: true
+                value:
+                  simple: Account.Username
+              operator: isNotEqualString
+              right:
+                iscontext: true
+                value:
+                  simple: inputs.Username
+          root: Account
+          transformers:
+          - operator: uniq
+    separatecontext: false
+    task:
+      brand: ""
+      description: Sets the email of the manager to the output context key of the
+        playbook. It finds the manager by looking in the context for a user who's
+        username is not the same as the playbook input username.
+      id: 94fc4ab3-e1a5-494a-88d8-56981e17b47a
+      iscommand: false
+      name: Set manager email to outputs
+      script: Set
+      type: regular
+      version: -1
+    taskid: 94fc4ab3-e1a5-494a-88d8-56981e17b47a
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 20,
+          "y": 1450
+        }
+      }
+  "15":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              complex:
+                accessor: Users.displayName
+                root: ActiveDirectory
+          operator: isNotEmpty
+      label: "Yes"
+    id: "15"
+    ignoreworker: false
+    nexttasks:
+      '#default#':
+      - "12"
+      "Yes":
+      - "16"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      description: Checks whether an email was retrieved for the user's manager.
+      id: e67a330b-f25f-470d-881d-6dc98f436631
+      iscommand: false
+      name: Was a manager display name found?
+      type: condition
+      version: -1
+    taskid: e67a330b-f25f-470d-881d-6dc98f436631
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 1630
+        }
+      }
+  "16":
+    id: "16"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "12"
+    note: false
+    reputationcalc: 1
+    scriptarguments:
+      append: {}
+      key:
+        simple: UserManagerDisplayName
+      value:
+        complex:
+          filters:
+          - - left:
+                iscontext: true
+                value:
+                  simple: Email
+              operator: isNotEqualString
+              right:
+                iscontext: true
+                value:
+                  simple: inputs.UserEmail
+          root: Account
+          transformers:
+          - args:
+              field:
+                value:
+                  simple: DisplayName
+            operator: getField
+          - operator: uniq
+    separatecontext: false
+    task:
+      brand: ""
+      description: Sets the email of the manager to the output context key of the
+        playbook. It finds the manager by looking in the context for a user who's
+        username is not the same as the playbook input username.
+      id: 53f0e4a9-72fd-4e7d-8cef-5383bc64e539
+      iscommand: false
+      name: Set manager display name to outputs
+      script: Set
+      type: regular
+      version: -1
+    taskid: 53f0e4a9-72fd-4e7d-8cef-5383bc64e539
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 1850
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {
+      "15_12_#default#": 0.23,
+      "15_16_Yes": 0.56,
+      "1_13_#default#": 0.22,
+      "1_2_yes": 0.58,
+      "2_4_Username": 0.47,
+      "2_5_Email": 0.55,
+      "6_13_#default#": 0.35,
+      "6_7_yes": 0.47,
+      "9_13_#default#": 0.5,
+      "9_14_Username": 0.74
+    },
+    "paper": {
+      "dimensions": {
+        "height": 2105,
+        "width": 1450,
+        "x": 20,
+        "y": 50
+      }
+    }
+  }

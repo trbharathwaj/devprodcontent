@@ -1,0 +1,278 @@
+id: Pentera Run Scan
+inputs:
+- description: The name of the Pentera task to run
+  key: PenteraTaskName
+  required: true
+  value: {}
+name: Pentera Run Scan
+outputs: []
+starttaskid: "0"
+system: true
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "3"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 5a959fa6-a7d4-4fa6-8071-47de420ebf6b
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: 5a959fa6-a7d4-4fa6-8071-47de420ebf6b
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 50
+        }
+      }
+  "1":
+    id: "1"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "4"
+    note: false
+    scriptarguments:
+      template_name:
+        simple: ${inputs.PenteraTaskName}
+    separatecontext: false
+    task:
+      brand: ""
+      id: 3a4bdbe3-2e52-4694-847c-a75c713304a0
+      iscommand: true
+      name: Run Pentera Template
+      script: '|||pentera-run-template-by-name'
+      type: regular
+      version: -1
+    taskid: 3a4bdbe3-2e52-4694-847c-a75c713304a0
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 340
+        }
+      }
+  "2":
+    id: "2"
+    ignoreworker: false
+    loop:
+      exitCondition: ""
+      iscommand: false
+      wait: 1
+    nexttasks:
+      '#none#':
+      - "7"
+    note: false
+    scriptarguments:
+      AdditionalPollingCommandArgNames: {}
+      AdditionalPollingCommandArgValues: {}
+      Ids:
+        simple: ${Pentera.TaskRun.ID}
+      Interval:
+        simple: "1"
+      PollingCommandArgName:
+        simple: task_run_id
+      PollingCommandName:
+        simple: pentera-get-task-run-status
+      Timeout:
+        simple: "60"
+      dt:
+        simple: Pentera.TaskRun(val.Status == 'Running' || val.Status == 'Cleaning
+          up').ID
+    separatecontext: true
+    task:
+      brand: ""
+      id: c39055fd-077a-4425-8d66-f67a1115faca
+      iscommand: false
+      name: GenericPolling
+      playbookId: GenericPolling
+      type: playbook
+      version: -1
+    taskid: c39055fd-077a-4425-8d66-f67a1115faca
+    timertriggers: []
+    type: playbook
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 660
+        }
+      }
+  "3":
+    id: "3"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "1"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 42db38b6-8f8b-4596-859a-bcc95f2cb854
+      iscommand: false
+      name: Start the Scan
+      type: title
+      version: -1
+    taskid: 42db38b6-8f8b-4596-859a-bcc95f2cb854
+    timertriggers: []
+    type: title
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 195
+        }
+      }
+  "4":
+    id: "4"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "2"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: e219e85f-a56a-4e27-8168-f6d1452e7db0
+      iscommand: false
+      name: Wait For The Scan To Complete
+      type: title
+      version: -1
+    taskid: e219e85f-a56a-4e27-8168-f6d1452e7db0
+    timertriggers: []
+    type: title
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 515
+        }
+      }
+  "5":
+    id: "5"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "6"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 9edbe478-90d3-4e33-8804-d3ea6679f63f
+      iscommand: false
+      name: Collect The Full Action Report
+      type: title
+      version: -1
+    taskid: 9edbe478-90d3-4e33-8804-d3ea6679f63f
+    timertriggers: []
+    type: title
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 1155
+        }
+      }
+  "6":
+    id: "6"
+    ignoreworker: false
+    note: false
+    scriptarguments:
+      task_run_id:
+        simple: ${Pentera.TaskRun.ID}
+    separatecontext: false
+    task:
+      brand: ""
+      id: 9dfd1648-57d8-408d-8b83-2df67ab2f8b7
+      iscommand: true
+      name: Retrieve The Full Action Report
+      script: '|||pentera-get-task-run-full-action-report'
+      type: regular
+      version: -1
+    taskid: 9dfd1648-57d8-408d-8b83-2df67ab2f8b7
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 1300
+        }
+      }
+  "7":
+    id: "7"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "8"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: e55b1bd2-c601-4388-8d78-1dc24bae2ef0
+      iscommand: false
+      name: Update Template Status
+      type: title
+      version: -1
+    taskid: e55b1bd2-c601-4388-8d78-1dc24bae2ef0
+    timertriggers: []
+    type: title
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 835
+        }
+      }
+  "8":
+    id: "8"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "5"
+    note: false
+    scriptarguments:
+      task_run_id:
+        simple: ${Pentera.TaskRun.ID}
+    separatecontext: false
+    task:
+      brand: ""
+      id: fb9b4b42-aaa1-473d-853b-f35aa18463a8
+      iscommand: true
+      name: Get Template Status
+      script: '|||pentera-get-task-run-status'
+      type: regular
+      version: -1
+    taskid: fb9b4b42-aaa1-473d-853b-f35aa18463a8
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 980
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 1345,
+        "width": 380,
+        "x": 50,
+        "y": 50
+      }
+    }
+  }

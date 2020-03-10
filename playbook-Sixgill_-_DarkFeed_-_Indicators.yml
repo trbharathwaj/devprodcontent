@@ -1,0 +1,103 @@
+description: The playbook extracts a STIX bundle then uses StixParser automation in
+  order to parse and push indicators into demisto’s platform.
+id: Sixgill - DarkFeed - Indicators
+inputs: []
+name: Sixgill - DarkFeed - Indicators
+outputs: []
+starttaskid: "0"
+system: true
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "4"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: ee6a2320-9bb6-4ec3-8588-cab46abee2a5
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: ee6a2320-9bb6-4ec3-8588-cab46abee2a5
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 50
+        }
+      }
+  "4":
+    id: "4"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "7"
+    note: false
+    scriptarguments:
+      fetch_indicators_limit: {}
+    separatecontext: false
+    task:
+      brand: Sixgill
+      description: Fetching Sixgill's DarkFeed Threat Intelligence indicators
+      id: 9e63819a-6e2f-4067-8c1e-a0f7500a42e4
+      iscommand: true
+      name: sixgill-get-indicators
+      script: Sixgill|||sixgill-get-indicators
+      type: regular
+      version: -1
+    taskid: 9e63819a-6e2f-4067-8c1e-a0f7500a42e4
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 210
+        }
+      }
+  "7":
+    id: "7"
+    ignoreworker: false
+    note: false
+    scriptarguments:
+      entry_id:
+        simple: ${InfoFile.EntryID}
+    separatecontext: false
+    task:
+      brand: ""
+      description: Creates indicators from the submitted STIX file. Supports STIX
+        1.0 and STIX 2.0.
+      id: 065eae4d-318f-4048-8d00-b24c6951a56f
+      iscommand: false
+      name: CreateIndicatorsFromSTIX
+      script: CreateIndicatorsFromSTIX
+      type: regular
+      version: -1
+    taskid: 065eae4d-318f-4048-8d00-b24c6951a56f
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 395
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 590,
+        "width": 380,
+        "x": 50,
+        "y": 50
+      }
+    }
+  }

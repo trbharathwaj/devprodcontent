@@ -1,0 +1,70 @@
+id: 3fd7a116-fc46-4834-8e13-cd33b0210e5e
+inputs: []
+name: set_sev
+outputs: []
+starttaskid: "0"
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "1"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: a9592c37-e86c-41f4-8ca3-7e5fdac3d9ad
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: a9592c37-e86c-41f4-8ca3-7e5fdac3d9ad
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 50
+        }
+      }
+  "1":
+    id: "1"
+    ignoreworker: false
+    note: false
+    scriptarguments:
+      listName:
+        simple: First_Names
+    separatecontext: false
+    task:
+      brand: Builtin
+      description: commands.local.cmd.list.get
+      id: a9984f7e-ec3c-43f7-8696-92eb8c84fcbe
+      iscommand: true
+      name: Get Lists
+      script: Builtin|||getList
+      type: regular
+      version: -1
+    taskid: a9984f7e-ec3c-43f7-8696-92eb8c84fcbe
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 210
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 255,
+        "width": 380,
+        "x": 450,
+        "y": 50
+      }
+    }
+  }

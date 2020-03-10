@@ -1,0 +1,262 @@
+description: Enrich entities using one or more integrations
+id: 22f0fd12-226f-413a-8ed3-31f3c09424d5
+inputs:
+- description: The IP addresses to enrich
+  key: IP
+  required: false
+  value:
+    simple: ${IP.Address}
+- description: The internal range to check against the IPs
+  key: InternalRange
+  required: false
+  value: {}
+- description: File MD5 to enrich
+  key: MD5
+  required: false
+  value:
+    simple: ${File.MD5}
+- description: File SHA256 to enrich
+  key: SHA256
+  required: false
+  value:
+    simple: ${File.SHA256}
+- description: File SHA1 to enrich
+  key: SHA1
+  required: false
+  value:
+    simple: ${File.SHA1}
+- description: url to enrich
+  key: url
+  required: false
+  value:
+    simple: ${URL.Data}
+- description: The email addresses to enrich
+  key: Email
+  required: false
+  value:
+    simple: ${Account.Email.Address}
+- description: The hostname to enrich
+  key: Hostname
+  required: false
+  value:
+    simple: ${Endpoint.Hostname}
+- description: The Username to enrich
+  key: Username
+  required: false
+  value:
+    simple: ${Account.Username}
+- description: The domain name to enrich
+  key: Domain
+  required: false
+  value:
+    simple: ${Domain.Name}
+name: Orlando_Test
+outputs:
+- contextPath: Account
+  description: The Account's object
+  type: unknown
+- contextPath: Account.ID
+  description: The unique Account DN (Distinguished Name)
+  type: string
+- contextPath: Domain
+  description: The domain objects
+  type: unknown
+- contextPath: URL
+  description: The URL's object
+  type: unknown
+- contextPath: URL.Malicious
+  description: whether url was detected as malicious
+  type: unknown
+- contextPath: URL.Vendor
+  description: name of vendor who labeled as malicious
+  type: string
+- contextPath: URL.Description
+  description: additional info on the url
+  type: string
+- contextPath: URL.Address
+  description: The enriched URL
+  type: string
+- contextPath: Account.Email.Address
+  description: The Email account full address
+  type: string
+- contextPath: IP
+  description: The IP objects
+  type: unknown
+- contextPath: Account.Email.Domain
+  description: The Email account domain
+  type: string
+- contextPath: Account.Email.NetworkType
+  description: The Email account NetworkType (could be Internal/External)
+  type: string
+- contextPath: Account.Email.Username
+  description: The Email account username
+  type: string
+- contextPath: Account.Email.Distance.Domain
+  description: The compared domain
+  type: unknown
+- contextPath: Account.Email.Distance.Value
+  description: 'The distance between the email domain and the compared domain '
+  type: string
+- contextPath: Account.Type
+  description: Type of the Account entity
+  type: string
+- contextPath: Account.Username
+  description: The Account username
+  type: string
+- contextPath: Account.Email
+  description: The email address associated with the Account
+- contextPath: Account.Groups
+  description: The groups the Account is part of
+  type: unknown
+- contextPath: Account.DisplayName
+  description: The Account display name
+  type: string
+- contextPath: Account.Manager
+  description: The Account's manager
+  type: string
+- contextPath: File
+  description: The File's object
+  type: unknown
+- contextPath: File.MD5
+  description: MD5 hash of the file
+  type: string
+- contextPath: File.SHA1
+  description: SHA1 hash of the file
+  type: string
+- contextPath: File.SHA256
+  description: SHA256 hash of the file
+  type: string
+- contextPath: File.Malicious.Vendor
+  description: For malicious files, the vendor that made the decision
+  type: string
+- contextPath: Endpoint
+  description: The Endpoint's object
+  type: unknown
+- contextPath: Endpoint.Hostname
+  description: The hostname to enrich
+  type: string
+- contextPath: Endpoint.OS
+  description: Endpoint OS
+  type: string
+- contextPath: Endpoint.IP
+  description: List of endpoint IP addresses
+- contextPath: Endpoint.MAC
+  description: List of endpoint MAC addresses
+- contextPath: Endpoint.Domain
+  description: Endpoint domain name
+  type: string
+- contextPath: DBotScore
+  description: The Indicator's object
+  type: unknown
+- contextPath: DBotScore.Indicator
+  description: The Indicator
+  type: string
+- contextPath: DBotScore.Type
+  description: The Indicator Type
+  type: string
+- contextPath: DBotScore.Vendor
+  description: The DBot score vendor
+  type: string
+- contextPath: DBotScore.Score
+  description: The DBot score
+  type: number
+starttaskid: "0"
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "17"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: cdd6228a-7feb-4386-8ab1-7dfdf77d99c2
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: cdd6228a-7feb-4386-8ab1-7dfdf77d99c2
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 265,
+          "y": 67
+        }
+      }
+  "15":
+    id: "15"
+    ignoreworker: false
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 38007764-1687-47b1-8490-0f3cded9dc95
+      iscommand: false
+      name: Done
+      type: title
+      version: -1
+    taskid: 38007764-1687-47b1-8490-0f3cded9dc95
+    timertriggers: []
+    type: title
+    view: |-
+      {
+        "position": {
+          "x": 265,
+          "y": 710
+        }
+      }
+  "17":
+    id: "17"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "15"
+    note: false
+    scriptarguments:
+      contextKey:
+        simple: RegexResult
+      data:
+        simple: 'Jul 22 03:40:39 dhcp02.prd.lga1.nyt.net dhcpd[5173]: DHCPACK on 10.54.35.202
+          to 48:65:ee:14:30:a4 (Gabe-Cohn-8767) via eth2 relay 10.54.34.1 lease-duration
+          86400 (RENEW) uid 01:48:65:ee:14:30:a4'
+      flags: {}
+      group: {}
+      regex:
+        simple: \((.*?)\)
+    separatecontext: false
+    task:
+      brand: ""
+      description: Extract regex data from given text - supports groups and looping
+        as well.
+      id: 70334662-d48d-4436-8944-2f56b5f6b12d
+      iscommand: false
+      name: TEst Regex
+      script: MatchRegex
+      type: regular
+      version: -1
+    taskid: 70334662-d48d-4436-8944-2f56b5f6b12d
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 265,
+          "y": 290
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 708,
+        "width": 380,
+        "x": 265,
+        "y": 67
+      }
+    }
+  }

@@ -1,0 +1,105 @@
+id: 6e3b227c-9f1b-4e8f-8a11-fa06eca5140c
+inputs: []
+name: Tutorial
+outputs: []
+starttaskid: "0"
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "2"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: e3164c07-7366-4b73-8b39-3ab3aafaebdc
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: e3164c07-7366-4b73-8b39-3ab3aafaebdc
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 50
+        }
+      }
+  "2":
+    id: "2"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "3"
+    note: false
+    scriptarguments:
+      extend-context:
+        simple: hollow_knight=.
+      value:
+        simple: Silksong
+    separatecontext: false
+    task:
+      brand: ""
+      description: Prints text to war room (Markdown supported)
+      id: 82a36f74-67a7-4785-8ff1-4e97b6e27bbd
+      iscommand: false
+      name: Print
+      script: Print
+      type: regular
+      version: -1
+    taskid: 82a36f74-67a7-4785-8ff1-4e97b6e27bbd
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 390
+        }
+      }
+  "3":
+    id: "3"
+    ignoreworker: false
+    loop:
+      exitCondition: ""
+      iscommand: false
+      wait: 1
+    note: false
+    scriptarguments:
+      Playbook_input:
+        simple: ${hollow_knight}
+    separatecontext: true
+    task:
+      brand: ""
+      id: 309f4fb5-0596-4308-80c5-154f33295d25
+      iscommand: false
+      name: Tutorial_sub
+      playbookId: 610fb59c-a80c-435f-8433-738a36ddebba
+      type: playbook
+      version: -1
+    taskid: 309f4fb5-0596-4308-80c5-154f33295d25
+    timertriggers: []
+    type: playbook
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 760
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 805,
+        "width": 380,
+        "x": 450,
+        "y": 50
+      }
+    }
+  }

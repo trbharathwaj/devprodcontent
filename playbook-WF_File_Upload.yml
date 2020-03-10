@@ -1,0 +1,270 @@
+id: 66630c4a-bc46-4037-861c-d82888150d13
+inputs: []
+name: WF_File_Upload
+outputs: []
+starttaskid: "0"
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "1"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 21e1b073-d901-4e94-8602-6545792b8697
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: 21e1b073-d901-4e94-8602-6545792b8697
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 490,
+          "y": 50
+        }
+      }
+  "1":
+    id: "1"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "2"
+      - "7"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 4d82aec2-d7a3-4490-8ddb-ef5b53f39936
+      iscommand: false
+      name: Upload File
+      type: regular
+      version: -1
+    taskid: 4d82aec2-d7a3-4490-8ddb-ef5b53f39936
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 490,
+          "y": 195
+        }
+      }
+  "2":
+    id: "2"
+    ignoreworker: false
+    nexttasks:
+      "no":
+      - "4"
+      "yes":
+      - "3"
+    note: false
+    scriptarguments:
+      extend-context:
+        simple: =.
+      value:
+        simple: ${lastCompletedTaskEntries}
+    separatecontext: false
+    task:
+      brand: ""
+      description: Check if a given value exists in the context. Will return 'no'
+        for empty empty arrays. To be used mostly with DQ and selectors.
+      id: 667e376b-5da9-4726-8683-686257537dcd
+      iscommand: false
+      name: Check if there is lastcompletedtask
+      script: Exists
+      type: condition
+      version: -1
+    taskid: 667e376b-5da9-4726-8683-686257537dcd
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 275,
+          "y": 545
+        }
+      }
+  "3":
+    id: "3"
+    ignoreworker: false
+    nexttasks:
+      '#default#':
+      - "6"
+      "Yes":
+      - "5"
+    note: false
+    scriptarguments:
+      entryidd:
+        simple: ${TaskID}
+    separatecontext: false
+    task:
+      brand: ""
+      id: d9462a2f-9bab-4895-80b8-404852368bdd
+      iscommand: false
+      name: Check if File was uploaded
+      script: 6fc06cf2-e7a4-4961-8778-373a360e0bb3
+      type: condition
+      version: -1
+    taskid: d9462a2f-9bab-4895-80b8-404852368bdd
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 265,
+          "y": 720
+        }
+      }
+  "4":
+    id: "4"
+    ignoreworker: false
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 0117b879-f85a-4775-8077-e5905e578aff
+      iscommand: false
+      name: File Not Uploaded (No lastcompletedtask)
+      type: regular
+      version: -1
+    taskid: 0117b879-f85a-4775-8077-e5905e578aff
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 715,
+          "y": 720
+        }
+      }
+  "5":
+    id: "5"
+    ignoreworker: false
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 80ee6a4d-f7f7-4053-8bee-652072a0841f
+      iscommand: false
+      name: File was Uploaded
+      type: regular
+      version: -1
+    taskid: 80ee6a4d-f7f7-4053-8bee-652072a0841f
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 895
+        }
+      }
+  "6":
+    id: "6"
+    ignoreworker: false
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: e2bbccca-b216-4da1-88f1-849f89ac8b5a
+      iscommand: false
+      name: No File
+      type: regular
+      version: -1
+    taskid: e2bbccca-b216-4da1-88f1-849f89ac8b5a
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 480,
+          "y": 895
+        }
+      }
+  "7":
+    continueonerror: true
+    id: "7"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "8"
+    note: false
+    scriptarguments:
+      append: {}
+      key:
+        simple: TaskID
+      value:
+        simple: ${lastCompletedTaskEntries}
+    separatecontext: false
+    task:
+      brand: ""
+      description: Sets a value into the context with the given context key
+      id: ec7dbf68-3c4c-4180-89fb-5646992d93b9
+      iscommand: false
+      name: Set
+      script: Set
+      type: regular
+      version: -1
+    taskid: ec7dbf68-3c4c-4180-89fb-5646992d93b9
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 705,
+          "y": 370
+        }
+      }
+  "8":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: ${TaskID}
+          operator: isNotEmpty
+      label: "yes"
+    id: "8"
+    ignoreworker: false
+    nexttasks:
+      '#default#':
+      - "4"
+      "yes":
+      - "3"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: eb39b90a-c82a-493d-8ae4-b601ab0e7cd4
+      iscommand: false
+      name: Check Task ID
+      type: condition
+      version: -1
+    taskid: eb39b90a-c82a-493d-8ae4-b601ab0e7cd4
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 705,
+          "y": 545
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 940,
+        "width": 1045,
+        "x": 50,
+        "y": 50
+      }
+    }
+  }

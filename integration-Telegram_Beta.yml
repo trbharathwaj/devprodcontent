@@ -1,0 +1,192 @@
+beta: true
+category: Messaging
+commonfields:
+  id: Telegram_Beta
+  version: -1
+configuration:
+- defaultvalue: ""
+  display: API Token
+  name: token
+  required: true
+  type: 4
+description: Telegram integration
+detaileddescription: 'Note: This is a beta Integration, which lets you implement and
+  test pre-release software. Since the integration is beta, it might contain bugs.
+  Updates to the integration during the beta phase might include non-backward compatible
+  features. We appreciate your feedback on the quality and usability of the integration
+  to help us identify issues, fix them, and continually improve. '
+display: Telegram (Beta)
+image: data:image/png;base64,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
+name: Telegram_Beta
+script:
+  commands:
+  - arguments:
+    - description: The recipient ID
+      name: userID
+      required: true
+    - description: The recipient username
+      name: username
+      required: true
+    - description: The message to send
+      name: message
+      required: true
+    description: Sends a message
+    name: telegram-send-message
+  - arguments: []
+    description: List users
+    name: telegram-list-users
+  dockerimage: demisto/python3:3.7.3.221
+  runonce: false
+  script: |2
+
+
+    ''' IMPORTS '''
+
+    import json
+    import requests
+
+    # Disable insecure warnings
+    requests.packages.urllib3.disable_warnings()
+
+    ''' GLOBALS/PARAMS '''
+
+    TOKEN = demisto.params().get('token')
+    BASE_URL = 'https://api.telegram.org/bot{}/'.format(TOKEN)
+
+    ''' HELPER FUNCTIONS '''
+
+
+    def http_request(method, url_suffix, params=None, data=None):
+        result = requests.request(
+            method,
+            BASE_URL + url_suffix,
+            verify=False,
+            params=params,
+            data=data
+        )
+        if result.status_code not in {200}:
+            return_error('Error in API call to Telegram Integration [%d] - %s' % (result.status_code, result.reason))
+
+        return result.json()
+
+
+    def get_updates():
+        return http_request('GET', 'getUpdates')
+
+
+    def get_bot():
+        return http_request('GET', 'getMe')
+
+
+    def item_to_incident(item):
+        incident = {
+            'name': 'Example Incident: ' + item.get('name'),
+            'occurred': item.get('createdDate'),
+            'rawJSON': json.dumps(item)
+        }
+
+        return incident
+
+
+    ''' COMMANDS + REQUESTS FUNCTIONS '''
+
+
+    def test_module():
+        """
+        Performs basic get request to get item samples
+        """
+        contents = get_bot()
+        if contents['ok']:
+            demisto.results("ok")
+        else:
+            error_code = contents['error_code']
+            description = contents['description']
+            demisto.results(f'{error_code} {description}')
+
+
+    def telegram_send_message():
+        """
+        Gets details about a items using IDs or some other filters
+        """
+        user_id = demisto.args().get('userID')
+        if user_id is None:
+            username = demisto.args().get('username')
+            if username is not None:
+                user_id = str(get_user_id(username))
+
+        if user_id is None:
+            return_error(f'username {username} does not exists, please use list_user command')
+        message = demisto.args().get('message')
+        contents = http_request('GET', "sendMessage?chat_id=" + user_id + "&amp&text=" + message)
+
+        demisto.results({
+            'Type': entryTypes['note'],
+            'ContentsFormat': formats['json'],
+            'Contents': contents,
+            'ReadableContentsFormat': formats['markdown'],
+            'HumanReadable': tableToMarkdown('Message sent', contents, 'result', removeNull=True),
+            'EntryContext': contents
+        })
+
+
+    def get_users():
+        users = {}
+
+        contents = get_updates()
+        for result in contents['result']:
+            user_data = result['message']
+            if 'username' in user_data['from']:
+                users[user_data['from']['username']] = user_data['from']['id']
+            # not all users have a username, so no choice but to save by their first_name (data can be overwritten)
+            else:
+                users[user_data['from']['first_name']] = user_data['from']['id']
+        return users
+
+
+    def telegram_list_users():
+        users = get_users()
+
+        demisto.results({
+            'Type': entryTypes['note'],
+            'ContentsFormat': formats['json'],
+            'Contents': users,
+            'ReadableContentsFormat': formats['markdown'],
+            'HumanReadable': tableToMarkdown('Users', users, removeNull=True),
+
+            'EntryContext': users
+        })
+
+
+    def get_user_id(username):
+        users = get_users()
+        if username in users:
+            return users[username]
+        else:
+            return
+
+
+    ''' COMMANDS MANAGER / SWITCH PANEL '''
+
+
+    def main():
+        LOG(f'command is {demisto.command()}')
+
+        try:
+            # Remove proxy if not set to true in params
+            handle_proxy()
+
+            if demisto.command() == 'test-module':
+                test_module()
+            elif demisto.command() == 'send-message':
+                telegram_send_message()
+            elif demisto.command() == 'list-users':
+                telegram_list_users()
+
+        except Exception as ex:
+            return_error(str(ex))
+
+
+    if __name__ == "__builtin__" or __name__ == "builtins":
+        main()
+  type: python
+system: true

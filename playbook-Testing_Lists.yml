@@ -1,0 +1,125 @@
+id: c46d5b28-74b8-45ad-88ee-85a585f8bb53
+inputs: []
+name: Testing_Lists
+outputs: []
+starttaskid: "0"
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "1"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: f290f52f-206f-45b4-8083-eef7fa7b1f77
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: f290f52f-206f-45b4-8083-eef7fa7b1f77
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 50
+        }
+      }
+  "1":
+    conditions:
+    - condition:
+      - - left:
+            value:
+              simple: Bharath
+          operator: inList
+          right:
+            iscontext: true
+            value:
+              simple: lists.First_Names
+      label: "yes"
+    id: "1"
+    ignoreworker: false
+    nexttasks:
+      '#default#':
+      - "3"
+      "yes":
+      - "2"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 31d07631-1094-4d14-8efd-8950b06714ad
+      iscommand: false
+      name: Lists
+      type: condition
+      version: -1
+    taskid: 31d07631-1094-4d14-8efd-8950b06714ad
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 200
+        }
+      }
+  "2":
+    id: "2"
+    ignoreworker: false
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: c914d4bb-d523-4517-8b5d-4ec35029d9e9
+      iscommand: false
+      name: Yes Branch
+      type: regular
+      version: -1
+    taskid: c914d4bb-d523-4517-8b5d-4ec35029d9e9
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 190,
+          "y": 400
+        }
+      }
+  "3":
+    id: "3"
+    ignoreworker: false
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 24948ee2-248a-457a-863b-5adf0d79f34e
+      iscommand: false
+      name: Untitled Task
+      type: regular
+      version: -1
+    taskid: 24948ee2-248a-457a-863b-5adf0d79f34e
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 730,
+          "y": 400
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 445,
+        "width": 920,
+        "x": 190,
+        "y": 50
+      }
+    }
+  }

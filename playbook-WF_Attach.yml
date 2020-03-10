@@ -1,0 +1,155 @@
+id: a27b22c4-7c73-4ec5-8f5e-a6fc6cd5c493
+inputs: []
+name: WF_Attach
+outputs: []
+starttaskid: "0"
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "1"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 77d6c48e-defd-44cc-81e8-f5f4d93abff5
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: 77d6c48e-defd-44cc-81e8-f5f4d93abff5
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 50
+        }
+      }
+  "1":
+    id: "1"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "2"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: b8de4c79-4b76-4b41-823b-951d0c8d319d
+      iscommand: false
+      name: Manual Task
+      type: regular
+      version: -1
+    taskid: b8de4c79-4b76-4b41-823b-951d0c8d319d
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 220
+        }
+      }
+  "2":
+    id: "2"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "3"
+    note: false
+    scriptarguments:
+      value:
+        simple: ${lastCompletedTaskEntries}
+    separatecontext: false
+    task:
+      brand: ""
+      description: Prints text to war room (Markdown supported)
+      id: 29df33c8-d5cb-42ec-8827-b2905479f392
+      iscommand: false
+      name: Next task
+      script: Print
+      type: regular
+      version: -1
+    taskid: 29df33c8-d5cb-42ec-8827-b2905479f392
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 420
+        }
+      }
+  "3":
+    form:
+      description: ""
+      expired: false
+      questions:
+      - defaultrows: []
+        fieldassociated: ""
+        gridcolumns: []
+        id: "0"
+        label: ""
+        labelarg:
+          simple: what is the question
+        options: []
+        placeholder: ""
+        readonly: false
+        required: true
+        tooltip: ""
+        type: attachments
+      sender: ""
+      title: Question
+      totalanswers: 0
+    id: "3"
+    ignoreworker: false
+    message:
+      bcc: null
+      body:
+        simple: message
+      cc: null
+      format: ""
+      methods: []
+      subject:
+        simple: test subject
+      timings:
+        completeafterreplies: 1
+        retriescount: 2
+        retriesinterval: 360
+      to:
+        simple: JSOC
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 5eaf1ea4-5a96-4133-8b99-2815e58dfeb7
+      iscommand: false
+      name: Upload file
+      type: collection
+      version: -1
+    taskid: 5eaf1ea4-5a96-4133-8b99-2815e58dfeb7
+    timertriggers: []
+    type: collection
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 570
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 615,
+        "width": 380,
+        "x": 450,
+        "y": 50
+      }
+    }
+  }

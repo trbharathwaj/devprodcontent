@@ -1,0 +1,542 @@
+id: Indeni Demo
+inputs: []
+name: Indeni Demo
+outputs: []
+rolename:
+- Administrator
+- Analyst
+- Read-Only
+starttaskid: "0"
+system: true
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "2"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 75519cd6-0d8d-4c02-8907-ae4bc435c31d
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: 75519cd6-0d8d-4c02-8907-ae4bc435c31d
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 265,
+          "y": 50
+        }
+      }
+  "1":
+    id: "1"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "3"
+    note: true
+    scriptarguments:
+      device_id:
+        simple: ${Indeni.AlertInfo.DeviceId}
+    separatecontext: false
+    task:
+      brand: Indeni
+      id: 3bca470a-2043-471e-84a1-c1e0a23437d0
+      iscommand: true
+      name: Indeni Get Device Info Detail
+      script: Indeni|||indeni-get-device-info
+      type: regular
+      version: -1
+    taskid: 3bca470a-2043-471e-84a1-c1e0a23437d0
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 265,
+          "y": 370
+        }
+      }
+  "2":
+    id: "2"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "1"
+    note: true
+    scriptarguments:
+      alert_id:
+        simple: ${incident.indeniissueid}
+    separatecontext: false
+    task:
+      brand: Indeni
+      id: 7593820d-3117-4236-809f-c495f3889bb9
+      iscommand: true
+      name: Indeni Get Issue Info Detail
+      script: Indeni|||indeni-get-alert-info
+      type: regular
+      version: -1
+    taskid: 7593820d-3117-4236-809f-c495f3889bb9
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 265,
+          "y": 195
+        }
+      }
+  "3":
+    id: "3"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "5"
+    note: false
+    scriptarguments:
+      alert_type_identifier:
+        simple: ${Indeni.AlertInfo.AlertType}
+    separatecontext: false
+    task:
+      brand: Indeni
+      id: 80939d50-a378-4257-8d86-412a5e92d226
+      iscommand: true
+      name: Indeni Get Issue Summary
+      script: Indeni|||indeni-get-alert-summary
+      type: regular
+      version: -1
+    taskid: 80939d50-a378-4257-8d86-412a5e92d226
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 265,
+          "y": 545
+        }
+      }
+  "4":
+    id: "4"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "8"
+    note: false
+    scriptarguments:
+      assignee: {}
+      description:
+        simple: |-
+          Indeni Alert ID: ${Indeni.AlertInfo.AlertId}
+          Device Name: ${Indeni.DeviceInfo.DeviceName}
+          Device IP: ${Indeni.DeviceInfo.DeviceIP}
+          Device Model: ${Indeni.DeviceInfo.DeviceModel}
+          OS Version: ${Indeni.DeviceInfo.OSVersion}
+
+          ${incident.details}
+      dueDate: {}
+      issueTypeId: {}
+      issueTypeName:
+        simple: Task
+      labels:
+        simple: demisto
+      parentIssueId: {}
+      parentIssueKey: {}
+      priority: {}
+      projectKey:
+        simple: IKP
+      projectName: {}
+      reporter: {}
+      summary:
+        simple: ${Indeni.AlertInfo.Headline}
+    separatecontext: false
+    task:
+      brand: ""
+      id: a6b789cf-9691-4e01-8780-071fb4c0cf9e
+      iscommand: false
+      name: Create Jira Ticket
+      script: JiraCreateIssue-example
+      type: regular
+      version: -1
+    taskid: a6b789cf-9691-4e01-8780-071fb4c0cf9e
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 265,
+          "y": 895
+        }
+      }
+  "5":
+    id: "5"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "4"
+    note: false
+    scriptarguments:
+      alert_id:
+        simple: ${Indeni.AlertInfo.AlertId}
+      note:
+        simple: This issue is currently been handled by Demisto
+    separatecontext: false
+    task:
+      brand: Indeni
+      id: 4b135a47-e2f5-4e3e-852a-6e849cb85e4e
+      iscommand: true
+      name: Post note to Indeni issue
+      script: Indeni|||indeni-post-note
+      type: regular
+      version: -1
+    taskid: 4b135a47-e2f5-4e3e-852a-6e849cb85e4e
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 265,
+          "y": 720
+        }
+      }
+  "8":
+    id: "8"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "12"
+    note: false
+    scriptarguments:
+      alert_id:
+        simple: ${Indeni.AlertInfo.AlertId}
+      note:
+        simple: Jira ticket created ${Ticket.Key}
+    separatecontext: false
+    task:
+      brand: Indeni
+      id: ea303a1a-a654-46a3-8962-70f4f1239322
+      iscommand: true
+      name: Add Jira ticket to issue note
+      script: Indeni|||indeni-post-note
+      type: regular
+      version: -1
+    taskid: ea303a1a-a654-46a3-8962-70f4f1239322
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 265,
+          "y": 1070
+        }
+      }
+  "9":
+    id: "9"
+    ignoreworker: false
+    note: false
+    scriptarguments:
+      assetid: {}
+      closeNotes: {}
+      closeReason:
+        simple: Jira ticket ${Ticket.Id} is resolved
+      emailclassification: {}
+      id:
+        simple: ${incident.id}
+      phishingsubtype: {}
+    separatecontext: false
+    task:
+      brand: Builtin
+      id: b6bdac90-e7bf-4ab4-8176-f27e8911ab79
+      iscommand: true
+      name: Close Investigation
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: b6bdac90-e7bf-4ab4-8176-f27e8911ab79
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 265,
+          "y": 2470
+        }
+      }
+  "10":
+    id: "10"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "11"
+    note: false
+    scriptarguments:
+      alert_id:
+        simple: ${Indeni.AlertInfo.AlertId}
+      note:
+        simple: Jira ticket is marked as DONE. Demisto will archive this issue.
+    separatecontext: false
+    task:
+      brand: Indeni
+      id: 1a4d4395-dd64-4a4c-8ea1-4297274fa62a
+      iscommand: true
+      name: Update note with jira ticket is done
+      script: Indeni|||indeni-post-note
+      type: regular
+      version: -1
+    taskid: 1a4d4395-dd64-4a4c-8ea1-4297274fa62a
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 2120
+        }
+      }
+  "11":
+    id: "11"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "9"
+    note: false
+    scriptarguments:
+      alert_id:
+        simple: ${Indeni.AlertInfo.AlertId}
+    separatecontext: false
+    task:
+      brand: Indeni
+      id: 3c33c24b-20cd-42ec-82e8-025dc83da2ad
+      iscommand: true
+      name: Archive Indeni Issue
+      script: Indeni|||indeni-archive-issue
+      type: regular
+      version: -1
+    taskid: 3c33c24b-20cd-42ec-82e8-025dc83da2ad
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 265,
+          "y": 2295
+        }
+      }
+  "12":
+    id: "12"
+    ignoreworker: false
+    loop:
+      exitCondition: ""
+      iscommand: false
+      wait: 1
+    nexttasks:
+      '#none#':
+      - "13"
+    note: false
+    scriptarguments:
+      AdditionalPollingCommandArgNames: {}
+      AdditionalPollingCommandArgValues: {}
+      Ids:
+        simple: ${Ticket.Id}
+      Interval:
+        simple: "1"
+      PollingCommandArgName:
+        simple: issueId
+      PollingCommandName:
+        simple: jira-get-issue
+      Timeout:
+        simple: "60"
+      dt:
+        simple: Ticket(val.Status != 'Done').Id
+    separatecontext: true
+    task:
+      brand: ""
+      id: 47277715-91a8-4025-873e-20d6d3820010
+      iscommand: false
+      name: GenericPolling
+      playbookId: GenericPolling
+      type: playbook
+      version: -1
+    taskid: 47277715-91a8-4025-873e-20d6d3820010
+    timertriggers: []
+    type: playbook
+    view: |-
+      {
+        "position": {
+          "x": 265,
+          "y": 1245
+        }
+      }
+  "13":
+    id: "13"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "14"
+    note: false
+    scriptarguments:
+      expandLinks: {}
+      getAttachments: {}
+      headers: {}
+      issueId:
+        simple: ${Ticket.Id}
+    separatecontext: false
+    task:
+      brand: jira-v2
+      id: fef2b209-1a13-4074-8e20-f1c0c1edf5c0
+      iscommand: true
+      name: Get Jira ticket status
+      script: jira-v2|||jira-get-issue
+      type: regular
+      version: -1
+    taskid: fef2b209-1a13-4074-8e20-f1c0c1edf5c0
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 265,
+          "y": 1420
+        }
+      }
+  "14":
+    id: "14"
+    ignoreworker: false
+    nexttasks:
+      "no":
+      - "15"
+      "yes":
+      - "10"
+    note: false
+    results:
+    - AreValuesEqual
+    scriptarguments:
+      left:
+        simple: ${Ticket.Status}
+      right:
+        simple: Done
+    separatecontext: false
+    task:
+      brand: ""
+      id: a699be5a-e74e-4955-8b84-f44f8a612a76
+      iscommand: false
+      name: Check if Jira ticket is Done
+      script: AreValuesEqual
+      type: condition
+      version: -1
+    taskid: a699be5a-e74e-4955-8b84-f44f8a612a76
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 265,
+          "y": 1595
+        }
+      }
+  "15":
+    id: "15"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "16"
+    note: false
+    scriptarguments:
+      alert_id:
+        simple: ${Indeni.AlertInfo.AlertId}
+      note:
+        simple: Jira ticket is still not closed after assigned wait time. Please manual
+          trigger the remaining of the playbook in Demisto once ticket is closed.
+    separatecontext: false
+    task:
+      brand: Indeni
+      id: 59e4265f-0845-4cc4-89c8-26349689a0bd
+      iscommand: true
+      name: Update note with Jira ticket still NOT resolved
+      script: Indeni|||indeni-post-note
+      type: regular
+      version: -1
+    taskid: 59e4265f-0845-4cc4-89c8-26349689a0bd
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 480,
+          "y": 1770
+        }
+      }
+  "16":
+    id: "16"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "17"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 04a49aae-bd54-4159-889e-364fd31bdfac
+      iscommand: false
+      name: Manual Resolve Jira Ticket
+      type: regular
+      version: -1
+    taskid: 04a49aae-bd54-4159-889e-364fd31bdfac
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 480,
+          "y": 1945
+        }
+      }
+  "17":
+    id: "17"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "11"
+    note: false
+    scriptarguments:
+      alert_id:
+        simple: ${Indeni.AlertInfo.AlertId}
+      note:
+        simple: 'Jira ticket is marked as DONE by user. Demisto will archive this
+          issue. '
+    separatecontext: false
+    task:
+      brand: Indeni
+      id: fe1899da-d617-4c10-8e6b-55a54cce27a7
+      iscommand: true
+      name: Update note with issue manually resolved
+      script: Indeni|||indeni-post-note
+      type: regular
+      version: -1
+    taskid: fe1899da-d617-4c10-8e6b-55a54cce27a7
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 480,
+          "y": 2120
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 2515,
+        "width": 810,
+        "x": 50,
+        "y": 50
+      }
+    }
+  }

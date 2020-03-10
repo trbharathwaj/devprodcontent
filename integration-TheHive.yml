@@ -1,0 +1,1002 @@
+category: Case Management
+commonfields:
+  id: TheHive
+  version: -1
+configuration:
+- defaultvalue: ""
+  display: Server URL (e.g. https://192.168.0.1)
+  name: server
+  required: false
+  type: 0
+- defaultvalue: ""
+  display: Authentication token (API Key)
+  name: token
+  required: false
+  type: 4
+- defaultvalue: ""
+  display: ""
+  name: proxy
+  required: false
+  type: 0
+description: 'This integration is designed to interface with TheHive case management
+  tool. It supports transferring cases from Demisto to TheHive. '
+display: TheHive
+image: data:image/png;base64,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
+name: TheHive
+script:
+  commands:
+  - arguments:
+    - auto: PREDEFINED
+      description: Case Template
+      name: Template
+      predefined:
+      - Generic
+      - Phishing
+    - description: Case title
+      name: title
+      required: true
+    - description: Case Description
+      name: Description
+    - auto: PREDEFINED
+      description: Case Severity (L=1, M=2, H=3)
+      name: severity
+      predefined:
+      - Low
+      - Medium
+      - High
+    - auto: PREDEFINED
+      name: TLP
+      predefined:
+      - White
+      - Green
+      - Amber
+      - Red
+    - auto: PREDEFINED
+      name: PAP
+      predefined:
+      - White
+      - Green
+      - Amber
+      - Red
+    - description: 'Case Tags (Comma Separated: Splunk,Demisto)'
+      name: Tags
+    - auto: PREDEFINED
+      defaultValue: "0"
+      description: Case Escalated (0=False, 1=True)
+      name: Escalated
+      predefined:
+      - "0"
+      - "1"
+    - description: Summary Note for case
+      name: SummaryNote
+    - auto: PREDEFINED
+      description: Company Label for case
+      name: CompanyLabel
+      predefined:
+      - 2K
+      - T2
+      - Rockstar
+      - Social Point
+      - Private Division
+      - Ghost Story Games
+      - Global
+    - auto: PREDEFINED
+      description: Log Source
+      name: DataSource
+      predefined:
+      - Palo Alto Networks
+      - Windows Events Logs
+      - Sysmon
+      - Nessus
+      - Sophos
+      - MS-ATA
+      - MS-DNS
+      - Phishing Mailbox
+      - User Reported
+      - Cisco-ASA
+      - SecurityOnion
+      - Proofpoint
+      - a10
+      - Customer Service Reported
+      - Border Router
+      - Okta
+      - RecordedFuture
+      - External Reported
+    - auto: PREDEFINED
+      description: Stage
+      name: Stage
+      predefined:
+      - In-progress
+      - Escalated
+      - Follow-up
+      - Final
+      - Closed
+    - description: Site for case (Label + Airport)
+      name: Site
+    - auto: PREDEFINED
+      description: Case Category
+      name: Category
+      predefined:
+      - Exercise
+      - Intrustion
+      - Malware
+      - Violation
+      - Probing
+      - Unknown
+      - Malicious Emails
+      - Spam or Marketing Email
+      - Data Loss Incident
+      - Lost or Stolen Asset
+      - Denial of Service
+      - ATA Alert
+      - DNS Query Investigation
+      - Typosquat
+      - Blacklist Review
+    - auto: PREDEFINED
+      description: Business Impact of the case
+      name: BusinessImpact
+      predefined:
+      - Low
+      - Medium
+      - High
+      - Critical
+    - auto: PREDEFINED
+      description: Case Flagged (0=False, 1=True). Defaults to True
+      name: flag
+      predefined:
+      - "0"
+      - "1"
+    description: 'This command will create a case in Hive with associated details. '
+    name: create-case
+    outputs:
+    - contextPath: TheHive.Case.caseId
+      description: Human Readable Case ID
+    - contextPath: TheHive.Case.id
+      description: Backend Case ID
+  - arguments:
+    - description: 'Case ID (Ex: AW9877OR5oTkxHqARLEK)'
+      name: case_id
+      required: true
+    - name: task_name
+      required: true
+    - name: message
+      required: true
+    description: This command will take a task name, a case ID, and a message to append
+      a note. Search for a task name implies a wildcard (*Work Not*) would find Work
+      Notes.
+    name: create-task-note
+  - arguments:
+    - description: 'Case ID (Ex: AW9877OR5oTkxHqARLEK)'
+      name: case_id
+      required: true
+    - auto: PREDEFINED
+      description: Indicator datatypes
+      name: datatype
+      predefined:
+      - autonomous-system
+      - domain
+      - email
+      - file
+      - filename
+      - fqdn
+      - hash
+      - ip
+      - mail
+      - mail_subject
+      - other
+      - regexp
+      - registry
+      - uri_path
+      - url
+      - user-agent
+    - description: 'The indicator(s) themselves (Ex: 1.1.1.1,2.2.2.2)'
+      name: data
+    - auto: PREDEFINED
+      defaultValue: "0"
+      description: Case Escalated (0=False, 1=True)
+      name: IOC
+      predefined:
+      - "0"
+      - "1"
+    - description: 'Case Tags (Comma Separated: Splunk,Demisto)'
+      name: Tags
+    - description: Description for IOC
+      name: message
+    - description: Pass in entire Demisto Labels Key for bulk importing
+      isArray: true
+      name: incident_labels
+    - defaultValue: SplunkSearch,SplunkURL,search_name,rid0,Instance,Brand,Email/html,attachmentId,Email/Header/,Email/headers,Email/MessageId,Email/ID,Email/itemId,Email/Conversion/ID,HTML
+      description: Excludes specific Demisto Label values from being processed
+      name: label_exclusion_list
+    - auto: PREDEFINED
+      name: TLP
+      predefined:
+      - White
+      - Green
+      - Amber
+      - Red
+    - defaultValue: ${File.EntryID}
+      description: File ID for Hive Upload
+      name: entryId
+    description: This command supports creating a single observable and/or creating
+      a bulk observable import from incident.labels
+    name: create-case-observable
+    outputs:
+    - contextPath: TheHive.Case.Observable.id
+      description: Backend Observable ID
+  - arguments:
+    - description: 'Case ID (Ex: AW9877OR5oTkxHqARLEK)'
+      name: case_id
+      required: true
+    - auto: PREDEFINED
+      description: Close Code
+      name: resolutionStatus
+      predefined:
+      - TruePositive
+      - FalsePositive
+      - Indeterminate
+      - Other
+      required: true
+    - description: Closure Note
+      name: summary
+      required: true
+    - auto: PREDEFINED
+      description: Was CIA affected?
+      name: impactStatus
+      predefined:
+      - Impact
+      - NoImpact
+    description: This command will close a case and associated tasks in Hive.
+    name: close-case
+  - arguments:
+    - description: 'Case ID (Ex: AW9877OR5oTkxHqARLEK)'
+      name: case_id
+      required: true
+    - description: Case title
+      name: title
+    - description: Closure Note
+      name: summary
+    - description: Summary Note for case (Custom Field)
+      name: SummaryNote
+    - description: Case Description
+      name: description
+    - auto: PREDEFINED
+      description: Case Flagged (0=False, 1=True)
+      name: Flag
+      predefined:
+      - "0"
+      - "1"
+    - auto: PREDEFINED
+      description: Case Escalated (0=False, 1=True)
+      name: Escalated
+      predefined:
+      - "0"
+      - "1"
+    - auto: PREDEFINED
+      name: TLP
+      predefined:
+      - White
+      - Green
+      - Amber
+      - Red
+    - auto: PREDEFINED
+      name: PAP
+      predefined:
+      - White
+      - Green
+      - Amber
+      - Red
+    - description: 'Case Tags (Comma Separated: Splunk,Demisto)'
+      name: Tags
+    - auto: PREDEFINED
+      description: Close Code
+      name: resolutionStatus
+      predefined:
+      - TruePositive
+      - FalsePositive
+      - Indeterminate
+      - Other
+    - auto: PREDEFINED
+      description: Was CIA affected?
+      name: impactStatus
+      predefined:
+      - Impact
+      - NoImpact
+    - auto: PREDEFINED
+      description: Stage of the case
+      name: Stage
+      predefined:
+      - In-progress
+      - Escalated
+      - Follow-up
+      - Final
+      - Closed
+    - auto: PREDEFINED
+      description: Company Label for case
+      name: CompanyLabel
+      predefined:
+      - 2K
+      - T2
+      - Rockstar
+      - Social Point
+      - Private Division
+      - Ghost Story Games
+      - Global
+    - auto: PREDEFINED
+      description: Log Source Type
+      name: DataSource
+      predefined:
+      - Palo Alto Networks
+      - Windows Events Logs
+      - Sysmon
+      - Nessus
+      - Sophos
+      - MS-ATA
+      - MS-DNS
+      - Phishing Mailbox
+      - User Reported
+      - Cisco-ASA
+      - SecurityOnion
+      - Proofpoint
+      - a10
+      - Customer Service Reported
+      - Border Router
+      - Okta
+      - RecordedFuture
+      - External Reported
+    - description: Site for case (Label + Airport)
+      name: Site
+    - auto: PREDEFINED
+      description: Case Category
+      name: Category
+      predefined:
+      - Exercise
+      - Intrustion
+      - Malware
+      - Violation
+      - Probing
+      - Unknown
+      - Malicious Emails
+      - Spam or Marketing Email
+      - Data Loss Incident
+      - Lost or Stolen Asset
+      - Denial of Service
+      - ATA Alert
+      - DNS Query Investigation
+      - Typosquat
+      - Blacklist Review
+    - auto: PREDEFINED
+      description: Business Impact of the case
+      name: BusinessImpact
+      predefined:
+      - Low
+      - Medium
+      - High
+      - Critical
+    - auto: PREDEFINED
+      description: status
+      name: status
+      predefined:
+      - Open
+      - Resolved
+    - auto: PREDEFINED
+      description: Case Owner
+      name: owner
+      predefined:
+      - dgoldstein
+      - dalbernaz
+      - garrett.beasley
+      - gowtham.selvaraj
+      - joe.scordo
+      - john.scholte
+      - jschaffner
+      - maaz.baig
+      - matt.clairmont
+      - nicholas.everson
+      - nithin.jacob
+      - nitin.yamdagni
+      - p.avancena
+      - patrick.lockett
+      - rahul.damania
+      - rakeshwaran.kumar
+      - steven.corey
+      - vasken.houdoverdov
+    - auto: PREDEFINED
+      description: Case Severity (L=1, M=2, H=3)
+      name: severity
+      predefined:
+      - Low
+      - Medium
+      - High
+    description: This command allows for updating any field in a hive case. The only
+      requirement is a case_id and the field you would like to change.
+    name: update-case
+  - arguments:
+    - description: 'Case ID (Ex: AW9877OR5oTkxHqARLEK)'
+      name: case_id
+      required: true
+    - auto: PREDEFINED
+      description: 'The name of TheHive responder (Ex: Escalator_1_0)'
+      name: responder_name
+      predefined:
+      - Escalator_1_0
+      required: true
+    description: Executes a case responder
+    name: run-case-responder
+  dockerimage: thehive:latest
+  runonce: false
+  script: |-
+    import requests, sys, json, time, os
+
+    from thehive4py.models import Case, CaseTask, CustomFieldHelper, CaseTaskLog, CaseObservable, CaseException
+    from thehive4py.api import TheHiveApi
+    from thehive4py.models import Alert, AlertArtifact, CustomFieldHelper
+
+    # Map inputs
+    TOKEN = demisto.params().get('token')
+    SERVER = demisto.params()['server'][:-1] if demisto.params()['server'].endswith('/') else demisto.params()['server']
+    tlp_pap_dict = {'White':0,'Green':1,'Amber':2,'Red':3}
+    sev_dict = {'Low':1,'Medium':2,'High':3}
+
+    if not TOKEN and not (USERNAME and PASSWORD):
+        raise Exception('Either credentials or auth token should be provided.')
+
+    if not demisto.params()['proxy']:
+        del os.environ['HTTP_PROXY']
+        del os.environ['HTTPS_PROXY']
+        del os.environ['http_proxy']
+        del os.environ['https_proxy']
+
+    # Create TheHive API object
+    api = TheHiveApi(str(SERVER), str(TOKEN))
+
+    # split multiple observables into a list (,)
+    def create_observable_list(observables):
+        observable_list = []
+        observable_list = observables.split(',')
+        return observable_list
+
+    # Split multiple exclusions into a list (,)
+    def create_observable_exclusions(exclusions):
+        exclusion_list = []
+        exclusion_list = exclusions.split(',')
+        return exclusion_list
+
+    # Split multiple tags into a list
+    def create_case_tags(tags):
+        tag_list = []
+        tag_list = tags.split(',')
+        return tag_list
+
+    # Convert dictionary keys to lowercase
+    def convert_dict_lower(dictObj):
+        temp_dict = {}
+        if isinstance(dictObj, dict):
+            for k,v in dictObj.items():
+                temp_dict[k.lower()] = v
+        else:
+            temp_dict = dictObj
+        return temp_dict
+
+    # Function to create a case observable (Supports Bulk Import/Individual)
+    def create_case_observable(args):
+        return type(args)
+        """demisto_output = {}
+        response_details = {}
+        observables = []
+        # Bulk Observable Creation
+        # Launch bulk upload if incident_labels is populated
+        if args.get('incident_labels', '') != '':
+            id = []
+            error_message = {}
+            dictObj = {}
+
+            # Convert incident_labels to lower
+            args['incident_labels'] = convert_dict_lower(args['incident_labels'])
+            for x in create_observable_exclusions(args['label_exclusion_list']):
+                for k in list(args['incident_labels'].keys()):
+                    if x in k:
+                        try:
+                            del args['incident_labels'][k]
+                        except:
+                            pass
+
+            # This should have all lower case values/keys
+            datatype_mappings = {
+                                    'autonomous-system':['autonomous-system','computer','hostname','host','src_host','dest_host'],
+                                    'domain':['domain','dest_nt_domain'],
+                                    'email':['src_address','dest_address','email_from','email_to','email','email_address','email_cc','email_sender','email_recipient','sender','recipient','from','to','cc','replyto'],
+                                    'file':[],
+                                    'filename':['filename','file_name','attachments','filepath'],
+                                    'fqdn':['fqdn'],
+                                    'hash':['hash','md5','sha128','sha256','sha512'],
+                                    'ip':['src_ip','dest_ip','ip'],
+                                    'mail':[],
+                                    'mail_subject':['subject','email_subject','email/subject'],
+                                    'other':['signature','action','initial_detection_time'],
+                                    'regexp':['regexp'],
+                                    'registry':['registry'],
+                                    'uri_path':['uri_path'],
+                                    'url':['url','link'],
+                                    'user':['user','src_user','dest_user','account','source_user','target_user'],
+                                    'user-agent':['user-agent','useragent','user_agent','browser-agent'],
+                                    'xend' : []
+            }
+            # Covert Above Dict object to lower case
+            # Loop over all incident labels and extract them into keys/values
+            for k,v in args['incident_labels'].items():
+                # Ensure all incident_label keys are lowercase (without this the datatype_mappings) won't find any matches
+                k = k.lower()
+                booltool = False
+                #The value of 'k' was not found to be a value to be excluded, add it to the inclusion dict
+                for datatype in datatype_mappings.keys():
+                    data = []
+                    # Check if k (key) is found in the list of datatypes
+                    if k in datatype_mappings[datatype]:
+                        # If v is not a list then it needs to be a list (Required by TheHive)
+                        if not isinstance(v, list):
+                            booltool = True
+                            if len(v) != 0:
+                                data.append(v)
+                        # If it's already a list no need to change it, just map to data
+                        else:
+                            booltool = True
+                            if len(v) != 0:
+                                data = v
+                    # DataType not found mapping to other
+                    elif datatype == 'xend' and booltool == False:
+                        datatype='other'
+                        # If v is not a list then it needs to be a list (Required by TheHive)
+                        if not isinstance(v, list):
+                            # exclude null mappings
+                            if len(v) != 0:
+                                data.append(v)
+                        # If it's already a list no need to change it, just map to data
+                        else:
+                            # exclude null mappings
+                            if len(v) != 0:
+                                data = v
+                    # Look for match of datatype (key) in dictObj (incident_labels) key
+                    if datatype in dictObj.keys():
+                        # Loop through values (data)
+                        for x in data:
+                            # if the value is not found for the key in dictObj then it needs to be appended
+                            if x not in dictObj[datatype]:
+                                # exclude null mappings
+                                if len(x) != 0:
+                                    dictObj[datatype].append({k:[x]})
+                    # If it's already a list no need to change it, just map to data
+                    else:
+                        # exclude null mappings
+                        if len(data) != 0:
+                            dictObj[datatype] = [{k:data}]
+            # Loop over dictObj to extract out what we will upload as an observable.
+            ## T=Tag, K=Hive Key, V=observable data (1.1.1.1), X={T:V} Object
+            for k,v in dictObj.items():
+                for x in v:
+                    for t,v in x.items():
+                        # Ensure k is lower because hive requires them to all be lower case (This is a safety check)
+                        datatype = k.lower()
+                        # Map the value to Data before the request is made
+                        data = v
+                        # Exclude uploading null values to hive
+                        if data != []:
+                            # Create Hive observable data object
+                            observables.append(CaseObservable(dataType=datatype,
+                                                        data=data,
+                                                        tlp=tlp_pap_dict[args.get(str('TLP'), 'White')],
+                                                        ioc=bool(int(args.get('Escalated','0'))),
+                                                        tags=[t],
+                                                        message=args.get('message', '')
+                                                        ))
+            for observable in observables:
+                # Create Case Observable
+                response = api.create_case_observable(args['case_id'], observable)
+                # Check if upload was successful
+                if response.status_code == 201:
+                    if isinstance(response.json(), dict):
+                        # Append all IDs for successful uploads
+                        id.append(response.json()['id'])
+                    elif isinstance(response.json(), list):
+                        if response.json()[0]['id'] != '':
+                            id.append(response.json()[0]['id'])
+                else:
+                    demisto.results(response.json())
+                    # Create dictionary for error message and status code
+                    error_message[k] = str(response.status_code)
+            # Check error message list if it's greater than 0 execute
+            if len(error_message) > 0:
+                # Print to warroom an error/note with the list details
+                for k,v in error_message.items():
+                    demisto.results({
+                                        'Type': entryTypes['error'],
+                                        'Note': True,
+                                        'ContentsFormat': formats['text'],
+                                        'Contents': 'Observable Upload Failed:\n' + 'DataType: ' + str(k) + '\nResponse code: ' + str(v),
+                                        'Tag': 'Error'
+                                    })
+            else:
+                # Format Demisto Object for Storing to Context/Warroom
+                response_details['id'] = id
+                demisto_output['TheHive.Case.Observable'] = response_details
+                demisto.results({
+                        'ContentsFormat': formats['json'],
+                        'Type': entryTypes['note'],
+                        'Contents': demisto_output,
+                        'EntryContext': demisto_output
+                    })
+                for x in id:
+                    return "Created Observable(s): " + str(x)
+
+        # Single Observable
+        else:
+            # If observable type is a file then we need to grab the file from Demisto
+            if args['datatype'] == 'file' and args.get('entryId', '') != '':
+                # Grab current file path based off EntryID
+                res = demisto.getFilePath(demisto.args()['entryId'])
+                # Store as a list because TheHive API expects them as such
+                file_name = []
+                # Remove all special characters and spaces prior to the rename. This is required to upload to TheHive successfully
+                res['name'] = ''.join(e for e in os.path.splitext(res['name'])[0] if e.isalnum()) + os.path.splitext(res['name'])[1]
+                # Grab the file path of the current file for upload
+                os.rename(res['path'], res['name'])
+                file_name.append(res['name'])
+                # Create TheHive File observable Object
+                observable = CaseObservable(dataType=args['datatype'],
+                                            data=file_name,
+                                            tlp=tlp_pap_dict[args.get(str('TLP'), 'White')],
+                                            ioc=bool(int(args.get('IOC','0'))),
+                                            tags=create_case_tags(args.get('Tags','')),
+                                            message=args.get('message', '')
+                                            )
+            else:
+                # Non-File observable object creation
+                observable = CaseObservable(dataType=args['datatype'],
+                                            data=create_observable_list(args['data']),
+                                            tlp=tlp_pap_dict[args.get(str('TLP'), 'White')],
+                                            ioc=bool(int(args.get('IOC','0'))),
+                                            tags=create_case_tags(args.get('Tags','')),
+                                            message=args.get('message', '')
+                                            )
+            # Create Case Observable
+            id = None
+            response = api.create_case_observable(args['case_id'], observable)
+            if response.status_code == 201:
+                # Store ID of successful upload
+                id = response.json()['id']
+            else:
+                 # Print to warroom an error/note with the details
+                demisto.results(res)
+                demisto.results(response.text)
+                demisto.results({
+                        'Type': entryTypes['error'],
+                        'Note': True,
+                        'ContentsFormat': formats['text'],
+                        'Contents': 'Observable Upload Failed:\n' + 'DataType: ' + str(args['datatype']) + '\nResponse code: ' + str(response.status_code),
+                        'Tag': 'Error'
+                    })
+                sys.exit(0)
+            # Format Demisto Object for Storing to Context/Warroom
+            response_details['id'] = id
+            demisto_output['TheHive.Case.Observable'] = response_details
+            demisto.results({
+                    'ContentsFormat': formats['json'],
+                    'Type': entryTypes['note'],
+                    'Contents': demisto_output,
+                    'EntryContext': demisto_output
+                })
+            return "Created Observable: " + str(id)"""
+
+    # Create TheHive case and return back the case number and the unique ID
+    def create_case_command(args):
+        demisto_output = {}
+        # Prepare the sample case
+        case = Case(title=args['title'],
+                    template=args.get('Template', 'Generic'),
+                    severity=int(sev_dict[args.get('severity', 'Low')]),
+                    tlp=tlp_pap_dict[args.get(str('TLP'), 'White')],
+                    pap=tlp_pap_dict[args.get(str('PAP'), 'Amber')],
+                    flag=bool(int(args.get('Flag','1'))),
+                    tags=create_case_tags(args.get('Tags','')),
+                    description=args.get('Description', ''),
+                    customFields={
+                                    'companyLabels':{'string':args.get('CompanyLabel',''),'order':1},
+                                    'incidentCategory':{'string':args.get('Category',''),'order':2},
+                                    'businessImpact':{'string':args.get('BusinessImpact', 'Low'),'order':3},
+                                    'stage':{'string':args.get('Stage','In-progress'),'order':4},
+                                    'dataSource':{'string':args.get('DataSource',''),'order':5},
+                                    'escalated':{'boolean':bool(int(args.get('Escalated','0'))),'order':6},
+                                    'site':{'string':args.get('Site',''),'order':7},
+                                    'summaryNote':{'string':args.get('SummaryNote',''),'order':8}
+                                })
+        # Create the case
+        response_details = {}
+        response = api.create_case(case)
+        if response.status_code == 201:
+            # Store case number of successful upload
+            response_details['caseId'] = json.loads(json.dumps(response.json()))['caseId']
+            # Store ID of successful upload
+            response_details['id'] = response.json()['id']
+            # Format Demisto Object for Storing to Context/Warroom
+            demisto_output['TheHive'] = {'Case':response_details}
+            demisto.results({
+                    'ContentsFormat': formats['json'],
+                    'Type': entryTypes['note'],
+                    'Contents': demisto_output,
+                    'EntryContext': demisto_output
+                })
+            return "Case Created: " + str(response_details['caseId'])
+        else:
+            # Print to warroom an error/note with the details
+            demisto.results({
+                                'Type': entryTypes['error'],
+                                'Note': True,
+                                'ContentsFormat': formats['text'],
+                                'Contents': 'Case Creation Failed:\n' + 'Case Name: ' + str(args['title']) + '\nResponse code: ' + str(response.status_code),
+                                'Tag': 'Error'
+                            })
+            return "Error making case"
+            sys.exit(0)
+
+    # Create Case Note in TheHive. Nothing is returned typically for task creations so no return is called for this function.
+    def create_task_note(args):
+        task_id = []
+        task_message = CaseTaskLog(message=args.get('message',''))
+        # Grab Task ID from case_id and task_name
+        response = api.get_case_tasks(args['case_id'])
+        # Check if no case is found, otherwise continue
+        if response.text != '[]':
+            # Grab all tasks and dump them into a json object
+            for task in json.loads(json.dumps(response.json())):
+                # Look for a match of the human readable name with the tasks found, if a match is found grab the key
+                if args['task_name'] in task['title']:
+                    task_id.append(task['id'])
+            # Loop over each ID found in the observed tasks (Typically only 1 time). This would happen multiple times if a user entered to generic of a task name
+            for id in task_id:
+                # Create a log in the specific task via TheHiveAPI
+                response = api.create_task_log(id,task_message)
+                # Validate Response for errors
+                if response.status_code != 201:
+                    # Print to warroom an error/note with the details
+                    demisto.results({
+                                        'Type': entryTypes['error'],
+                                        'Note': True,
+                                        'ContentsFormat': formats['text'],
+                                        'Contents': 'Task Note Creation Failed:\n' + 'Response: ' + str(response.text) + '\nResponse code: ' + str(response.status_code),
+                                        'Tag': 'Error'
+                                    })
+                    return "Error creating task note"
+        else:
+            #Print to warroom an error/note with the details
+            demisto.results({
+                                'Type': entryTypes['error'],
+                                'Note': True,
+                                'ContentsFormat': formats['text'],
+                                'Contents': 'Task Note Creation Failed:\n' + 'Response: ' + str(response.text) + '\nResponse code: ' + str(response.status_code),
+                                'Tag': 'Error'
+                            })
+            return "No Case Found: check case id"
+
+    def close_case_command(args):
+        try:
+            case_id = args.pop('case_id')
+            updated_case = api.case.update(
+                                    case_id,
+                                    status='Resolved',
+                                    impactStatus=args.pop('impactStatus','NoImpact'),
+                                    **args)
+            return "Case {} Closed".format(case_id)
+        except CaseException as e:
+            #Print to warroom an error/note with the details
+            demisto.results({
+                                'Type': entryTypes['error'],
+                                'Note': True,
+                                'ContentsFormat': formats['text'],
+                                'Contents': 'Case Close Failed:\n' + 'Response: ' + str(e),
+                                'Tag': 'Error'
+                            })
+            return "Case failed to close: {}".format(str(e))
+
+    # Module to update case details
+    def update_case(args):
+        # Demisto Human Readable Name to Hive backend name
+        custom_fields = {'CompanyLabel':'companyLabels','Category':'incidentCategory','BusinessImpact':'businessImpact','Stage':'stage','DataSource':'dataSource','Escalated':'escalated','Site':'site','SummaryNote':'summaryNote'}
+        order = 0
+        # Pull existing custom fields from a case
+        customFields = get_custom_case_fields(args['case_id'])
+        for k,v in custom_fields.items():
+            try:
+                value = args.pop(k)
+                order += 1
+                if k == 'Escalated':
+                    customFields[v] = {'boolean': bool(int(value)), 'order': order}
+                else:
+                    customFields[v] = {'string': value, 'order': order}
+            except KeyError:
+                pass
+        # Demisto Human Readable Name to Hive backend name (Demisto:Hive)
+        incident_fields = {'TLP':'tlp','PAP':'pap','Flag':'flag','severity':'severity','Tags':'tags'}
+        for k,v in incident_fields.items():
+            try:
+                value = args.pop(k)
+                if k == 'TLP' or k == 'PAP':
+                    args[v] = tlp_pap_dict[str(value)]
+                elif k == 'Flag':
+                    args[v] = bool(int(value))
+                elif k == 'severity':
+                    args[v] = int(sev_dict[value])
+                elif k == 'Tags':
+                    args[v] = create_case_tags[str(value)]
+            except KeyError:
+                pass
+        try:
+            case_id = args.pop('case_id')
+            if len(customFields) > 0:
+                updated_case = api.case.update(
+                    case_id,
+                    customFields=customFields,
+                    **args)
+            else:
+                updated_case = api.case.update(
+                    case_id,
+                    **args)
+            return "Case {} updated".format(case_id)
+        except CaseException as e:
+            #Print to warroom an error/note with the details
+            demisto.results({
+                                'Type': entryTypes['error'],
+                                'Note': True,
+                                'ContentsFormat': formats['text'],
+                                'Contents': 'Case Update Failed:\n' + 'Response: ' + str(e),
+                                'Tag': 'Error'
+                            })
+            return "Case failed to update: {}".format(str(e))
+
+    # Modue to pull existing custom case fields
+    def get_custom_case_fields(id):
+        response = api.get_case(id)
+        if response.status_code == 200:
+            customFields = json.loads(json.dumps(response.json()))['customFields']
+            return customFields
+        else:
+            # Print to warroom an error/note with the list details
+            demisto.results({
+                'Type': entryTypes['error'],
+                'Note': True,
+                'ContentsFormat': formats['text'],
+                'Contents': 'Failed to pull existing Case fields:\nResponse Code: {}\nResponse Text: {}'.format(response.status_code, response.text),
+                'Tag': 'Error'
+            })
+            return {}
+
+
+    # Module to test if integration is working correctly
+    def test_module():
+        # Make a quick call to see if any templates are found
+        response = api.find_case_templates()
+        # Check if previous call was successful, if so return a result of 'ok' otherwise the error code
+        if response.status_code == requests.codes.ok:
+            result = 'ok'
+        else:
+            result = response.status_code
+        # If encountered error, send_request will return_error
+        return result
+
+    """
+    This is code pulled from a pull request from: https://github.com/zpriddy/TheHive4py/tree/run_analyzer
+    """
+    def run_responder(self, object_id, object_type, responder_name=None, responder_id=None):
+        """
+        Run a responder by name or id. Must have either name or ID provided.
+        :param object_id: identifier of the object to run the responder on
+        :param object_type: type of the object the responder is running on
+        :param responder_name: Name of the responder to run (optional)
+        :param responder_id: identifier of the Cortex responder (optional)
+        :rtype: json
+        """
+        if not responder_id and not responder_name:
+            raise TheHiveException("Responder run error: No responder ID or Name provided")
+        data = {
+            "objectType": object_type,
+            "objectId": object_id
+        }
+        if responder_name:
+            if not verify_responder_name(self,responder_name):
+                resp_id = search_responder_by_name(self,responder_name)
+                if resp_id:
+                    data['responderId'] = resp_id
+            else:
+                data['responderName'] = responder_name
+        else:
+            data['responderId'] = responder_id
+        req = self.url + "/api/connector/cortex/action"
+        try:
+            response = requests.post(req, headers={'Content-Type': 'application/json'}, json=data, proxies=self.proxies, auth=self.auth, verify=self.cert)
+            return None
+        except requests.exceptions.RequestException as e:
+            demisto.results({
+                        'Type': entryTypes['error'],
+                        'Note': True,
+                        'ContentsFormat': formats['text'],
+                        'Contents': 'Responder run error:\n' + 'Response: ' + str(e),
+                        'Tag': 'Error'
+                    })
+
+    def verify_responder_name(self, responder_name):
+        """
+        Verify the responder name.
+        :param responder_name: Cortex responder name
+        :return: bool
+        """
+        data = {
+            "query": {
+                "name": responder_name
+            }
+        }
+        req = self.url + "/api/connector/cortex/responder/_search"
+        try:
+            responder_list = requests.post(req, headers={'Content-Type': 'application/json'}, json=data,
+                                           proxies=self.proxies,
+                                           auth=self.auth, verify=self.cert).json()
+            if len(responder_list) == 1:
+                return True
+            return False
+        except requests.exceptions.RequestException as e:
+            demisto.results({
+                        'Type': entryTypes['error'],
+                        'Note': True,
+                        'ContentsFormat': formats['text'],
+                        'Contents': 'Responder verify error:\n' + 'Response: ' + str(e),
+                        'Tag': 'Error'
+                    })
+
+    def search_responder_by_name(self, responder_name):
+        """
+        Find a responder by short name (without version)
+        :param responder_name: Cortex responder name
+        :return: str
+        """
+        data = {
+            "query": {
+                "_string": responder_name
+            }
+        }
+        req = self.url + "/api/connector/cortex/responder/_search"
+        try:
+            responder_list = requests.post(req, headers={'Content-Type': 'application/json'}, json=data,
+                                           proxies=self.proxies,
+                                           auth=self.auth, verify=self.cert).json()
+            if len(responder_list) == 1:
+                return responder_list[0].get('id')
+            return None
+        except requests.exceptions.RequestException as e:
+            demisto.results({
+                                'Type': entryTypes['error'],
+                                'Note': True,
+                                'ContentsFormat': formats['text'],
+                                'Contents': 'Responder verify error:\n' + 'Response: ' + str(e),
+                                'Tag': 'Error'
+                            })
+    # Command Selector
+    try:
+        LOG('Command being called is {command}'.format(command=demisto.command()))
+        if demisto.command() == 'test-module':
+            demisto.results(test_module())
+        elif demisto.command() == 'create-case':
+            demisto.results(create_case_command(demisto.args()))
+        elif demisto.command() == 'create-alert':
+            demisto.results(create_alert_command())
+        elif demisto.command() == 'create-task-note':
+            demisto.results(create_task_note(demisto.args()))
+        elif demisto.command() == 'create-case-observable':
+            demisto.results(create_case_observable(demisto.args()))
+        elif demisto.command() == 'close-case':
+            demisto.results(close_case_command(demisto.args()))
+        elif demisto.command() == 'update-case':
+            demisto.results(update_case(demisto.args()))
+        elif demisto.command() == 'run-case-responder':
+            demisto.results(run_responder(api,demisto.args()['case_id'],"case",demisto.args()['responder_name']))
+    except:
+        raise
+  subtype: python3
+  type: python

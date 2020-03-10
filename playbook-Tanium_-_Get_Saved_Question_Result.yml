@@ -1,0 +1,133 @@
+description: This playbook used generic polling to gets saved question result.
+id: Tanium - Get Saved Question Result
+inputs:
+- description: ""
+  key: saved-question-id
+  required: true
+  value: {}
+name: Tanium - Get Saved Question Result
+outputs:
+- contextPath: Tanium.SavedQuestionResult.Results
+  description: The saved question results.
+- contextPath: Tanium.SavedQuestionResult.SavedQuestionID
+  description: The unique ID of the saved question object.
+starttaskid: "0"
+system: true
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "2"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: fd08b385-0693-43a8-8523-e4e344e47c7e
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: fd08b385-0693-43a8-8523-e4e344e47c7e
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 50
+        }
+      }
+  "2":
+    id: "2"
+    ignoreworker: false
+    loop:
+      exitCondition: ""
+      iscommand: false
+      wait: 1
+    nexttasks:
+      '#none#':
+      - "4"
+    note: false
+    scriptarguments:
+      AdditionalPollingCommandArgNames: {}
+      AdditionalPollingCommandArgValues: {}
+      Ids:
+        complex:
+          root: inputs.saved-question-id
+      Interval:
+        simple: "1"
+      PollingCommandArgName:
+        simple: question-id
+      PollingCommandName:
+        simple: tn-get-saved-question-result
+      Timeout:
+        simple: "60"
+      dt:
+        simple: Tanium.SavedQuestionResult(val.Status != 'Completed').SavedQuestionID
+    separatecontext: true
+    task:
+      brand: ""
+      description: |-
+        Use this playbook as a sub-playbook to block execution of the master playbook until a remote action is complete.
+        This playbook implements polling by continuously running the command in Step \#2 until the operation completes.
+        The remote action should have the following structure:
+
+        1. Initiate the operation.
+        2. Poll to check if the operation completed.
+        3. (optional) Get the results of the operation.
+      id: c9237b16-f000-4425-8ae8-00c0a2e1349f
+      iscommand: false
+      name: GenericPolling
+      playbookId: GenericPolling
+      type: playbook
+      version: -1
+    taskid: c9237b16-f000-4425-8ae8-00c0a2e1349f
+    timertriggers: []
+    type: playbook
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 195
+        }
+      }
+  "4":
+    id: "4"
+    ignoreworker: false
+    note: false
+    scriptarguments:
+      question-id:
+        simple: ${inputs.saved-question-id}
+    separatecontext: false
+    task:
+      brand: ""
+      id: a664c828-58f9-434e-8298-4d8b27cb7636
+      iscommand: true
+      name: Get results
+      script: '|||tn-get-saved-question-result'
+      type: regular
+      version: -1
+    taskid: a664c828-58f9-434e-8298-4d8b27cb7636
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 370
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 415,
+        "width": 380,
+        "x": 50,
+        "y": 50
+      }
+    }
+  }

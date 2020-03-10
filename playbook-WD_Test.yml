@@ -1,0 +1,118 @@
+id: f5dba9e5-1f0e-4998-8410-7ac32fe6aa6f
+inputs: []
+name: WD_Test
+outputs: []
+starttaskid: "0"
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "1"
+    note: false
+    separatecontext: false
+    task:
+      brand: ""
+      id: 93909551-8023-4969-8203-006ce3db4181
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: 93909551-8023-4969-8203-006ce3db4181
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 50
+        }
+      }
+  "1":
+    id: "1"
+    ignoreworker: false
+    nexttasks:
+      '#none#':
+      - "2"
+    note: false
+    scriptarguments:
+      append: {}
+      key:
+        simple: TestKey
+      value:
+        simple: bharath
+    separatecontext: false
+    task:
+      brand: ""
+      description: Sets a value into the context with the given context key
+      id: 79d2380e-6f16-4473-8ab7-61eab4c224d6
+      iscommand: false
+      name: Set
+      script: Set
+      type: regular
+      version: -1
+    taskid: 79d2380e-6f16-4473-8ab7-61eab4c224d6
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 180
+        }
+      }
+  "2":
+    id: "2"
+    ignoreworker: false
+    note: false
+    scriptarguments:
+      attachIDs: {}
+      bcc: {}
+      body: {}
+      cc: {}
+      htmlBody:
+        simple: Hi ${TestKey}
+      noteEntryID: {}
+      replyTo: {}
+      subject:
+        simple: 'Subject '
+      to:
+        simple: branganathan@paloaltonetworks.com
+    separatecontext: false
+    task:
+      brand: ""
+      description: |-
+        Deprecated - please use the send-mail command instead
+
+        Send an email with the specified parameters.
+        Attachments are provided as a comma-separated list of entry IDs.
+        Example usage: !SendEmail subject="File from war room" body="Please see the attached file. --DBot" to=jane@acme.com cc=john@acme.com attachIDs=89@3,46@3
+      id: 28a26ab0-ddbc-4a9c-8346-97c247548b01
+      iscommand: false
+      name: Send Mail
+      script: SendEmail
+      type: regular
+      version: -1
+    taskid: 28a26ab0-ddbc-4a9c-8346-97c247548b01
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 360
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 405,
+        "width": 380,
+        "x": 450,
+        "y": 50
+      }
+    }
+  }
