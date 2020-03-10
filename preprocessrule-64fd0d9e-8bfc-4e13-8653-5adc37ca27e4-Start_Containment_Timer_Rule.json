@@ -1,0 +1,20 @@
+{
+	"action": "script",
+	"enabled": false,
+	"existingEventsFilters": [],
+	"id": "64fd0d9e-8bfc-4e13-8653-5adc37ca27e4",
+	"index": 0,
+	"linkTo": "oldest",
+	"locked": false,
+	"name": "Start Containment Timer Rule",
+	"newEventFilters": [],
+	"period": {
+		"by": "days",
+		"fromValue": 30
+	},
+	"scriptName": "ContainmentTimerStart",
+	"searchClosed": false,
+	"sortValues": null,
+	"system": false,
+	"version": -1
+}

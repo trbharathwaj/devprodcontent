@@ -1,0 +1,20 @@
+{
+	"action": "script",
+	"enabled": false,
+	"existingEventsFilters": [],
+	"id": "33ad6ce3-e8c6-40ab-8ed1-a5e210fa5461",
+	"index": 1,
+	"linkTo": "oldest",
+	"locked": false,
+	"name": "Stop Sytem Timer rule",
+	"newEventFilters": [],
+	"period": {
+		"by": "days",
+		"fromValue": 30
+	},
+	"scriptName": "remediation_stop",
+	"searchClosed": false,
+	"sortValues": null,
+	"system": false,
+	"version": -1
+}

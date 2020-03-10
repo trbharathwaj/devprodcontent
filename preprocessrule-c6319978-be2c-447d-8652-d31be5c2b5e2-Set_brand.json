@@ -1,0 +1,20 @@
+{
+	"action": "script",
+	"enabled": false,
+	"existingEventsFilters": [],
+	"id": "c6319978-be2c-447d-8652-d31be5c2b5e2",
+	"index": 2,
+	"linkTo": "oldest",
+	"locked": false,
+	"name": "Set brand",
+	"newEventFilters": [],
+	"period": {
+		"by": "days",
+		"fromValue": 30
+	},
+	"scriptName": "wd-pre-processing",
+	"searchClosed": false,
+	"sortValues": null,
+	"system": false,
+	"version": -1
+}
