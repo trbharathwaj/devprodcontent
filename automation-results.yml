@@ -1,0 +1,14 @@
+commonfields:
+  id: 2d538790-6f3f-4013-8e22-e5c78de2252e
+  version: -1
+enabled: true
+name: results
+runas: DBotWeakRole
+runonce: false
+script: |-
+  demisto.results("hello")
+  demisto.results("world")
+scripttarget: 0
+subtype: python2
+tags: []
+type: python

@@ -1,0 +1,64 @@
+args:
+- default: true
+  description: URL to decode
+  name: url
+  required: true
+comment: Decode ProofPoint URLs to get the actual URLs
+commonfields:
+  id: ba6e4806-abdf-4700-8967-53842dc3fee7
+  version: -1
+enabled: true
+name: ProofpointDecodeURL_py2
+outputs:
+- contextPath: URL.Data
+  description: Decoded URLs
+runas: DBotWeakRole
+runonce: false
+script: |
+  import argparse
+  import json
+  import re
+  import sys
+
+
+  import string
+  from urlparse import parse_qs, unquote, urlparse
+
+  valid_versions = ['v1', 'v2']
+
+  def find_version(url):
+      match = re.search(r'https://urldefense.proofpoint.com/(?P<version>v[0-9])/', url)
+      return match.group('version')
+
+  def ppdecode(url, return_all=False):
+      try:
+          version = find_version(url)
+      except AttributeError:
+          #return_error('This does not appear to be a valid proofpoint url: {}'.format(url))
+          demisto.results('This does not appear to be a valid proofpoint url: {}'.format(url))
+      else:
+          if version not in valid_versions:
+              return_error('Ppdecode is unprepared to handle this version of proofpoint urls: {}'.format(url))
+      parsed_url = urlparse(url)
+      query_components = parse_qs(parsed_url.query)
+      if 'u' in query_components:
+          translated_url = query_components['u'][0].translate(string.maketrans('-_', '%/'))
+      else:
+          return_error('A URL was not detected in the query.')
+      decoded_url = unquote(translated_url)
+      query_components['decoded_url'] = decoded_url
+      query_components['proofpoint_version'] = version
+      return query_components
+
+  try:
+      results = ppdecode(str(demisto.args()['url']))
+      ec = {'URL': {'Data': results['decoded_url']}}
+      #ec = {'URL':  results['decoded_url']}
+      demisto.results({'ContentsFormat': formats['markdown'], 'Type': entryTypes['note'], 'Contents': results, 'EntryContext': ec, 'HumanReadable': '#### Decoded URL\n' + results['decoded_url']})
+
+  except RuntimeError as e:
+      return_error(str(e))
+scripttarget: 0
+subtype: python2
+tags: []
+type: python

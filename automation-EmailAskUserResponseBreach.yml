@@ -1,0 +1,22 @@
+commonfields:
+  id: 557fb5b4-a206-4bf9-8253-d85025e83647
+  version: -1
+enabled: true
+name: EmailAskUserResponseBreach
+runas: DBotWeakRole
+runonce: false
+script: |
+  inc = demisto.incidents()[0]
+  inc_id = inc["id"]
+  cssystem=inc["CustomFields"]["cssystem"].lower()
+  if cssystem.startswith("w"):
+      demisto.debug(str(inc_id)+"Workstation containment flow: Taking Lift Containment path due to SLA breach")
+      demisto.results(demisto.executeCommand("taskComplete", {"input": "retain", "id":"workstationcontainmentresponse", "incidentId": inc_id }))
+  elif not cssystem.startswith("w"):
+      demisto.debug(str(inc_id)+"Server containment flow: Taking Provide manual options to contain path due to SLA breach")
+      demisto.results(demisto.executeCommand("taskComplete", {"input": "ignore", "id":"servercontainmentresponse", "incidentId": inc_id }))
+scripttarget: 0
+subtype: python2
+tags:
+- sla
+type: python

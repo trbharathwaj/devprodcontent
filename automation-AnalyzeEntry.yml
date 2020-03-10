@@ -1,0 +1,26 @@
+args:
+- name: entryidd
+  required: true
+commonfields:
+  id: 6fc06cf2-e7a4-4961-8778-373a360e0bb3
+  version: -1
+enabled: true
+name: AnalyzeEntry
+runas: DBotWeakRole
+runonce: false
+script: |-
+  entryidd = demisto.args()['entryidd']
+
+  e = demisto.executeCommand('getEntry', {'id': entryidd});
+
+  print(e[0])
+
+  if(e[0]['Metadata']['file']):
+      demisto.results('yes')
+  else:
+      demisto.results('no')
+scripttarget: 0
+subtype: python2
+tags:
+- Condition
+type: python

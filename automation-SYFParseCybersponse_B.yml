@@ -1,0 +1,241 @@
+args:
+- description: Entry ID of CSV File
+  name: entryID
+  required: true
+comment: 'This Script will parse out CyberSponse CSV Export and create Demisto incidents '
+commonfields:
+  id: d8e723c1-08b5-45ed-8ef4-b28d211bb678
+  version: -1
+enabled: true
+name: SYFParseCybersponse_B
+runas: DBotWeakRole
+runonce: false
+script: |-
+  #import json
+  entryID = demisto.args()["entryID"]
+  res = demisto.executeCommand("ParseCSV-COPY", {"entryID": entryID})[0]["Contents"][0:50]
+
+
+  for inc in res:
+      # Creating Variables for each cybersponse incident field
+      syfrecordseries = inc["SYF Record Series"]
+      syfrecordtype = inc["SYF Record Type"]
+      userclickphish = inc["Was Phish Successful"]
+      inc_name = inc["Incident Name"]
+      syfdatasecurityclassification = inc["Data Classification"]
+      syfcountofrecordslost = inc["Count of Records Loss"]
+      datalost = inc["Was Data Lost"]
+      # Single Select
+      if inc["Actors External"]:
+          actorveris = inc["Actors External"]
+      elif inc["Actors Internal"]:
+          actorveris = inc["Actors Internal"]
+      else:
+          actorveris = "Partner"
+      #inc["Actors Internal"]
+      #demisto.results("Line 25")
+      syfseverity = inc["Incident Tier"].strip()
+      alertsource = inc["Source"]
+      syfphase = inc["Phase"]
+      owner = inc["Incident Owner"]
+      occurred = inc["Created Date and Date of Compromise"]
+      lastmodified = inc["Last Modified Date"]
+      closedon = inc["Time of containment and Closed Values"]
+      created = inc["Created Date"]
+      incstatus = inc["Status"]
+      vipasset = inc["VIP Asset"]
+      hviuser = inc["VIP User"].strip()
+      killchainphase = inc["Kill Chain Phase Reached"].strip()
+      methodofcontainment = inc["Method of Containment"].strip()
+      #closurecode = inc["False Positive"]
+      breachresponse = inc["Breach Response Required"]
+      syfsitecodes = inc["SYF Site Code"].strip()
+      threataction = inc["Threat Action"]
+      inctype = inc["Threat Action"]
+      syfdatasecurityclassification = inc["Data Classification"].strip()
+      #closedby = inc["Closed By"]
+      dateofcompromise = inc["Date of Compromise"]
+      timeofcontainment = inc["Time of containment and Closed Values"]
+      details = inc["Incident Summary"]
+      containmenttimer = inc["Time to Containment"]
+      containmenttime = inc["Time to Containment"]
+      #Uncomment for incident details
+      inc_summary = inc.get("Incident Summary", " ")
+      details =  inc_summary
+      details = demisto.executeCommand("TextFromHTML", {"html":"<html><body> + inc_summary + </html></body>"})[0]["Contents"]
+      #inc["Created Date"]
+      #inc["Created By"]
+
+      #inc["Digital Media Tracking Document in Attachments"]
+      #inc["Team"]
+      #inc["Date of Incident Closed On"]
+      #inc["False Positive Reason CIRT Forensics Required Actors"]
+      #typeofdata = inc["Type of Data"]
+
+
+      # demisto.results(json.dumps({
+      #     "syfrecordseries":syfrecordseries,
+      #     "syfrecordtype": syfrecordtype,
+      #     "name": inc_name,
+      #     "syfdatasecurityclassification": syfdatasecurityclassification,
+      #     "syfcountofrecordslost": syfcountofrecordslost,
+      #     "syfseverity": syfseverity,
+      #     #"syfphase": syfphase,
+      #     "alertsource": alertsource,
+      #     "occurred": occurred,
+      #     "hviuser": hviuser,
+      #     "methodofcontainment": methodofcontainment,
+      #     "syfsitecodes": syfsitecodes,
+      #     "threataction": threataction,
+      #     #"closurecode": closurecode,
+      #     "breachresponse": breachresponse,
+      #     "datalost": datalost,
+      #     "killchainphase": killchainphase,
+      #     "lastmodified": lastmodified,
+      #     "vipasset": vipasset,
+      #     "incstatus": incstatus,
+      #     #"closedby": closedby,
+      #     "dateofcompromise": dateofcompromise,
+      #     "timeofcontainment": timeofcontainment,
+      #     "type": inctype
+      #     #"typeofdata": typeofdata
+      # }))
+      #sys.exit()
+
+      start_date_timer = occurred[:] + ':00'
+      end_date_timer = closedon[:] + ':00'
+
+
+      start_date_object = datetime.strptime(start_date_timer, "%m/%d/%Y %H:%M:%S")
+      end_date_object = datetime.strptime(end_date_timer, "%m/%d/%Y %H:%M:%S")
+
+      demisto.results(start_date_object.isoformat())
+      demisto.results(end_date_object.isoformat())
+
+
+      if "/" in occurred and " " in occurred:
+          if len(occurred.split(" ")) == 2:
+              day,time = occurred.split(" ")
+          else:
+              day, time, _ = occurred.split(" ")
+          day = ["%.2d" % int(i) for i in day.split("/")]
+          m,d,y = day
+          day = "-".join([y,m,d])
+          time = time + ":00Z"
+          occurred = day + "T" + time
+          # 9/2/2015 21:46 (10030)
+      elif "Z" not in occurred:
+          occurred = "T".join(occurred.split(" ")[:2]) + "Z"
+  #
+  #
+      if "/" in closedon and " " in closedon:
+          if len(closedon.split(" ")) == 2:
+              day,time = closedon.split(" ")
+          else:
+              day, time, _ = closedon.split(" ")
+          day = ["%.2d" % int(i) for i in day.split("/")]
+          m,d,y = day
+          day = "-".join([y,m,d])
+          time = time + ":00Z"
+          closedon = day + "T" + time
+          # 9/2/2015 21:46 (10030)
+      elif "Z" not in closedon:
+          closedon = "T".join(closedon.split(" ")[:2]) + "Z"
+
+
+      # Create New Incident in Demisto -- Key value pairs are incident fields
+      res = demisto.executeCommand("createNewIncident", {
+          "syfrecordseries":syfrecordseries,
+          "syfrecordtype": syfrecordtype,
+          "name": inc_name,
+          "syfdatasecurityclassification": syfdatasecurityclassification,
+          "syfcountofrecordslost": syfcountofrecordslost,
+          "syfseverity": syfseverity,
+          "syfphase": syfphase,
+          "alertsource": alertsource,
+          "occurred": occurred,
+          "closedon": closedon,
+          "created": created,
+          "hviuser": hviuser,
+          "methodofcontainment": methodofcontainment,
+          "syfsitecodes": syfsitecodes,
+          "threataction": threataction,
+          #"closurecode": closurecode,
+          "breachresponse": breachresponse,
+          "datalost": datalost,
+          "killchainphase": killchainphase,
+          "lastmodified": lastmodified,
+          "vipasset": vipasset,
+          "incstatus": incstatus,
+          #"closedby": closedby,
+          "dateofcompromise": dateofcompromise,
+          "timeofcontainment": timeofcontainment,
+          "type": inctype,
+          #Uncomment for incident details
+          "details": details,
+          #"containmenttimer": containmenttimer,
+          #"containmenttime": containmenttime,
+          "syfdatasecurityclassification": syfdatasecurityclassification
+          #"typeofdata": typeofdata
+      })
+
+      try:
+          inc_id = res[0]["EntryContext"]["CreatedIncidentID"]
+          print(inc_id)
+          inc["CustomFields"]['containmenttime'] = {"startDate": start_date_object.isoformat() , "endDate":end_date_object.isoformat() , "runStatus": 'ended', "accumulatedPause": 0, "slaStatus": -1, "sla": 0 }
+          demisto.executeCommand('setIncident', {"containmenttime": json.dumps(inc["CustomFields"]), "id": inc_id})
+
+          #demisto.results("Created New Incident {}".format(inc_id)
+
+          if incstatus == "Resolved":
+              demisto.executeCommand("closeInvestigation", {"id": inc_id})
+
+
+      except:
+          demisto.results("Failed Creating the following incident\n\n\n{}".format(json.dumps(res[0])))
+          demisto.results(json.dumps({
+              "syfrecordseries":syfrecordseries,
+              "syfrecordtype": syfrecordtype,
+              "name": inc_name,
+              "syfdatasecurityclassification": syfdatasecurityclassification,
+              "syfcountofrecordslost": syfcountofrecordslost,
+              "syfseverity": syfseverity,
+              "syfphase": syfphase,
+              "alertsource": alertsource,
+              "occurred": occurred,
+              "closedon": closedon,
+              "created": created,
+              "hviuser": hviuser,
+              "methodofcontainment": methodofcontainment,
+              "syfsitecodes": syfsitecodes,
+              "threataction": threataction,
+              #"closurecode": closurecode,
+              "breachresponse": breachresponse,
+              "datalost": datalost,
+              "killchainphase": killchainphase,
+              "lastmodified": lastmodified,
+              "vipasset": vipasset,
+              "incstatus": incstatus,
+              #"closedby": closedby,
+              "dateofcompromise": dateofcompromise,
+              "timeofcontainment": timeofcontainment,
+              "type": inctype,
+              "containmenttimer": containmenttimer,
+              "containmenttime": containmenttime,
+              "details": details
+              #"typeofdata": typeofdata
+          }))
+
+      #demisto.results(demisto.executeCommand("createNewIncident", {
+          #"name": inc_name
+      #}))
+
+      # Create Markdown table of cybersponse row
+      # md = tableToMarkdown("Cybersponse Incident Data", inc)
+
+  demisto.results("DONE, Completed Parsing")
+scripttarget: 0
+subtype: python2
+tags: []
+timeout: 2.5µs
+type: python

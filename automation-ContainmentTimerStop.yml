@@ -1,0 +1,13 @@
+commonfields:
+  id: 02c2ff3d-1d9a-4805-8c61-8985fdf64283
+  version: -1
+enabled: true
+name: ContainmentTimerStop
+runas: DBotWeakRole
+runonce: false
+script: demisto.executeCommand("stopTimer", {"timerField":"containmenttimer"})
+scripttarget: 0
+subtype: python2
+tags:
+- field-change-triggered
+type: python

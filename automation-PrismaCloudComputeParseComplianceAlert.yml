@@ -1,0 +1,77 @@
+args:
+- description: The compliance alert raw JSON
+  name: alert_raw_json
+  required: true
+comment: Parse Compliance alert raw JSON data
+commonfields:
+  id: PrismaCloudComputeParseComplianceAlert
+  version: -1
+dockerimage: demisto/python3:3.7.4.2245
+name: PrismaCloudComputeParseComplianceAlert
+outputs:
+- contextPath: PrismaCloudCompute.ComplianceAlert.compliance.description
+  description: The compliance description
+  type: String
+- contextPath: PrismaCloudCompute.ComplianceAlert.compliance.id
+  description: The compliance ID
+  type: String
+- contextPath: PrismaCloudCompute.ComplianceAlert.compliance.type
+  description: The compliance type
+  type: String
+- contextPath: PrismaCloudCompute.ComplianceAlert.time
+  description: Compliance alert creation time
+  type: Date
+- contextPath: PrismaCloudCompute.ComplianceAlert.type
+  description: Entity type (host / image / container)
+  type: String
+runonce: false
+script: |2
+
+
+  import json
+
+
+  def parse_compliance(raw_json):
+      data = json.loads(raw_json)
+
+      if data.get('kind') != 'compliance':
+          raise ValueError(f'Input should be a raw JSON compliance alert, received: {raw_json}')
+
+      outputs = {'PrismaCloudCompute.ComplianceAlert': data}
+
+      # remove unneeded fields from human readable results
+      headers: list = []
+      for field in data.keys():
+          if field not in ['_id', 'kind', 'compliance']:
+              headers.append(field)
+      headers.sort()
+
+      readable_outputs = tableToMarkdown('Compliance Information',
+                                         data,
+                                         headers=headers)
+
+      # add another table for compliance issues
+      readable_outputs += tableToMarkdown('Compliance', data.get('compliance'))
+
+      return (
+          readable_outputs,
+          outputs,
+          raw_json
+      )
+
+
+  def main():
+      try:
+          return_outputs(*parse_compliance(demisto.args().get('alert_raw_json', '')))
+      except Exception as ex:
+          return_error(f'Failed to execute PrismaCloudComputeParseComplianceAlert. Error: {str(ex)}')
+
+
+  if __name__ in ('__builtin__', 'builtins'):
+      main()
+scripttarget: 0
+subtype: python3
+system: true
+tags:
+- Prisma Cloud Compute
+type: python

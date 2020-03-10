@@ -1,0 +1,28 @@
+args:
+- name: incident_id
+  required: true
+commonfields:
+  id: 296dadc7-5854-48c3-83ab-2a0d2b3065e0
+  version: -1
+enabled: true
+name: GetTimerValue
+runas: DBotWeakRole
+runonce: false
+script: |-
+  //incident_id = demisto.args()['incident_id']
+
+
+  //print(demisto.incidents()[0]['CustomFields']['containmenttimer'])
+
+  //demisto.executeCommand('setIncident', {'accumulatedPause':'50', 'slaField':'containmenttimer'})
+
+
+  //demisto.executeCommand('setTimersForIncidents', {'id':'7565', 'timerFields':'containmenttimer'})
+
+  var fromDate = incidents[0]["CustomFields"]["containmenttimer"]["startDate"];
+
+  datestring = fromDate.split("T")
+  return(datestring[0])
+scripttarget: 0
+tags: []
+type: javascript

@@ -1,0 +1,64 @@
+args:
+- defaultValue: "-1"
+  description: List on the Left
+  name: LeftList
+- defaultValue: "-1"
+  description: List on the Right
+  name: RightList
+comment: 'Compare 2 Lists - Script written for Shriki''s playbook '
+commonfields:
+  id: 59455f66-f31d-45ea-841d-6f43cb7bb93a
+  version: -1
+enabled: true
+name: CompareLists
+outputs:
+- contextPath: newincidents
+  type: unknown
+- contextPath: oldincidents
+  type: unknown
+runas: DBotWeakRole
+runonce: false
+script: |+
+  lList = []
+  rList = []
+
+
+  if('LeftList' in demisto.args()):
+      lList = demisto.get(demisto.context(), 'LeftList')
+
+
+  if('RightList' in demisto.args()):
+      rList = demisto.get(demisto.context(), 'RightList')
+
+  output1 = []
+  output2 = []
+
+
+  for i in rList:
+      if i not in lList:
+          output1.append(i)
+
+  if(len(output1) > 0):
+      demisto.setContext('newincidents', output1)
+
+      #if(output1[0] != "" and len(output1)>1):
+
+
+  for j in lList:
+      if j not in rList:
+         output2.append(j)
+
+  if(len(output2) > 0):
+      demisto.setContext('oldincidents', output2)
+      #if(output2[0] != "" and len(output2)>1):
+
+
+
+
+scripttarget: 0
+subtype: python2
+tags:
+- Utilities
+- Condition
+- filter
+type: python

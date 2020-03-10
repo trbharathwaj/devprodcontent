@@ -1,0 +1,62 @@
+args:
+- auto: PREDEFINED
+  description: 'Level of detail required in the table '
+  name: detail
+  predefined:
+  - brief
+  - more
+  - full
+comment: 'Display the customer object as a table '
+commonfields:
+  id: 6e14248e-6654-4a21-8221-94bd9b719ba1
+  version: -1
+enabled: true
+name: Jackson_Customer_Table
+runas: DBotWeakRole
+runonce: false
+script: |
+  import json
+
+  detail_level = demisto.args()['detail']
+  customer_object = demisto.context()['customer']
+
+  res = []
+
+  length = len(customer_object)
+
+  keys = customer_object.keys()
+
+  if detail_level == 'brief':
+      print("detail level is brief")
+      for key in keys:
+          username = customer_object[key]['username']
+          phone = customer_object[key]['phonenumber']
+
+
+          if(isinstance(username,list)):
+              username = ' , '.join(username)
+          if(isinstance(phone,list)):
+              phone = ' , '.join(phone)
+
+          res.append( {"Username" : username, "phone" : phone } )
+
+  elif detail_level == 'more':
+      print("detail level is more")
+      print(customer_object)
+  elif detail_level == 'full':
+      print("detail level is full")
+      print(customer_object)
+  else:
+      print("Not a valid option")
+
+  #res1 = [ {"Full Name" : "val1", "Username" : "val2", "phone" : "val3", "policynumber" : "val2", "EMAIL" : "val2", "IP" : "val2"} ]
+
+  #res1.append( {"Full Name" : "val1", "Username" : "val2", "phone" : "val3", "policynumber" : "val2", "EMAIL" : "val2", "IP" : "val2"} )
+
+  #print(res)
+
+  demisto.results( {'ContentsFormat': formats['table'], 'Type': entryTypes['note'], 'Contents': res} )
+scripttarget: 0
+subtype: python2
+tags: []
+type: python

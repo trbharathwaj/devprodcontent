@@ -1,0 +1,17 @@
+comment: Script to check the issue reported by Nate from Qualtrics
+commonfields:
+  id: 13c74d53-c5e7-42b1-8ea7-b7e8f663e037
+  version: -1
+enabled: true
+name: StatusFieldCheck
+runas: DBotWeakRole
+runonce: false
+script: |+
+  value =  demisto.args()['new']
+  demisto.log(value)
+
+scripttarget: 0
+subtype: python2
+tags:
+- field-change-triggered
+type: python

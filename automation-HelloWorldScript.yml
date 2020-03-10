@@ -1,0 +1,59 @@
+args:
+- description: 'Say hello to:'
+  name: name
+comment: Hello World Script
+commonfields:
+  id: HelloWorldScript
+  version: -1
+dockerimage: demisto/python3:3.7.4.2245
+name: HelloWorldScript
+outputs:
+- contextPath: HelloWorld.hello
+  description: The result of hello
+  type: String
+runonce: false
+script: |2
+
+
+
+
+
+  def say_hello(name):
+      return f'Hello {name}'
+
+
+  def say_hello_command(args):
+      name = args.get('name')
+
+      original_result = say_hello(name)
+
+      markdown = f'## {original_result}'
+      outputs = {
+          'HelloWorld': {
+              'hello': original_result
+          }
+      }
+
+      return (
+          markdown,
+          outputs,
+          original_result
+      )
+
+
+  def main():
+      try:
+          return_outputs(*say_hello_command(demisto.args()))
+      except Exception as ex:
+          return_error(f'Failed to execute HelloWorldScript. Error: {str(ex)}')
+
+
+  if __name__ in ('__main__', '__builtin__', 'builtins'):
+      main()
+scripttarget: 0
+subtype: python3
+system: true
+tags:
+- hello
+- world
+type: python

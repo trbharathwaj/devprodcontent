@@ -1,0 +1,26 @@
+commonfields:
+  id: 8fe9a4ee-0916-4ea5-8e34-71f9c6d3bab6
+  version: -1
+dockerimage: demisto/python3:3.7.5.5271
+enabled: true
+name: Widet_automation
+runas: DBotWeakRole
+runonce: false
+script: |-
+  query1 ='status:closed -category:job'
+  query_results = demisto.executeCommand("getIncidents",
+      {
+          'query':query1,
+          'size':1000,
+          'fromdate': demisto.args()['from'],
+          'todate': demisto.args()['to']
+      })[0]['Contents']
+
+
+  totalIncidents = int(query_results['total'])
+
+  demisto.results(totalIncidents)
+scripttarget: 0
+subtype: python3
+tags: []
+type: python

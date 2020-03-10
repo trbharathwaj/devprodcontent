@@ -1,0 +1,14 @@
+commonfields:
+  id: 131d255c-96be-43cb-843e-44b157b9d87a
+  version: -1
+enabled: true
+name: Expose_modules_copy
+runas: DBotWeakRole
+runonce: false
+script: |
+  var all = getModules();
+  var allArr = Object.keys(all).map(function(m) {return {instance: m, brand: all[m].brand, category: all[m].category, state: all[m].state};});
+  return {Type: entryTypes.note, Contents: allArr, ContentsFormat: formats.json, HumanReadable: tableToMarkdown('Modules', allArr, ['brand', 'instance', 'category', 'state']), EntryContext: {ConfiguredModules: allArr}};
+scripttarget: 0
+tags: []
+type: javascript

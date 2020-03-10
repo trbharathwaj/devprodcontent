@@ -1,0 +1,42 @@
+args:
+- name: incident_id
+- defaultValue: ${TheHive.Case.id}
+  name: case_id
+  required: true
+- name: context_key
+  required: true
+- name: key_exclusion_list
+comment: |2+
+
+commonfields:
+  id: e5df8229-722a-49f4-8334-2765a5dd1b00
+  version: -1
+dockerimage: demisto/python3:3.8.1.5734
+enabled: true
+name: BulkImportHiveCaseObservable
+runas: DBotWeakRole
+runonce: false
+script: |-
+  incident_id = demisto.args().get('incident_id', demisto.incidents()[0]['id'])
+  context_key = demisto.args().get('context_key', 'labels')
+  key_exclusion_list = demisto.args().get('key_exclusion_list','SplunkSearch,SplunkURL,search_name,rid0,Instance,Brand,Email/html,attachmentId,Email/Header/,Email/headers,Email/MessageId,Email/ID,Email/itemId,Email/Conversion/ID,HTML')
+  incident_data = {}
+  incident_data_dict = {}
+
+  if not context_key == 'labels':
+      incident_data = demisto.executeCommand("getContext", {"id": incident_id})[0]['Contents']['context'][context_key]
+  else:
+      get_incidents = demisto.executeCommand("getIncidents", {"id": incident_id})[0]["Contents"]
+      incident_data_list = get_incidents["data"][0]['labels']
+      for x in incident_data_list:
+          incident_data[x['type']] = x['value']
+
+  demisto.results(demisto.executeCommand('get-user',{'incident_labels':incident_data}))
+
+  demisto.log(str(type(incident_data)))
+  #demisto.log(str(incident_data))
+  #demisto.log(len(incident_data))
+scripttarget: 0
+subtype: python3
+tags: []
+type: python

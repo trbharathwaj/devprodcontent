@@ -1,0 +1,36 @@
+args:
+- default: true
+  description: War room entryID of the file to read.
+  name: entryID
+  required: true
+- description: Maximal file size to load, in bytes. Default is 1MB.
+  name: maxFileSize
+- description: Data to write to the File
+  name: Data
+  required: true
+comment: Load the contents of a file into context.
+commonfields:
+  id: b29d7fb7-5cd8-464c-85b8-94f38af19385
+  version: -1
+enabled: true
+name: WriteToFileInWarRoom
+outputs:
+- contextPath: FileData
+  description: Data read from war room file
+runas: DBotWeakRole
+runonce: false
+script: |
+  maxFileSize = demisto.get(demisto.args(), 'maxFileSize')
+  if maxFileSize:
+      maxFileSize = int(maxFileSize)
+  else:
+      maxFileSize = 1024**2
+  res = demisto.executeCommand('getFilePath', {'id': demisto.args()['entryID']})
+  with open(res[0]['Contents']['path'], 'a') as f:
+      f.write(demisto.args()['Data'])
+  demisto.log("Done")
+scripttarget: 0
+subtype: python2
+tags:
+- Utility
+type: python

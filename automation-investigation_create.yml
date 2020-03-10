@@ -1,0 +1,26 @@
+args:
+- description: Incident iD to create an investigation for
+  name: incident_id
+  required: true
+comment: Gets incidents and creates an investigation
+commonfields:
+  id: 7dbde4ab-6976-40a3-886a-e1f365715fd7
+  version: -1
+enabled: true
+name: investigation_create
+runas: DBotWeakRole
+runonce: false
+script: |
+  inc = args['incident_id']
+
+  var req = {
+      "id": inc,
+      "version": 1
+  };
+
+  response = executeCommand('demisto-api-post', {uri:'incident/investigate', 'body': req})
+
+  return response
+scripttarget: 0
+tags: []
+type: javascript

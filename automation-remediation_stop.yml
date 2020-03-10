@@ -1,0 +1,14 @@
+commonfields:
+  id: 0eeb4369-5c2a-4a8c-8318-a10d6b001198
+  version: -1
+enabled: true
+name: remediation_stop
+runas: DBotWeakRole
+runonce: false
+script: demisto.executeCommand("stopTimer", {"timerField":"remediationtimer"})
+scripttarget: 0
+subtype: python2
+tags:
+- field-change-triggered
+- preProcessing
+type: python

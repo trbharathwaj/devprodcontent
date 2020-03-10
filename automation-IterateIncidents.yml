@@ -1,0 +1,76 @@
+args:
+- name: query
+  required: true
+commonfields:
+  id: 39548327-3ebd-49dc-80d9-458e4e388052
+  version: -1
+enabled: true
+name: IterateIncidents
+runas: DBotWeakRole
+runonce: false
+script: |
+  var query = args.query;
+
+  function addEntry(text) {
+      executeCommand("addEntries", {"entries": JSON.stringify([{
+          Type: entryTypes.note,
+          Contents: text,
+          ContentsFormat: formats.markdown
+      }])});
+  }
+
+  // specific logic to handle each incidnet found in the query
+  function handleIncident(inc) {
+
+      //use setincident here to set the fields as necessary
+      addEntry(inc.id)
+      var resexec = executeCommand("investigation_create", {'incident_id': inc.id});
+      if (isError(resexec[0])) {
+          return resexec;
+      }
+      addEntry('Incident set for' + inc.id);
+
+  }
+
+
+  // get the number of incidents matching the query
+  var res = executeCommand("getIncidents", {query: query,size:0});
+  if (isError(res[0])) {
+      return res;
+  }
+
+  total = res[0].Contents.total;
+  addEntry('total is ' + total);
+
+  var done = 0;
+  var page = 0;
+
+  // paging through the incidents 100 at a time
+  while (done < total) {
+      var res = executeCommand("getIncidents", {query: query,size:100, page: page});
+      if (isError(res[0])) {
+          return res;
+      }
+      arr = res[0].Contents.data;
+
+      // print progress to the war room
+      addEntry('Starting batch. page: ' + page + '. first ID: ' + arr[0].id);
+
+      // handle each incident found with the specific logic
+      arr.forEach(function(inc){
+          handleIncident(inc);
+          done++;
+      });
+
+      // print progress to the war room
+      addEntry('Done ' + done + ' out of ' + total);
+
+
+      page++;
+  }
+
+  return 'done';
+scripttarget: 0
+tags: []
+timeout: 1ms
+type: javascript

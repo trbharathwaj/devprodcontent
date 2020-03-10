@@ -1,0 +1,13 @@
+commonfields:
+  id: 86f52b47-a6ac-4fb4-8a83-8d24416abd67
+  version: -1
+enabled: true
+name: Modify
+runas: DBotWeakRole
+runonce: false
+script: |-
+  setIncident({type: 'Phishing', details: 'Phishing on my computer', severity: 'Critical', name: 'Phishing incident',
+              incidentstatus:'value3'});
+scripttarget: 0
+tags: []
+type: javascript

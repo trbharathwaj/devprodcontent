@@ -1,0 +1,16 @@
+commonfields:
+  id: 0326592d-e9b2-432d-8a8b-80e35db2c1bb
+  version: -1
+enabled: true
+name: entry
+runas: DBotWeakRole
+runonce: false
+script: |-
+  res = demisto.executeCommand("getEntries", {'id':'7514'})
+  for entry in res:
+      demisto.results(entry)
+  demisto.results(res)
+scripttarget: 0
+subtype: python2
+tags: []
+type: python

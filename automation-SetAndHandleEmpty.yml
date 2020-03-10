@@ -1,0 +1,59 @@
+args:
+- default: true
+  description: The key to set in context.
+  name: key
+  required: true
+- description: The value of the key to set in context. The value is usually a DQ expression.
+    Can be an array.
+  isArray: true
+  name: value
+- auto: PREDEFINED
+  description: Whether to append the new context key to the existing context key.
+    If "false", then the existing context key will be overwritten with the new context
+    key.
+  name: append
+  predefined:
+  - "true"
+  - "false"
+- auto: PREDEFINED
+  defaultValue: "false"
+  description: Whether to save the argument as a string. The default value is "false".
+  name: stringify
+  predefined:
+  - "true"
+  - "false"
+comment: Checks if the specified value exists in context. If the value exists, it
+  will be set in context, otherwise no value will be set in context.
+commonfields:
+  id: SetAndHandleEmpty
+  version: -1
+dockerimage: demisto/python3:3.7.4.2728
+enabled: true
+name: SetAndHandleEmpty
+runas: DBotWeakRole
+runonce: false
+script: |2
+
+
+
+
+  def main():
+      args = demisto.args()
+      value = args.get('value')
+      if value:
+          human_readable = 'Key ' + args.get('key') + ' set'
+          context_entry = {args.get('key'): value}
+      else:
+          context_entry = {}
+          human_readable = 'value is None'
+      return_outputs(human_readable, context_entry)
+
+
+  if __name__ in ('__builtin__', 'builtins'):
+      main()
+scripttarget: 0
+subtype: python3
+system: true
+tags:
+- Utility
+type: python

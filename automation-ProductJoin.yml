@@ -1,0 +1,64 @@
+args:
+- default: true
+  description: The first list (or CSV string).
+  isArray: true
+  name: value
+  required: true
+- description: The second list (or CSV string).
+  isArray: true
+  name: list2
+  required: true
+- defaultValue: =
+  description: Separator
+  name: join
+  required: true
+comment: Returns the product of two lists, joined by a separator, as a list of strings.
+commonfields:
+  id: ProductJoin
+  version: -1
+enabled: true
+name: ProductJoin
+runas: DBotWeakRole
+runonce: false
+script: |2
+
+
+  from itertools import product
+
+
+  def parse_list(lst):
+      if isinstance(lst, list):  # handle list
+          if len(lst) == 1:
+              lst = str(lst[0]).split(',')
+      else:
+          lst = str(lst).split(',')
+
+      return map(lambda _: str(_).strip(), lst)  # clean and convert to str for join
+
+
+  def product_join(args):
+      sep = args.get('join')
+      list1 = parse_list(args.get('value'))
+      list2 = parse_list(args.get('list2'))
+
+      ret = []
+      for item in product(list1, list2):
+          ret.append(sep.join(item))
+
+      return ret
+
+
+  def main(args):
+      demisto.results(product_join(args))
+
+
+  if __name__ in ('builtins', '__builtin__'):
+      main(demisto.args())
+scripttarget: 0
+subtype: python3
+system: true
+tags:
+- transformer
+- general
+- entirelist
+type: python

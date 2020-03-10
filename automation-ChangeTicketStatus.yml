@@ -1,0 +1,19 @@
+comment: Stops the "Time To Containament" timer if the phase has been changed to Containament
+commonfields:
+  id: e78444dc-0ee6-463f-89e8-68d33e74d400
+  version: -1
+enabled: true
+name: ChangeTicketStatus
+runas: DBotWeakRole
+runonce: false
+script: |
+  args_phase =  demisto.args()['new']
+  demisto.results(args_phase)
+  if args_phase == '2. Containment':
+      print('setting')
+      demisto.executeCommand("setIncident", {'phase': '2. Containment'})
+scripttarget: 0
+subtype: python2
+tags:
+- field-change-triggered
+type: python

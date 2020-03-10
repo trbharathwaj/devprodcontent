@@ -1,0 +1,82 @@
+commonfields:
+  id: 6dff9f89-ee93-42bc-8b4e-9b7660733ecc
+  version: -1
+dockerimage: demisto/python3:3.7.4.1150
+enabled: true
+name: ProofpointPreprocessSubject_Lock
+runas: DBotWeakRole
+runonce: false
+script: |+
+  import json
+  # Check if the incoming subject is identical to previous subject in the last x hours
+  demisto.debug("xxxxxxxxxxxxxxxxxxxxxxxxx Entering ProofpointPreprocessSubject xxxxxxxxxxxxxxxxxxxxxxxxx")
+
+  l1 = demisto.executeCommand("demisto-lock-get", {"name":"proofpoint_pre_lock","timeout":"30"})
+  #demisto.results(l1)
+  try:
+  #    subject = demisto.incidents()[0]['CustomFields']['subject']
+      subject = demisto.incidents()[0]['CustomFields']['sanitizedsubject']
+
+  except:
+      demisto.results(True)
+      pass
+
+  incident_query = 'occurred:>="1 day ago" and type:"Proofpoint TAP" and -status:closed and -category:job and subject:"{}"'.format(subject)
+  demisto.debug("incident_query is: " + incident_query)
+  #print(incident_query)
+  res = demisto.executeCommand("getTickets", {"query":incident_query})[0]['Contents']
+  total = res['total']
+  #demisto.debug("total number of tickets with subject: ",  total)
+  if total == 0:
+      demisto.results(True)
+  else:
+      top_incident = res['data'][0]
+      demisto.debug("old incident that script found: "+ json.dumps(top_incident))
+      # TO spit out incident id of original
+      #print(top_incident['id'])
+      #print(res)
+      #print(top_incident)
+      try:
+          recipient = top_incident['CustomFields']['recipient']
+      except:
+          recipient = None
+          pass
+      recipient_list = recipient.split(",")
+      demisto.debug("Recipient List from old incident: " + recipient)
+
+      #print(recipient)
+      try:
+          demisto.debug("Incoming recipients: "+ demisto.incidents()[0]['CustomFields']['recipient'])
+          incoming_recipient_list = demisto.incidents()[0]['CustomFields']['recipient'].split(',')
+          #print(len(incoming_recipient_list[0]))
+      except:
+          incoming_recipient_list = None
+          pass
+      original_recipient_list = recipient_list
+
+      if incoming_recipient_list is not None and incoming_recipient_list != [] and incoming_recipient_list[0]!='':
+          if recipient is not None and recipient != [] and recipient[0]!='':
+              original_recipient_list = list(set(recipient_list + incoming_recipient_list))
+          else:
+              original_recipient_list = incoming_recipient_list
+      else:
+          incoming_recipient_list = original_recipient_list
+
+
+      #print(original_recipient_list)
+
+      new_string = ','.join(original_recipient_list)
+      #print(new_string)
+      demisto.debug(demisto.executeCommand("setTicket", {'id':top_incident['id'],'recipient':new_string}))
+      # data from original incident: demisto.incidents()[0]['fieldname'] or demisto.incidents()[0]['CustomFields']['fieldname']
+      # data from old incident: res['fieldname'] or res['CustomFields']['fieldname']
+      demisto.results(False)
+      l2 = demisto.executeCommand("demisto-lock-release", {"name":"proofpoint_pre_lock"})
+      #demisto.results(l2)
+      demisto.debug("xxxxxxxxxxxxxxxxxxxxxxxxx Exiting ProofpointPreprocessSubject xxxxxxxxxxxxxxxxxxxxxxxxx")
+
+scripttarget: 0
+subtype: python2
+tags:
+- preProcessing
+type: python

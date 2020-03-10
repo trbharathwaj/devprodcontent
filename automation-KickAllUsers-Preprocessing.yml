@@ -1,0 +1,29 @@
+args:
+- name: user
+commonfields:
+  id: cb94d6a8-51f7-4dce-82ea-eea2e8333e33
+  version: -1
+enabled: true
+name: KickAllUsers-Preprocessing
+runas: DBotWeakRole
+runonce: false
+script: |-
+  res = True
+
+  incident_id = demisto.incidents()[0]['id']
+  users = demisto.callingContext['context']['Inv']['users']
+
+  demisto.executeCommand('setIncident', {'owner': ''})
+
+  for user in users:
+      if user != "admin":
+          demisto.executeCommand("demisto-api-post", {"uri":"/investigation/"+incident_id+"/deleteuser/"+str(user), "body":{}})
+
+  demisto.executeCommand("demisto-api-post", {"uri":"/investigation/"+incident_id+"/deleteuser/admin", "body":{}})
+
+  demisto.results(res)
+scripttarget: 0
+subtype: python2
+tags:
+- preProcessing
+type: python

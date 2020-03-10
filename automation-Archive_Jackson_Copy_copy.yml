@@ -1,0 +1,126 @@
+args:
+- name: username
+- name: fullname
+- isArray: true
+  name: phonenumber
+- name: email
+- name: policynumber
+- name: city
+- name: state
+- name: zip
+- name: producerid
+- name: accountstatus
+- isArray: true
+  name: ip
+comment: Add customer automation for Jackson. To set some values into the context
+commonfields:
+  id: dbc75e18-0200-4b6d-8044-74c8c5ddb1ea
+  version: -1
+enabled: true
+name: Archive_Jackson_Copy_copy
+outputs:
+- contextPath: new_customer
+runas: DBotWeakRole
+runonce: false
+script: |2
+
+  inputstuff = demisto.args()
+
+  contxt = {}
+
+  contxt = demisto.context()['cust']
+
+  allFields = ['city','state','zip','producerid','accountstatus','fullname','phonenumber','emailaddress','policynumber','username','ip']
+  matchableFields = ['fullname','phonenumber','emailaddress','policynumber','username']
+
+  matchedIndex = ''
+  matchedFields = []
+  setFields = []
+  customer = {}
+  sourceIsList = 0
+  dstIsList = 0
+  dbg = 1
+  action = 'add'
+
+  from copy import deepcopy
+
+  CheckMatchFields = list(set(inputstuff.keys()) & set(matchableFields))
+  if not CheckMatchFields:
+      print('straght add')
+      exit()
+
+  #no attributes where passed so we error
+  #Loop over all of the fields we support and check/set their values
+  for field in inputstuff.keys():
+      if field in matchableFields:
+          for item in contxt.values():
+              for inner_item in item.values():
+                  print('Got to Update')
+
+
+  if action == 'update':
+      for attribute in setFields:
+          #if attribute in matchedFields:
+          if dbg == 1: print(attribute +' 1')
+          #if this is a new attribute we define it to a null in the old context so it doesnt puke when we try to compare the values.
+          if attribute not in oldValue[matchedIndex].keys():
+              oldValue[matchedIndex][attribute] = customer[attribute]
+          if str(customer[attribute]) != str(oldValue[matchedIndex][attribute]):
+              if dbg == 1: print(attribute +' 2')
+              #New value and old value are not the same, so we append the new value as a list item.
+              if isinstance(customer[attribute],list):
+                  if dbg == 1: print(attribute +' 3')
+                  if isinstance(oldValue[matchedIndex][attribute],list):
+                      #new value = list : old value = list
+                      if dbg == 1: print(attribute +' 4')
+                      #both our input and old values are lists
+                      res[matchedIndex][attribute] = customer[attribute] + oldValue[matchedIndex][attribute]
+                      res[matchedIndex][attribute] = list(set(res[matchedIndex][attribute])) #remove dups
+                      res[matchedIndex][attribute].sort()
+                  else:
+                      #new value = list  : old value = str
+                      if dbg == 1: print(attribute +' 5')
+                      res[matchedIndex][attribute] = customer[attribute]
+                      res[matchedIndex][attribute].append(oldValue[matchedIndex][attribute])
+                      res[matchedIndex][attribute] = list(set(res[matchedIndex][attribute])) #remove dups
+                      res[matchedIndex][attribute].sort()
+              else:
+                  print(attribute +' 6')
+                  if isinstance(oldValue[matchedIndex][attribute],list):
+                      #new value = str :  old value = list
+                      if dbg == 1: print(attribute +' 7')
+                      #but our original value is.
+                      res[matchedIndex][attribute] = oldValue[matchedIndex][attribute]
+                      res[matchedIndex][attribute].append(customer[attribute])
+                      res[matchedIndex][attribute] = list(set(res[matchedIndex][attribute])) #remove dups
+                      res[matchedIndex][attribute].sort()
+                  else:
+                      #new value = str :  old value = str
+                      if dbg == 1: print(attribute +' 8')
+                      res[matchedIndex][attribute] = []
+                      res[matchedIndex][attribute].append(oldValue[matchedIndex][attribute])
+                      res[matchedIndex][attribute].append(customer[attribute])
+                      res[matchedIndex][attribute] = list(set(res[matchedIndex][attribute])) #remove dups
+                      res[matchedIndex][attribute].sort()
+                      #print res[matchedIndex][attribute]
+          else:
+              #Old and new values are the same.
+              if dbg == 1: print(attribute +' 10')
+              res[matchedIndex][attribute] = customer[attribute]
+
+      #delete the existing customer object
+      context = res
+      print('updated based on the ' + matchedAttribute + 'field. /n')
+      print(res)
+      #demisto.setContext('customer',res)
+      demisto.executeCommand('Set', {'key': 'new_customer','value':res,'append':'true'})
+
+  else:
+      print('added')
+      contxt = demisto.context()['cust']
+      contxt[len(contxt)] = inputstuff
+      demisto.setContext('cust',contxt)
+scripttarget: 0
+subtype: python2
+tags: []
+type: python

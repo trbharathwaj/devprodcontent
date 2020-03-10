@@ -1,0 +1,16 @@
+commonfields:
+  id: 463d4316-fd98-49c4-867b-24357057c9cf
+  version: -1
+dockerimage: demisto/python3:3.8.1.5734
+enabled: true
+name: Take2_test
+runas: DBotWeakRole
+runonce: false
+script: |-
+  demisto.results(demisto.demistoVersion())
+  user = demisto.executeCommand("getUsers", {"current": True})
+  demisto.results(user[0])
+scripttarget: 0
+subtype: python3
+tags: []
+type: python

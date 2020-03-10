@@ -1,0 +1,34 @@
+args:
+- defaultValue: "-1"
+  description: List of Users
+  isArray: true
+  name: Recipients
+  required: true
+comment: Get the Slack ID if the checkbox is checked
+commonfields:
+  id: 578891b8-3a96-4892-8b1a-b9f89149cb5b
+  version: -1
+enabled: true
+name: GetSlackRecipients
+outputs:
+- contextPath: FinalList
+  type: unknown
+runas: DBotWeakRole
+runonce: false
+script: |-
+  EmailList = demisto.args()["Recipients"]
+
+  FinalList = []
+
+  for i in EmailList:
+      if 'sendslack' in i:
+          FinalList.append(i['name'])
+
+  if len(FinalList) > 0:
+      demisto.setContext('FinalList', FinalList)
+scripttarget: 0
+subtype: python2
+tags:
+- Utilities
+- Condition
+type: python

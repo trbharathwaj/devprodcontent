@@ -1,0 +1,12 @@
+commonfields:
+  id: f6f7ca33-c9e4-4587-8e5c-e09118318f48
+  version: -1
+enabled: true
+name: PrintContextToWarroom
+runas: DBotWeakRole
+runonce: false
+script: print(demisto.incidents())
+scripttarget: 0
+subtype: python2
+tags: []
+type: python

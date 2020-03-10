@@ -1,0 +1,39 @@
+args:
+- defaultValue: "-1"
+  description: Text to get Email From
+  isArray: true
+  name: Text
+comment: Get the last mail id in the FROM header - For Dine Brands specific document
+  format
+commonfields:
+  id: a64fbb00-188d-48c4-83fa-77b58dc1319f
+  version: -1
+enabled: true
+name: GetMailId
+outputs:
+- contextPath: MailId
+  type: unknown
+runas: DBotWeakRole
+runonce: false
+script: |-
+  import re
+
+  text = demisto.args()["Text"]
+
+  match = re.split("From:",text)
+
+  start = '<'
+  end = '>'
+
+  index = len(match)
+
+  result = re.search('%s(.*)%s' % (start, end), match[index-1]).group(1)
+
+  result = result.split(':',1)
+  print(result[1])
+scripttarget: 0
+subtype: python2
+tags:
+- Condition
+- Utility
+type: python

@@ -1,0 +1,45 @@
+args:
+- description: IPv4 address to filter.
+  name: left
+  required: true
+- description: Comma-separated list of IPv4 ranges in CIDR notation against which
+    to match.
+  name: right
+  required: true
+comment: Determines whether an IPv4 address is contained in one or more comma-delimited
+  CIDR ranges.
+commonfields:
+  id: IsInCidrRanges
+  version: -1
+dockerimage: demisto/netutils:1.0.0.5165
+enabled: true
+name: IsInCidrRanges
+runas: DBotWeakRole
+runonce: false
+script: |2
+
+
+
+  from netaddr import IPAddress, IPNetwork
+
+
+  def main():
+      ip_address = demisto.args()['left']
+      cidr_range_list = argToList(demisto.args()['right'])
+
+      for cidr in cidr_range_list:
+          if IPAddress(ip_address) in IPNetwork(cidr):
+              demisto.results(True)
+              return
+
+      demisto.results(False)
+
+
+  if __name__ == "__builtin__" or __name__ == "builtins":
+      main()
+scripttarget: 0
+subtype: python3
+system: true
+tags:
+- filter
+type: python

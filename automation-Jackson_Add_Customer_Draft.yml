@@ -1,0 +1,134 @@
+args:
+- name: username
+- isArray: true
+  name: policynumber
+- isArray: true
+  name: state
+- isArray: true
+  name: city
+- isArray: true
+  name: email
+- isArray: true
+  name: fullname
+- name: phonenumber
+- name: zip
+- name: producerid
+- name: accountstatus
+- name: ip
+comment: Script to read the context and update it
+commonfields:
+  id: 5b671fcf-9c51-472e-84aa-5e060efbf8f5
+  version: -1
+enabled: true
+name: Jackson_Add_Customer_Draft
+runas: DBotWeakRole
+runonce: false
+script: |-
+  '''The following Automation is used to add customer data to the context. We add the record to the context directly, if the
+  customer record is new or if there are no matchable fields. If the record is an update, we take the relevant customer record
+  from the context, do the update and push it back to the context. We delete the entire customer hive and add it back again. '''
+
+  # Function to add the customer dictionary to the context
+  def add():
+      if 'customer' in demisto.context().keys():
+          contxt = demisto.context()['customer']
+      else:
+          contxt = {}
+
+      contxt[len(contxt)] = inputstuff_copy
+      demisto.setContext('customer',contxt)
+
+  # Declaring variables used in the Automation
+
+  inputstuff = demisto.args()
+  inputstuff_copy = demisto.args()
+  allFields = ['city','state','zip','producerid','accountstatus','fullname','phonenumber','email','policynumber','username','ip']
+  matchableFields = ['fullname','phonenumber','email','policynumber','username']
+  record_to_update = []
+  flag = 0
+
+  # If there are multiple comma separated values entered for a field, we split them before adding them into the dictionary
+
+  for key,value in inputstuff.items():
+      if value.find(',') != -1:
+          inputstuff[key] = inputstuff[key].split(',')
+          print('Broken the commas from the input')
+          print(inputstuff[key])
+
+  # To check if there is a 'customer' key in the context. The key will not exist during the first run so we can directly add if the key is not found
+
+  if 'customer' in demisto.context().keys():
+      contxt = demisto.context()['customer']
+  else:
+      add()
+      exit()
+
+  # If none of the input fields are in Matchable fields, we simply add the record to the customer context key and quit
+
+  CheckMatchLists = list(set(inputstuff.keys()) & set(matchableFields))
+
+  if not CheckMatchLists:
+      add()
+      exit()
+
+  # Strip the unicode character from the 'CheckMatchLists' List
+  CheckMatchLists = [str(r) for r in CheckMatchLists]
+
+  # Check if there are records that match the matchable fields; if yes, we set the update flag and get the customer record that has to be updated
+
+  for field in CheckMatchLists:
+      for key,item in contxt.items():
+          if(inputstuff[field] in item.values()):
+              record_to_update = item.items()
+              key_to_del = key
+              flag = 1
+              break
+
+      for stuff in item.values():
+          if(isinstance(stuff,list)):
+              if inputstuff[field] in stuff:
+                  record_to_update = item.items()
+                  key_to_del = key
+                  flag = 1
+                  break
+      if(flag):
+          break
+
+  # If the update flag is set, do an update. Else directly add the record to the context
+
+  if(flag):
+      record_dict = dict(record_to_update)
+      del contxt[key_to_del]
+
+  # check if any of the input record or existing record is a list. Then do a concatenation depeding on the type
+
+      for key in inputstuff:
+          if key in record_dict.keys():
+              if(record_dict[key] != inputstuff[key]):
+                  if(isinstance(inputstuff[key],list) and isinstance(record_dict[key],list)):
+                      record_dict[key] = record_dict[key] + inputstuff[key]
+                      record_dict[key] = list(set(record_dict[key]))
+                  elif(isinstance(record_dict[key],list)):
+                      if inputstuff[key] not in record_dict[key]:
+                          record_dict[key].append(inputstuff[key])
+                  elif(isinstance(inputstuff[key],list)):
+                      record_dict[key] = record_dict[key].split()
+                      record_dict[key] = record_dict[key] + inputstuff[key]
+                  else:
+                      record_dict[key] = record_dict[key] + ',' + inputstuff[key]
+                      record_dict[key] = list(record_dict[key].split(','))
+
+          else:
+              record_dict[key] = inputstuff[key]
+
+      contxt[key_to_del] = record_dict
+      print('Inserting this record')
+      print(record_dict)
+      demisto.setContext('customer',contxt)
+
+  else:
+      add()
+scripttarget: 0
+subtype: python2
+tags: []
+type: python

@@ -1,0 +1,16 @@
+commonfields:
+  id: 077a086e-1e72-4c76-84a7-e48f5edef039
+  version: -1
+enabled: true
+name: ContainmentTimerStop_copy
+runas: DBotWeakRole
+runonce: false
+script: |-
+  results = demisto.executeCommand("demisto-api-get",{"uri":"/users"})
+
+  print(results)
+scripttarget: 0
+subtype: python2
+tags:
+- field-change-triggered
+type: python

@@ -1,0 +1,235 @@
+args:
+- name: username
+- isArray: true
+  name: policynumber
+- isArray: true
+  name: state
+- isArray: true
+  name: city
+- isArray: true
+  name: email
+- isArray: true
+  name: fullname
+- name: phonenumber
+- name: zip
+- name: producerid
+- name: accountstatus
+- name: ip
+comment: Script to read the context and update it
+commonfields:
+  id: 8f55af5a-acfa-4b30-8052-06ccf89d15ac
+  version: -1
+enabled: true
+name: Jackson_Add_Customer_Enhanced
+runas: DBotWeakRole
+runonce: false
+script: |
+  '''The following Automation is used to add customer data to the context. We add the record to the context directly, if the
+  customer record is new or if there are no matchable fields. If the record is an update, we take the relevant customer record
+  from the context, do the update and push it back to the context. We delete the entire customer hive and add it back again. '''
+
+
+  # Function to add the customer dictionary to the context
+  def add():
+      if 'customer' in demisto.context().keys():
+          contxt = demisto.context()['customer']
+      else:
+          contxt = {}
+
+      contxt[len(contxt)] = inputstuff_copy
+      demisto.setContext('customer',contxt)
+
+  # Function to check and remove internal IP Addresses
+  def checkIP():
+      if(isinstance(inputstuff['ip'],list)):
+          for addr in inputstuff['ip']:
+              if addr.startswith('10.') or addr.startswith('172.'):
+                  internalIP.append(addr)
+          for ipaddr in internalIP:
+              inputstuff['ip'].remove(ipaddr)
+      else:
+          if inputstuff['ip'].startswith('10.') or inputstuff['ip'].startswith('172.'):
+              del inputstuff['ip']
+
+  # Declaring variables used in the Automation
+
+  internalIP = []
+  inputstuff = demisto.args()
+  inputstuff_copy = demisto.args()
+  allFields = ['city','state','zip','producerid','accountstatus','fullname','phonenumber','email','policynumber','username','ip']
+  matchableFields = ['fullname','phonenumber','email','policynumber','username']
+  record_to_update = []
+  flag = 0
+
+  # If there are multiple comma separated values entered for a field, we split them before adding them into the dictionary
+
+  for key,value in inputstuff.items():
+      if value.find(',') != -1:
+          inputstuff[key] = inputstuff[key].split(',')
+
+  # call function to remove internal IP addresses
+  if 'ip' in inputstuff.keys():
+      checkIP()
+
+  # To check if there is a 'customer' key in the context. The key will not exist during the first run so we can directly add if the key is not found
+
+  if 'customer' in demisto.context().keys():
+      contxt = demisto.context()['customer']
+  else:
+      add()
+      exit()
+
+  # If none of the input fields are in Matchable fields, we simply add the record to the customer context key and quit
+
+  CheckMatchLists = list(set(inputstuff.keys()) & set(matchableFields))
+
+  if not CheckMatchLists:
+      add()
+      exit()
+
+  # Strip the unicode character from the 'CheckMatchLists' List
+  CheckMatchLists = [str(r) for r in CheckMatchLists]
+
+  # Check if there are records that match the matchable fields; if yes, we set the update flag and get the customer record that has to be updated
+
+  for field in CheckMatchLists:
+      for key,item in contxt.items():
+          if(inputstuff[field] in item.values()):
+              record_to_update = item.items()
+              key_to_del = key
+              flag = 1
+              break
+
+      for stuff in item.values():
+          if(isinstance(stuff,list)):
+              if inputstuff[field] in stuff:
+                  record_to_update = item.items()
+                  key_to_del = key
+                  flag = 1
+                  break
+
+      if(flag):
+          break
+
+  # If the update flag is set, do an update. Else directly add the record to the context
+
+  if(flag):
+      record_dict = dict(record_to_update)
+      del contxt[key_to_del]
+
+  # check if any of the input record or existing record is a list. Then do a concatenation depeding on the type
+
+      for key in inputstuff:
+          if key in record_dict.keys():
+              if(record_dict[key] != inputstuff[key]):
+                  if(isinstance(inputstuff[key],list) and isinstance(record_dict[key],list)):
+                      record_dict[key] = record_dict[key] + inputstuff[key]
+                      record_dict[key] = list(set(record_dict[key]))
+                  elif(isinstance(record_dict[key],list)):
+                      if inputstuff[key] not in record_dict[key]:
+                          record_dict[key].append(inputstuff[key])
+                  elif(isinstance(inputstuff[key],list)):
+                      record_dict[key] = record_dict[key].split()
+                      record_dict[key] = record_dict[key] + inputstuff[key]
+                      record_dict[key] = list(set(record_dict[key]))
+                  else:
+                      record_dict[key] = record_dict[key] + ',' + inputstuff[key]
+                      record_dict[key] = list(record_dict[key].split(','))
+
+          else:
+              record_dict[key] = inputstuff[key]
+
+      contxt[key_to_del] = record_dict
+      demisto.setContext('customer',contxt)
+
+  else:
+      add()
+
+  customer_object = demisto.context()['customer']
+
+  res = []
+
+  keys = customer_object.keys()
+
+  username = phone = fullname = policynumber = email = ip = city = state = zipcode = producerid = accountstatus = []
+
+  def parse_values():
+      keys = customer_object.keys()
+      for key in keys:
+          if 'username' in customer_object[key].keys():
+              username = customer_object[key]['username']
+              if(isinstance(username,list)):
+                  username = ' , '.join(username)
+          else:
+              username = 'NA'
+          if 'phonenumber' in customer_object[key].keys():
+              phone = customer_object[key]['phonenumber']
+              if(isinstance(phone,list)):
+                  phone = ' , '.join(phone)
+          else:
+              phone = 'NA'
+          if 'fullname' in customer_object[key].keys():
+              fullname = customer_object[key]['fullname']
+              if(isinstance(fullname,list)):
+                  fullname = ' , '.join(fullname)
+          else:
+              fullname = 'NA'
+          if 'policynumber' in customer_object[key].keys():
+              policynumber = customer_object[key]['policynumber']
+              if(isinstance(policynumber,list)):
+                  policynumber = ' , '.join(policynumber)
+          else:
+              policynumber = 'NA'
+          if 'email' in customer_object[key].keys():
+              email = customer_object[key]['email']
+              if(isinstance(email,list)):
+                  email = ' , '.join(email)
+          else:
+              email = 'NA'
+          if 'ip' in customer_object[key].keys():
+              ip = customer_object[key]['ip']
+              if(isinstance(ip,list)):
+                  ip = ' , '.join(ip)
+          else:
+              ip = 'NA'
+          if 'city' in customer_object[key].keys():
+              city = customer_object[key]['city']
+              if(isinstance(city,list)):
+                  city = ' , '.join(city)
+          else:
+              city = 'NA'
+          if 'state' in customer_object[key].keys():
+              state = customer_object[key]['state']
+              if(isinstance(state,list)):
+                  state = ' , '.join(state)
+          else:
+              state = 'NA'
+          if 'zipcode' in customer_object[key].keys():
+              zipcode = customer_object[key]['zip']
+              if(isinstance(zipcode,list)):
+                  zipcode = ' , '.join(zipcode)
+          else:
+              zipcode = 'NA'
+          if 'producerid' in customer_object[key].keys():
+              producerid = customer_object[key]['producerid']
+              if(isinstance(producerid,list)):
+                  producerid = ' , '.join(producerid)
+          else:
+              producerid = 'NA'
+          if 'accountstatus' in customer_object[key].keys():
+              accountstatus = customer_object[key]['accountstatus']
+              if(isinstance(accountstatus,list)):
+                  accountstatus = ' , '.join(accountstatus)
+          else:
+              accountstatus = 'NA'
+
+
+          res.append( {"Username" : username, "phone" : phone , "FullName" : fullname , "email" : email , "ip" : ip, "policynumber" : policynumber } )
+
+  parse_values()
+
+  demisto.results( {'ContentsFormat': formats['table'], 'Type': entryTypes['note'], 'Contents': res} )
+scripttarget: 0
+subtype: python2
+tags: []
+type: python

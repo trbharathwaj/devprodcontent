@@ -1,0 +1,28 @@
+args:
+- name: dueDate
+  required: true
+commonfields:
+  id: cd57639f-151d-49e4-8fca-8d972b253f21
+  version: -1
+dockerimage: demisto/python3:3.8.1.5734
+enabled: true
+name: CalculateDays
+runas: DBotWeakRole
+runonce: false
+script: |-
+  #Calculate remaining days to due date  - this utility returns only number of days remaining to duedate
+  from datetime import datetime
+  import dateutil
+  from dateutil import parser
+  from datetime import date
+
+  currentDate = datetime.today()
+  dueDate = demisto.args()['dueDate']
+  dateparser = dateutil.parser.isoparse(dueDate)
+  timeDelta = dateparser.date() - currentDate.date()
+  demisto.results(timeDelta.days)
+  demisto.setContext('timeDelta', timeDelta.days)
+scripttarget: 0
+subtype: python3
+tags: []
+type: python

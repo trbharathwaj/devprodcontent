@@ -1,0 +1,159 @@
+args:
+- default: true
+  description: A comma-separated list of incident IDs by which to filter the results.
+  isArray: true
+  name: id
+- description: A comma-separated list of incident names by which to filter the results.
+  isArray: true
+  name: name
+- description: 'A comma-separated list of incident statuses by which to filter the
+    results. For example: assigned.'
+  isArray: true
+  name: status
+- description: 'A comma-separated list of incident statuses to exclude from the results.  For
+    example: assigned.'
+  isArray: true
+  name: notstatus
+- description: A comma-separated list of incident close reasons by which to filter
+    the results.
+  isArray: true
+  name: reason
+- description: Filter by from date (e.g. 2006-01-02T15:04:05+07:00 or 2006-01-02T15:04:05Z)
+  name: fromdate
+- description: Filter by to date (e.g. 2006-01-02T15:04:05+07:00 or 2006-01-02T15:04:05Z)
+  name: todate
+- description: Filter by from close date (e.g. 2006-01-02T15:04:05+07:00 or 2006-01-02T15:04:05Z)
+  name: fromclosedate
+- description: Filter by to close date (e.g. 2006-01-02T15:04:05+07:00 or 2006-01-02T15:04:05Z)
+  name: toclosedate
+- description: Filter by from due date (e.g. 2006-01-02T15:04:05+07:00 or 2006-01-02T15:04:05Z)
+  name: fromduedate
+- description: Filter by to due date (e.g. 2006-01-02T15:04:05+07:00 or 2006-01-02T15:04:05Z)
+  name: toduedate
+- description: Filter by Severity
+  isArray: true
+  name: level
+- description: Filter by incident owners
+  isArray: true
+  name: owner
+- description: Filter by incident details
+  name: details
+- description: Filter by incident type
+  isArray: true
+  name: type
+- description: Use free form query (use Lucene syntax) as filter. All other filters
+    will be ignored when this filter is used.
+  isArray: true
+  name: query
+- description: Filter by the page number
+  name: page
+- description: Filter by the page size (per fetch)
+  name: size
+- description: Sort in format of field.asc,field.desc,...
+  name: sort
+comment: Searches Demisto incidents
+commonfields:
+  id: SearchIncidentsV2
+  version: -1
+dockerimage: demisto/python3:3.8.1.5734
+enabled: true
+name: SearchIncidentsV2
+outputs:
+- contextPath: foundIncidents.id
+  description: A list of incident IDs returned from the query.
+- contextPath: foundIncidents.name
+  description: A list of incident names returned from the query.
+- contextPath: foundIncidents.severity
+  description: A list of incident severities returned from the query.
+- contextPath: foundIncidents.status
+  description: A list of incident statuses returned from the query.
+- contextPath: foundIncidents.owner
+  description: A list of incident owners returned from the query.
+- contextPath: foundIncidents.created
+  description: A list of the incident create date returned from the query.
+- contextPath: foundIncidents.closed
+  description: A list of incident close dates returned from the query.
+- contextPath: foundIncidents.labels
+  description: An array of labels per incident returned from the query.
+- contextPath: foundIncidents.details
+  description: Details of the incidents returned from the query.
+- contextPath: foundIncidents.dueDate
+  description: A list of incident due dates returned from the query.
+- contextPath: foundIncidents.phase
+  description: A list of incident phases returned from the query.
+runonce: false
+script: |
+  from typing import Dict, List
+
+
+
+
+
+  special = ['n', 't', '\\', '"', '\'', '7', 'r']
+
+
+  def check_if_found_incident(res: List):
+      if res and isinstance(res, list) and isinstance(res[0].get('Contents'), dict):
+          if 'data' not in res[0]['Contents']:
+              raise DemistoException(res[0].get('Contents'))
+          elif res[0]['Contents']['data'] is None:
+              return False
+          return True
+      else:
+          raise DemistoException(f'failed to get incidents from demisto.\nGot: {res}')
+
+
+  def is_valid_args(args: Dict):
+      array_args: List[str] = ['id', 'name', 'status', 'notstatus', 'reason', 'level', 'owner', 'type', 'query']
+      error_msg: List[str] = []
+      for _key, value in args.items():
+          if _key in array_args:
+              value = ','.join(value)
+          i = 0
+          while i < len(value):
+              if value[i] == '\\':
+                  if value[i + 1] not in special:
+                      error_msg.append(f'Error while parsing the argument: "{_key}" '
+                                       f'\nSucceeded parsing untill:\n- "{value[0:i]}"')
+                  else:
+                      i += 1
+              i += 1
+      if len(error_msg) != 0:
+          raise DemistoException('\n'.join(error_msg))
+
+      return True
+
+
+  def search_incidents(args: Dict):
+      if is_valid_args(args):
+          res: List = demisto.executeCommand('getIncidents', args)
+          if is_error(res):
+              raise DemistoException(get_error(res))
+          incident_found: bool = check_if_found_incident(res)
+          if incident_found is False:
+              return 'Incidents not found.', {}, {}
+          else:
+              data: Dict = res[0]['Contents']['data']
+              context_entry: Dict = {'foundIncidents': data}
+              headers: List[str] = ['id', 'name', 'severity', 'status', 'owner', 'created', 'closed']
+              md: str = tableToMarkdown(name="Incidents found", t=data, headers=headers)
+              return md, context_entry, res
+
+
+  def main():
+      args: Dict = demisto.args()
+      try:
+          readable_output, outputs, raw_response = search_incidents(args)
+          return_outputs(readable_output, outputs, raw_response)
+      except DemistoException as error:
+          return_error(str(error), error)
+
+
+  if __name__ in ('__main__', '__builtin__', 'builtins'):
+      main()
+scripttarget: 0
+subtype: python3
+system: true
+tags:
+- Utility
+type: python

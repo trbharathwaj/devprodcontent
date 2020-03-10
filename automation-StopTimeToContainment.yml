@@ -1,0 +1,18 @@
+comment: Stops the "Time To Containament" timer if the phase has been changed to Containament
+commonfields:
+  id: e4711bd3-9507-4bea-83bb-cb6e2f954fdb
+  version: -1
+enabled: true
+name: StopTimeToContainment
+runas: DBotWeakRole
+runonce: false
+script: |
+  args_phase =  demisto.args()['new']
+  demisto.results(args_phase)
+  if args_phase == '2. Containment':
+      demisto.executeCommand("stopTimer", {"timerField":"containmenttimer"})
+scripttarget: 0
+subtype: python2
+tags:
+- field-change-triggered
+type: python

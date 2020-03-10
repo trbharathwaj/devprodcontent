@@ -1,0 +1,15 @@
+commonfields:
+  id: ae71b9c6-efe8-4ba2-8fb2-deea0c1ffced
+  version: -1
+enabled: true
+name: New_Post_Processing_Script
+runas: DBotWeakRole
+runonce: false
+script: |-
+  contxt = demisto.args()
+  print(contxt)
+scripttarget: 0
+subtype: python2
+tags:
+- post-processing
+type: python

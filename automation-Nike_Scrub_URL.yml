@@ -1,0 +1,25 @@
+args:
+- description: URL to scrub
+  isArray: true
+  name: URL
+  required: true
+commonfields:
+  id: 3611d414-5525-4e22-844f-f4fe6bd23826
+  version: -1
+enabled: true
+name: Nike_Scrub_URL
+outputs:
+- contextPath: scrubbed_url
+runas: DBotWeakRole
+runonce: false
+script: |+
+  import re
+  url  = demisto.args()['URL']
+  scrubbed_url = re.sub('[* | \[ | \]]', '', url)
+  demisto.setContext('scrubbedurl',scrubbed_url)
+  demisto.results(scrubbed_url)
+
+scripttarget: 0
+subtype: python2
+tags: []
+type: python

@@ -1,0 +1,28 @@
+args:
+- description: Demisto List Name to Set to Context
+  name: list_name
+  required: true
+comment: 'Sets a comma separated demisto list to the Context with the key name Demisto
+  List. If list is not found, will set key to item not found. '
+commonfields:
+  id: bba27430-fe69-4bc2-8d59-22b1daa4bd1d
+  version: -1
+enabled: true
+name: Set_List
+runas: DBotWeakRole
+runonce: false
+script: |+
+  res = demisto.executeCommand('getList', {'listName':demisto.args()['list_name']})
+
+  split = res[0]['Contents'].split(',')
+
+  #demisto.executeCommand('Set', {'key': 'Demisto_List', 'value':split})
+
+  appendContext('Demisto_List', split, dedup=True)
+
+
+
+scripttarget: 0
+subtype: python2
+tags: []
+type: python

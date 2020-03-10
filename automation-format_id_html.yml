@@ -1,0 +1,104 @@
+args:
+- description: Pass in the list name to customize the HTML body
+  name: listName
+  required: true
+- description: List of incidents that have errored
+  isArray: true
+  name: foundIncidents
+  required: true
+commonfields:
+  id: bcf5d87e-77af-4edd-8e1c-10e494229469
+  version: -1
+enabled: true
+name: format_id_html
+outputs:
+- contextPath: error
+  type: unknown
+- contextPath: success
+  type: unknown
+runas: DBotWeakRole
+runonce: false
+script: |2+
+
+  config = demisto.executeCommand("getList", {"listName":demisto.args()["listName"]})
+
+  if (isError(config[0])):
+      demisto.results( { "Type" : entryTypes["error"], "ContentsFormat" : formats["text"], "Contents" : "Error fetching list, please confirm list name is correct" } )
+      demisto.debug("Error fetching list, please confirm list name is correct")
+      sys.exit(0)
+
+
+  loaded_config = config[0]["Contents"]
+
+  conf = {}
+  for i in loaded_config.decode('utf-8').split("\n"):
+      if "<table " in i:
+          conf["table"] = i
+      elif "<tr " in i:
+          conf["tr"] = i
+
+  columns = 4 # change this value to add additional columns
+  col_0_name = "Incident Number"
+  col_1_name = "Incident Name"
+  col_2_name = "Incident Type"
+  col_3_name = "Link to incident"
+  a = [];b = [];c = [];d=[]
+
+  # pull from context data for data retrieval
+  rows = []
+
+  if "foundIncidents" in demisto.args():
+      inc_list = demisto.args()["foundIncidents"]
+  else:
+      demisto.results( { "Type" : entryTypes["error"], "ContentsFormat" : formats["text"], "Contents" : "No Failed Incidents" } )
+      sys.exit(0)
+
+  for i in inc_list:
+      if i is not None:
+          a.append(i["id"])
+          b.append(i["name"])
+          c.append(i["type"])
+          tmp = demisto.demistoUrls()['server'] + "/#/Details/" + i["id"]
+          d.append(tmp)
+
+  rows.append(a);rows.append(b);rows.append(c);rows.append(d)
+
+  if rows and columns: # check if rows and columns exist, error out if not
+      temp = len(rows[0]) #error checking for row count
+      error = False
+      for i in rows[1:]:
+          if len(i) != temp:
+              error = True
+
+      #logic to build table
+      if (columns != len(rows)) or error:
+          demisto.results( { "Type" : entryTypes["error"], "ContentsFormat" : formats["text"], "Contents" : "Row format inconsistent with number of columns" } )
+          sys.exit(0)
+
+      else:
+          ret = conf["table"] + """<tr><th>"""+col_0_name+"</th><th>"+col_1_name+"</th><th>"+col_2_name+"</th><th>" + col_3_name+"</th></tr>"
+          for i in range(len(rows[0])):
+              ret += conf["tr"]
+              for j in range(columns):
+                  if """https://""" in rows[j][i]:
+                      ret+="<td>"+"""<a href='""" + rows[j][i] + """'>""" + "Link" + "</td>"
+                  else:
+                      ret+="<td>"+rows[j][i]+"</td>"
+              ret+="</tr>"
+          ret+="</table>"
+          demisto.setContext("ErrorIncTable",ret)
+          demisto.results("success")
+          demisto.log(demisto.executeCommand("DisplayHTML",{"html": ret, "header": "Found the following incidents"}))
+          # demisto.executeCommand("ExtractHTMLTables",{"html": ret, "header": "Found the following incidents"})
+          # if "HTMLTables" in demisto.context():
+          #     tabs = demisto.context()["HTMLTables"]
+          #     demisto.results(demisto.executeCommand("ToTable",{"data": tabs}))
+  else:
+      demisto.results( { "Type" : entryTypes["error"], "ContentsFormat" : formats["text"], "Contents" : "Failed to build table, no rows or no columns" } )
+      sys.exit(0)
+
+
+scripttarget: 0
+subtype: python2
+tags: []
+type: python

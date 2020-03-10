@@ -1,0 +1,28 @@
+args:
+- description: First list
+  name: List_1
+  required: true
+- description: Second list
+  name: List_2
+  required: true
+comment: Join 2 lists element to element
+commonfields:
+  id: 7c56cb15-3131-4e8c-8ec5-a61503780484
+  version: -1
+dockerimage: demisto/python3:3.7.5.5420
+enabled: true
+name: List_Join_Zurich
+runas: DBotWeakRole
+runonce: false
+script: |
+  list1 = []
+  list2 = []
+
+  list1 = demisto.args()['List_1']
+  list2 = demisto.args()['List_2']
+
+  demisto.results(list1+list2)
+scripttarget: 0
+subtype: python3
+tags: []
+type: python

@@ -1,0 +1,25 @@
+args:
+- default: true
+  description: Value for CounterVal
+  isArray: true
+  name: value
+comment: 'Used in the Looping playbook '
+commonfields:
+  id: cf0657a6-f292-4ecf-8b27-3fa000b42738
+  version: -1
+enabled: true
+name: CheckCounterVal
+runas: DBotWeakRole
+runonce: false
+script: |-
+  import json
+  value = demisto.args().get("value", None)
+  if not value:
+      value = [0]
+  demisto.results(value)
+scripttarget: 0
+subtype: python2
+tags:
+- transformer
+- general
+type: python

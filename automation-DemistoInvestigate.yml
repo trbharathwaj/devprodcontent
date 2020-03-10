@@ -1,0 +1,44 @@
+args:
+- name: query
+commonfields:
+  id: e6bda74d-571b-4c6f-8f30-be5ed9e9a31c
+  version: -1
+enabled: true
+name: DemistoInvestigate
+runas: DBotWeakRole
+runonce: false
+script: |-
+  function addEntry(text) {
+      entry =  [{ContentsFormat: formats.markdown, Type: entryTypes.note, Contents: text}];
+      executeCommand("addEntries", {"entries":JSON.stringify(entry)});
+  }
+
+  var res = executeCommand("getIncidents", {query:args.query});
+  if (isError(res[0])) {
+      return res;
+  }
+
+  var ids = dq(res[0].Contents,'data.id');
+  if (!ids || ids.length === 0) {
+      return 'No pending incidents found per query';
+  }
+
+  addEntry('Running on incidents ' + ids.join(', '));
+
+  ids.forEach(function(id){
+      addEntry(`Handling #${id}`);
+      res = executeCommand('demisto-api-get', {uri:`/incident/load/${id}`});
+      if (isError(res[0])) {
+          throw res[0].Contents;
+      }
+      res = executeCommand('demisto-api-post', {uri:'incident/investigate', body:res[0].Contents.response});
+      if (isError(res[0])) {
+          throw res[0].Contents;
+      }
+      wait(1);
+  });
+
+  return 'done';
+scripttarget: 0
+tags: []
+type: javascript

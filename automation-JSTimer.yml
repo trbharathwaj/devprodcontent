@@ -1,0 +1,19 @@
+commonfields:
+  id: 6717e63f-4f7d-4074-8da5-d68916e88170
+  version: -1
+enabled: true
+name: JSTimer
+runas: DBotWeakRole
+runonce: false
+script: |-
+  //test = executeCommand("GetContextValue", {"key":"incident.containmenttimer.dueDate"});
+  //test = 'hello'
+
+  //return (Object.keys(incidents[0]["CustomFields"]["containmenttimer"]))
+  var fromDate = incidents[0]["CustomFields"]["containmenttimer"]["startDate"];
+  var toDate = incidents[0]["CustomFields"]["containmenttimer"]["endDate"];
+  log(fromDate)
+  log(toDate)
+scripttarget: 0
+tags: []
+type: javascript

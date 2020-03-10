@@ -1,0 +1,48 @@
+args:
+- name: ids
+  required: true
+- description: timer/sla field cli name
+  name: timerFields
+  required: true
+comment: set the given timer fields to exactly 07m30s as ended timers
+commonfields:
+  id: 236645d5-fdd0-4faa-8d64-b0790b442c3e
+  version: -1
+enabled: true
+name: setTimersForIncidents_copy_1
+runas: DBotWeakRole
+runonce: false
+script: |-
+  var res = executeCommand("getIncidents", {"query": 'id:('+args.ids.split(',').join(' ')+')'});
+
+  var entryResults = [];
+  var timerFields = args.timerFields.split(',');
+  if (res && res[0].Contents && res[0].Contents.data) {
+      res[0].Contents.data.forEach(function (incident) {
+          if (!incident.isPlayground) {
+              var fromDate = new Date();
+              var toDate = new Date();
+              toDate.setSeconds(toDate.getSeconds() + 30);
+              toDate.setHours(toDate.getHours() + 7 );
+              var newValue = {};
+              for(var i = 0; i < timerFields.length; i++) {
+                  logInfo("set timer" + timerFields[i] + ' for inc ' + incident.id);
+                  var fromDate = incidents[0]["CustomFields"]["containmenttimer"]["startDate"];
+                  var toDate = incidents[0]["CustomFields"]["containmenttimer"]["endDate"];
+                  toDate.setSeconds(toDate.getSeconds() + 30);
+                  toDate.setHours(toDate.getHours() + 7 );
+                  newValue[timerFields[i].toLowerCase()] = { startDate: fromDate.toISOString(), endDate: toDate.toISOString(), runStatus: 'ended', accumulatedPause: 0, slaStatus: 0, sla: 0 };
+
+              }
+              entryResults.push(executeCommand("setIncident", { customFields: JSON.stringify(newValue) }));
+          }
+      });
+  } else {
+      entryResults.push({ Contents: "nothing found for" + 'id:('+args.ids.split(',').join(' ')+')', Type: 'note' });
+  }
+
+  return entryResults;
+scripttarget: 0
+sourcescripid: 0942b601-c631-458e-86f4-52c7225f0729
+tags: []
+type: javascript

@@ -1,0 +1,52 @@
+args:
+- description: new queue name
+  name: new
+- description: old queue name
+  name: old
+comment: This script serves as trigger script for custom field - Queue.  When this
+  filed is updated, the Incident Status field will also be updated
+commonfields:
+  id: 9b82dc5a-fcbe-4687-8bb9-943714ea1f95
+  version: -1
+enabled: true
+name: QueueUpdate
+runas: DBotWeakRole
+runonce: false
+script: |-
+  newQueue = args.new;
+  oldQueue = args.old;
+
+  /*if not newQueue or not oldQueue:
+      return "To continue, please specify Queue field"
+
+  queues = {"NCDC": "Waiting for Triage", "IR": "Escalated to IR", "ITO": None, "VM": None}
+
+  if (!newQueue in Object.keys(args)):
+      return "To continue, please specify correct Queue field"
+  */
+
+  incident_data = incidents[0];
+  incident_type = incident_data["type"];
+  oldStatus = incident_data["CustomFields"]["incident.incidentstatus"];
+  queues = {"NCDC": "Waiting for Triage", "IR": "Escalated to IR", "ITO": "Escalated To ITO", "Threat Hunt": "Threat Hunt"};
+
+  res = executeCommand("setIncident", {"queue": newQueue});
+  if (newQueue == "ITO") {
+      executeCommand("setIncident", {"roles": "ITO"});
+      executeCommand("ItoCounterUpdates", {"new": queues[newQueue], "old": oldStatus});
+  }
+  else if (newQueue == "Threat Hunt") {
+      executeCommand("ThCounterUpdates", {"new": queues[newQueue], "old": oldStatus});
+  }
+  else {
+      executeCommand("IrCounterUpdates", {"new": queues[newQueue], "old": oldStatus});
+  }
+
+  if (oldQueue != "N/A") {
+  executeCommand('setIncident', {'owner' : ""});}
+
+  return res;
+scripttarget: 0
+tags:
+- field-change-triggered
+type: javascript

@@ -1,0 +1,12 @@
+commonfields:
+  id: cb3b5288-93fd-4e70-887e-b3314e62365c
+  version: -1
+enabled: true
+name: printuser
+runas: DBotWeakRole
+runonce: false
+script: demisto.results(demisto.users())
+scripttarget: 0
+subtype: python2
+tags: []
+type: python

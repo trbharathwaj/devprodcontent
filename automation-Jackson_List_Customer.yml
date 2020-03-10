@@ -1,0 +1,114 @@
+args:
+- auto: PREDEFINED
+  description: 'Level of detail required in the table '
+  name: detail
+  predefined:
+  - brief
+  - more
+  - full
+  required: true
+comment: 'Display the customer object as a table '
+commonfields:
+  id: d0d6597e-582e-4e14-8489-316e3e87a6a2
+  version: -1
+enabled: true
+name: Jackson_List_Customer
+runas: DBotWeakRole
+runonce: false
+script: |+
+  detail_level = demisto.args()['detail']
+  customer_object = demisto.context()['customer']
+
+  res = []
+
+  keys = customer_object.keys()
+
+  username = phone = fullname = policynumber = email = ip = city = state = zipcode = producerid = accountstatus = []
+
+  def parse_values():
+      keys = customer_object.keys()
+      for key in keys:
+          if 'username' in customer_object[key].keys():
+              username = customer_object[key]['username']
+              if(isinstance(username,list)):
+                  username = ' , '.join(username)
+          else:
+              username = 'NA'
+          if 'phonenumber' in customer_object[key].keys():
+              phone = customer_object[key]['phonenumber']
+              if(isinstance(phone,list)):
+                  phone = ' , '.join(phone)
+          else:
+              phone = 'NA'
+          if 'fullname' in customer_object[key].keys():
+              fullname = customer_object[key]['fullname']
+              if(isinstance(fullname,list)):
+                  fullname = ' , '.join(fullname)
+          else:
+              fullname = 'NA'
+          if 'policynumber' in customer_object[key].keys():
+              policynumber = customer_object[key]['policynumber']
+              if(isinstance(policynumber,list)):
+                  policynumber = ' , '.join(policynumber)
+          else:
+              policynumber = 'NA'
+          if 'email' in customer_object[key].keys():
+              email = customer_object[key]['email']
+              if(isinstance(email,list)):
+                  email = ' , '.join(email)
+          else:
+              email = 'NA'
+          if 'ip' in customer_object[key].keys():
+              ip = customer_object[key]['ip']
+              if(isinstance(ip,list)):
+                  ip = ' , '.join(ip)
+          else:
+              ip = 'NA'
+          if 'city' in customer_object[key].keys():
+              city = customer_object[key]['city']
+              if(isinstance(city,list)):
+                  city = ' , '.join(city)
+          else:
+              city = 'NA'
+          if 'state' in customer_object[key].keys():
+              state = customer_object[key]['state']
+              if(isinstance(state,list)):
+                  state = ' , '.join(state)
+          else:
+              state = 'NA'
+          if 'zipcode' in customer_object[key].keys():
+              zipcode = customer_object[key]['zip']
+              if(isinstance(zipcode,list)):
+                  zipcode = ' , '.join(zipcode)
+          else:
+              zipcode = 'NA'
+          if 'producerid' in customer_object[key].keys():
+              producerid = customer_object[key]['producerid']
+              if(isinstance(producerid,list)):
+                  producerid = ' , '.join(producerid)
+          else:
+              producerid = 'NA'
+          if 'accountstatus' in customer_object[key].keys():
+              accountstatus = customer_object[key]['accountstatus']
+              if(isinstance(accountstatus,list)):
+                  accountstatus = ' , '.join(accountstatus)
+          else:
+              accountstatus = 'NA'
+
+          if detail_level == 'brief':
+              res.append( {"Username" : username, "phone" : phone , "FullName" : fullname , "email" : email , "ip" : ip, "policynumber" : policynumber } )
+          elif detail_level == 'more':
+              res.append( {"Username" : username, "phone" : phone , "FullName" : fullname , "email" : email , "ip" : ip, "policynumber" : policynumber, "city" : city, "state" : state, "zipcode" : zipcode} )
+          elif detail_level == 'full':
+              res.append( {"Username" : username, "phone" : phone , "FullName" : fullname , "email" : email , "ip" : ip, "policynumber" : policynumber, "city" : city, "state" : state, "zipcode" : zipcode, "producerid" : producerid, "accountstatus" : accountstatus } )
+          else:
+              print("Not a valid option")
+
+  parse_values()
+
+  demisto.results( {'ContentsFormat': formats['table'], 'Type': entryTypes['note'], 'Contents': res} )
+
+scripttarget: 0
+subtype: python2
+tags: []
+type: python

@@ -1,0 +1,56 @@
+args:
+- description: Name of the PDF report that is included in the Warroom output. This
+    does not require the file extension at the end.
+  name: pdfName
+comment: 'Takes an HTML file and converts it to a PDF file. This is leveraged for
+  reporting to Slack as a nice clean format. '
+commonfields:
+  id: a165fca4-0a86-4d6f-80ad-aaef30d47b5e
+  version: -1
+dockerimage: tk2-weasypdf:latest
+enabled: true
+name: pdfkit
+outputs:
+- contextPath: File.Name
+  description: Filename (only in case of report type=json)
+- contextPath: File.Type
+  description: File type e.g. "PE" (only in case of report type=json)
+- contextPath: File.Size
+  description: File size (only in case of report type=json)
+- contextPath: File.MD5
+  description: MD5 hash of the file (only in case of report type=json)
+- contextPath: File.SHA1
+  description: SHA1 hash of the file (only in case of report type=json)
+- contextPath: File.SHA256
+  description: SHA256 hash of the file (only in case of report type=json)
+- contextPath: File.EntryID
+  description: EntryID of the file (only in case of report type=json)
+runas: DBotWeakRole
+runonce: false
+script: |-
+  import datetime
+  import os
+  import pdfkit
+
+  # Mapping Inputs/Variables
+  fileExtension = ".pdf"
+  timeNow = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+  pdf_data = ""
+
+  if 'pdfName' in demisto.args():
+      pdfName = os.path.splitext(demisto.args()['pdfName'])[0]
+  else:
+      pdfName = "PDF-Report-"+timeNow
+
+  # Convert HTML Content to PDF
+  pdfkit.from_string('Hello!','./test.pdf')
+
+  # output file to warroom
+  #demisto.results(fileResult(pdfName+fileExtension, pdf_data))
+scripttarget: 0
+subtype: python2
+tags:
+- Utilities
+- util
+timeout: 180ns
+type: python

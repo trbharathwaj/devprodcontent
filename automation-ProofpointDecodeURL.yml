@@ -1,0 +1,45 @@
+args:
+- default: true
+  description: URL to decode
+  name: url
+  required: true
+comment: Deprecated. Use UnEscapeURLs instead. Decode ProofPoint URLs to get the actual
+  URLs.
+commonfields:
+  id: ProofpointDecodeURL
+  version: -1
+deprecated: true
+enabled: true
+name: ProofpointDecodeURL
+outputs:
+- contextPath: URL.Data
+  description: Decoded URLs
+runonce: false
+script: |2
+
+
+
+  args = {
+      "input": demisto.args().get("url")
+  }
+  res = demisto.executeCommand("UnEscapeURLs", args)
+
+  if is_error(res):
+      return_error("Error: An error returned, could not parse URL.")
+  else:
+      decoded_url = res[0].get("Contents")
+      entry_context = {
+          "Data": decoded_url
+      }
+      return_outputs(
+          readable_output="Decoded URL is: {0}".format(decoded_url),
+          raw_response=decoded_url,
+          outputs={
+              'URL(val.Data && val.Data == obj.Data)': entry_context
+          }
+      )
+scripttarget: 0
+subtype: python2
+system: true
+tags: []
+type: python

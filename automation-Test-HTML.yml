@@ -1,0 +1,22 @@
+commonfields:
+  id: 4b64d667-5a50-4720-8c17-7ce232a54a18
+  version: -1
+enabled: true
+name: Test-HTML
+runas: DBotWeakRole
+runonce: false
+script: |-
+  bad_thing = "This is the result"
+
+  entry = { "Type": entryTypes["note"], "ContentsFormat": formats["html"], "Contents": '<p style="color:red">' + bad_thing + '</p>' }
+
+
+  #entry = { "Type": entryTypes["note"], "ContentsFormat": formats["html"], "Contents": '<h1 style="color:red;">Heading </h1>' }
+
+  res = demisto.incident()['rawType']
+
+  demisto.results(res)
+scripttarget: 0
+subtype: python2
+tags: []
+type: python

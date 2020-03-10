@@ -1,0 +1,55 @@
+commonfields:
+  id: 7b093d35-a6d7-4962-811a-1c5a8449748c
+  version: -1
+dockerimage: demisto/python3:3.7.5.5420
+enabled: true
+name: Custom_Table_Zurich
+runas: DBotWeakRole
+runonce: false
+script: |-
+  IPcontext = demisto.get(demisto.context(),'IP')
+  dbotscore = demisto.get(demisto.context(),'DBotScore')
+
+  ip_address = []
+  geo_location = 0
+  virustotal_scores = 0
+  recorded_score = 0
+  dbot_score = 0
+
+  final_table = []
+
+
+  # Getting the IP Indicators that do not have a score of 0
+  for items in dbotscore:
+      #if items['Score'] != 0:
+      ip_address.append(items['Indicator'])
+
+  # removing dupes from this list since it may have multiples from multiple integrations
+  ip_address = list(dict.fromkeys(ip_address))
+
+  # fetching the criticality value from recorded future for the requried indicators
+
+  for address in ip_address:
+      for items in IPcontext:
+          if items['Address'] == address and items['RecordedFuture']['Criticality'] != 'None':
+              recorded_score = items['RecordedFuture']['Criticality']
+              #geo_location = items['Geo']
+
+
+      format_table = {"IP" : address, "Geo":"India","VirusTotal Score": "2", "Recorded Future Score" : recorded_score, "Dbot score" : "2","Malicious": "Yes/No"}
+
+      final_table.append(format_table)
+
+  '''table = [{"IP" : "8.8.8.8", "Geo":"India","VirusTotal Score","2", "Recorded Score" : "Malicious", "Dbot score" : "2","Malicious", "Yes/No"}]
+  table.append({"IP":"7.7.7.7", "Score":2})'''
+
+  hr = tableToMarkdown('Indicators', final_table)
+
+  output = [ {'Type': entryTypes['note'], 'ContentsFormat': formats['markdown'] ,
+  'Contents':hr}]
+
+  demisto.results(output)
+scripttarget: 0
+subtype: python3
+tags: []
+type: python

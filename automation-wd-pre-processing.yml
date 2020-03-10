@@ -1,0 +1,27 @@
+commonfields:
+  id: 929e7fc2-dfd4-45e5-8529-e7a5f0ff2c14
+  version: -1
+enabled: true
+name: wd-pre-processing
+runas: DBotWeakRole
+runonce: false
+script: |-
+  res = True
+  incident = demisto.incidents()[0]
+  listnew = []
+
+
+
+  demisto.executeCommand("setIncident", {"addedfromauthz":incident})
+
+  #for label in incident['labels']:
+  #    if 'rawJSON' in :
+  #        listnew.append('exists')
+
+  #demisto.executeCommand("setIncident", {"addedfromauthz":listnew})
+  #demisto.results(res)
+scripttarget: 0
+subtype: python2
+tags:
+- preProcessing
+type: python

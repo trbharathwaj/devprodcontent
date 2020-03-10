@@ -1,0 +1,166 @@
+args:
+- description: The single select field to append to, this is the Machine name (CLI
+    name), all lowercase, no spaces
+  name: single_select_field
+  required: true
+- description: Can be single field or comma seperated
+  name: values_to_add
+  required: true
+- auto: PREDEFINED
+  defaultValue: "true"
+  description: Choose whether to append or overwrite
+  name: append
+  predefined:
+  - "true"
+  - "false"
+comment: |-
+  Requires Demisto REST API
+
+
+  Sample field dict:
+  {
+      'associatedToAll':True,
+      'associatedTypes':[],
+      'breachScript':'',
+      'caseInsensitive':True,
+      'cliName':'testfield1',
+      'closeForm':False,
+      'columns':None,
+      'commitMessage':'',
+      'content':False,
+      'defaultRows':None,
+      'description':'',
+      'editForm':True,
+      'fieldCalcScript':'',
+      'group':0,
+      'hidden':False,
+      'id':'incident_testfield1',
+      'isReadOnly':False,
+      'locked':False,
+      'modified':'2019-08-22T03:03:53.484827459Z',
+      'name':'Test field1',
+      'neverSetAsRequired':False,
+      'ownerOnly':False,
+      'placeholder':'',
+      'prevName':'Test field1',
+      'required':False,
+      'script':'',
+      'selectValues':['this','is','a','test','yo','hey'],
+      'shouldCommit':False,
+      'shouldPublish':False,
+      'shouldPush':False,
+      'sla':0,
+      'system':False,
+      'systemAssociatedTypes':None,
+      'threshold':72,
+      'type':'singleSelect',
+      'unmapped':False,
+      'unsearchable':False,
+      'useAsKpi':False,
+      'validationRegex':'',
+      'version':5
+  }
+commonfields:
+  id: 70da5f7d-bc68-4f8c-80ea-3ba54fdaf252
+  version: -1
+dockerimage: demisto/python3:3.7.5.3066
+enabled: true
+name: AddSingleSelectFieldViaAPI
+runas: DBotWeakRole
+runonce: false
+script: |+
+  #######################
+  #
+  # Author: Steven Yang
+  # Date: 8/21/2019
+  #
+  #######################
+
+  import json
+
+
+  # arg import
+  field_name = demisto.getArg("single_select_field")
+  to_add = demisto.getArg("values_to_add")
+  append = demisto.getArg("append")
+
+  # api fetch field info
+  try:
+      res = demisto.executeCommand("demisto-api-get", {"uri":"/incidentfields"})[0]['Contents']['response']
+  except:
+      demisto.results("Error fetching fields")
+      demisto.results(res)
+      sys.exit(0)
+
+  # Grab field to add to using CLIName
+  target_dict = {}
+  for field in res:
+      try:
+          if field['cliName'] == field_name:
+              target_dict = field
+              break
+      except:
+          demisto.results("Single select field with name: " + field_name + " not found.")
+          sys.exit(0)
+
+  # Generate new list to append to field
+  try:
+      if isinstance(target_dict['selectValues'],list) and append == 'true':
+         new_list = target_dict['selectValues']
+         for i in to_add.split(','):
+             new_list.append(i)
+      elif append == 'false':
+          new_list = to_add.split(',')
+  except:
+      demisto.results("Error parsing field list")
+      sys.exit(0)
+
+
+  data = {
+      "sla":target_dict['sla'],
+      "shouldCommit":target_dict['shouldCommit'],
+      "caseInsensitive":target_dict['caseInsensitive'],
+      "hidden":target_dict['hidden'],
+      "locked":target_dict['locked'],
+      "threshold":target_dict['threshold'],
+      "script":target_dict['script'],
+      "useAsKpi":target_dict['useAsKpi'],
+      "name":target_dict['name'],
+      "cliName":target_dict['cliName'],
+      "isReadOnly":target_dict['isReadOnly'],
+      "unmapped":target_dict['unmapped'],
+      # "shouldPush":target_dict['shouldPush'],
+      "editForm":target_dict['editForm'],
+      "validationRegex":target_dict['validationRegex'],
+      "system":target_dict['system'],
+      "commitMessage":target_dict['commitMessage'],
+      "placeholder":target_dict['placeholder'],
+      "associatedTypes":target_dict['associatedTypes'],
+      "version":-1,
+      "content":target_dict['content'],
+      "fieldCalcScript":target_dict['fieldCalcScript'],
+      "type":"singleSelect",
+      "defaultRows":target_dict['defaultRows'],
+      "id":target_dict['id'],
+      "unsearchable":target_dict['unsearchable'],
+      "breachScript":target_dict['breachScript'],
+      "closeForm":target_dict['closeForm'],
+      # "shouldPublish":target_dict['shouldPublish'],
+      "description":target_dict['description'],
+      "columns":target_dict['columns'],
+      "selectValues":new_list,
+      "prevName":target_dict['prevName'],
+      "ownerOnly":target_dict['ownerOnly'],
+      "group":target_dict['group'],
+      "required":target_dict['required']
+  }
+
+  # API POST
+  res2 = demisto.executeCommand("demisto-api-post", {"uri":"/incidentfield",'body':json.dumps(data)})
+  demisto.results(res2)
+  demisto.results("Done")
+
+scripttarget: 0
+subtype: python3
+tags: []
+type: python

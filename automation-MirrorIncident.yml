@@ -1,0 +1,307 @@
+args:
+- description: Incident ID of incident to copy.  If argument not supplied, current
+    incident will be duplicated
+  name: incident_id
+- description: 'Custom playbook ID to assign to incident '
+  name: playbook_id
+- auto: PREDEFINED
+  defaultValue: "false"
+  description: Toggle debug mode
+  name: debug
+  predefined:
+  - "true"
+  - "false"
+- auto: PREDEFINED
+  defaultValue: "false"
+  description: Choose whether to copy artifacts generated in the war room, DO NOT
+    USE for large incidents
+  name: copy_artifacts
+  predefined:
+  - "true"
+  - "false"
+- defaultValue: Demisto_Rest_API-${incident.integrationlabel}
+  description: Integration name for which the automation will use (using)
+  name: tenant_name
+  required: true
+comment: "Create Duplicate of an Incident. This will make a perfect copy of the incident
+  Context data and user war room entries. Run with timeout 600 seconds and python
+  3 docker container. \n\nRequires:\n1. REST API pointing to a server that is not
+  itself\n2. Python 3 Docker image\n3. Advanced config external hostname set up to
+  point to server itself\n4. Playbook has to be on target and host server"
+commonfields:
+  id: b8be61cc-91f3-488e-8964-f9db1b36b4e3
+  version: -1
+dependson:
+  must: []
+dockerimage: demisto/python3
+enabled: true
+name: MirrorIncident
+rolename:
+- TK2-Analyst
+- Administrator
+- Playbook Writer
+runas: DBotWeakRole
+runonce: false
+script: |-
+  import json
+
+  # --------------------------------------------------PHASE 1------------------------------------------------------------
+  # Collect toggle arguments
+  demisto.log("P1: Collect toggle arguments")
+
+  if demisto.args()["debug"] == 'true':
+      DEBUG = True
+  else:
+      DEBUG = False
+
+  if demisto.args()["copy_artifacts"] == 'true':
+      COPY_ARTIFACTS = True
+  else:
+      COPY_ARTIFACTS = False
+
+  # Determine Which Tenant to use
+  tenant_name = demisto.args()['tenant_name']
+
+  # Incident ID from Current Incident or Arugument
+  incident_id = demisto.args().get('incident_id', demisto.incidents()[0]['id'])
+
+  # --------------------------------------------------PHASE 2------------------------------------------------------------
+  # Grab entries as well as incidents
+  demisto.log("P2: Grab entries as well as incidents")
+
+  # Grab current incident entries, all of them
+  curr_entries = demisto.executeCommand("getEntries", {"id":incident_id})
+
+
+  # DEBUG
+  # print(curr_entries[-10])
+  # sys.exit(0)
+
+  # Grab incident data using getIncidents
+  get_incidents = demisto.executeCommand("getIncidents", {"id": incident_id})[0]["Contents"]
+
+  # Dump incident data
+  if DEBUG:
+      demisto.results("Incident Data")
+      demisto.results(json.dumps(get_incidents))
+
+  # If the object exists, otherwise incident not found
+  if get_incidents['total']:
+      # Fetch incident data
+      incident_data = get_incidents["data"][0]
+
+      # DEBUG
+      # demisto.results(json.dumps(incident_data))
+      # sys.exit(0)
+
+      # Ensuring labels are passed in correctly in ${incident}
+      labels = []
+      for label in incident_data['labels']:
+          # DEBUG
+          # demisto.results(label)
+          labels.append(label)
+      incident_data['labels'] = labels
+      incident_data['customFields'] = incident_data["CustomFields"]
+
+      # Set required incident fields pirror to mirroring
+      incident_data['customFields']['incidenttime'] = str(incident_data['occurred'])
+      incident_data['customFields']['ismirrored'] = "true"
+
+      # Deletion of tags that conflict with incident creation
+      try:
+          del incident_data["id"]
+          del incident_data["investigationId"]
+          del incident_data["roles"]
+          del incident_data["owner"]
+          del incident_data["created"]
+          del incident_data["modified"]
+          del incident_data["occurred"]
+          del incident_data["dueDate"]
+          del incident_data["notifyTime"]
+          del incident_data["closeReason"]
+          del incident_data["closeNotes"]
+          del incident_data["closed"]
+          del incident_data["rawCloseReason"]
+      except:
+          return_error("Error parsing incident data")
+          sys.exit(0)
+
+      # determine if we need to assign different playbook id
+      playbook_id = demisto.args().get('playbook_id', incident_data['playbookId'])
+      incident_data['playbookId'] = playbook_id
+
+      # API post to same server
+      # response = demisto.executeCommand("createNewIncident", incident_data)[0]
+
+      # API post to other server, uses REST API URL and API key
+      response = demisto.executeCommand("demisto-api-post", {"uri":"incident", "body":json.dumps(incident_data), "using":tenant_name})
+
+      # Error handling for initial incident creation
+      if not isError(response):
+          if DEBUG:
+              demisto.results('Incident post response')
+              demisto.results(json.dumps(response))
+              exit()
+      else:
+          demisto.results(response)
+          return_error("Unable to duplicate incident. Please check if playbook exists on destination server.")
+          sys.exit(0)
+
+  # --------------------------------------------------PHASE 3------------------------------------------------------------
+      # Grab Context data and open investigation
+
+      demisto.log("P3: Grab Context data and open investigation")
+      res = demisto.executeCommand("getContext", {"id":incident_id})[0]['Contents']['context']
+
+      # DEBUG
+      # demisto.results('Printing Context grabbed')
+      # demisto.results(res)
+
+      # Fetch incident ID of newly created incident to append context to
+      try:
+          id_g = str(response[0]['Contents']['response']['id'])
+      except:
+          return_error("Please check if Incident exists on destination server")
+          sys.exit(0)
+
+      open_body = {
+          "id": id_g,
+          "version": 1
+      }
+
+      # POST to open investigation
+      try:
+          res_openinves = demisto.executeCommand("demisto-api-post", {"uri":"incident/investigate", "body":open_body, "using":tenant_name})
+      except:
+          return_error("Error fetching new investigation info on destination server")
+          sys.exit(0)
+
+
+  # --------------------------------------------------PHASE 4------------------------------------------------------------
+      # Post entry data
+
+      demisto.log("P4: Post entry data")
+
+      for i in curr_entries:
+
+          # DEBUG
+          # print(i["Contents"])
+
+          if i['File'] != '' and i['FileID'] != '':
+              file_name = str(i['File'])
+              download_path = "/entry/download/" + str(i['ID'])
+              # print(download_path)
+              ent = {
+                  "args" : None,
+                  "data" : "!demisto-api-download uri=`{}` filename=`{}`".format(download_path,file_name),
+                  "id" : "",
+                  "investigationId" : id_g,
+                  "markdown" : False,
+                  "version" : 0
+              }
+              dest_ent = demisto.executeCommand("demisto-api-post", {"uri":"entry", "body":json.dumps(ent), "using":tenant_name})
+
+              # If post request produces error, enter error entry in war room
+              if isError(dest_ent) and DEBUG:
+                  demisto.results("Error parsing:")
+                  demisto.results(i["Contents"])
+
+
+          # Show all user ran commands
+          elif ("user" in i['Metadata'] and i['Metadata']['user'] != ''):
+              ent = {
+                  "data" : i["Contents"],
+                  "id" : "",
+                  "investigationId" : id_g,
+                  "markdown" : True,
+                  "version" : 0
+              }
+              dest_ent = demisto.executeCommand("demisto-api-post", {"uri":"entry/note", "body":json.dumps(ent), "using":tenant_name})
+
+              # If post request produces error, enter error entry in war room
+              if isError(dest_ent) and DEBUG:
+                  demisto.results("Error parsing:")
+                  demisto.results(i["Contents"])
+
+          #optional print all relevant artifacts
+          elif ('artifact' in i['Metadata']['category']):
+              if COPY_ARTIFACTS:
+                  ent = {
+                      "data" : i["Contents"],
+                      "id" : "",
+                      "investigationId" : id_g,
+                      "markdown" : True,
+                      "version" : 0
+                  }
+                  dest_ent = demisto.executeCommand("demisto-api-post", {"uri":"entry/note", "body":json.dumps(ent), "using":tenant_name})
+
+                  # If post request produces error, enter error entry in war room
+                  if isError(dest_ent) and DEBUG:
+                      demisto.results("Error parsing:")
+                      demisto.results(i["Contents"])
+              else:
+                  pass
+
+
+
+  # --------------------------------------------------PHASE 5------------------------------------------------------------
+      # Post context data
+      demisto.log("P5: Post context data")
+
+      # DEBUG
+      # print(res.items())
+
+      # Iterate through context and create a separate post request to append context to new incident. This handles everything under ${root} that
+      # is a list or unicode string or dict
+      for k,v in res.items():
+          if isinstance(v,list) or isinstance(v,dict):
+              args = {
+                       "args" : None,
+                       "data" : "!Set key={} value=`{}`".format(k,json.dumps(v)),
+                       "id" : "",
+                       "investigationId" : id_g,
+                       "markdown" : False,
+                       "version" : 0
+                      }
+              dest = demisto.executeCommand("demisto-api-post", {"uri":"entry", "body":json.dumps(args), "using":tenant_name})
+              # If post request produces error, enter error key in war room
+              # if isError(dest):
+              #     demisto.results("Error parsing key: " + k)
+
+          elif isinstance(v,str):
+              args_2 = {
+                       "args" : None,
+                       "data" : "!Set key={} value=`{}`".format(k,v),
+                       "id" : "",
+                       "investigationId" : id_g,
+                       "markdown" : False,
+                       "version" : 0
+                       }
+              dest2 = demisto.executeCommand("demisto-api-post", {"uri":"entry", "body":args_2, "using":tenant_name})
+
+              # DEBUG
+              # print("#### ARGS FROM BODY")
+              # print(args_2)
+              # print("##### RETURN from api post")
+              # print(json.dumps(dest2))
+
+               # If post request produces error, enter error key in war room
+              # if isError(dest2):
+              #     demisto.results("Error parsing key: " + k)
+
+          # Unhandled case where context obj is not list or unicode string or dict
+          else:
+              demisto.results("Context object not of form String or List or Dict not passed to new incident: " + str(type(v)))
+
+  # When incident number is not found
+  else:
+      demisto.results("Unable to find incident {}".format(demisto.args()["incident_id"]))
+
+  demisto.results("Finished Duplication")
+scripttarget: 0
+subtype: python2
+tags:
+- Utilities
+- util
+timeout: 600ns
+type: python
