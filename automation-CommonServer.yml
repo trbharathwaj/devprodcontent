@@ -2,7 +2,16 @@ comment: Common code that will be merged into each server script when it runs
 commonfields:
   id: CommonServer
   version: -1
+contentitemexportablefields:
+  contentitemfields:
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
 name: CommonServer
+pswd: ""
 runonce: false
 script: |-
   // Common functions script
