@@ -5,13 +5,15 @@ commonfields:
 contentitemexportablefields:
   contentitemfields:
     fromServerVersion: ""
-    itemVersion: ""
-    packID: ""
-    propagationLabels:
+    itemVersion: 1.1.21
+    packID: Base
+    packPropagationLabels:
     - all
+    propagationLabels: []
     toServerVersion: ""
 name: CommonServer
 pswd: ""
+runas: DBotWeakRole
 runonce: false
 script: |-
   // Common functions script
