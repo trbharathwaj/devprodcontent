@@ -1,0 +1,22 @@
+commonfields:
+  id: 38bbb609-9c56-4522-81ef-ef6bf055d714
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/python3:3.8.5.10845
+enabled: true
+name: TestAuto
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: print("hello")
+scripttarget: 0
+subtype: python3
+tags: []
+type: python
